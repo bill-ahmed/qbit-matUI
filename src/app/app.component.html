@@ -14,7 +14,7 @@
   h4,
   h5,
   h6 {
-    margin: 8px;
+    margin: 4px;
   }
 
 
@@ -23,37 +23,36 @@
   }
 
   .toolbar {
-    position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 35px;
+    height: 90px;
     display: flex;
     align-items: center;
     background-color: #1976d2;
     color: white;
     font-weight: 600;
+
+    padding: 15px;
   }
 
-  .toolbar img {
-    margin: 0 16px;
+  .capitalCaseText {
+    text-transform: uppercase;
   }
 
-  .toolbar #twitter-logo {
-    height: 40px;
-    margin: 0 16px;
-  }
-
-  .toolbar #twitter-logo:hover {
-    opacity: 0.8;
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
 
   .content {
     display: flex;
-    margin: auto;
-    margin-top: 30px;
-    min-height: 100vh;
-    
+    width: 100%;
+    padding: 5px;
+
+    flex-grow: 1;
+
     flex-direction: column;
   }
 
@@ -69,9 +68,12 @@
     color: #125699;
   }
 
+  button {
+    margin: 5px;
+  }
+
 
   footer {
-    margin-top: 8px;
     display: flex;
     align-items: center;
     line-height: 20px;
@@ -83,20 +85,42 @@
   }
 </style>
 
-<!-- Toolbar -->
-<div class="toolbar" role="banner">
-  <span>
+<div class="container">
+  <!-- Toolbar -->
+  <div class="toolbar" role="banner">
+    <span>
+      <div class="leftInfo">
+        <h1 class="capitalCaseText">
+          Manage Torrents
+        </h1>
+        <h4>
+          qBittorrent v4.2.1
+        </h4>
+      </div>
+    </span>
+
+    <div class="spacer"></div>
+
+    <div>
+      Fab Icon
+    </div>
+
+    <button>
+      Advanced...
+    </button>
+
+  </div>
+
+  <!-- Main Content -->
+  <div class="content" role="main">
+    <app-torrents-table></app-torrents-table>
+  </div>
+
+
+  <!-- Footer -->
+  <div class="footer">
     <h3>
-      qBit WebUI
+      footer stuff
     </h3>
-  </span>
-
-  <div class="spacer"></div>
-
+  </div>
 </div>
-
-<div class="content" role="main">
-  <h3>Table Here</h3>
-</div>
-
-
