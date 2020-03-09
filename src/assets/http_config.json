@@ -1,0 +1,6 @@
+{
+    "endpoints": {
+        "root": "",
+        "torrentList": "/api/v2/sync/maindata"
+    }
+}
