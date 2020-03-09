@@ -1,0 +1,72 @@
+<style>
+
+    .spacer {
+      flex: 1;
+    }
+  
+    .toolbar {
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      background-color: #1976d2;
+      color: white;
+      font-weight: 600;
+  
+      padding: 15px;
+    }
+  
+    .capitalCaseText {
+      text-transform: uppercase;
+    }
+  
+    .content {
+      display: flex;
+      width: 100%;
+      padding: 5px;
+  
+      flex-grow: 1;
+  
+      flex-direction: column;
+    }
+</style>
+  
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+    <span>
+    <div class="leftInfo">
+        <h1 class="capitalCaseText">
+        Manage Torrents
+        </h1>
+        <h4>
+        qBittorrent v4.2.1
+        </h4>
+    </div>
+    </span>
+
+    <div class="spacer"></div>
+
+    <div>
+    Fab Icon
+    </div>
+
+    <button mat-button>
+    Advanced...
+    </button>
+
+</div>
+
+<!-- Main Content -->
+<div class="content" role="main">
+    <app-torrents-table></app-torrents-table>
+</div>
+
+
+<!-- Footer -->
+<div class="footer">
+    <h3>
+    footer stuff
+    </h3>
+</div>
