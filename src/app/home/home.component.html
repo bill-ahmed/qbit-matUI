@@ -3,6 +3,12 @@
     .spacer {
       flex: 1;
     }
+
+    .homeContainer{
+      flex: 1;
+      min-height: 100vh;
+      width: 100%;
+    }
   
     .toolbar {
       top: 0;
@@ -24,6 +30,7 @@
   
     .content {
       display: flex;
+      min-height: 100%;
       width: 100%;
       padding: 5px;
   
@@ -32,41 +39,38 @@
       flex-direction: column;
     }
 </style>
-  
-<!-- Toolbar -->
-<div class="toolbar" role="banner">
-    <span>
-    <div class="leftInfo">
-        <h1 class="capitalCaseText">
-        Manage Torrents
-        </h1>
-        <h4>
-        qBittorrent v4.2.1
-        </h4>
-    </div>
-    </span>
+<div class="homeContainer">
+  <!-- Toolbar -->
+  <div class="toolbar" role="banner">
+      <span>
+      <div class="leftInfo">
+          <h1 class="capitalCaseText">
+          Manage Torrents
+          </h1>
+          <h4>
+          qBittorrent v4.2.1
+          </h4>
+      </div>
+      </span>
 
-    <div class="spacer"></div>
+      <div class="spacer"></div>
 
-    <div>
-    Fab Icon
-    </div>
+      <div>
+      Fab Icon
+      </div>
 
-    <button mat-button>
-    Advanced...
-    </button>
+      <button mat-button>
+      Advanced...
+      </button>
 
-</div>
+      <button (click)="logout()">
+        Logout
+      </button>
 
-<!-- Main Content -->
-<div class="content" role="main">
-    <app-torrents-table></app-torrents-table>
-</div>
+  </div>
 
-
-<!-- Footer -->
-<div class="footer">
-    <h3>
-    footer stuff
-    </h3>
+  <!-- Main Content -->
+  <div class="content" role="main">
+      <app-torrents-table></app-torrents-table>
+  </div>
 </div>
