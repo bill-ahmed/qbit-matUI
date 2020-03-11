@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { GetCookieInfo } from '../../utils/ClientInfo';
 import { HttpClient } from '@angular/common/http';
 import { HttpConfigType } from '../../utils/Interfaces';
 import * as http_endpoints from '../../assets/http_config.json';
@@ -38,6 +37,11 @@ export class LoginComponent implements OnInit {
     let root = this.http_endpoints.default.endpoints.root;
     let endpoint = this.http_endpoints.default.endpoints.login;
 
+    // all headers
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    // body parameters
     let body = new FormData();
     body.append('username', username);
     body.append('password', password);
@@ -46,24 +50,21 @@ export class LoginComponent implements OnInit {
 
     let xhr = new XMLHttpRequest();
 
-    // xhr.open('POST', url, true);
-    // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
-    // xhr.addEventListener('readystatechange', function() {
-    //     if (xhr.readyState === 4) { // DONE state
-    //         if (xhr.status === 200){
-    //           alert("done");
-    //         }
-    //         else{
-    //           alert("else");
-    //         }
-                
-    //     }
-    // });
-
-    // const queryString = "username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
-    // xhr.send(queryString);
     console.log(url)
-    this.http.post(url, body).subscribe((data: any) => console.log(data));
+    this.http.post(url, {headers: headers, body: body, responseType: 'text'}).subscribe((data: any) => {
+
+      // If successful, route to home page
+      if(data.status === 200 && data.statusText === "OK"){
+        alert("Logged in!");
+        this.router.navigate(['/home']);
+
+      } else {
+        alert("Error logging ing.");
+        this.cookieService.deleteAll(); // Clear all cookies and refresh page
+        window.location.reload();
+      }
+      console.log(data)
+    });
   }
 
 }

@@ -1,6 +1,6 @@
 {
     "endpoints": {
-        "root": "/api/v2",
+        "root": "http://localhost:4300/api/v2",
         "torrentList": "/sync/maindata",
         "login": "/auth/login"
     }
