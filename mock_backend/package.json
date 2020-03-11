@@ -4,11 +4,14 @@
   "description": "A mock back-end service.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "express": "^4.17.1"
   }

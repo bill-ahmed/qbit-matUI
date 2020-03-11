@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { GetCookieInfo } from '../../utils/ClientInfo';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,13 +9,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  
+  private cookieSID: string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private cs: CookieService) { }
 
   ngOnInit(): void {
+    let key = GetCookieInfo().SIDKey;
+    this.cookieSID = this.cs.get(key);
+
+    if(this.cookieSID === ""){
+      this.logout();
+    }
   }
 
   logout(): void {
+    this.cs.deleteAll();
     this.router.navigate(['/']);
   }
 

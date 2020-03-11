@@ -37,10 +37,6 @@ export class LoginComponent implements OnInit {
     let root = this.http_endpoints.default.endpoints.root;
     let endpoint = this.http_endpoints.default.endpoints.login;
 
-    // all headers
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded');
-
     // body parameters
     let body = new FormData();
     body.append('username', username);
@@ -49,21 +45,22 @@ export class LoginComponent implements OnInit {
     let url = root + endpoint;
 
     let xhr = new XMLHttpRequest();
-
+ 
     console.log(url)
-    this.http.post(url, {headers: headers, body: body, responseType: 'text'}).subscribe((data: any) => {
+    this.http.post(url, body, {responseType: 'text'}).subscribe(
+      (data: any) => {
 
-      // If successful, route to home page
-      if(data.status === 200 && data.statusText === "OK"){
-        alert("Logged in!");
-        this.router.navigate(['/home']);
+        // If successful, route to home page
+        if(data.status === 200 && data === "Ok."){
+          alert("Logged in!");
+          this.router.navigate(['/home']);
 
-      } else {
-        alert("Error logging ing.");
-        this.cookieService.deleteAll(); // Clear all cookies and refresh page
-        window.location.reload();
-      }
-      console.log(data)
+        } else {
+          alert("Error logging in.");
+          this.cookieService.deleteAll(); // Clear all cookies and refresh page
+          // window.location.reload();
+        }
+        console.log(data)
     });
   }
 
