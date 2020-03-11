@@ -3,5 +3,6 @@
         "root": "http://localhost:4300/api/v2",
         "torrentList": "/sync/maindata",
         "login": "/auth/login"
-    }
+    },
+    "devCookie": "8c212779b4abde7A"
 }

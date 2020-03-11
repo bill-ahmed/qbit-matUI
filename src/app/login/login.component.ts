@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { isDevMode } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { HttpConfigType } from '../../utils/Interfaces';
@@ -46,20 +47,25 @@ export class LoginComponent implements OnInit {
 
     let xhr = new XMLHttpRequest();
  
-    console.log(url)
-    console.log("updated v1");
+    console.log("Sent request to", url)
     this.http.post(url, body, {responseType: 'text', observe: 'response'}).subscribe(
       (data: any) => {
 
         // If successful, route to home page
         if(data.status === 200 && data.body === "Ok."){
           alert("Logged in!");
+
+          // When in development/testing, set cookie manually because Express server won't do it for some reason RIP IDK
+          if(isDevMode()){
+            this.cookieService.set('SID', this.http_endpoints.default.devCookie);
+          }
+
           this.router.navigate(['/home']);
 
         } else {
           alert("Error logging in.");
           this.cookieService.deleteAll(); // Clear all cookies and refresh page
-          // window.location.reload();
+          window.location.reload();
         }
         console.log(data)
     });
