@@ -47,11 +47,12 @@ export class LoginComponent implements OnInit {
     let xhr = new XMLHttpRequest();
  
     console.log(url)
-    this.http.post(url, body, {responseType: 'text'}).subscribe(
+    console.log("updated v1");
+    this.http.post(url, body, {responseType: 'text', observe: 'response'}).subscribe(
       (data: any) => {
 
         // If successful, route to home page
-        if(data.status === 200 && data === "Ok."){
+        if(data.status === 200 && data.body === "Ok."){
           alert("Logged in!");
           this.router.navigate(['/home']);
 

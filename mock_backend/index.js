@@ -2,18 +2,33 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var cookieParser = require('cookie-parser')
+var multer = require('multer');
+var upload = multer();
 var app = express();
 
 const PORT = 4300;
 
 app.use(cors());
 app.use(cookieParser());
-app.use(bodyParser.urlencoded());
+
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({extended: true}));
+
+// For parsing multipart/form-data
+app.use(upload.array()); 
+app.use(express.static('public'));
 
 app.post('/api/v2/auth/login', function (req, res, next) {
-    console.log(req);
-    res.cookie('SID', '8c212779b4abde7A');
-    res.send("Ok.");
+    var user = req.body.username;
+    var pass = req.body.password;
+
+    if(user === "admin" && pass === "Password"){
+        res.cookie('SID', '8c212779b4abde7A');
+        res.send("Ok.");
+    } else {
+        res.send("Fail.");
+    }
+    next();
 });
 
 app.get('/api/v2/sync/maindata', function(req, res) {
