@@ -2,7 +2,7 @@ import { Component, OnInit, isDevMode } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
 import { HttpClient } from '@angular/common/http';
-import { MainData, TorrentList } from '../../utils/Interfaces';
+import { MainData, Torrent } from '../../utils/Interfaces';
 
 // UI Components
 import { MatTableDataSource, MatTable } from '@angular/material/table';
@@ -16,7 +16,7 @@ import * as http_endpoints from '../../assets/http_config.json';
 })
 export class TorrentsTableComponent implements OnInit {
   public allTorrentInformation: MainData;
-  public allTorrentData : [TorrentList];
+  public allTorrentData : [Torrent];
   public cookieValueSID: string;
   private http_endpoints: any;
 

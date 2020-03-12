@@ -10,7 +10,7 @@ export interface CookieInfoType {
 }
 
 /** An interface to represent a torrent. Taken from: https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-Documentation#get-torrent-list */
-export interface TorrentList {
+export interface Torrent {
     hash: string,
     name: string,
     size: number,
@@ -54,7 +54,7 @@ export interface GlobalTransferInfo {
 export interface MainData {
     rid: number,
     full_update: boolean,
-    torrents: [ TorrentList ],
+    torrents: [ Torrent ],
     /** List of hashes of torrents removed since last request */
     torrents_removed: [ string ],
     /** List of categories added since last request */
