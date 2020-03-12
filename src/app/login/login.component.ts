@@ -21,6 +21,23 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**Handle any errors with login
+   * @param response The response given by server.
+   */
+  handleAuthErrors(response: any): void {
+    alert("Error logging in.");
+    this.cookieService.deleteAll(); // Clear all cookies and refresh page
+    window.location.reload();
+  }
+
+  /**Exceptions when contacting server
+   * @param error The error thrown.
+   */
+  handleAuthExceptions(error: any){
+    alert("There was an error logging in. Check console logs for details.");
+    console.log(error);
+  }
+
   /**Login a user. Will set a cookie with appropriate credentials */
   login(): void {
     
@@ -48,27 +65,29 @@ export class LoginComponent implements OnInit {
     let xhr = new XMLHttpRequest();
  
     console.log("Sent request to", url)
-    this.http.post(url, body, {responseType: 'text', observe: 'response'}).subscribe(
-      (data: any) => {
-
-        // If successful, route to home page
-        if(data.status === 200 && data.body === "Ok."){
-          alert("Logged in!");
-
-          // When in development/testing, set cookie manually because Express server won't do it for some reason RIP IDK
-          if(isDevMode()){
-            this.cookieService.set('SID', this.http_endpoints.default.devCookie);
+    try {
+      this.http.post(url, body, {responseType: 'text', observe: 'response'}).subscribe(
+        (data: any) => {
+  
+          // If successful, route to home page
+          if(data.status === 200 && data.body === "Ok."){
+  
+            // When in development/testing, set cookie manually because Express server won't do it for some reason RIP IDK
+            if(isDevMode()){
+              this.cookieService.set('SID', this.http_endpoints.default.devCookie);
+            }
+  
+            this.router.navigate(['/home']);
+  
+          } else {
+            this.handleAuthErrors(data);
           }
-
-          this.router.navigate(['/home']);
-
-        } else {
-          alert("Error logging in.");
-          this.cookieService.deleteAll(); // Clear all cookies and refresh page
-          window.location.reload();
-        }
-        console.log(data)
-    });
+          console.log(data)
+      });
+      
+    } catch (error) {
+      this.handleAuthExceptions(error);
+    }
   }
 
 }

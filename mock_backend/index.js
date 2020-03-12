@@ -7,6 +7,7 @@ var upload = multer();
 var app = express();
 
 const PORT = 4300;
+const CREDS = require('./config.json');
 
 app.use(cors());
 app.use(cookieParser());
@@ -22,7 +23,7 @@ app.post('/api/v2/auth/login', function (req, res, next) {
     var user = req.body.username;
     var pass = req.body.password;
 
-    if(user === "admin" && pass === "Password"){
+    if(user === CREDS.login.username && pass === CREDS.login.password){
         res.cookie('SID', '8c212779b4abde7A');
         res.send("Ok.");
     } else {
@@ -43,5 +44,6 @@ app.get('/api/v2/sync/maindata', function(req, res) {
 });
 
 app.listen(PORT, function () {
-  console.log(`Server listening on: http://localhost:${PORT}`);
+  console.log(`Server listening on: http://localhost:${PORT}\n`);
+  console.log("config.json:\n", JSON.stringify(CREDS, null, 2))
 })

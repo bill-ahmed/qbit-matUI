@@ -11,10 +11,14 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   
   private cookieSID: string;
+  private isPageLoading: boolean;
 
   constructor(private router: Router, private cs: CookieService) { }
 
   ngOnInit(): void {
+    this.isPageLoading = true;
+
+    // Grab cookie information
     let key = GetCookieInfo().SIDKey;
     this.cookieSID = this.cs.get(key);
 

@@ -1,7 +1,5 @@
-interface CookieInfo {
-  SIDKey: string
-}
+import { CookieInfoType } from './Interfaces';
 
-export function GetCookieInfo(): CookieInfo {
+export function GetCookieInfo(): CookieInfoType {
   return {SIDKey: "SID"}
 }
