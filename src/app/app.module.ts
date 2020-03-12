@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Material theme components
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTableDataSource } from '@angular/material/table';  
+import { MatTableModule } from '@angular/material/table';  
 
 import { AppComponent } from './app.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -32,7 +32,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     MatFormFieldModule,
-    MatTableDataSource,
+    MatTableModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

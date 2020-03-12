@@ -2,7 +2,7 @@ import { Component, OnInit, isDevMode } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
 import { HttpClient } from '@angular/common/http';
-import { MainData } from '../../utils/Interfaces';
+import { MainData, TorrentList } from '../../utils/Interfaces';
 
 // UI Components
 import { MatTableDataSource, MatTable } from '@angular/material/table';
@@ -15,20 +15,17 @@ import * as http_endpoints from '../../assets/http_config.json';
   styleUrls: ['./torrents-table.component.css']
 })
 export class TorrentsTableComponent implements OnInit {
-  public allTorrentData : MainData;
+  public allTorrentInformation: MainData;
+  public allTorrentData : [TorrentList];
   public cookieValueSID: string;
   private http_endpoints: any;
 
   // UI Components
-  displayedColumns: string[] = ["col1", "col2", "col3"];
-  dataSource = new MatTableDataSource([
-    {
-      col1: "1", col2: "2", col3: "3"
-    },
-    {
-      col1: "4", col2: "5", col3: "6"
-    },
-  ]);
+  public tableColumns: string[] = ["Name", "Size", "Progress", "Status", "Down Speed", "Up Speed", "ETA", "Completed On"];
+  public dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
+
+  // Other
+  private REFRESH_TIMEOUT = 1000
 
   constructor(private cookieService: CookieService, private http: HttpClient) { 
     this.http_endpoints = http_endpoints
@@ -37,7 +34,10 @@ export class TorrentsTableComponent implements OnInit {
   ngOnInit(): void {
     let cookieInfo = GetCookieInfo()
     this.cookieValueSID = this.cookieService.get(cookieInfo.SIDKey);
-    this.getTorrentData();
+
+    // Retrieve updated torrent data on interval
+    this.allTorrentData = null;
+    setInterval(() => this.getTorrentData(), this.REFRESH_TIMEOUT);
   }
 
   setCookie(): void{
@@ -57,9 +57,17 @@ export class TorrentsTableComponent implements OnInit {
     this.http.get<MainData>(url, options)
     .subscribe((data: MainData) => 
     {
+      // Update state with data retrieved
+      this.allTorrentInformation = data;
+      this.allTorrentData = data.torrents;
+      this.updateDataSource();
       console.log(data);
-
     });
+  }
+
+  /**Update material table with new data */
+  updateDataSource(): void {
+    this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
   }
 
 }
