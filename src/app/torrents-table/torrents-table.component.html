@@ -1,5 +1,13 @@
 <div>
     <p>torrents-table works! {{cookieValueSID}}</p>
-    <button (click)="getAllTorrents()">torrent data</button>
+    <button (click)="getTorrentData()">torrent data</button>
+    
+    <!-- Table of torrent data -->
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <ng-container matColumnDef="col1">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.col1}} </td>
+        </ng-container>
+    </table>
 </div>
 

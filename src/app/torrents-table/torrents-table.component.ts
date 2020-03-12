@@ -2,7 +2,11 @@ import { Component, OnInit, isDevMode } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
 import { HttpClient } from '@angular/common/http';
-import { HttpConfigType, MainData } from '../../utils/Interfaces';
+import { MainData } from '../../utils/Interfaces';
+
+// UI Components
+import { MatTableDataSource, MatTable } from '@angular/material/table';
+
 import * as http_endpoints from '../../assets/http_config.json';
 
 @Component({
@@ -15,6 +19,17 @@ export class TorrentsTableComponent implements OnInit {
   public cookieValueSID: string;
   private http_endpoints: any;
 
+  // UI Components
+  displayedColumns: string[] = ["col1", "col2", "col3"];
+  dataSource = new MatTableDataSource([
+    {
+      col1: "1", col2: "2", col3: "3"
+    },
+    {
+      col1: "4", col2: "5", col3: "6"
+    },
+  ]);
+
   constructor(private cookieService: CookieService, private http: HttpClient) { 
     this.http_endpoints = http_endpoints
   }
@@ -22,7 +37,7 @@ export class TorrentsTableComponent implements OnInit {
   ngOnInit(): void {
     let cookieInfo = GetCookieInfo()
     this.cookieValueSID = this.cookieService.get(cookieInfo.SIDKey);
-    // this.getAllTorrents();
+    this.getTorrentData();
   }
 
   setCookie(): void{
@@ -30,7 +45,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   /**Get all torrent data */
-  getAllTorrents(): void{
+  getTorrentData(): void{
     let root = this.http_endpoints.default.endpoints.root;
     let endpoint = this.http_endpoints.default.endpoints.torrentList;
     let url = root + endpoint
