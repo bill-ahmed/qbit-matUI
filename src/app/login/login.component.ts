@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { isDevMode } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { HttpConfigType } from '../../utils/Interfaces';

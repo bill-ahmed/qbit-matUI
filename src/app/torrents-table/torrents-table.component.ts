@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
 import { HttpClient } from '@angular/common/http';
-import { HttpConfigType } from '../../utils/Interfaces';
+import { HttpConfigType, MainData } from '../../utils/Interfaces';
 import * as http_endpoints from '../../assets/http_config.json';
 
 @Component({
@@ -11,25 +11,18 @@ import * as http_endpoints from '../../assets/http_config.json';
   styleUrls: ['./torrents-table.component.css']
 })
 export class TorrentsTableComponent implements OnInit {
-  public allTorrentData = [];
+  public allTorrentData : MainData;
   public cookieValueSID: string;
   private http_endpoints: any;
 
   constructor(private cookieService: CookieService, private http: HttpClient) { 
-    this.cookieService = cookieService;
-    this.http = http;
     this.http_endpoints = http_endpoints
   }
 
   ngOnInit(): void {
     let cookieInfo = GetCookieInfo()
     this.cookieValueSID = this.cookieService.get(cookieInfo.SIDKey);
-    
-    if (this.cookieValueSID === "") {
-      this.cookieValueSID = "EMPTY"
-      //this.cookieService.set("SID", this.cookieValueSID, new Date(2050, 12, 12), "/", "qbit.billahmed.com", false, "None")
-      this.cookieService.set("SID", this.cookieValueSID);
-    }
+    // this.getAllTorrents();
   }
 
   setCookie(): void{
@@ -42,7 +35,16 @@ export class TorrentsTableComponent implements OnInit {
     let endpoint = this.http_endpoints.default.endpoints.torrentList;
     let url = root + endpoint
     console.log(url)
-    this.http.get(url).subscribe((data: any) => console.log(data));
+
+    // Do not send cookies in dev mode
+    let options = isDevMode() ? { } : { withCredentials: true }
+   
+    this.http.get<MainData>(url, options)
+    .subscribe((data: MainData) => 
+    {
+      console.log(data);
+
+    });
   }
 
 }
