@@ -1,4 +1,4 @@
-import { Component, OnInit, isDevMode } from '@angular/core';
+import { Component, OnInit, isDevMode, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
 import { HttpClient } from '@angular/common/http';
@@ -6,6 +6,7 @@ import { MainData, Torrent } from '../../utils/Interfaces';
 
 
 // UI Components
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 
 import * as http_endpoints from '../../assets/http_config.json';
@@ -28,6 +29,7 @@ export class TorrentsTableComponent implements OnInit {
   // Other
   private DEFAULT_REFRESH_TIMEOUT = 1000
   private REFRESH_INTERVAL: any = null;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private http: HttpClient) { 
     this.http_endpoints = http_endpoints
@@ -37,9 +39,11 @@ export class TorrentsTableComponent implements OnInit {
     let cookieInfo = GetCookieInfo()
     this.cookieValueSID = this.cookieService.get(cookieInfo.SIDKey);
 
+    this.dataSource.sort = this.sort;
+
     // Retrieve updated torrent data on interval
     this.allTorrentData = null;
-    //this.SetTorrentRefreshInterval(this.DEFAULT_REFRESH_TIMEOUT)
+    this.SetTorrentRefreshInterval(this.DEFAULT_REFRESH_TIMEOUT)
   }
 
   ngOnDestroy(): void {
@@ -75,7 +79,7 @@ export class TorrentsTableComponent implements OnInit {
         }
         
       }
-
+      console.log(data);
       // Update state with data retrieved
       this.allTorrentInformation = data;
       this.allTorrentData = cleanTorrentData;

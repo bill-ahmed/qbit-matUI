@@ -1,12 +1,12 @@
 <div>
-    <p>torrents-table works! {{cookieValueSID}}</p>
+    <p>Cookie SID: {{cookieValueSID}}</p>
     <button (click)="getTorrentData()">torrent data</button>
     
     <!-- Table of torrent data -->
     <mat-table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2">
 
         <ng-container  matColumnDef="Name">
-            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
             <mat-cell *matCellDef="let torrent">{{torrent.name}}</mat-cell>
         </ng-container>
 

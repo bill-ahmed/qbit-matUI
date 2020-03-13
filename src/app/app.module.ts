@@ -14,6 +14,7 @@ import { TorrentsTableComponent } from './torrents-table/torrents-table.componen
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { environment } from 'src/environments/environment';
+import { MatSortModule } from '@angular/material/sort';
 
 var appRoutes: Routes;
 
@@ -42,7 +43,8 @@ if(!environment.production){
     RouterModule.forRoot(appRoutes),
     HttpClientModule,
     MatFormFieldModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
