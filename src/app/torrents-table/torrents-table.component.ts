@@ -8,6 +8,7 @@ import { MainData, Torrent } from '../../utils/Interfaces';
 // UI Components
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { MatSpinner } from '@angular/material/progress-spinner';
 
 import * as http_endpoints from '../../assets/http_config.json';
 
@@ -105,6 +106,11 @@ export class TorrentsTableComponent implements OnInit {
   /** Clear interval for getting new torrent data */
   ClearTorrentRefreshInterval(): void {
     if (this.REFRESH_INTERVAL) { clearInterval(this.REFRESH_INTERVAL); }
+  }
+
+  /** Determine if table is loading data or not */
+  isLoading(): boolean {
+    return this.allTorrentData == null
   }
 
 }

@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { environment } from 'src/environments/environment';
 import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 var appRoutes: Routes;
 
@@ -45,6 +46,7 @@ if(!environment.production){
     MatFormFieldModule,
     MatTableModule,
     MatSortModule,
+    MatProgressSpinnerModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

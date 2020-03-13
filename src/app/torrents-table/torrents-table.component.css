@@ -5,3 +5,18 @@ table {
 th.mat-sort-header-sorted {
     color: black;
 }
+
+mat-spinner {
+    align-self: center;
+    margin: 5% auto 10px auto;
+}
+
+mat-table {
+    margin: 20px 10px 10px 10px;
+}
+
+#loading_p {
+    width: 50px;
+    align-self: center;
+    margin: 10px auto 10px auto;
+}
