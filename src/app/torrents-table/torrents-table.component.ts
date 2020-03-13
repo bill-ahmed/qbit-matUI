@@ -1,8 +1,9 @@
-import { Component, OnInit, isDevMode, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
 import { HttpClient } from '@angular/common/http';
 import { MainData, Torrent } from '../../utils/Interfaces';
+import { IsDevEnv } from '../../utils/Environment';
 
 
 // UI Components
@@ -28,8 +29,10 @@ export class TorrentsTableComponent implements OnInit {
   public dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
 
   // Other
-  private DEFAULT_REFRESH_TIMEOUT = 1000
+  private DEFAULT_REFRESH_TIMEOUT = 2000
   private REFRESH_INTERVAL: any = null;
+  private isFetchingData: boolean = false;
+  private RID = 0;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private http: HttpClient) { 
@@ -57,13 +60,21 @@ export class TorrentsTableComponent implements OnInit {
 
   /**Get all torrent data */
   getTorrentData(): void{
+    
+    // Don't request if we're already in the middle of one
+    if(this.isFetchingData){
+      return;
+    }
+
+    this.isFetchingData = true;
+
     let root = this.http_endpoints.default.endpoints.root;
     let endpoint = this.http_endpoints.default.endpoints.torrentList;
-    let url = root + endpoint
+    let url = root + endpoint + `?rid=${this.RID}`;
     console.log(url)
 
     // Do not send cookies in dev mode
-    let options = isDevMode() ? { } : { withCredentials: true }
+    let options = IsDevEnv() ? { } : { withCredentials: true }
    
     this.http.get<MainData>(url, options)
     .subscribe((data: MainData) => 
@@ -81,10 +92,14 @@ export class TorrentsTableComponent implements OnInit {
         
       }
       console.log(data);
+
       // Update state with data retrieved
       this.allTorrentInformation = data;
       this.allTorrentData = cleanTorrentData;
       this.updateDataSource();
+
+      this.isFetchingData = false;
+      this.RID += 1;
 
     });
   }
@@ -92,6 +107,7 @@ export class TorrentsTableComponent implements OnInit {
   /**Update material table with new data */
   updateDataSource(): void {
     this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
+    this.dataSource.sort = this.sort;
   }
 
   /**Set interval for getting torrents

@@ -12,7 +12,12 @@ mat-spinner {
 }
 
 mat-table {
+    height: 85vh;
+    width: 98vw;
+
     margin: 20px 10px 10px 10px;
+
+    overflow: scroll;
 }
 
 #loading_p {

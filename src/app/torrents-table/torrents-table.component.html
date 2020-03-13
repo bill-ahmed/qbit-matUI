@@ -49,7 +49,7 @@
         </ng-container>
 
         <!-- Header row of table -->
-        <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+        <mat-header-row *matHeaderRowDef="tableColumns; sticky: true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
     </mat-table>
 </div>

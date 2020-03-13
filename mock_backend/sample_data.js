@@ -3,14 +3,20 @@ var GetRandomInt = require('./utils.js').GetRandomInt;
 // Maximum upload/download speeds for mock data
 const MIN_SPEED = 0;
 const MAX_SPEED = 90000000;
+var RID = -1;    // For /sync/maindata endpoint
+
+function getRandomId() {
+    return Math.random().toString(36).substring(15);
+}
 
 /**Mock data for /sync/maindata endpoint */
 function GetMainData(){
+    RID += 1;
     return (
         {
             "categories": {},
             "full_update": true,
-            "rid": 0,
+            "rid": RID,
             "server_state": {
                 "alltime_dl": 134924863044,
                 "alltime_ul": 169885275053,
