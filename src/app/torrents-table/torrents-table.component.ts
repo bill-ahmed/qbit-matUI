@@ -22,6 +22,7 @@ import { GetFileSizeString } from '../../utils/DataRepresentation';
   styleUrls: ['./torrents-table.component.css']
 })
 export class TorrentsTableComponent implements OnInit {
+  private rawData: any;
   public allTorrentInformation: MainData;
   public allTorrentData : [Torrent];
   public cookieValueSID: string;
@@ -93,59 +94,57 @@ export class TorrentsTableComponent implements OnInit {
   /**Update material table with new data */
   private async updateDataSource(data: MainData): Promise<void> {
     
-    let cleanData = this.getFormattedResponse(data);
-    console.log(cleanData);
-
-    // Update state with data retrieved
-    this.allTorrentInformation = cleanData;
-    this.allTorrentData = cleanData.torrents;
-
-    this.isFetchingData = false;
+    // Only set raw data initially
+    if(!this.rawData){
+      this.rawData = JSON.parse(JSON.stringify(data));
+    }
     
-    /** 
-     * Incrementing RID will give us changes between last /sync/main request. 
-     * Move getTorrentData() into separate service in order to handle changelogs
-    */
-    //this.RID += 1;
+    // Update state with new 
+    // TODO: When a torrent gets added or removed, we need to refresh our data
+    this.setFormattedResponse(data);
 
+    this.allTorrentData = this.allTorrentInformation.torrents;
+    this.isFetchingData = false;
+    this.RID += 1;
+
+    // Trigger update for table
     this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
     this.dataSource.sort = this.sort;
   }
 
 
   /** Clean the response given from server */
-  private getFormattedResponse(data: MainData): MainData {
+  private setFormattedResponse(data: MainData) {
 
     let cleanTorrentData: [Torrent];
 
     // (1) If we already have some data, update it
-    // if(this.allTorrentInformation) {
-    //   this.updateServerStatus(data.server_state);
-    //   this.updateTorrentChanges(data.torrents);
-
-    //   return this.allTorrentInformation;
-    // }
+    if(this.allTorrentInformation) {
+      this.updateServerStatus(data.server_state);
+      this.updateTorrentChanges(data.torrents);
+    } else {
+      this.allTorrentInformation = data;
+    }
 
     // Re-format response
-    for(const key of Object.keys(data.torrents)){
-      data.torrents[key].hash = key;
+    for(const key of Object.keys(this.rawData.torrents)){
+      this.rawData.torrents[key].hash = key;
 
       if(cleanTorrentData){
-        cleanTorrentData.push(data.torrents[key]);
+        cleanTorrentData.push(this.rawData.torrents[key]);
       } else {
-        cleanTorrentData = [data.torrents[key]];
+        cleanTorrentData = [this.rawData.torrents[key]];
       }
       
     }
 
-    data.torrents = cleanTorrentData;
-    return data;
+    this.allTorrentInformation.torrents = cleanTorrentData;
   }
 
   /** Update server status in changelog */
   private updateServerStatus(data: GlobalTransferInfo): void {
     for(const key of Object.keys(data)){
-      this.allTorrentInformation.server_state[key] = data[key];
+      this.rawData.server_state[key] = data[key];
     }
   }
 
@@ -156,7 +155,7 @@ export class TorrentsTableComponent implements OnInit {
       for(const torKey of Object.keys(data[torID])){
 
         //TODO: allTorrentInformation.torrents is Array, while data still holds torrents as objects
-        this.allTorrentInformation.torrents[torKey] = data[key][torID]; 
+        this.rawData.torrents[torID][torKey] = data[torID][torKey]; 
       }
     }
   }
