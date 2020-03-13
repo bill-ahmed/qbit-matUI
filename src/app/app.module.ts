@@ -18,6 +18,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ProgressBarModule } from "angular-progress-bar"
 
 var appRoutes: Routes;
 
@@ -50,7 +52,8 @@ if(!environment.production){
     MatSortModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
-    MatButtonModule
+    MatButtonModule,
+    ProgressBarModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
