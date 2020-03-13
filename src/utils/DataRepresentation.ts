@@ -9,11 +9,13 @@ export function GetFileSizeString(size: number): string {
     const KB = 1024;
     const MB = 1048576;
     const GB = 1073741824;
+    const TB = 1099511627776;
 
     const B_s = `${(size / B).toFixed(DP)} B`;
     const KB_s = `${(size / KB).toFixed(DP)} KB`;
     const MB_s = `${(size / MB).toFixed(DP)} MB`;
     const GB_s = `${(size / GB).toFixed(DP)} GB`;
+    const TB_s = `${(size / TB).toFixed(DP)} TB`;
 
     let result = `${size} B`;
 
@@ -28,6 +30,9 @@ export function GetFileSizeString(size: number): string {
     }
     if(size < GB){
         return MB_s;
+    }
+    if(size < TB){
+        return GB_s;
     }
 
     return "ERROR -- Could not too large";
