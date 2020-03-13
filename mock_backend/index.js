@@ -40,7 +40,6 @@ app.get('/api/v2/sync/maindata', function(req, res) {
 
     res.json(response);
     rid += 1;
-    console.log("Sent torrent data.");
 });
 
 app.listen(PORT, function () {
