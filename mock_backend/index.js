@@ -4,6 +4,7 @@ var cors = require('cors');
 var cookieParser = require('cookie-parser')
 var multer = require('multer');
 var GetMainData = require('./sample_data').GetMainData;
+var GetUserPreferences = require('./sample_data').GetUserPreferences;
 
 var upload = multer();
 var app = express();
@@ -36,6 +37,12 @@ app.post('/api/v2/auth/login', function (req, res, next) {
 
 app.get('/api/v2/sync/maindata', function(req, res) {
     let response = GetMainData();
+
+    res.json(response);
+});
+
+app.get('/api/v2/app/preferences', function(req, res) {
+    let response = GetUserPreferences();
 
     res.json(response);
 });

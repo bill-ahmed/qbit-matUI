@@ -2,7 +2,8 @@
     "endpoints": {
         "root": "http://localhost:4300/api/v2",
         "torrentList": "/sync/maindata",
-        "login": "/auth/login"
+        "login": "/auth/login",
+        "userPreferences": "/app/preferences"
     },
     "devCookie": "8c212779b4abde7A"
 }

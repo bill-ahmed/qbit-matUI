@@ -221,4 +221,35 @@ function GetMainData(){
     );
 }
 
+/** Mock object to represent this user's preference
+ * NOTE: This object is imcomplete; for more info: https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-Documentation#get-qbittorrent-preferences
+ */
+function GetUserPreferences() {
+    return (
+        {"locale":"ru_RU",
+        "save_path":"C:/Users/Dayman/Downloads",
+        "temp_path_enabled":false,
+        "temp_path":"C:/Users/Dayman/Documents/Downloads/temp",
+        "scan_dirs":["D:/Browser Downloads"],
+        "download_in_scan_dirs":[false],
+        "export_dir_enabled":false,
+        "export_dir":"",
+        "autorun_enabled":false,
+        "autorun_program":"",
+        "preallocate_all":false,
+        "queueing_enabled":true,
+        "max_active_downloads":2,
+        "max_active_torrents":200,
+        "max_active_uploads":200,
+        "listen_port":31498,
+        "upnp":false,
+        "dl_limit":3072,
+        "up_limit":3072,
+        "max_connec":500,
+        "max_connec_per_torrent":100,
+        "max_uploads_per_torrent":15}
+    );
+}
+
 module.exports.GetMainData = GetMainData;
+module.exports.GetUserPreferences = GetUserPreferences;

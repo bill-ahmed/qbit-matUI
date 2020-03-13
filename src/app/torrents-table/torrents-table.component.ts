@@ -79,7 +79,6 @@ export class TorrentsTableComponent implements OnInit {
     let root = this.http_endpoints.default.endpoints.root;
     let endpoint = this.http_endpoints.default.endpoints.torrentList;
     let url = root + endpoint + `?rid=${this.RID}`;
-    console.log(url)
 
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { } : { withCredentials: true }

@@ -1,16 +1,22 @@
 <h2 mat-dialog-title>Upload Torrent</h2>
 <mat-dialog-content class="mat-typography">
   <h3>Choose File</h3>
-  <p>Learn one way to build applications with Angular and reuse your code and abilities to build
-    apps for any deployment target. For web, mobile web, native mobile and native desktop.</p>
+  <input multiple type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
+  <br/>
+  <br/>
 
+  
   <h3>Save Location</h3>
-  <p>Achieve the maximum speed possible on the Web Platform today, and take it further, via Web
-    Workers and server-side rendering. Angular puts you in control over scalability. Meet huge
-    data requirements by building data models on RxJS, Immutable.js or another push-model.</p>
+  <p>Choose a save location below. If no save location is chosen, the default shown will be used instead.</p>
+
+  <mat-form-field appearance="outline">
+    <mat-label>{{filesDestination}}</mat-label>
+    <input disabled matInput >
+    <mat-icon matSuffix>folder_open</mat-icon>
+  </mat-form-field>
  
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button [mat-dialog-close]="true" color="primary" cdkFocusInitial>Upload</button>
+  <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>
+  <button disabled={{isUploadDisabled()}} mat-raised-button (click)="handleFileUpload()" color="primary" cdkFocusInitial>Upload</button>
 </mat-dialog-actions>

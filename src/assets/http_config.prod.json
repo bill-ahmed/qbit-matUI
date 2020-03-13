@@ -2,6 +2,7 @@
     "endpoints": {
         "root": "/api/v2",
         "torrentList": "/sync/maindata",
-        "login": "/auth/login"
+        "login": "/auth/login",
+        "userPreferences": "/app/preferences"
     }
 }

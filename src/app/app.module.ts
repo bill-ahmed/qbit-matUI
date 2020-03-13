@@ -24,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddTorrentDialogComponent } from './add-torrent-dialog/add-torrent-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input'
 
 var appRoutes: Routes;
 
@@ -62,6 +63,8 @@ if(!environment.production){
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
