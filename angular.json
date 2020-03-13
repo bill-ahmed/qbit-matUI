@@ -38,6 +38,10 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "src/assets/http_config.json",
+                  "with": "src/assets/http_config.prod.json"
                 }
               ],
               "optimization": true,
