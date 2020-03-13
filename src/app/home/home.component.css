@@ -1,0 +1,46 @@
+.mat-toolbar {
+    background: #1976D2;
+    color: white;
+    
+    padding: 25px;
+    margin-bottom: 10px;
+}
+
+.mat-toolbar h1 {
+    font-size: 22pt;
+}
+
+.mat-toolbar #toolbar_actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.mat-toolbar #toolbar_actions button{
+    margin-left: 25px;
+}
+
+.fill_remaining {
+    flex: 1 1 auto;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.homeContainer{
+    flex: 1;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    min-height: 100%;
+    width: 100%;
+    padding: 5px;
+    
+    flex-grow: 1;
+    flex-direction: column;
+}

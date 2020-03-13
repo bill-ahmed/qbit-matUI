@@ -3,6 +3,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
 import { Router } from '@angular/router';
 
+// UI Components
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatButton } from '@angular/material/button'
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
