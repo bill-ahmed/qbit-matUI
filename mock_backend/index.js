@@ -7,7 +7,6 @@ var GetMainData = require('./sample_data').GetMainData;
 
 var upload = multer();
 var app = express();
-var rid = 0;    // Used for /sync/maindata endpoint
 
 const PORT = 4300;
 const CREDS = require('./config.json');
@@ -39,7 +38,6 @@ app.get('/api/v2/sync/maindata', function(req, res) {
     let response = GetMainData();
 
     res.json(response);
-    rid += 1;
 });
 
 app.listen(PORT, function () {
