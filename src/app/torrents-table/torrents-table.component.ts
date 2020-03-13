@@ -4,6 +4,7 @@ import { GetCookieInfo } from '../../utils/ClientInfo';
 import { HttpClient } from '@angular/common/http';
 import { MainData, Torrent } from '../../utils/Interfaces';
 
+
 // UI Components
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 
@@ -25,7 +26,8 @@ export class TorrentsTableComponent implements OnInit {
   public dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
 
   // Other
-  private REFRESH_TIMEOUT = 1000
+  private DEFAULT_REFRESH_TIMEOUT = 1000
+  private REFRESH_INTERVAL: any = null;
 
   constructor(private cookieService: CookieService, private http: HttpClient) { 
     this.http_endpoints = http_endpoints
@@ -37,7 +39,11 @@ export class TorrentsTableComponent implements OnInit {
 
     // Retrieve updated torrent data on interval
     this.allTorrentData = null;
-    setInterval(() => this.getTorrentData(), this.REFRESH_TIMEOUT);
+    //this.SetTorrentRefreshInterval(this.DEFAULT_REFRESH_TIMEOUT)
+  }
+
+  ngOnDestroy(): void {
+    this.ClearTorrentRefreshInterval();
   }
 
   setCookie(): void{
@@ -57,17 +63,44 @@ export class TorrentsTableComponent implements OnInit {
     this.http.get<MainData>(url, options)
     .subscribe((data: MainData) => 
     {
+      let cleanTorrentData: [Torrent];
+      
+      for(const key of Object.keys(data.torrents)){
+        data.torrents[key].hash = key;
+
+        if(cleanTorrentData){
+          cleanTorrentData.push(data.torrents[key]);
+        } else {
+          cleanTorrentData = [data.torrents[key]];
+        }
+        
+      }
+
       // Update state with data retrieved
       this.allTorrentInformation = data;
-      this.allTorrentData = data.torrents;
+      this.allTorrentData = cleanTorrentData;
       this.updateDataSource();
-      console.log(data);
+
     });
   }
 
   /**Update material table with new data */
   updateDataSource(): void {
     this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
+  }
+
+  /**Set interval for getting torrents
+   * @param interval The interval to set.
+   */
+  SetTorrentRefreshInterval(interval: number): void {
+    let newInterval = interval || this.DEFAULT_REFRESH_TIMEOUT;
+    this.REFRESH_INTERVAL = setInterval(() => this.getTorrentData(), newInterval);
+    
+  }
+
+  /** Clear interval for getting new torrent data */
+  ClearTorrentRefreshInterval(): void {
+    if (this.REFRESH_INTERVAL) { clearInterval(this.REFRESH_INTERVAL); }
   }
 
 }
