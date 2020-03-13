@@ -1,9 +1,10 @@
-import { Component, OnInit, isDevMode } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { HttpConfigType } from '../../utils/Interfaces';
 import * as http_endpoints from '../../assets/http_config.json';
-import { Router } from '@angular/router';
+import { IsDevEnv } from '../../utils/Environment';
 
 @Component({
   selector: 'app-login',
@@ -72,7 +73,7 @@ export class LoginComponent implements OnInit {
           if(data.status === 200 && data.body === "Ok."){
   
             // When in development/testing, set cookie manually because Express server won't do it for some reason RIP IDK
-            if(isDevMode()){
+            if(IsDevEnv()){
               this.cookieService.set('SID', this.http_endpoints.default.devCookie);
             }
   
