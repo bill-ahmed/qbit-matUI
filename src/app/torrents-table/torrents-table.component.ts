@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
 import { HttpClient } from '@angular/common/http';
-import { MainData, Torrent } from '../../utils/Interfaces';
+import { MainData, Torrent, GlobalTransferInfo } from '../../utils/Interfaces';
 import { IsDevEnv } from '../../utils/Environment';
 
 
@@ -10,8 +10,11 @@ import { IsDevEnv } from '../../utils/Environment';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatSpinner } from '@angular/material/progress-spinner';
+import { ProgressBarMode } from '@angular/material/progress-bar';
 
+// Helpers
 import * as http_endpoints from '../../assets/http_config.json';
+import { GetFileSizeString } from '../../utils/DataRepresentation';
 
 @Component({
   selector: 'app-torrents-table',
@@ -25,7 +28,7 @@ export class TorrentsTableComponent implements OnInit {
   private http_endpoints: any;
 
   // UI Components
-  public tableColumns: string[] = ["Name", "Size", "Progress", "Status", "Down Speed", "Up Speed", "ETA", "Completed On"];
+  public tableColumns: string[] = ["Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
   public dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
 
   // Other
@@ -35,8 +38,12 @@ export class TorrentsTableComponent implements OnInit {
   private RID = 0;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
+  // Helper functions
+  GetFileSizeString: any;
+
   constructor(private cookieService: CookieService, private http: HttpClient) { 
     this.http_endpoints = http_endpoints
+    this.GetFileSizeString = GetFileSizeString;
   }
 
   ngOnInit(): void {
@@ -59,7 +66,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   /**Get all torrent data */
-  getTorrentData(): void{
+  private getTorrentData(): void{
     
     // Don't request if we're already in the middle of one
     if(this.isFetchingData){
@@ -79,35 +86,79 @@ export class TorrentsTableComponent implements OnInit {
     this.http.get<MainData>(url, options)
     .subscribe((data: MainData) => 
     {
-      let cleanTorrentData: [Torrent];
-      
-      for(const key of Object.keys(data.torrents)){
-        data.torrents[key].hash = key;
-
-        if(cleanTorrentData){
-          cleanTorrentData.push(data.torrents[key]);
-        } else {
-          cleanTorrentData = [data.torrents[key]];
-        }
-        
-      }
-      console.log(data);
-
-      // Update state with data retrieved
-      this.allTorrentInformation = data;
-      this.allTorrentData = cleanTorrentData;
-      this.updateDataSource();
-
-      this.isFetchingData = false;
-      this.RID += 1;
-
+      this.updateDataSource(data);
     });
   }
 
   /**Update material table with new data */
-  updateDataSource(): void {
+  private async updateDataSource(data: MainData): Promise<void> {
+    
+    let cleanData = this.getFormattedResponse(data);
+    console.log(cleanData);
+
+    // Update state with data retrieved
+    this.allTorrentInformation = cleanData;
+    this.allTorrentData = cleanData.torrents;
+
+    this.isFetchingData = false;
+    
+    /** 
+     * Incrementing RID will give us changes between last /sync/main request. 
+     * Move getTorrentData() into separate service in order to handle changelogs
+    */
+    //this.RID += 1;
+
     this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
     this.dataSource.sort = this.sort;
+  }
+
+
+  /** Clean the response given from server */
+  private getFormattedResponse(data: MainData): MainData {
+
+    let cleanTorrentData: [Torrent];
+
+    // (1) If we already have some data, update it
+    // if(this.allTorrentInformation) {
+    //   this.updateServerStatus(data.server_state);
+    //   this.updateTorrentChanges(data.torrents);
+
+    //   return this.allTorrentInformation;
+    // }
+
+    // Re-format response
+    for(const key of Object.keys(data.torrents)){
+      data.torrents[key].hash = key;
+
+      if(cleanTorrentData){
+        cleanTorrentData.push(data.torrents[key]);
+      } else {
+        cleanTorrentData = [data.torrents[key]];
+      }
+      
+    }
+
+    data.torrents = cleanTorrentData;
+    return data;
+  }
+
+  /** Update server status in changelog */
+  private updateServerStatus(data: GlobalTransferInfo): void {
+    for(const key of Object.keys(data)){
+      this.allTorrentInformation.server_state[key] = data[key];
+    }
+  }
+
+  private updateTorrentChanges(data: any) {
+    for(const key of Object.keys(data)){
+      let torID = key;
+
+      for(const torKey of Object.keys(data[torID])){
+
+        //TODO: allTorrentInformation.torrents is Array, while data still holds torrents as objects
+        this.allTorrentInformation.torrents[torKey] = data[key][torID]; 
+      }
+    }
   }
 
   /**Set interval for getting torrents
@@ -116,7 +167,6 @@ export class TorrentsTableComponent implements OnInit {
   SetTorrentRefreshInterval(interval: number): void {
     let newInterval = interval || this.DEFAULT_REFRESH_TIMEOUT;
     this.REFRESH_INTERVAL = setInterval(() => this.getTorrentData(), newInterval);
-    
   }
 
   /** Clear interval for getting new torrent data */

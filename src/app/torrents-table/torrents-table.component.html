@@ -15,12 +15,15 @@
 
         <ng-container  matColumnDef="Size">
             <mat-header-cell *matHeaderCellDef>Size</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">{{torrent.size}}</mat-cell>
+            <mat-cell *matCellDef="let torrent">{{GetFileSizeString(torrent.size)}}</mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="Progress">
             <mat-header-cell *matHeaderCellDef>Progress</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">{{torrent.progress}}</mat-cell>
+            <mat-cell *matCellDef="let torrent">
+                <progress-bar progress="{{torrent.progress * 100}}" [color]="'#488aff'">
+                </progress-bar>
+            </mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="Status">
@@ -28,14 +31,14 @@
             <mat-cell *matCellDef="let torrent">{{torrent.state}}</mat-cell>
         </ng-container>
         
-        <ng-container  matColumnDef="Down Speed">
+        <ng-container  matColumnDef="Down_Speed">
             <mat-header-cell *matHeaderCellDef>Down Speed</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">{{torrent.dlspeed}}</mat-cell>
+            <mat-cell *matCellDef="let torrent">{{GetFileSizeString(torrent.dlspeed)}}/s</mat-cell>
         </ng-container>
 
-        <ng-container  matColumnDef="Up Speed">
+        <ng-container  matColumnDef="Up_Speed">
             <mat-header-cell *matHeaderCellDef>Up Speed</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">{{torrent.upspeed}}</mat-cell>
+            <mat-cell *matCellDef="let torrent">{{GetFileSizeString(torrent.upspeed)}}/s</mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="ETA">
@@ -43,9 +46,13 @@
             <mat-cell *matCellDef="let torrent">{{torrent.eta}}</mat-cell>
         </ng-container>
 
-        <ng-container  matColumnDef="Completed On">
+        <ng-container  matColumnDef="Completed_On">
             <mat-header-cell *matHeaderCellDef>Completed On</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">FILL IN</mat-cell>
+            <mat-cell *matCellDef="let torrent">
+                <p *ngIf="torrent.completion_on">
+                    {{torrent.completion_on}}
+                </p>
+            </mat-cell>
         </ng-container>
 
         <!-- Header row of table -->

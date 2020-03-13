@@ -21,6 +21,8 @@ export interface Torrent {
     num_seeds: number,
     num_leechs: number,
     num_incomplete: number,
+    /**Unix timestamp of when torrent was completed */
+    completion_on: number | undefined,
     ratio: number,
     eta: number,
     state: "error" | "pausedUP" | "pausedDL" | "queuedUP" | "queuedDL" | "uploading" | "stalledUP" | "checkingUP" | "checkingDL" | "downloading" | "stalledDL" | "metaDL",

@@ -1,5 +1,5 @@
 table {
-    width: 100%
+    min-width: 100%;
 }
 
 th.mat-sort-header-sorted {
@@ -13,15 +13,108 @@ mat-spinner {
 
 mat-table {
     height: 85vh;
-    width: 98vw;
+    min-width: 98vw;
 
     margin: 20px 10px 10px 10px;
 
     overflow: scroll;
 }
 
+progress-bar {
+    width: 100%;
+}
+
 #loading_p {
     width: 50px;
     align-self: center;
     margin: 10px auto 10px auto;
+}
+
+/** Sizes of each column */
+.mat-column-Name {
+    flex: 0 0 35% !important;
+    overflow-wrap: break-word;
+    overflow: scroll;
+
+    word-wrap: break-word;
+    word-break: break-word;
+
+    padding-right: 10px;
+    margin: 5px;
+
+    min-width: 300px;
+}
+
+.mat-column-Size {
+    flex: 0 0 5% !important;
+    overflow-wrap: break-word;
+
+    word-wrap: break-word;
+    word-break: break-word;
+
+    min-width: 80px;
+}
+
+.mat-column-Progress {
+    flex: 0 0 7% !important;
+    overflow-wrap: break-word;
+
+    word-wrap: break-word;
+    word-break: break-word;
+
+    min-width: 180px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.mat-column-Status {
+    flex: 0 0 5% !important;
+    overflow-wrap: break-word;
+
+    word-wrap: break-word;
+    word-break: break-word;
+
+    min-width: 80px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.mat-column-Down_Speed {
+    flex: 0 0 5% !important;
+    overflow-wrap: break-word;
+
+    word-wrap: break-word;
+    word-break: break-word;
+
+    min-width: 80px;
+}
+
+.mat-column-Up_Speed {
+    flex: 0 0 5% !important;
+    overflow-wrap: break-word;
+
+    word-wrap: break-word;
+    word-break: break-word;
+
+    min-width: 80px;
+}
+
+.mat-column-ETA {
+    flex: 0 0 6% !important;
+    overflow-wrap: break-word;
+
+    word-wrap: break-word;
+    word-break: break-word;
+
+    min-width: 80px;
+}
+
+
+.mat-column-Completed_On {
+    overflow-wrap: break-word;
+
+    word-wrap: break-word;
+    word-break: break-word;
+
+    min-width: 200px;
 }
