@@ -14,11 +14,11 @@
     <span>
       <div id="toolbar_actions">
 
-          <button mat-fab color="primary">
-            ADD
+          <button mat-fab matTooltip="Add Torrent" (click)="openAddTorrentDialog()">
+            <mat-icon>add</mat-icon>
           </button>
     
-          <button mat-raised-button (click)="logout()" color="warn">
+          <button mat-raised-button (click)="logout()" >
             Logout
           </button>
       </div>

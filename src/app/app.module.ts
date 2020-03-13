@@ -20,6 +20,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ProgressBarModule } from "angular-progress-bar"
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AddTorrentDialogComponent } from './add-torrent-dialog/add-torrent-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 var appRoutes: Routes;
 
@@ -40,7 +44,8 @@ if(!environment.production){
     AppComponent,
     TorrentsTableComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    AddTorrentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +59,9 @@ if(!environment.production){
     MatToolbarModule,
     MatButtonModule,
     ProgressBarModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatDialogModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

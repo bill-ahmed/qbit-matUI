@@ -23,6 +23,14 @@
     margin-left: 25px;
 }
 
+.mat-fab {
+    background: #ff1744;
+    
+    position: relative;
+    top: 38px;
+    right: 10px;
+}
+
 .fill_remaining {
     flex: 1 1 auto;
 }
