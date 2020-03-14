@@ -45,4 +45,20 @@ export class TorrentDataService {
     return null;
 
   }
+
+  /** Delete a torrent.
+   * @param hash The unique hash of the torrent.
+   * @param deleteFromDisk If the files should be deleted as well (true), 
+   * or if they should persist (false).
+   */
+  DeleteTorrent(hash: string, deleteFromDisk: boolean): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.deleteTorrent;
+    let url = root + endpoint;
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { } : { withCredentials: true }
+
+    return null;
+  }
 }

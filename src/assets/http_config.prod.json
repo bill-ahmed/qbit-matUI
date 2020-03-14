@@ -1,8 +1,10 @@
 {
     "endpoints": {
         "root": "/api/v2",
-        "torrentList": "/sync/maindata",
         "login": "/auth/login",
+        "torrentList": "/sync/maindata",
+        "uploadTorrents": "/torrents/add",
+        "deleteTorrent": "/torrents/delete",
         "userPreferences": "/app/preferences"
     }
 }

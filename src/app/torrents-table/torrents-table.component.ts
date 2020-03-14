@@ -94,6 +94,8 @@ export class TorrentsTableComponent implements OnInit {
     // TODO: When a torrent gets added or removed, we need to refresh our data
     this.setFormattedResponse(data);
 
+    console.log(this.allTorrentInformation);
+
     this.allTorrentData = this.allTorrentInformation.torrents;
     this.isFetchingData = false;
     this.RID += 1;
@@ -142,6 +144,11 @@ export class TorrentsTableComponent implements OnInit {
   private updateTorrentChanges(data: any) {
     for(const key of Object.keys(data)){
       let torID = key;
+
+      // If this torrent is new, create space for it
+      if(!this.rawData.torrents[torID]) {
+        this.rawData.torrents[torID] = {};
+      }
 
       for(const torKey of Object.keys(data[torID])){
         this.rawData.torrents[torID][torKey] = data[torID][torKey]; 
