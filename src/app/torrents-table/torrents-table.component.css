@@ -34,7 +34,6 @@ progress-bar {
 .mat-column-Name {
     flex: 0 0 35% !important;
     overflow-wrap: break-word;
-    overflow: scroll;
 
     word-wrap: break-word;
     word-break: break-word;
