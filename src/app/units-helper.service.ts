@@ -86,4 +86,36 @@ export class UnitsHelperService {
 
     return result;
   }
+
+  /** Get the date representation of a timestamp
+   * @param timestamp Number of seconds since epoch.
+   */
+  GetDateString(timestamp: number): string {
+    let date = new Date(timestamp * 1000);
+    let result = 
+    `${this.getDay(date)}/${this.getMonth(date)}/${date.getFullYear()}, 
+    ${this.getHours(date)}:${this.getMinutes(date)}:${this.getSeconds(date)}`;
+
+    return result;
+  }
+
+  private getDay(date: Date): string {
+    return (date.getDate()+1) < 10 ? `0${date.getDate()+1}` : `${date.getDate()+1}`
+  }
+
+  private getMonth(date: Date): string {
+    return (date.getMonth()+1) < 10 ? `0${date.getMonth()+1}` : `${date.getMonth()+1}`
+  }
+
+  private getSeconds(date: Date): string {
+    return (date.getSeconds()) < 10 ? `0${date.getSeconds()}` : `${date.getSeconds()}`
+  }
+
+  private getMinutes(date: Date): string {
+    return (date.getMinutes()) < 10 ? `0${date.getMinutes()}` : `${date.getMinutes()}`
+  }
+
+  private getHours(date: Date): string {
+    return (date.getHours()) < 10 ? `0${date.getHours()}` : `${date.getHours()}`
+  }
 }

@@ -68,8 +68,12 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   getCompletedOnString(timestamp: number): string {
-    
-    return ""
+    let dateCompleted = "";
+
+    if(timestamp) {
+      dateCompleted =  this.UnitConversion.GetDateString(timestamp);
+    }
+    return dateCompleted;
   }
 
   /**Get all torrent data */
