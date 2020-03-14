@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
-import { HttpClient } from '@angular/common/http';
 import { MainData, Torrent, GlobalTransferInfo } from '../../utils/Interfaces';
-import { IsDevEnv } from '../../utils/Environment';
 
 
 // UI Components
@@ -15,6 +13,7 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 // Helpers
 import * as http_endpoints from '../../assets/http_config.json';
 import { GetFileSizeString } from '../../utils/DataRepresentation';
+import { TorrentDataService } from '../torrent-data.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -42,7 +41,7 @@ export class TorrentsTableComponent implements OnInit {
   // Helper functions
   GetFileSizeString: any;
 
-  constructor(private cookieService: CookieService, private http: HttpClient) { 
+  constructor(private cookieService: CookieService, private TorrentService: TorrentDataService) { 
     this.http_endpoints = http_endpoints
     this.GetFileSizeString = GetFileSizeString;
   }
@@ -75,15 +74,8 @@ export class TorrentsTableComponent implements OnInit {
     }
 
     this.isFetchingData = true;
-
-    let root = this.http_endpoints.default.endpoints.root;
-    let endpoint = this.http_endpoints.default.endpoints.torrentList;
-    let url = root + endpoint + `?rid=${this.RID}`;
-
-    // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
    
-    this.http.get<MainData>(url, options)
+    this.TorrentService.GetAllTorrentData(this.RID)
     .subscribe((data: MainData) => 
     {
       this.updateDataSource(data);

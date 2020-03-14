@@ -30,7 +30,7 @@ export class AddTorrentDialogComponent implements OnInit {
   /** Update which torrents the user wants to upload. */
   updateFiles(event: any): void {
     this.filesToUpload = event.target.files;
-    console.log(this.filesToUpload);
+    console.log(event.target.files);
   }
 
   /** Whether the Upload button should be disabled or not */
