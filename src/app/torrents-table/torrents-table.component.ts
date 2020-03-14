@@ -12,8 +12,8 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 
 // Helpers
 import * as http_endpoints from '../../assets/http_config.json';
-import { GetFileSizeString } from '../../utils/DataRepresentation';
 import { TorrentDataService } from '../torrent-data.service';
+import { UnitsHelperService } from '../units-helper.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -25,7 +25,6 @@ export class TorrentsTableComponent implements OnInit {
   public allTorrentInformation: MainData;
   public allTorrentData : [Torrent];
   public cookieValueSID: string;
-  private http_endpoints: any;
 
   // UI Components
   public tableColumns: string[] = ["Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
@@ -38,13 +37,7 @@ export class TorrentsTableComponent implements OnInit {
   private RID = 0;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  // Helper functions
-  GetFileSizeString: any;
-
-  constructor(private cookieService: CookieService, private TorrentService: TorrentDataService) { 
-    this.http_endpoints = http_endpoints
-    this.GetFileSizeString = GetFileSizeString;
-  }
+  constructor(private cookieService: CookieService, private TorrentService: TorrentDataService, private UnitConversion: UnitsHelperService) { }
 
   ngOnInit(): void {
     let cookieInfo = GetCookieInfo()
@@ -61,8 +54,22 @@ export class TorrentsTableComponent implements OnInit {
     this.ClearTorrentRefreshInterval();
   }
 
-  setCookie(): void{
-    this.cookieValueSID = "NEW VALUE";
+  getFileSizeString(size: number): string {
+    return this.UnitConversion.GetFileSizeString(size);
+  }
+
+  getTorrentETAString(tor: Torrent): string {
+    let result = "∞";
+
+    if(!tor.completion_on) {
+      result = this.UnitConversion.GetSecondsString(tor.eta);
+    }
+    return result;
+  }
+
+  getCompletedOnString(timestamp: number): string {
+    
+    return ""
   }
 
   /**Get all torrent data */

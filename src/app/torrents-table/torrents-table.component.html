@@ -14,7 +14,7 @@
 
         <ng-container  matColumnDef="Size">
             <mat-header-cell *matHeaderCellDef>Size</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">{{GetFileSizeString(torrent.size)}}</mat-cell>
+            <mat-cell *matCellDef="let torrent">{{getFileSizeString(torrent.size)}}</mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="Progress">
@@ -32,25 +32,23 @@
         
         <ng-container  matColumnDef="Down_Speed">
             <mat-header-cell *matHeaderCellDef>Down Speed</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">{{GetFileSizeString(torrent.dlspeed)}}/s</mat-cell>
+            <mat-cell *matCellDef="let torrent">{{getFileSizeString(torrent.dlspeed)}}/s</mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="Up_Speed">
             <mat-header-cell *matHeaderCellDef>Up Speed</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">{{GetFileSizeString(torrent.upspeed)}}/s</mat-cell>
+            <mat-cell *matCellDef="let torrent">{{getFileSizeString(torrent.upspeed)}}/s</mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="ETA">
             <mat-header-cell *matHeaderCellDef>ETA</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">{{torrent.eta}}</mat-cell>
+            <mat-cell *matCellDef="let torrent">{{getTorrentETAString(torrent)}}</mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="Completed_On">
             <mat-header-cell *matHeaderCellDef>Completed On</mat-header-cell>
             <mat-cell *matCellDef="let torrent">
-                <p *ngIf="torrent.completion_on">
-                    {{torrent.completion_on}}
-                </p>
+                {{getCompletedOnString(torrent.completion_on)}}
             </mat-cell>
         </ng-container>
 
