@@ -144,24 +144,39 @@ export class TorrentsTableComponent implements OnInit {
       let torID = key;
 
       for(const torKey of Object.keys(data[torID])){
-
-        //TODO: allTorrentInformation.torrents is Array, while data still holds torrents as objects
         this.rawData.torrents[torID][torKey] = data[torID][torKey]; 
       }
     }
   }
 
   /**Set interval for getting torrents
-   * @param interval The interval to set.
+   * @param interval (optional) The interval to set. 
+   * If none is given, REFRESH_INTERVAL will be used.
    */
-  SetTorrentRefreshInterval(interval: number): void {
+  private SetTorrentRefreshInterval(interval: number | void): void {
     let newInterval = interval || this.DEFAULT_REFRESH_TIMEOUT;
     this.REFRESH_INTERVAL = setInterval(() => this.getTorrentData(), newInterval);
   }
 
   /** Clear interval for getting new torrent data */
-  ClearTorrentRefreshInterval(): void {
+  private ClearTorrentRefreshInterval(): void {
     if (this.REFRESH_INTERVAL) { clearInterval(this.REFRESH_INTERVAL); }
+  }
+
+  /** Reset all data in torrents table. This will also grab the entire
+   * torrent list again (rid = 0) via http request, and re-build the table.
+   * 
+   * NOTE: THIS MAY CAUSE PERFORMANCE ISSUES -- USE ONLY WHEN NEEDED.
+   */
+  private ResetAllTableData(): void {
+    this.allTorrentInformation = null;
+    this.allTorrentData = null;
+    this.rawData = null;
+
+    this.ClearTorrentRefreshInterval();
+    this.SetTorrentRefreshInterval();
+
+    this.RID = 0;   // Keep last to prevent race-condition
   }
 
   /** Determine if table is loading data or not */
