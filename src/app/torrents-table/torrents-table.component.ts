@@ -27,7 +27,7 @@ export class TorrentsTableComponent implements OnInit {
   public cookieValueSID: string;
 
   // UI Components
-  public tableColumns: string[] = ["Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
+  public tableColumns: string[] = ["Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On", "Actions"];
   public dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
 
   // Other
@@ -91,6 +91,13 @@ export class TorrentsTableComponent implements OnInit {
     {
       this.updateDataSource(data);
     });
+  }
+
+  /** Delete a torrent
+   * @param tor: The torrent in question.
+   */
+  handleTorrentDelete(tor: Torrent) {
+    alert("Delete " + tor.name);
   }
 
   /**Update material table with new data */

@@ -38,8 +38,7 @@ progress-bar {
     word-wrap: break-word;
     word-break: break-word;
 
-    padding-right: 10px;
-    margin: 5px;
+    margin: 2px;
 
     min-width: 300px;
 }
@@ -50,6 +49,8 @@ progress-bar {
 
     word-wrap: break-word;
     word-break: break-word;
+
+    padding-left: 10px;
 
     min-width: 80px;
 }
