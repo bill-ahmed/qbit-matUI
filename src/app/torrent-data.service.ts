@@ -42,14 +42,8 @@ export class TorrentDataService {
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { } : { withCredentials: true, responseType: 'text', observe: 'response'}
 
-    /** Upload each file individually
-     * TODO: Send all files in batch
-     */
-    for(const file of files) {
-      let result = await this.sendFile(file, url, options);
-      console.log("Sent file: ", file);
-      console.log("Got result: ", result);
-    }
+    let result = await this.sendFile(files, url, options);
+    return result;
   }
 
   /** Delete a torrent.
@@ -73,7 +67,18 @@ export class TorrentDataService {
     return this.http.post(url, body, options);
   }
 
-  private sendFile(file: any, endpoint: string, options: any): Promise<any> {
-    return this.http.post(endpoint, file, options).toPromise();
+  /** Upload file(s) to server
+   * @param files An array of File objects
+   * @param endpoint The URL to send the files to
+   * @param options Options to pass to POST request
+   */
+  private sendFile(files: any, endpoint: string, options: any): Promise<any> {
+    const formData = new FormData();
+
+    for(const file of files) {
+      formData.append("torrents", file, file.name);
+    }
+
+    return this.http.post(endpoint, formData, options).toPromise();
   }
 }

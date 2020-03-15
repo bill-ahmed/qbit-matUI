@@ -33,7 +33,7 @@ export class TorrentsTableComponent implements OnInit {
   public dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
 
   // Other
-  private DEFAULT_REFRESH_TIMEOUT = 2000
+  private DEFAULT_REFRESH_TIMEOUT = 1000
   private REFRESH_INTERVAL: any = null;
   private isFetchingData: boolean = false;
   private RID = 0;
