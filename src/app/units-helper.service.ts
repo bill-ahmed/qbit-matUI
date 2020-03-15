@@ -100,7 +100,7 @@ export class UnitsHelperService {
   }
 
   private getDay(date: Date): string {
-    return (date.getDate()+1) < 10 ? `0${date.getDate()+1}` : `${date.getDate()+1}`
+    return (date.getDate()) < 10 ? `0${date.getDate()}` : `${date.getDate()}`
   }
 
   private getMonth(date: Date): string {

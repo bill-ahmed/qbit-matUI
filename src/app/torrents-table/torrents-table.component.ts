@@ -38,6 +38,7 @@ export class TorrentsTableComponent implements OnInit {
   private isFetchingData: boolean = false;
   private RID = 0;
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
+  private currentMatSort = {active: "Completed_On", direction: "desc"};
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private TorrentService: TorrentDataService, private UnitConversion: UnitsHelperService, public deleteTorrentDialog: MatDialog) { }
@@ -134,6 +135,9 @@ export class TorrentsTableComponent implements OnInit {
     this.isFetchingData = false;
     this.RID += 1;
 
+    // Re-sort data
+    this.onMatSortChange(this.currentMatSort);
+
     // Trigger update for table
     this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
     this.dataSource.sort = this.sort;
@@ -212,6 +216,64 @@ export class TorrentsTableComponent implements OnInit {
   /** Clear interval for getting new torrent data */
   private ClearTorrentRefreshInterval(): void {
     if (this.REFRESH_INTERVAL) { clearInterval(this.REFRESH_INTERVAL); }
+  }
+
+  onMatSortChange(event: any): void {
+    this.currentMatSort = event;
+    switch (event.active) {
+      case "Name":
+        this.sortTorrentsByName(event.direction);
+        break;
+      case "Completed_On":
+        this.sortTorrentsByCompletedOn(event.direction);
+        break;
+      case "Status":
+        this.sortTorrentsByStatus(event.direction);
+        break;
+      case "Size":
+        this.sortTorrentsBySize(event.direction);
+        break;
+
+      default:
+        return;
+    }
+    this.refreshDataSource();
+  }
+
+  private sortTorrentsByName(direction: string): void {
+    this.allTorrentData.sort((a: Torrent, b: Torrent) => {
+      let res = (a.name === b.name ? 0 : (a.name < b.name ? -1 : 1))
+      if(direction === "desc") { res = res * (-1) }
+      return res;
+    });
+  }
+
+  private sortTorrentsByCompletedOn(direction: string): void {
+    this.allTorrentData.sort((a: Torrent, b: Torrent) => {
+      let res = (a.completion_on === b.completion_on ? 0 : (a.completion_on < b.completion_on ? -1 : 1))
+      if(direction === "desc") { res = res * (-1) }
+      return res;
+    });
+  }
+
+  private sortTorrentsByStatus(direction: string): void {
+    this.allTorrentData.sort((a: Torrent, b: Torrent) => {
+      let res = (a.state === b.state ? 0 : (a.state < b.state ? -1 : 1))
+      if(direction === "desc") { res = res * (-1) }
+      return res;
+    });
+  }
+
+  private sortTorrentsBySize(direction: string): void {
+    this.allTorrentData.sort((a: Torrent, b: Torrent) => {
+      let res = (a.size === b.size ? 0 : (a.size < b.size ? -1 : 1))
+      if(direction === "desc") { res = res * (-1) }
+      return res;
+    });
+  }
+
+  private refreshDataSource(): void {
+    this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
   }
 
   /** Reset all data in torrents table. This will also grab the entire

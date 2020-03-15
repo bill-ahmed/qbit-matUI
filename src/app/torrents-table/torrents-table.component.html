@@ -5,7 +5,7 @@
     <p id="loading_p" *ngIf="isLoading()">Loading...</p>
 
     <!-- Table of torrent data -->
-    <mat-table *ngIf="!isLoading()" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z2">
+    <mat-table *ngIf="!isLoading()" mat-table [dataSource]="dataSource" matSort (matSortChange)="onMatSortChange($event)" class="mat-elevation-z2">
 
         <ng-container  matColumnDef="Name">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
@@ -26,7 +26,7 @@
         </ng-container>
 
         <ng-container  matColumnDef="Size">
-            <mat-header-cell *matHeaderCellDef>Size</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Size</mat-header-cell>
             <mat-cell *matCellDef="let torrent">{{getFileSizeString(torrent.size)}}</mat-cell>
         </ng-container>
 
@@ -39,7 +39,7 @@
         </ng-container>
 
         <ng-container  matColumnDef="Status">
-            <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
             <mat-cell *matCellDef="let torrent">{{torrent.state}}</mat-cell>
         </ng-container>
         
@@ -59,7 +59,7 @@
         </ng-container>
 
         <ng-container  matColumnDef="Completed_On">
-            <mat-header-cell *matHeaderCellDef>Completed On</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Completed On</mat-header-cell>
             <mat-cell *matCellDef="let torrent">
                 {{getCompletedOnString(torrent.completion_on)}}
             </mat-cell>
