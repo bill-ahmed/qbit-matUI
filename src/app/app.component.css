@@ -1,0 +1,17 @@
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    background: black;
+    color: white;
+
+    min-height: 61px;
+}
+
+.footer a {
+    text-decoration: none;
+    color: inherit;
+}
