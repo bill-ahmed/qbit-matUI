@@ -38,8 +38,6 @@ progress-bar {
     word-wrap: break-word;
     word-break: break-word;
 
-    margin: 2px;
-
     min-width: 300px;
 }
 

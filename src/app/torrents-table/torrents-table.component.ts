@@ -14,6 +14,8 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 import * as http_endpoints from '../../assets/http_config.json';
 import { TorrentDataService } from '../torrent-data.service';
 import { UnitsHelperService } from '../units-helper.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DeleteTorrentDialogComponent } from '../delete-torrent-dialog/delete-torrent-dialog.component';
 
 @Component({
   selector: 'app-torrents-table',
@@ -35,9 +37,10 @@ export class TorrentsTableComponent implements OnInit {
   private REFRESH_INTERVAL: any = null;
   private isFetchingData: boolean = false;
   private RID = 0;
+  private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private cookieService: CookieService, private TorrentService: TorrentDataService, private UnitConversion: UnitsHelperService) { }
+  constructor(private cookieService: CookieService, private TorrentService: TorrentDataService, private UnitConversion: UnitsHelperService, public deleteTorrentDialog: MatDialog) { }
 
   ngOnInit(): void {
     let cookieInfo = GetCookieInfo()
@@ -93,21 +96,26 @@ export class TorrentsTableComponent implements OnInit {
     });
   }
 
-  /** Delete a torrent
-   * @param tor: The torrent in question.
-   */
-  handleTorrentDelete(tor: Torrent) {
-    this.TorrentService.DeleteTorrent(tor.hash, false)
-    .subscribe((res: any) => {
-      console.log(res);
-    });
-  }
-
   /** Pause a torrent
    * @param tor: The torrent in question.
    */
   handleTorrentPause(tor: Torrent) {
     alert(`PAUSE ${tor.name}`);
+  }
+
+  /** Open the modal for deleting a new torrent */
+  openDeleteTorrentDialog(tor: Torrent): void {
+    this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tor}});
+
+    this.deleteTorDialogRef.afterClosed().subscribe((result: any) => {
+      console.log(result);
+      if (result.attemptedDelete) { this.torrentDeleteFinishCallback() }
+    });
+  }
+
+  torrentDeleteFinishCallback(): void {
+    this.deleteTorDialogRef.close();
+    this.ResetAllTableData();   // TODO: Once merging deleted torrent changes are merged, this can be removed.
   }
 
   /**Update material table with new data */
@@ -119,7 +127,7 @@ export class TorrentsTableComponent implements OnInit {
     }
     
     // Update state with new 
-    // TODO: When a torrent gets added or removed, we need to refresh our data
+    // TODO: When a torrent gets removed, we need to refresh our data
     this.setFormattedResponse(data);
 
     this.allTorrentData = this.allTorrentInformation.torrents;
@@ -224,7 +232,7 @@ export class TorrentsTableComponent implements OnInit {
 
   /** Determine if table is loading data or not */
   isLoading(): boolean {
-    return this.allTorrentData == null
+    return this.allTorrentData == null;
   }
 
 }

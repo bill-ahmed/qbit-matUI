@@ -24,7 +24,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddTorrentDialogComponent } from './add-torrent-dialog/add-torrent-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input'
+import { MatInputModule } from '@angular/material/input';
+import { DeleteTorrentDialogComponent } from './delete-torrent-dialog/delete-torrent-dialog.component'
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 var appRoutes: Routes;
 
@@ -46,7 +48,8 @@ if(!environment.production){
     TorrentsTableComponent,
     LoginComponent,
     HomeComponent,
-    AddTorrentDialogComponent
+    AddTorrentDialogComponent,
+    DeleteTorrentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ if(!environment.production){
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
+    MatCheckboxModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

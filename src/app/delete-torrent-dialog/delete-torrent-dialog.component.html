@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Delete Torrent</h2>
+<mat-dialog-content class="mat-typography">
+ 
+  <h3>{{torrentToDelete.name}}</h3>
+  <p>Are you sure you want to delete this?</p>
+
+  <br/>
+  <mat-checkbox (change)="updateDeleteFilesFromDisk($event)" disabled={{isLoading}}>Also delete from disk (warning: you cannot undo this action)</mat-checkbox>
+
+  <br/>
+  <br/>
+ 
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>
+  <button disabled={{isLoading}} mat-raised-button (click)="handleTorrentDelete()" color="warn" cdkFocusInitial>Delete</button>
+</mat-dialog-actions>
