@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 // Material UI Components
 import { MatFormField } from '@angular/material/form-field';
+import { TorrentDataService } from '../torrent-data.service';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -14,7 +15,7 @@ export class AddTorrentDialogComponent implements OnInit {
   public filesDestination = "C:\\My Folder\\Temp";
   public isLoading = false;
 
-  constructor() { }
+  constructor(private TorrentService: TorrentDataService) { }
 
   ngOnInit(): void {
     this.updateDefaultSaveLocation();
@@ -23,8 +24,7 @@ export class AddTorrentDialogComponent implements OnInit {
   /** Send request to server with all torrents uploaded. */
   handleFileUpload(): void {
     this.isLoading = true;
-
-    setTimeout(() => {this.isLoading = false}, 1000);
+    this.TorrentService.UploadNewTorrents(this.filesToUpload);
   }
 
   /** Update which torrents the user wants to upload. */

@@ -34,16 +34,22 @@ export class TorrentDataService {
   /** Send batch of 1 or more torrents to server for enqueue.
    * @param files The files to upload.
    */
-  UploadNewTorrents(files: FileList): Observable<any> {
+  async UploadNewTorrents(files: FileList[]): Promise<any> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.uploadTorrents;
     let url = root + endpoint;
 
     // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
+    let options = IsDevEnv() ? { } : { withCredentials: true, responseType: 'text', observe: 'response'}
 
-    return null;
-
+    /** Upload each file individually
+     * TODO: Send all files in batch
+     */
+    for(const file of files) {
+      let result = await this.sendFile(file, url, options);
+      console.log("Sent file: ", file);
+      console.log("Got result: ", result);
+    }
   }
 
   /** Delete a torrent.
@@ -56,9 +62,18 @@ export class TorrentDataService {
     let endpoint = this.http_endpoints.deleteTorrent;
     let url = root + endpoint;
 
+    // body parameters
+    let body = new FormData();
+    body.append("hashes", hash);
+    body.append("deleteFiles", `${deleteFromDisk}`);
+
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { } : { withCredentials: true }
 
-    return null;
+    return this.http.post(url, body, options);
+  }
+
+  private sendFile(file: any, endpoint: string, options: any): Promise<any> {
+    return this.http.post(endpoint, file, options).toPromise();
   }
 }

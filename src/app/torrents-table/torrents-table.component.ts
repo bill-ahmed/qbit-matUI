@@ -27,7 +27,7 @@ export class TorrentsTableComponent implements OnInit {
   public cookieValueSID: string;
 
   // UI Components
-  public tableColumns: string[] = ["Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On", "Actions"];
+  public tableColumns: string[] = ["Name", "Actions", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
   public dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
 
   // Other
@@ -97,7 +97,17 @@ export class TorrentsTableComponent implements OnInit {
    * @param tor: The torrent in question.
    */
   handleTorrentDelete(tor: Torrent) {
-    alert("Delete " + tor.name);
+    this.TorrentService.DeleteTorrent(tor.hash, false)
+    .subscribe((res: any) => {
+      console.log(res);
+    });
+  }
+
+  /** Pause a torrent
+   * @param tor: The torrent in question.
+   */
+  handleTorrentPause(tor: Torrent) {
+    alert(`PAUSE ${tor.name}`);
   }
 
   /**Update material table with new data */
@@ -111,8 +121,6 @@ export class TorrentsTableComponent implements OnInit {
     // Update state with new 
     // TODO: When a torrent gets added or removed, we need to refresh our data
     this.setFormattedResponse(data);
-
-    console.log(this.allTorrentInformation);
 
     this.allTorrentData = this.allTorrentInformation.torrents;
     this.isFetchingData = false;
@@ -154,12 +162,20 @@ export class TorrentsTableComponent implements OnInit {
 
   /** Update server status in changelog */
   private updateServerStatus(data: GlobalTransferInfo): void {
+    if(!data) {
+      return;
+    }
+
     for(const key of Object.keys(data)){
       this.rawData.server_state[key] = data[key];
     }
   }
 
   private updateTorrentChanges(data: any) {
+    if(!data) {
+      return;
+    }
+
     for(const key of Object.keys(data)){
       let torID = key;
 
@@ -168,8 +184,10 @@ export class TorrentsTableComponent implements OnInit {
         this.rawData.torrents[torID] = {};
       }
 
-      for(const torKey of Object.keys(data[torID])){
-        this.rawData.torrents[torID][torKey] = data[torID][torKey]; 
+      if(data[torID]){
+        for(const torKey of Object.keys(data[torID])){
+          this.rawData.torrents[torID][torKey] = data[torID][torKey]; 
+        }
       }
     }
   }
