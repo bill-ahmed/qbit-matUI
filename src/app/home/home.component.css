@@ -26,9 +26,9 @@
 .mat-fab {
     background: #ff1744;
     
-    position: relative;
+    /* position: relative;
     top: 38px;
-    right: 10px;
+    right: 10px; */
 }
 
 .fill_remaining {
