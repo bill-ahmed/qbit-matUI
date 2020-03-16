@@ -1,27 +1,36 @@
 # QbitWebUI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.5.
+An alternative Web Interface to the original [qBittorrent Web UI](https://github.com/qbittorrent/qBittorrent). This interface is very slimmed down and contains the following features
 
-## Development server
+* Adding torrents
+* Deleting torrents
+* Searching by name
+* Sorting by different metrics (name, size, etc.)
+* A fully material-themed UI
+* ... More to come!
+
+## Configuration
+This app relies on a couple files to work properly. Under `src/assets/` there are two files: `http_config.json` and `http_config.prod.json`. During the production build, the former is replaced with the latter file. 
+
+If you wish to configure your endpoints and other data for dev/prod, do so here.
+
+## Running the App -- Development server
+To install the dependencies, run `npm install`.
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Replacing existing qBittorrent Web UI
+In order to use this version, first follow the instructions outlined [here (*)](https://github.com/qbittorrent/qBittorrent/wiki/Alternate-WebUI-usage).
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Once you've completed that:
 
-## Running end-to-end tests
+1. Build the production app (from build section)
+2. Navigate to the `dist/` directory, and copy all files to your clipboard
+3. Navigate to wherever you placed the `public`/`private` folder from (*)
+4. Replace all the contents of the `private` folder with the contents of `dist/` from the project directoy
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+That's it!
