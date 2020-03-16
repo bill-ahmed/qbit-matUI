@@ -28,6 +28,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DeleteTorrentDialogComponent } from './delete-torrent-dialog/delete-torrent-dialog.component'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchTorrentsComponent } from './home/search-torrents/search-torrents.component';
+import { MatCardModule } from '@angular/material/card';
 
 var appRoutes: Routes;
 
@@ -70,7 +71,8 @@ if(!environment.production){
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatCardModule,
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

@@ -1,0 +1,25 @@
+.searchTorrentsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 5px;
+    height: 40px;
+
+    width: 100%;
+}
+
+.searchTorrentsInput {
+    font-size: 12pt;
+    letter-spacing: 0.04em;
+
+    border: 0px solid;
+    outline: none;
+
+    padding-bottom: 7px;
+    margin: 5px;
+    margin-left: 10px;
+
+    flex-grow: 1;
+}

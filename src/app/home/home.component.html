@@ -8,19 +8,18 @@
       </h1> 
     </span>
 
-    <!-- Fill the remaining space -->
-    <span class="fill_remaining"></span>
+    <app-search-torrents></app-search-torrents>
 
     <span>
       <div id="toolbar_actions">
 
-          <button mat-fab matTooltip="Add Torrent" (click)="openAddTorrentDialog()">
-            <mat-icon>add</mat-icon>
-          </button>
-    
-          <button mat-raised-button (click)="logout()" >
-            Logout
-          </button>
+        <button mat-fab matTooltip="Add Torrent" (click)="openAddTorrentDialog()">
+          <mat-icon>add</mat-icon>
+        </button>
+  
+        <button mat-raised-button (click)="logout()" >
+          Logout
+        </button>
       </div>
     </span>
 

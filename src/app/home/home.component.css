@@ -6,11 +6,17 @@
     margin-bottom: 10px;
 
     height: 80px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .mat-toolbar h1 {
     font-size: 22pt;
 }
+
 
 .mat-toolbar #toolbar_actions{
     display: flex;
@@ -31,8 +37,14 @@
     right: 10px; */
 }
 
-.fill_remaining {
-    flex: 1 1 auto;
+/* .fill_remaining, app-search-torrents {
+    flex: 1 0 auto;
+} */
+
+app-search-torrents {
+    flex-grow: 0.8;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .spacer {
