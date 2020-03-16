@@ -15,9 +15,17 @@ This app relies on a couple files to work properly. Under `src/assets/` there ar
 If you wish to configure your endpoints and other data for dev/prod, do so here.
 
 ## Running the App -- Development server
-To install the dependencies, run `npm install`.
+To install the dependencies, run `npm install` in both the root directory and the `mock_backend/` folder.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Front-end:
+1. Run `ng serve` for a dev server
+2. Navigate to `http://localhost:4200/`
+
+### Back-end
+1. Navigate to `mock_backend/` directory (`cd mock_backend`)
+2. Run `node index.js`
+
+The app will automatically reload if you change any of the Angular source code.
 
 ## Build
 
