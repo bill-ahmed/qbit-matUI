@@ -89,7 +89,7 @@ export class TorrentsTableComponent implements OnInit {
     return dateCompleted;
   }
 
-  /**Get all torrent data */
+  /** Get all torrent data and update the table */
   private getTorrentData(): void{
     
     // Don't request if we're already in the middle of one
@@ -107,8 +107,14 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private updateTorrentSearchValue(val: string): void {
-    this.torrentSearchValue = val.trim().toLowerCase();
-    this.updateTorrentsBasedOnSearchValue();
+    let newVal =  val.trim().toLowerCase();
+    this.torrentSearchValue = newVal;
+
+    // User is searching for something
+    if(newVal) { this.updateTorrentsBasedOnSearchValue() } 
+
+    else { this.getTorrentData() }  // They've back-spaced out of their query; update immediately
+
   }
 
   /** Callback for when user is searching for a torrent. Filter all torrents displayed that match torrent criteria */
