@@ -32,14 +32,12 @@
 .mat-fab {
     background: #ff1744;
     
-    /* position: relative;
+    position: relative;
     top: 38px;
-    right: 10px; */
-}
+    right: 10px;
 
-/* .fill_remaining, app-search-torrents {
-    flex: 1 0 auto;
-} */
+    margin-right: 40px;
+}
 
 app-search-torrents {
     flex-grow: 0.8;

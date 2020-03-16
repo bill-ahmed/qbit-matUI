@@ -83,7 +83,11 @@ export class HomeComponent implements OnInit {
 
   logout(): void {
     this.cs.deleteAll();
-    this.router.navigate(['/']);
+    this.cs.delete("SID");
+
+    // Route differently in production because it's a SPA, while dev is still two pages.
+    if(IsDevEnv) { this.router.navigate(['/']); }
+    else { window.location.reload() }
   }
 
 }
