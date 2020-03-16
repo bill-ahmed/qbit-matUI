@@ -27,6 +27,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { DeleteTorrentDialogComponent } from './delete-torrent-dialog/delete-torrent-dialog.component'
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SearchTorrentsComponent } from './home/search-torrents/search-torrents.component';
 
 var appRoutes: Routes;
 
@@ -49,7 +50,8 @@ if(!environment.production){
     LoginComponent,
     HomeComponent,
     AddTorrentDialogComponent,
-    DeleteTorrentDialogComponent
+    DeleteTorrentDialogComponent,
+    SearchTorrentsComponent
   ],
   imports: [
     BrowserModule,

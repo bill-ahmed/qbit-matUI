@@ -34,7 +34,7 @@ export class TorrentDataService {
   /** Send batch of 1 or more torrents to server for enqueue.
    * @param files The files to upload.
    */
-  async UploadNewTorrents(files: FileList[]): Promise<any> {
+  async UploadNewTorrents(files: FileList[], destination: string): Promise<any> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.uploadTorrents;
     let url = root + endpoint;
@@ -42,7 +42,7 @@ export class TorrentDataService {
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { } : { withCredentials: true, responseType: 'text', observe: 'response'}
 
-    let result = await this.sendFile(files, url, options);
+    let result = await this.sendFiles(files, url, options, destination);
     return result;
   }
 
@@ -72,8 +72,10 @@ export class TorrentDataService {
    * @param endpoint The URL to send the files to
    * @param options Options to pass to POST request
    */
-  private sendFile(files: any, endpoint: string, options: any): Promise<any> {
+  private sendFiles(files: any, endpoint: string, options: any, savePath: string | void): Promise<any> {
     const formData = new FormData();
+
+    if (savePath) { formData.append("savepath", savePath) }
 
     for(const file of files) {
       formData.append("torrents", file, file.name);

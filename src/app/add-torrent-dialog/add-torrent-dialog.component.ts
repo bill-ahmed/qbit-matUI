@@ -13,19 +13,19 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class AddTorrentDialogComponent implements OnInit {
 
   public filesToUpload: FileList[] = null;
-  public filesDestination = "C:\\My Folder\\Temp";
+  public filesDestination = "";
   public isLoading = false;
 
   constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private TorrentService: TorrentDataService) { }
 
   ngOnInit(): void {
-    this.updateDefaultSaveLocation();
+    this.updateDefaultSaveLocationFromDisk();
   }
 
   /** Send request to server with all torrents uploaded. */
   handleFileUpload(): void {
     this.isLoading = true;
-    this.TorrentService.UploadNewTorrents(this.filesToUpload)
+    this.TorrentService.UploadNewTorrents(this.filesToUpload, this.filesDestination)
     .then((resp: any) => {
       this.uploadFileCompletionCallback(resp);
 
@@ -47,7 +47,7 @@ export class AddTorrentDialogComponent implements OnInit {
   }
 
   /** Retrieve default save location for torrents and update state */
-  public updateDefaultSaveLocation(): void {
+  public updateDefaultSaveLocationFromDisk(): void {
 
     let save_location = "";
     let pref = localStorage.getItem('preferences');
@@ -57,6 +57,11 @@ export class AddTorrentDialogComponent implements OnInit {
     }
 
     this.filesDestination = save_location || "";
+  }
+
+  /** Callback for when user changes save location */
+  public updateFileDestination(event: any): void {
+    this.filesDestination = event.target.value;
   }
 
   /** Handle cleanup for when adding torrents is completed
