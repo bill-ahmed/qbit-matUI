@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatCard } from '@angular/material/card';
+import { TorrentSearchServiceService } from 'src/app/services/torrent-search-service.service';
 
 @Component({
   selector: 'app-search-torrents',
@@ -10,7 +11,7 @@ export class SearchTorrentsComponent implements OnInit {
 
   public searchValue: string;
 
-  constructor() { }
+  constructor(private searchService: TorrentSearchServiceService) { }
 
   ngOnInit(): void {
   }
@@ -18,7 +19,7 @@ export class SearchTorrentsComponent implements OnInit {
   /** Callback for when user changes search query */
   public onSearchValueChange(event: any): void {
     this.searchValue = event.target.value;
-    console.log("Searching for: ", this.searchValue);
+    this.searchService.updateSearch(this.searchValue);
   }
 
 }

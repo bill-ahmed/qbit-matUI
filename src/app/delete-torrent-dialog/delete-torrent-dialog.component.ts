@@ -4,7 +4,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 
 // Helpers
-import { TorrentDataService } from '../torrent-data.service';
+import { TorrentDataService } from '../services/torrent-data.service';
 import { Torrent } from 'src/utils/Interfaces';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 

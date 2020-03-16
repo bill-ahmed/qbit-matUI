@@ -12,10 +12,11 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 
 // Helpers
 import * as http_endpoints from '../../assets/http_config.json';
-import { TorrentDataService } from '../torrent-data.service';
-import { UnitsHelperService } from '../units-helper.service';
+import { TorrentDataService } from '../services/torrent-data.service';
+import { UnitsHelperService } from '../services/units-helper.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteTorrentDialogComponent } from '../delete-torrent-dialog/delete-torrent-dialog.component';
+import { TorrentSearchServiceService } from '../services/torrent-search-service.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -25,7 +26,7 @@ import { DeleteTorrentDialogComponent } from '../delete-torrent-dialog/delete-to
 export class TorrentsTableComponent implements OnInit {
   private rawData: any;
   public allTorrentInformation: MainData;
-  public allTorrentData : [Torrent];
+  public allTorrentData : Torrent[];
   public cookieValueSID: string;
 
   // UI Components
@@ -39,11 +40,19 @@ export class TorrentsTableComponent implements OnInit {
   private RID = 0;
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   private currentMatSort = {active: "Completed_On", direction: "desc"};
+  private torrentSearchValue = "";
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private cookieService: CookieService, private TorrentService: TorrentDataService, private UnitConversion: UnitsHelperService, public deleteTorrentDialog: MatDialog) { }
+  constructor(private cookieService: CookieService, private TorrentService: TorrentDataService, 
+    private UnitConversion: UnitsHelperService, public deleteTorrentDialog: MatDialog, private torrentSearchService: TorrentSearchServiceService) { }
 
   ngOnInit(): void {
+
+    // Subscribe to torrent searching service
+    this.torrentSearchService.getSearchValue().subscribe((res: string) => {
+      this.updateTorrentSearchValue(res);
+    })
+
     let cookieInfo = GetCookieInfo()
     this.cookieValueSID = this.cookieService.get(cookieInfo.SIDKey);
 
@@ -97,6 +106,25 @@ export class TorrentsTableComponent implements OnInit {
     });
   }
 
+  private updateTorrentSearchValue(val: string): void {
+    this.torrentSearchValue = val.trim().toLowerCase();
+    this.updateTorrentsBasedOnSearchValue();
+  }
+
+  /** Callback for when user is searching for a torrent. Filter all torrents displayed that match torrent criteria */
+  updateTorrentsBasedOnSearchValue(): void {
+
+    // If a search value is given, then do the work
+    if(this.allTorrentData && this.torrentSearchValue) {
+      this.allTorrentData = this.allTorrentData
+      .filter((tor: Torrent) => {
+        return tor.name.toLowerCase().includes(this.torrentSearchValue);
+      });
+
+      this.refreshDataSource();
+    }
+  }
+
   /** Pause a torrent
    * @param tor: The torrent in question.
    */
@@ -137,6 +165,9 @@ export class TorrentsTableComponent implements OnInit {
 
     // Re-sort data
     this.onMatSortChange(this.currentMatSort);
+
+    // Filter by any search criteria
+    this.updateTorrentsBasedOnSearchValue();
 
     // Trigger update for table
     this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
