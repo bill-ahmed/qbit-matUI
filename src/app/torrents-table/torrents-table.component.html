@@ -5,24 +5,32 @@
     <p id="loading_p" *ngIf="isLoading()">Loading...</p>
 
     <!-- Table of torrent data -->
-    <mat-table *ngIf="!isLoading()" mat-table [dataSource]="dataSource" matSort (matSortChange)="onMatSortChange($event)" class="mat-elevation-z4">
-
-        <ng-container  matColumnDef="Name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">{{torrent.name}}</mat-cell>
-        </ng-container>
+    <mat-table *ngIf="!isLoading()" mat-table [dataSource]="dataSource" matSort (matSortChange)="onMatSortChange($event)" class="mat-elevation-z2">
 
         <ng-container  matColumnDef="Actions">
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let torrent">
-                <button mat-icon-button matTooltip="Pause Torrent" matTooltipPosition="left" (click)="handleTorrentPause(torrent)">
+                <button id="infoButton" mat-icon-button matTooltip="More Info" matTooltipPosition="below" (click)="true">
+                    <mat-icon>info</mat-icon>
+                </button>
+
+                <button *ngIf="!isTorrentPaused(torrent)" mat-icon-button matTooltip="Pause Torrent" matTooltipPosition="below" (click)="handleTorrentPause(torrent)">
                     <mat-icon>pause</mat-icon>
                 </button>
 
-                <button color="warn" mat-icon-button matTooltip="Delete Torrent" matTooltipPosition="right" (click)="openDeleteTorrentDialog(torrent)">
+                <button *ngIf="isTorrentPaused(torrent)" mat-icon-button matTooltip="Resume Torrent" matTooltipPosition="below" (click)="true">
+                    <mat-icon>play_arrow</mat-icon>
+                </button>
+
+                <button color="warn" mat-icon-button matTooltip="Delete Torrent" matTooltipPosition="below" (click)="openDeleteTorrentDialog(torrent)">
                     <mat-icon>delete</mat-icon>
                 </button>
             </mat-cell>
+        </ng-container>
+
+        <ng-container  matColumnDef="Name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let torrent">{{torrent.name}}</mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="Size">
@@ -69,5 +77,6 @@
         <mat-header-row *matHeaderRowDef="tableColumns; sticky: true"></mat-header-row>
         <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
     </mat-table>
+    <app-global-transfer-info></app-global-transfer-info>
 </div>
 

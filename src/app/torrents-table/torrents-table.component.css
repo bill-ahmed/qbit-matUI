@@ -24,6 +24,10 @@ progress-bar {
     width: 100%;
 }
 
+#infoButton {
+    color: #1976D2;
+}
+
 #loading_p {
     width: 50px;
     align-self: center;
@@ -38,11 +42,13 @@ progress-bar {
     word-wrap: break-word;
     word-break: break-word;
 
+    margin-left: 40px;
+
     min-width: 300px;
 }
 
 .mat-column-Actions {
-    flex: 0 0 5% !important;
+    flex: 0 0 7% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;

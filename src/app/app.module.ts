@@ -29,6 +29,7 @@ import { DeleteTorrentDialogComponent } from './delete-torrent-dialog/delete-tor
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchTorrentsComponent } from './home/search-torrents/search-torrents.component';
 import { MatCardModule } from '@angular/material/card';
+import { GlobalTransferInfoComponent } from './torrents-table/global-transfer-info/global-transfer-info.component';
 
 var appRoutes: Routes;
 
@@ -52,7 +53,8 @@ if(!environment.production){
     HomeComponent,
     AddTorrentDialogComponent,
     DeleteTorrentDialogComponent,
-    SearchTorrentsComponent
+    SearchTorrentsComponent,
+    GlobalTransferInfoComponent
   ],
   imports: [
     BrowserModule,

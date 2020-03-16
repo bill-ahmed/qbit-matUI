@@ -30,7 +30,7 @@ export class TorrentsTableComponent implements OnInit {
   public cookieValueSID: string;
 
   // UI Components
-  public tableColumns: string[] = ["Name", "Actions", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
+  public tableColumns: string[] = ["Actions", "Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
   public dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
 
   // Other
@@ -65,6 +65,10 @@ export class TorrentsTableComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.ClearTorrentRefreshInterval();
+  }
+
+  isTorrentPaused(tor: Torrent): boolean {
+    return tor.state === "pausedDL" || tor.state === "pausedUP";
   }
 
   getFileSizeString(size: number): string {
