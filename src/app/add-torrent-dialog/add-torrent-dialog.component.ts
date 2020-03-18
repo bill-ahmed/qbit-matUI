@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 // Material UI Components
 import { MatFormField } from '@angular/material/form-field';
-import { TorrentDataService } from '../services/torrent-data-http.service';
+import { TorrentDataHTTPService } from '../services/torrent-data-http.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -16,7 +16,7 @@ export class AddTorrentDialogComponent implements OnInit {
   public filesDestination = "";
   public isLoading = false;
 
-  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private TorrentService: TorrentDataService) { }
+  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private TorrentService: TorrentDataHTTPService) { }
 
   ngOnInit(): void {
     this.updateDefaultSaveLocationFromDisk();

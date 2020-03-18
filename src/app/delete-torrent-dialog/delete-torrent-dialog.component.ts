@@ -4,7 +4,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 
 // Helpers
-import { TorrentDataService } from '../services/torrent-data-http.service';
+import { TorrentDataHTTPService } from '../services/torrent-data-http.service';
 import { Torrent } from 'src/utils/Interfaces';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -21,7 +21,7 @@ export class DeleteTorrentDialogComponent implements OnInit {
   public isLoading = false;
   private attemptedDelete = false;  // Keep track of whether any deletes were attempted
 
-  constructor(private dialogRef:MatDialogRef<DeleteTorrentDialogComponent>, private TorrentService: TorrentDataService, @Inject(MAT_DIALOG_DATA) data) { 
+  constructor(private dialogRef:MatDialogRef<DeleteTorrentDialogComponent>, private TorrentService: TorrentDataHTTPService, @Inject(MAT_DIALOG_DATA) data) { 
     this.torrentToDelete = data.torrent;
    }
 

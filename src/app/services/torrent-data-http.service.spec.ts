@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { TorrentDataHTTPService } from './torrent-data-http.service';
 
-describe('TorrentDataService', () => {
+describe('TorrentDataHTTPService', () => {
   let service: TorrentDataHTTPService;
 
   beforeEach(() => {
