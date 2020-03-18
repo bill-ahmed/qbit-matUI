@@ -31,6 +31,13 @@ export class TorrentDataStoreService {
     return this.TorrentMainData;
   }
 
+  /** Handle uploading torrent files
+   * @param files The torrents to upload.
+   */
+  public async UploadTorrents(files: FileList[], destination: string): Promise<any> {
+    return await this.torrent_http_service.UploadNewTorrents(files, destination)
+  }
+
   /** Clean the response given from server */
   private setFormattedResponse(data: MainData) {
 

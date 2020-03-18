@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 // Material UI Components
 import { MatFormField } from '@angular/material/form-field';
-import { TorrentDataHTTPService } from '../services/torrent-management/torrent-data-http.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -16,7 +16,7 @@ export class AddTorrentDialogComponent implements OnInit {
   public filesDestination = "";
   public isLoading = false;
 
-  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private TorrentService: TorrentDataHTTPService) { }
+  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService) { }
 
   ngOnInit(): void {
     this.updateDefaultSaveLocationFromDisk();
@@ -25,7 +25,7 @@ export class AddTorrentDialogComponent implements OnInit {
   /** Send request to server with all torrents uploaded. */
   handleFileUpload(): void {
     this.isLoading = true;
-    this.TorrentService.UploadNewTorrents(this.filesToUpload, this.filesDestination)
+    this.data_store.UploadTorrents(this.filesToUpload, this.filesDestination)
     .then((resp: any) => {
       this.uploadFileCompletionCallback(resp);
 
