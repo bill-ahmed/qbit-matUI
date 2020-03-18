@@ -25,7 +25,7 @@ export interface Torrent {
     completion_on: number | undefined,
     ratio: number,
     eta: number,
-    state: "error" | "pausedUP" | "pausedDL" | "queuedUP" | "queuedDL" | "uploading" | "stalledUP" | "checkingUP" | "checkingDL" | "downloading" | "stalledDL" | "metaDL",
+    state: "forcedUP" | "error" | "pausedUP" | "pausedDL" | "queuedUP" | "queuedDL" | "uploading" | "stalledUP" | "checkingUP" | "checkingDL" | "downloading" | "stalledDL" | "metaDL",
     seq_dl: boolean,
     f_l_piece_prio: boolean,
     category: string,

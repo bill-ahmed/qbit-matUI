@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
-import { MainData, Torrent, GlobalTransferInfo } from '../../utils/Interfaces';
+import { MainData, Torrent } from '../../utils/Interfaces';
 
 
 // UI Components
@@ -12,11 +12,11 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 
 // Helpers
 import * as http_endpoints from '../../assets/http_config.json';
-import { UnitsHelperService } from '../services/units-helper.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteTorrentDialogComponent } from '../delete-torrent-dialog/delete-torrent-dialog.component';
 import { TorrentSearchServiceService } from '../services/torrent-search-service.service';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
+import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -44,7 +44,7 @@ export class TorrentsTableComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
-    private UnitConversion: UnitsHelperService, public deleteTorrentDialog: MatDialog, private torrentSearchService: TorrentSearchServiceService) { }
+    private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private torrentSearchService: TorrentSearchServiceService) { }
 
   ngOnInit(): void {
 
@@ -72,25 +72,15 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   getFileSizeString(size: number): string {
-    return this.UnitConversion.GetFileSizeString(size);
+    return this.pp.pretty_print_file_size(size);
   }
 
   getTorrentETAString(tor: Torrent): string {
-    let result = "∞";
-
-    if(!tor.completion_on) {
-      result = this.UnitConversion.GetSecondsString(tor.eta);
-    }
-    return result;
+    return this.pp.pretty_print_eta(tor);
   }
 
   getCompletedOnString(timestamp: number): string {
-    let dateCompleted = "";
-
-    if(timestamp) {
-      dateCompleted =  this.UnitConversion.GetDateString(timestamp);
-    }
-    return dateCompleted;
+    return this.pp.pretty_print_completed_on(timestamp);
   }
 
   /** Get all torrent data and update the table */
