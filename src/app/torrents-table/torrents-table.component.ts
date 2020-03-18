@@ -16,7 +16,7 @@ import { UnitsHelperService } from '../services/units-helper.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteTorrentDialogComponent } from '../delete-torrent-dialog/delete-torrent-dialog.component';
 import { TorrentSearchServiceService } from '../services/torrent-search-service.service';
-import { TorrentDataStoreService } from '../services/torrent-data-store.service';
+import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -125,7 +125,6 @@ export class TorrentsTableComponent implements OnInit {
     if(newVal) { this.updateTorrentsBasedOnSearchValue() } 
 
     else { this.getTorrentData() }  // They've back-spaced out of their query; update immediately
-
   }
 
   /** Callback for when user is searching for a torrent. Filter all torrents displayed that match torrent criteria */

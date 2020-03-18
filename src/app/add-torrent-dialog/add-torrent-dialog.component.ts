@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 // Material UI Components
 import { MatFormField } from '@angular/material/form-field';
-import { TorrentDataHTTPService } from '../services/torrent-data-http.service';
+import { TorrentDataHTTPService } from '../services/torrent-management/torrent-data-http.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({

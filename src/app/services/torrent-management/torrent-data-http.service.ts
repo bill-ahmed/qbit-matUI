@@ -3,7 +3,7 @@ import { MainData } from 'src/utils/Interfaces';
 import { Observable } from 'rxjs';
 
 // Utils
-import * as http_config from '../../assets/http_config.json';
+import * as http_config from '../../../assets/http_config.json';
 import { IsDevEnv } from 'src/utils/Environment';
 import { HttpClient } from '@angular/common/http';
 
