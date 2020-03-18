@@ -94,4 +94,13 @@ export class TorrentDataStoreService {
       }
     }
   }
+
+  /** Delete all data in store
+   * 
+   * CAUTION: MAKE SURE THAT (RID = 0) IS SENT AS THE NEXT REQUEST...or else
+   */
+  public ResetAllData(): void {
+    this.rawData = null;
+    this.TorrentMainData = null;
+  }
 }

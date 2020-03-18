@@ -239,6 +239,7 @@ export class TorrentsTableComponent implements OnInit {
     this.allTorrentData = null;
     this.RID = 0;
 
+    this.data_store.ResetAllData();
     this.ClearTorrentRefreshInterval();
     this.SetTorrentRefreshInterval();
   }
