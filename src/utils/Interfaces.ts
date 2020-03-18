@@ -56,7 +56,7 @@ export interface GlobalTransferInfo {
 export interface MainData {
     rid: number,
     full_update: boolean,
-    torrents: [ Torrent ],
+    torrents: Torrent[],
     /** List of hashes of torrents removed since last request */
     torrents_removed: [ string ],
     /** List of categories added since last request */

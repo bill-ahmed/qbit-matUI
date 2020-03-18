@@ -12,11 +12,11 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 
 // Helpers
 import * as http_endpoints from '../../assets/http_config.json';
-import { TorrentDataHTTPService } from '../services/torrent-data-http.service';
 import { UnitsHelperService } from '../services/units-helper.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteTorrentDialogComponent } from '../delete-torrent-dialog/delete-torrent-dialog.component';
 import { TorrentSearchServiceService } from '../services/torrent-search-service.service';
+import { TorrentDataStoreService } from '../services/torrent-data-store.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -43,7 +43,7 @@ export class TorrentsTableComponent implements OnInit {
   private torrentSearchValue = "";
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private cookieService: CookieService, private TorrentService: TorrentDataHTTPService, 
+  constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
     private UnitConversion: UnitsHelperService, public deleteTorrentDialog: MatDialog, private torrentSearchService: TorrentSearchServiceService) { }
 
   ngOnInit(): void {
@@ -94,7 +94,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   /** Get all torrent data and update the table */
-  private getTorrentData(): void{
+  private async getTorrentData(): Promise<void>{
     
     // Don't request if we're already in the middle of one
     if(this.isFetchingData){
@@ -102,12 +102,19 @@ export class TorrentsTableComponent implements OnInit {
     }
 
     this.isFetchingData = true;
-   
-    this.TorrentService.GetAllTorrentData(this.RID)
-    .subscribe((data: MainData) => 
-    {
-      this.updateDataSource(data);
-    });
+    let data = await this.data_store.GetTorrentData(this.RID);
+
+    // Update state with fresh torrent data
+    this.allTorrentInformation = data;
+    this.allTorrentData = data.torrents;
+    this.isFetchingData = false;
+    this.RID += 1;
+
+    // Re-sort data
+    this.onMatSortChange(this.currentMatSort);
+
+    // Filter by any search criteria
+    this.updateTorrentsBasedOnSearchValue();
   }
 
   private updateTorrentSearchValue(val: string): void {
@@ -154,95 +161,7 @@ export class TorrentsTableComponent implements OnInit {
 
   torrentDeleteFinishCallback(): void {
     this.deleteTorDialogRef.close();
-    this.ResetAllTableData();   // TODO: Once merging deleted torrent changes are merged, this can be removed.
-  }
-
-  /**Update material table with new data */
-  private async updateDataSource(data: MainData): Promise<void> {
-    
-    // Only set raw data initially
-    if(!this.rawData){
-      this.rawData = JSON.parse(JSON.stringify(data));
-    }
-    
-    // Update state with new 
-    // TODO: When a torrent gets removed, we need to refresh our data
-    this.setFormattedResponse(data);
-
-    this.allTorrentData = this.allTorrentInformation.torrents;
-    this.isFetchingData = false;
-    this.RID += 1;
-
-    // Re-sort data
-    this.onMatSortChange(this.currentMatSort);
-
-    // Filter by any search criteria
-    this.updateTorrentsBasedOnSearchValue();
-
-    // Trigger update for table
-    this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
-    this.dataSource.sort = this.sort;
-  }
-
-
-  /** Clean the response given from server */
-  private setFormattedResponse(data: MainData) {
-
-    let cleanTorrentData: [Torrent];
-
-    // (1) If we already have some data, update it
-    if(this.allTorrentInformation) {
-      this.updateServerStatus(data.server_state);
-      this.updateTorrentChanges(data.torrents);
-    } else {
-      this.allTorrentInformation = data;
-    }
-
-    // Re-format response
-    for(const key of Object.keys(this.rawData.torrents)){
-      this.rawData.torrents[key].hash = key;
-
-      if(cleanTorrentData){
-        cleanTorrentData.push(this.rawData.torrents[key]);
-      } else {
-        cleanTorrentData = [this.rawData.torrents[key]];
-      }
-      
-    }
-
-    this.allTorrentInformation.torrents = cleanTorrentData;
-  }
-
-  /** Update server status in changelog */
-  private updateServerStatus(data: GlobalTransferInfo): void {
-    if(!data) {
-      return;
-    }
-
-    for(const key of Object.keys(data)){
-      this.rawData.server_state[key] = data[key];
-    }
-  }
-
-  private updateTorrentChanges(data: any) {
-    if(!data) {
-      return;
-    }
-
-    for(const key of Object.keys(data)){
-      let torID = key;
-
-      // If this torrent is new, create space for it
-      if(!this.rawData.torrents[torID]) {
-        this.rawData.torrents[torID] = {};
-      }
-
-      if(data[torID]){
-        for(const torKey of Object.keys(data[torID])){
-          this.rawData.torrents[torID][torKey] = data[torID][torKey]; 
-        }
-      }
-    }
+    this.ResetAllTableData();   // TODO: Once merging deleted torrent changes are included, this can be removed.
   }
 
   /**Set interval for getting torrents
@@ -315,6 +234,7 @@ export class TorrentsTableComponent implements OnInit {
 
   private refreshDataSource(): void {
     this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
+    this.dataSource.sort = this.sort;
   }
 
   /** Reset all data in torrents table. This will also grab the entire
