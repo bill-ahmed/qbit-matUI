@@ -48,7 +48,7 @@ progress-bar {
 }
 
 .mat-column-Actions {
-    flex: 0 0 7% !important;
+    flex: 0 0 8% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -58,7 +58,7 @@ progress-bar {
 
     margin: 2px;
 
-    min-width: 80px;
+    min-width: 150px;
 }
 
 .mat-column-Size {

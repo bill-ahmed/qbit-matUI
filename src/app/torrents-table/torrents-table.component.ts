@@ -24,7 +24,6 @@ import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-
   styleUrls: ['./torrents-table.component.css']
 })
 export class TorrentsTableComponent implements OnInit {
-  private rawData: any;
   public allTorrentInformation: MainData;
   public allTorrentData : Torrent[];
   public cookieValueSID: string;
@@ -73,6 +72,10 @@ export class TorrentsTableComponent implements OnInit {
 
   getFileSizeString(size: number): string {
     return this.pp.pretty_print_file_size(size);
+  }
+
+  getStatusString(status: string): string {
+    return this.pp.pretty_print_status(status);
   }
 
   getTorrentETAString(tor: Torrent): string {
@@ -234,12 +237,10 @@ export class TorrentsTableComponent implements OnInit {
   private ResetAllTableData(): void {
     this.allTorrentInformation = null;
     this.allTorrentData = null;
-    this.rawData = null;
+    this.RID = 0;
 
     this.ClearTorrentRefreshInterval();
     this.SetTorrentRefreshInterval();
-
-    this.RID = 0;   // Keep last to prevent race-condition
   }
 
   /** Determine if table is loading data or not */

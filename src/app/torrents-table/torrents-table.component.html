@@ -50,7 +50,7 @@
 
         <ng-container  matColumnDef="Status">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
-            <mat-cell *matCellDef="let torrent">{{torrent.state}}</mat-cell>
+            <mat-cell *matCellDef="let torrent">{{getStatusString(torrent.state)}}</mat-cell>
         </ng-container>
         
         <ng-container  matColumnDef="Down_Speed">
