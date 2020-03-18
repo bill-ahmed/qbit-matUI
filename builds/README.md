@@ -1,0 +1,2 @@
+# Build for qbit-WebUI
+This folder contains the latest WIP builds. To run, simply extract the appropriate `.zip` file and read the _Replacing existing qBittorrent Web UI_ section of the main README.md instructions.
