@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TorrentDataService } from './torrent-data.service';
+import { TorrentDataHTTPService } from './torrent-data-http.service';
 
 describe('TorrentDataService', () => {
-  let service: TorrentDataService;
+  let service: TorrentDataHTTPService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TorrentDataService);
+    service = TestBed.inject(TorrentDataHTTPService);
   });
 
   it('should be created', () => {

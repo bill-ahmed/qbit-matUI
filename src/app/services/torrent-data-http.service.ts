@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class TorrentDataService {
+export class TorrentDataHTTPService {
 
   private http_endpoints: any;
 

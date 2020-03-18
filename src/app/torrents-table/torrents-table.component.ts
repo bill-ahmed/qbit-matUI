@@ -12,7 +12,7 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 
 // Helpers
 import * as http_endpoints from '../../assets/http_config.json';
-import { TorrentDataService } from '../services/torrent-data.service';
+import { TorrentDataHTTPService } from '../services/torrent-data-http.service';
 import { UnitsHelperService } from '../services/units-helper.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteTorrentDialogComponent } from '../delete-torrent-dialog/delete-torrent-dialog.component';
@@ -43,7 +43,7 @@ export class TorrentsTableComponent implements OnInit {
   private torrentSearchValue = "";
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private cookieService: CookieService, private TorrentService: TorrentDataService, 
+  constructor(private cookieService: CookieService, private TorrentService: TorrentDataHTTPService, 
     private UnitConversion: UnitsHelperService, public deleteTorrentDialog: MatDialog, private torrentSearchService: TorrentSearchServiceService) { }
 
   ngOnInit(): void {
