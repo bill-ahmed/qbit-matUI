@@ -40,6 +40,7 @@ export class TorrentsTableComponent implements OnInit {
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   private currentMatSort = {active: "Completed_On", direction: "desc"};
   private torrentSearchValue = "";
+  private torrentsSelects: Torrent[] = [];    // Keep track of which torrents are currently selected
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
@@ -64,6 +65,10 @@ export class TorrentsTableComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.ClearTorrentRefreshInterval();
+  }
+
+  areTorrentsSelected(): boolean {
+    return this.torrentsSelects.length === 0;
   }
 
   isTorrentPaused(tor: Torrent): boolean {

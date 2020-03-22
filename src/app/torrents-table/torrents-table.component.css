@@ -24,8 +24,15 @@ progress-bar {
     width: 100%;
 }
 
+#deleteTorrents {
+    /* background: #ff1744;
+    color: white; */
+    margin: 15px;
+    margin-left: 10px;
+}
+
 #infoButton {
-    color: #1976D2;
+    /* color: #1976D2; */
 }
 
 #loading_p {
