@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
+import { MatSnackBarRef } from '@angular/material/snack-bar';
 import { Torrent } from 'src/utils/Interfaces';
+import { RowSelectionService } from 'src/app/services/torrent-management/row-selection.service';
 
 @Component({
   selector: 'app-bulk-update-torrents',
@@ -9,18 +10,27 @@ import { Torrent } from 'src/utils/Interfaces';
 })
 export class BulkUpdateTorrentsComponent implements OnInit {
 
-  public numTorrentsSelected: number = 0;
+  public torrentsSelected: string[] = [];
 
-  constructor(@Inject(MAT_SNACK_BAR_DATA) public torData: Torrent[], private snackbarREF: MatSnackBarRef<BulkUpdateTorrentsComponent>) { }
+  constructor(private snackbarREF: MatSnackBarRef<BulkUpdateTorrentsComponent>, private torrentsSelectedService: RowSelectionService) { }
 
   ngOnInit(): void {
-    this.numTorrentsSelected = this.torData.length;
+
+    // Update state when new torrents are selected/un-selected
+    this.torrentsSelectedService
+    .getTorrentsSelected()
+    .subscribe((newTorrents: string[]) => {
+      
+      this.torrentsSelected = newTorrents;
+    })
   }
 
   /** Get appropriate message to display in snackbar */
   public getSnackbarMessage(): string {
-    return this.numTorrentsSelected === 1 ? 
-        `1 torrent selected.` : `${this.numTorrentsSelected} torrents selected.`;
+    let numTorrentsSelected = this.torrentsSelected.length;
+
+    return numTorrentsSelected === 1 ? 
+        `1 torrent selected.` : `${numTorrentsSelected} torrents selected.`;
   }
 
   /** Programtically close the snackbar.

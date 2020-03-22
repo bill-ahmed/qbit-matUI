@@ -7,18 +7,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class RowSelectionService {
 
-  private _torrentsSelectedSource = new BehaviorSubject<Torrent[]>([]);
+  private _torrentsSelectedSource = new BehaviorSubject<string[]>([]);
   private _torrentsSelectedValue = this._torrentsSelectedSource.asObservable();
 
   constructor() { }
 
   /** Update which torrents are selected. */
-  public updateTorrentsSelected(newVal: Torrent[]): void {
+  public updateTorrentsSelected(newVal: string[]): void {
     this._torrentsSelectedSource.next(newVal);
   }
 
   /** Get list of torrents selected as they get updated. */
-  public getSearchValue(): Observable<Torrent[]> {
+  public getTorrentsSelected(): Observable<string[]> {
     return this._torrentsSelectedValue;
   }
 }

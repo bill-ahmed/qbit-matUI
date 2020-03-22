@@ -20,6 +20,7 @@ import { TorrentDataStoreService } from '../services/torrent-management/torrent-
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
 import { BulkUpdateTorrentsComponent } from './bulk-update-torrents/bulk-update-torrents.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import { RowSelectionService } from '../services/torrent-management/row-selection.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -48,8 +49,8 @@ export class TorrentsTableComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
-    private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private torrentSearchService: TorrentSearchServiceService,
-    private snackBar: MatSnackBar) { }
+              private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private torrentSearchService: TorrentSearchServiceService,
+              private torrentsSelectedService: RowSelectionService ,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
 
@@ -81,9 +82,8 @@ export class TorrentsTableComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+    this._updateSelectionService();
   }
 
   areTorrentsSelected(): boolean {
@@ -166,11 +166,16 @@ export class TorrentsTableComponent implements OnInit {
     alert(`PAUSE ${tor.name}`);
   }
   
-  /** Callback for when a torrent is selected in the table.
+  /** Callback for when a torrent is selected in the table. Update row selection service with new data
    * @param event The event thrown.
    */
   handleTorrentSelected(tor: Torrent): void {
     this.selection.toggle(tor);
+    this._updateSelectionService();
+  }
+
+  _updateSelectionService() {
+    this.torrentsSelectedService.updateTorrentsSelected(this.selection.selected.map(elem => elem.hash));
   }
 
   /** Open the modal for deleting a new torrent */
@@ -187,11 +192,7 @@ export class TorrentsTableComponent implements OnInit {
 
   /** Open snackbar for deleting/pausing/playing torrents */
   openSnackBar(): void {
-    let snackbarREF = this.snackBar.openFromComponent(BulkUpdateTorrentsComponent, 
-      {
-        data: this.torrentsSelected
-      }
-    );
+    let snackbarREF = this.snackBar.openFromComponent(BulkUpdateTorrentsComponent);
 
     snackbarREF.afterDismissed().subscribe(
       (result: any) => {
