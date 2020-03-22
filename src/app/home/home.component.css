@@ -29,14 +29,21 @@
     margin-left: 25px;
 }
 
-.mat-fab {
-    background: #ff1744;
+#addTorrentFAB {
+    /* background: #ff1744; */
     
     position: relative;
     top: 38px;
     right: 10px;
 
     margin-right: 40px;
+
+    display: none;
+}
+
+#addTorrentButton {
+    color: white;
+    margin-right: 20px;
 }
 
 app-search-torrents {
@@ -64,4 +71,15 @@ app-search-torrents {
     
     flex-grow: 1;
     flex-direction: column;
+}
+
+/** For phone screens */
+@media only screen and (max-width: 768px) {
+    #addTorrentButton {
+        display: none;
+    }
+
+    #addTorrentFAB {
+        display: unset;
+    }
 }
