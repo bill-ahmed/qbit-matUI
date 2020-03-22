@@ -1,12 +1,12 @@
-<h2 mat-dialog-title>Delete Torrent</h2>
+<h2 mat-dialog-title>{{torrentToDelete.name}}</h2>
 <mat-dialog-content class="mat-typography">
  
-  <h3>{{torrentToDelete.name}}</h3>
   <p>Are you sure you want to delete this?</p>
 
   <br/>
-  <mat-checkbox (change)="updateDeleteFilesFromDisk($event)" disabled={{isLoading}}>Also delete from disk (warning: you cannot undo this action)</mat-checkbox>
+  <mat-checkbox (change)="updateDeleteFilesFromDisk($event)" disabled={{isLoading}}>Also delete from disk (<b>Warning:</b> you cannot undo this action)</mat-checkbox>
 
+  <br/>
   <br/>
   <br/>
  
