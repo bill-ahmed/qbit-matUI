@@ -19,6 +19,7 @@ import { TorrentSearchServiceService } from '../services/torrent-search-service.
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
 import { BulkUpdateTorrentsComponent } from './bulk-update-torrents/bulk-update-torrents.component';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-torrents-table',
@@ -29,9 +30,10 @@ export class TorrentsTableComponent implements OnInit {
   public allTorrentInformation: MainData;
   public allTorrentData : Torrent[];
   public cookieValueSID: string;
+  selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
-  public tableColumns: string[] = ["Actions", "Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
+  public tableColumns: string[] = ["select", "Actions", "Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
   public dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
 
   // Other
@@ -68,6 +70,20 @@ export class TorrentsTableComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.ClearTorrentRefreshInterval();
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   areTorrentsSelected(): boolean {
@@ -145,12 +161,22 @@ export class TorrentsTableComponent implements OnInit {
   /** Pause a torrent
    * @param tor: The torrent in question.
    */
-  handleTorrentPause(tor: Torrent) {
+  handleTorrentPause(event: any, tor: Torrent) {
+    event.stopPropagation();    // Don't trigger row selection
     alert(`PAUSE ${tor.name}`);
+  }
+  
+  /** Callback for when a torrent is selected in the table.
+   * @param event The event thrown.
+   */
+  handleTorrentSelected(tor: Torrent): void {
+    this.selection.toggle(tor);
   }
 
   /** Open the modal for deleting a new torrent */
-  openDeleteTorrentDialog(tors: Torrent[]): void {
+  openDeleteTorrentDialog(event: any, tors: Torrent[]): void {
+    event.stopPropagation();
+
     this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}});
 
     this.deleteTorDialogRef.afterClosed().subscribe((result: any) => {
@@ -161,11 +187,18 @@ export class TorrentsTableComponent implements OnInit {
 
   /** Open snackbar for deleting/pausing/playing torrents */
   openSnackBar(): void {
-    this.snackBar.openFromComponent(BulkUpdateTorrentsComponent, 
+    let snackbarREF = this.snackBar.openFromComponent(BulkUpdateTorrentsComponent, 
       {
         data: this.torrentsSelected
       }
     );
+
+    snackbarREF.afterDismissed().subscribe(
+      (result: any) => {
+        console.log("Finished bulk edit.", result);
+    }, (error: any) => {
+      console.error("Error with bulk edit.", error);
+    } );
   }
 
   torrentDeleteFinishCallback(): void {
