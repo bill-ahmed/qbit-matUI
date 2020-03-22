@@ -1,9 +1,7 @@
 <div>
     <!-- <button (click)="getTorrentData()">Get Torrents</button> -->
 
-    <button mat-raised-button id="deleteTorrents" color="warn" disabled={{areTorrentsSelected()}} (click)="true">
-        Delete
-    </button>
+    <button (click)="openSnackBar()">snackbar</button>
     
     <mat-spinner diameter=50 *ngIf="isLoading()"></mat-spinner>
     <p id="loading_p" *ngIf="isLoading()">Loading...</p>
@@ -27,7 +25,7 @@
                     <mat-icon>play_arrow</mat-icon>
                 </button>
 
-                <button color="primary" id="infoButton" mat-icon-button matTooltip="More Info" matTooltipPosition="below" (click)="true">
+                <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="below" (click)="true">
                     <mat-icon>info</mat-icon>
                 </button>
 

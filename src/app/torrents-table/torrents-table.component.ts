@@ -8,6 +8,7 @@ import { MainData, Torrent } from '../../utils/Interfaces';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatSpinner } from '@angular/material/progress-spinner';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 
 // Helpers
@@ -17,6 +18,7 @@ import { DeleteTorrentDialogComponent } from '../delete-torrent-dialog/delete-to
 import { TorrentSearchServiceService } from '../services/torrent-search-service.service';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
+import { BulkUpdateTorrentsComponent } from './bulk-update-torrents/bulk-update-torrents.component';
 
 @Component({
   selector: 'app-torrents-table',
@@ -40,11 +42,12 @@ export class TorrentsTableComponent implements OnInit {
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   private currentMatSort = {active: "Completed_On", direction: "desc"};
   private torrentSearchValue = "";
-  private torrentsSelects: Torrent[] = [];    // Keep track of which torrents are currently selected
+  private torrentsSelected: Torrent[] = [];    // Keep track of which torrents are currently selected
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
-    private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private torrentSearchService: TorrentSearchServiceService) { }
+    private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private torrentSearchService: TorrentSearchServiceService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
 
@@ -68,7 +71,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   areTorrentsSelected(): boolean {
-    return this.torrentsSelects.length === 0;
+    return this.torrentsSelected.length === 0;
   }
 
   isTorrentPaused(tor: Torrent): boolean {
@@ -154,6 +157,15 @@ export class TorrentsTableComponent implements OnInit {
       console.log(result);
       if (result.attemptedDelete) { this.torrentDeleteFinishCallback() }
     });
+  }
+
+  /** Open snackbar for deleting/pausing/playing torrents */
+  openSnackBar(): void {
+    this.snackBar.openFromComponent(BulkUpdateTorrentsComponent, 
+      {
+        data: this.torrentsSelected
+      }
+    );
   }
 
   torrentDeleteFinishCallback(): void {

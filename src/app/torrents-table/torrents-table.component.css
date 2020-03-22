@@ -31,10 +31,6 @@ progress-bar {
     margin-left: 10px;
 }
 
-#infoButton {
-    /* color: #1976D2; */
-}
-
 #loading_p {
     width: 50px;
     align-self: center;
@@ -43,7 +39,7 @@ progress-bar {
 
 /** Sizes of each column */
 .mat-column-Name {
-    flex: 0 0 35% !important;
+    flex: 0 0 30% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -82,7 +78,7 @@ progress-bar {
 }
 
 .mat-column-Progress {
-    flex: 0 0 7% !important;
+    flex: 0 0 12% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
