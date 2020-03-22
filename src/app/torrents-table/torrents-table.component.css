@@ -51,11 +51,14 @@ progress-bar {
 }
 
 .mat-column-select {
-    flex: 0 0 5% !important;
+    flex: 0 0 3% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
     word-break: break-word;
+
+    min-width: 55px;
+    margin-left: 10px;
 }
 
 .mat-column-Actions {
