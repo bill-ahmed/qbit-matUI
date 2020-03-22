@@ -16,21 +16,25 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 export class DeleteTorrentDialogComponent implements OnInit {
 
-  public torrentToDelete: Torrent;
+  public torrentsToDelete: Torrent[];
   public deleteFilesOnDisk = false;
   public isLoading = false;
   private attemptedDelete = false;  // Keep track of whether any deletes were attempted
 
   constructor(private dialogRef:MatDialogRef<DeleteTorrentDialogComponent>, private TorrentService: TorrentDataHTTPService, @Inject(MAT_DIALOG_DATA) data) { 
-    this.torrentToDelete = data.torrent;
+    this.torrentsToDelete = data.torrent;
    }
 
   ngOnInit(): void {
-    console.log(this.torrentToDelete.name);
+    console.log(this.torrentsToDelete);
   }
 
   updateDeleteFilesFromDisk(event: MatCheckboxChange): void {
     this.deleteFilesOnDisk = event.checked;
+  }
+
+  getTorrentsToDeleteString(): string {
+    return this.torrentsToDelete.map(tor => tor.name).join("\n");
   }
 
   /** Delete a torrent
@@ -40,7 +44,7 @@ export class DeleteTorrentDialogComponent implements OnInit {
     this.isLoading = true;
     this.attemptedDelete = true;
 
-    this.TorrentService.DeleteTorrent(this.torrentToDelete.hash, this.deleteFilesOnDisk)
+    this.TorrentService.DeleteTorrent(this.torrentsToDelete.map((elem) => elem.hash), this.deleteFilesOnDisk)
     .subscribe(
     (res: any) => {
       console.log(res);

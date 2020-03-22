@@ -51,14 +51,14 @@ export class TorrentDataHTTPService {
    * @param deleteFromDisk If the files should be deleted as well (true), 
    * or if they should persist (false).
    */
-  DeleteTorrent(hash: string, deleteFromDisk: boolean): Observable<any> {
+  DeleteTorrent(hash: string[], deleteFromDisk: boolean): Observable<any> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.deleteTorrent;
     let url = root + endpoint;
 
     // body parameters
     let body = new FormData();
-    body.append("hashes", hash);
+    body.append("hashes", hash.join("|"));
     body.append("deleteFiles", `${deleteFromDisk}`);
 
     // Do not send cookies in dev mode

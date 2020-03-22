@@ -150,8 +150,8 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   /** Open the modal for deleting a new torrent */
-  openDeleteTorrentDialog(tor: Torrent): void {
-    this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tor}});
+  openDeleteTorrentDialog(tors: Torrent[]): void {
+    this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}});
 
     this.deleteTorDialogRef.afterClosed().subscribe((result: any) => {
       console.log(result);
