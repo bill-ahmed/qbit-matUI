@@ -5,6 +5,7 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 * Adding torrents
 * Deleting torrents
 * Searching by name
+* Bulk edit (currently delete, more actions are WIP)
 * Sorting by different metrics (name, size, etc.)
 * A fully material-themed UI
 * ... More to come!
@@ -41,4 +42,6 @@ Once you've completed that:
 3. Navigate to wherever you placed the `public`/`private` folder from (*)
 4. Replace all the contents of the `private` folder with the contents of `dist/` from the project directoy
 
-That's it!
+Alternatively, you can take a production-ready build from the `builds` directory in this project. The latest version is zipped.
+
+That's all!
