@@ -30,12 +30,13 @@ import { RowSelectionService } from '../services/torrent-management/row-selectio
 export class TorrentsTableComponent implements OnInit {
   public allTorrentInformation: MainData;
   public allTorrentData : Torrent[];
+  public filteredTorrentData: Torrent[];
   public cookieValueSID: string;
   selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
   public tableColumns: string[] = ["select", "Actions", "Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
-  public dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
+  public dataSource = new MatTableDataSource(this.filteredTorrentData ? this.filteredTorrentData : []);
 
   // Other
   private DEFAULT_REFRESH_TIMEOUT = 1000
@@ -68,6 +69,7 @@ export class TorrentsTableComponent implements OnInit {
 
     // Retrieve updated torrent data on interval
     this.allTorrentData = null;
+    this.filteredTorrentData = null;
     this.SetTorrentRefreshInterval(this.DEFAULT_REFRESH_TIMEOUT)
   }
 
@@ -126,6 +128,7 @@ export class TorrentsTableComponent implements OnInit {
     // Update state with fresh torrent data
     this.allTorrentInformation = data;
     this.allTorrentData = data.torrents;
+    this.filteredTorrentData = data.torrents;
     this.isFetchingData = false;
     this.RID += 1;
 
@@ -137,26 +140,30 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private updateTorrentSearchValue(val: string): void {
-    let newVal =  val.trim().toLowerCase();
-    this.torrentSearchValue = newVal;
+    val = val || "";  // In case null is given
+    this.torrentSearchValue = val.trim().toLowerCase();
 
     // User is searching for something
-    if(newVal) { this.updateTorrentsBasedOnSearchValue() } 
-
-    else { this.getTorrentData() }  // They've back-spaced out of their query; update immediately
+    this.updateTorrentsBasedOnSearchValue()
   }
 
-  /** Callback for when user is searching for a torrent. Filter all torrents displayed that match torrent criteria */
+  /** Callback for when user is searching for a torrent. Filter all torrents displayed that match torrent criteria 
+   * 
+   * NOTE: If search value in state is empty, no filtering is done
+  */
   updateTorrentsBasedOnSearchValue(): void {
 
     // If a search value is given, then do the work
     if(this.allTorrentData && this.torrentSearchValue) {
-      this.allTorrentData = this.allTorrentData
+      this.filteredTorrentData = this.allTorrentData
       .filter((tor: Torrent) => {
         return tor.name.toLowerCase().includes(this.torrentSearchValue);
       });
 
       this.refreshDataSource();
+    } 
+    else if(this.torrentSearchValue === "") {   // If searching for value is empty, restore filteredTorrentData
+      this.filteredTorrentData = this.allTorrentData  
     }
   }
 
@@ -278,7 +285,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private sortTorrentsByName(direction: string): void {
-    this.allTorrentData.sort((a: Torrent, b: Torrent) => {
+    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
       let res = (a.name === b.name ? 0 : (a.name < b.name ? -1 : 1))
       if(direction === "desc") { res = res * (-1) }
       return res;
@@ -286,7 +293,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private sortTorrentsByCompletedOn(direction: string): void {
-    this.allTorrentData.sort((a: Torrent, b: Torrent) => {
+    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
       let res = (a.completion_on === b.completion_on ? 0 : (a.completion_on < b.completion_on ? -1 : 1))
       if(direction === "desc") { res = res * (-1) }
       return res;
@@ -294,7 +301,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private sortTorrentsByStatus(direction: string): void {
-    this.allTorrentData.sort((a: Torrent, b: Torrent) => {
+    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
       let res = (a.state === b.state ? 0 : (a.state < b.state ? -1 : 1))
       if(direction === "desc") { res = res * (-1) }
       return res;
@@ -302,7 +309,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private sortTorrentsBySize(direction: string): void {
-    this.allTorrentData.sort((a: Torrent, b: Torrent) => {
+    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
       let res = (a.size === b.size ? 0 : (a.size < b.size ? -1 : 1))
       if(direction === "desc") { res = res * (-1) }
       return res;
@@ -310,8 +317,8 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private refreshDataSource(): void {
-    this.dataSource = new MatTableDataSource(this.allTorrentData ? this.allTorrentData : []);
     this.dataSource.sort = this.sort;
+    this.dataSource.data = (this.filteredTorrentData ? this.filteredTorrentData : []);
   }
 
   /** Reset all data in torrents table. This will also grab the entire
@@ -325,6 +332,7 @@ export class TorrentsTableComponent implements OnInit {
 
     this.allTorrentInformation = null;
     this.allTorrentData = null;
+    this.filteredTorrentData = null;
     this.RID = 0;
 
     this.data_store.ResetAllData();
