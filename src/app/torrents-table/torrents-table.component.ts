@@ -8,7 +8,7 @@ import { MainData, Torrent } from '../../utils/Interfaces';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatSpinner } from '@angular/material/progress-spinner';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatSnackBar, MatSnackBarRef} from '@angular/material/snack-bar';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 
 // Helpers
@@ -43,9 +43,11 @@ export class TorrentsTableComponent implements OnInit {
   private isFetchingData: boolean = false;
   private RID = 0;
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
+  private snackbarREF: MatSnackBarRef<BulkUpdateTorrentsComponent>;
   private currentMatSort = {active: "Completed_On", direction: "desc"};
   private torrentSearchValue = "";
-  private torrentsSelected: Torrent[] = [];    // Keep track of which torrents are currently selected
+  private torrentsSelected: Torrent[] = [];     // Keep track of which torrents are currently selected
+  private bulkActionType: string = ""           // Keep track of what action user chose in bulk update 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
@@ -176,11 +178,17 @@ export class TorrentsTableComponent implements OnInit {
 
   _updateSelectionService() {
     this.torrentsSelectedService.updateTorrentsSelected(this.selection.selected.map(elem => elem.hash));
+    if(this.selection.selected.length > 0)  {   // If user has selected at least one torrent
+      if(!this.snackbarREF) { // And snackbar isn't already open
+        this.openSnackBar() 
+      }
+    }
+    else { this.closeSnackBar() } // Otherwise, close it
   }
 
   /** Open the modal for deleting a new torrent */
   openDeleteTorrentDialog(event: any, tors: Torrent[]): void {
-    event.stopPropagation();
+    if(event) { event.stopPropagation() };
 
     this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}});
 
@@ -190,13 +198,15 @@ export class TorrentsTableComponent implements OnInit {
     });
   }
 
-  /** Open snackbar for deleting/pausing/playing torrents */
+  /** Open snackbar for bulk editing deleting/pausing/playing torrents */
   openSnackBar(): void {
-    let snackbarREF = this.snackBar.openFromComponent(BulkUpdateTorrentsComponent);
+    this.snackbarREF = this.snackBar.openFromComponent(BulkUpdateTorrentsComponent);
 
-    snackbarREF.afterDismissed().subscribe(
+    this.snackbarREF.afterDismissed().subscribe(
       (result: any) => {
-        console.log("Finished bulk edit.", result);
+
+        this.handleBulkTorrentAction(result);
+
     }, (error: any) => {
       console.error("Error with bulk edit.", error);
     } );
@@ -205,6 +215,30 @@ export class TorrentsTableComponent implements OnInit {
   torrentDeleteFinishCallback(): void {
     this.deleteTorDialogRef.close();
     this.ResetAllTableData();   // TODO: Once merging deleted torrent changes are included, this can be removed.
+  }
+
+  /** Callback for when user completes an action
+   * 
+   * TODO: This only handles DELETE. Need to account for more actions in the future!
+   */
+  handleBulkTorrentAction(action: any) {
+    
+    // Trigger deletion modal
+    if(action.dismissedByAction) {
+      this.openDeleteTorrentDialog(null, this.selection.selected);
+      this.openSnackBar();    // Keep opening snackbar until user cancels bulk delete
+    } else {
+      // Otherwise, close the snackbar and clear all selected items
+      this.closeSnackBar();
+      this.selection.clear();
+    }
+  }
+
+  private closeSnackBar(): void {
+    if (this.snackbarREF) { 
+      this.snackbarREF.dismiss();
+      this.snackbarREF = null;
+    }
   }
 
   /**Set interval for getting torrents
@@ -286,6 +320,9 @@ export class TorrentsTableComponent implements OnInit {
    * NOTE: THIS MAY CAUSE PERFORMANCE ISSUES -- USE ONLY WHEN NEEDED.
    */
   private ResetAllTableData(): void {
+    this.closeSnackBar();
+    this.selection.clear();
+
     this.allTorrentInformation = null;
     this.allTorrentData = null;
     this.RID = 0;

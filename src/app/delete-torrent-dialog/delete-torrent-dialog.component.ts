@@ -34,7 +34,7 @@ export class DeleteTorrentDialogComponent implements OnInit {
   }
 
   getTorrentsToDeleteString(): string {
-    return this.torrentsToDelete.map(tor => tor.name).join("\n");
+    return this.torrentsToDelete.length < 2 ? "Are you sure you want to delete this?" : "Are you sure you want to delete these?"
   }
 
   /** Delete a torrent

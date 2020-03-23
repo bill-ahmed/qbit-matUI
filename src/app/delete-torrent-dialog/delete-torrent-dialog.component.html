@@ -1,7 +1,11 @@
 <h2 mat-dialog-title>Delete Torrent(s)</h2>
 <mat-dialog-content class="mat-typography">
- 
-  <h4><b>{{getTorrentsToDeleteString()}}</b></h4>
+
+  <li *ngFor="let tor of torrentsToDelete">
+    <b>{{tor.name}}</b>
+  </li>
+  
+  <br/>
   <p>Are you sure you want to delete this?</p>
 
   <br/>
