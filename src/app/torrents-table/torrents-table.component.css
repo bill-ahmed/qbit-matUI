@@ -24,6 +24,16 @@ progress-bar {
     width: 100%;
 }
 
+.mat-row {
+    transition: background-color 0.15s ease;
+    background-color: unset;
+}
+
+.mat-row:hover {
+    background-color: #e5e5e5;
+    
+}
+
 #deleteTorrents {
     /* background: #ff1744;
     color: white; */

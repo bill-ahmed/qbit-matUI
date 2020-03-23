@@ -96,6 +96,6 @@
         <mat-header-row *matHeaderRowDef="tableColumns; sticky: true"></mat-header-row>
         <mat-row (click)="handleTorrentSelected(row)" *matRowDef="let row; columns: tableColumns"></mat-row>
     </mat-table>
-    <app-global-transfer-info *ngIf="!isLoading()"></app-global-transfer-info>
+    <!-- <app-global-transfer-info *ngIf="!isLoading()"></app-global-transfer-info> -->
 </div>
 
