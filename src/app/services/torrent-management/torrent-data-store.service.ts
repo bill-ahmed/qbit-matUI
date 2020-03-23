@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MainData, Torrent, GlobalTransferInfo } from 'src/utils/Interfaces';
 import { TorrentDataHTTPService } from './torrent-data-http.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,10 @@ import { Observable } from 'rxjs';
 export class TorrentDataStoreService {
 
   private rawData: any;
+  private _rawDataSource = new BehaviorSubject<MainData>(null);
+
   private TorrentMainData: MainData;
+  private _torrentMainDataValue = this._rawDataSource.asObservable();
 
   constructor(private torrent_http_service: TorrentDataHTTPService) { }
 
@@ -27,6 +30,7 @@ export class TorrentDataStoreService {
     // Update state with new 
     // TODO: When a torrent gets removed, we need to refresh our data
     this.setFormattedResponse(data);
+    this._updateDataSource(this.TorrentMainData);
 
     return this.TorrentMainData;
   }
@@ -36,6 +40,18 @@ export class TorrentDataStoreService {
    */
   public async UploadTorrents(files: FileList[], destination: string): Promise<any> {
     return await this.torrent_http_service.UploadNewTorrents(files, destination)
+  }
+
+  /** Subscribe to torrent data
+   * 
+   */
+  public GetTorrentDataSubscription(): Observable<MainData> {
+    return this._torrentMainDataValue;
+  }
+
+  /** Update observable with new data */
+  private _updateDataSource(source: MainData): void {
+    this._rawDataSource.next(source);
   }
 
   /** Clean the response given from server */
