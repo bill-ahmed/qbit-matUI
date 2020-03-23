@@ -3,5 +3,11 @@
         <b>Global Transfer Summary</b>
     </h3>
 
-    <h4>Test</h4>
+    <div>
+        <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
+
+        <div *ngIf="!isLoading()" id="summaryContent">
+            <h4>Test</h4>
+        </div>
+    </div>
 </div>

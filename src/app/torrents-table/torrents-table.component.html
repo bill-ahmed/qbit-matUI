@@ -1,4 +1,4 @@
-<div>
+<div class="torrent-table-container">
     <!-- <button (click)="getTorrentData()">Get Torrents</button> -->
     
     <mat-spinner diameter=50 *ngIf="isLoading()"></mat-spinner>
@@ -96,6 +96,6 @@
         <mat-header-row *matHeaderRowDef="tableColumns; sticky: true"></mat-header-row>
         <mat-row (click)="handleTorrentSelected(row)" *matRowDef="let row; columns: tableColumns"></mat-row>
     </mat-table>
-    <!-- <app-global-transfer-info *ngIf="!isLoading()"></app-global-transfer-info> -->
+    <app-global-transfer-info *ngIf="!isLoading()"></app-global-transfer-info>
 </div>
 

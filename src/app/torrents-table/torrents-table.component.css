@@ -2,6 +2,13 @@ table {
     min-width: 100%;
 }
 
+.torrent-table-container {
+    display: flex;
+    flex-direction: column;
+
+    overflow: scroll;
+}
+
 th.mat-sort-header-sorted {
     color: black;
 }

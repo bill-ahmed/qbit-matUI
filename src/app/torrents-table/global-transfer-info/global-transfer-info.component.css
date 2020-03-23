@@ -1,11 +1,20 @@
 .global-transfer-info-container {
-    min-width: 98vw;
-    margin: 20px 10px 10px 10px;
+    width: 50%;
+    margin: 0px auto 10px auto;
     padding: 10px;
     padding-bottom: 0px;
+
+    background: white;
+
+    position: relative;
+    top: -33px;
+
+    align-self: center;
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
+
+    vertical-align: middle;
 }
