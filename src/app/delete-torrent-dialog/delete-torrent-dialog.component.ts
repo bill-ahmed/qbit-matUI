@@ -33,10 +33,6 @@ export class DeleteTorrentDialogComponent implements OnInit {
     this.deleteFilesOnDisk = event.checked;
   }
 
-  getTorrentsToDeleteString(): string {
-    return this.torrentsToDelete.length < 2 ? "Are you sure you want to delete this?" : "Are you sure you want to delete these?"
-  }
-
   /** Delete a torrent
    * @param tor: The torrent in question.
    */

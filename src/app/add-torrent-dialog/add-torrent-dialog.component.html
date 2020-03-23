@@ -1,5 +1,7 @@
 <h2 mat-dialog-title>Upload Torrent</h2>
+<mat-divider></mat-divider>
 <mat-dialog-content class="mat-typography">
+  <br/>
   <h3>Choose File</h3>
   <input multiple type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
   <br/>

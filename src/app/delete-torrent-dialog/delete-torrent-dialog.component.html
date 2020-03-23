@@ -1,18 +1,17 @@
 <h2 mat-dialog-title>Delete Torrent(s)</h2>
+<mat-divider></mat-divider>
 <mat-dialog-content class="mat-typography">
-
-  <li *ngFor="let tor of torrentsToDelete">
-    <b>{{tor.name}}</b>
-  </li>
-  
   <br/>
-  <p>Are you sure you want to delete this?</p>
-
+  <p>Are you sure you want to delete the following?</p>
   <br/>
   <mat-checkbox (change)="updateDeleteFilesFromDisk($event)" disabled={{isLoading}}>Also delete from disk (<b>Warning:</b> you cannot undo this action)</mat-checkbox>
 
   <br/>
   <br/>
+  <li *ngFor="let tor of torrentsToDelete">
+    <b>{{tor.name}}</b>
+  </li>
+
   <br/>
  
 </mat-dialog-content>

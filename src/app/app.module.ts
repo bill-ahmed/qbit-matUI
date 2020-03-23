@@ -31,6 +31,7 @@ import { SearchTorrentsComponent } from './home/search-torrents/search-torrents.
 import { MatCardModule } from '@angular/material/card';
 import { GlobalTransferInfoComponent } from './torrents-table/global-transfer-info/global-transfer-info.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDividerModule } from '@angular/material/divider';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 
 var appRoutes: Routes;
@@ -79,6 +80,7 @@ if(!environment.production){
     MatCheckboxModule,
     MatCardModule,
     MatSnackBarModule,
+    MatDividerModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

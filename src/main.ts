@@ -6,6 +6,7 @@ import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
+  window.console.log = function() {}  // Disable all console logs in prod
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
