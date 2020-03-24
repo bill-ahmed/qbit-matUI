@@ -1,20 +1,43 @@
 .global-transfer-info-container {
-    width: 50%;
-    margin: 0px auto 10px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.torrent-transfer-info-container, .disks-transfer-information {
+    width: 40%;
+    height: 50px;
+
+    margin: 0px 0 10px 0;
     padding: 10px;
     padding-bottom: 0px;
 
     background: white;
 
-    position: relative;
-    top: -33px;
-
-    align-self: center;
-
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: baseline;
 
     vertical-align: middle;
+}
+
+#summaryContent {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: row;
+}
+
+h3 {
+    font-size: 11pt;
+}
+
+#summaryContent h4 {
+    font-size: 10pt;
+    margin: 0 5px 0 5px;
+}
+
+#summaryContentDivider {
+    margin: 0 10px 0 10px;
 }

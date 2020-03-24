@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TorrentDataStoreService } from 'src/app/services/torrent-management/torrent-data-store.service';
 import { GlobalTransferInfo, MainData } from 'src/utils/Interfaces';
+import { UnitsHelperService } from 'src/app/services/units-helper.service';
 
 @Component({
   selector: 'app-global-transfer-info',
@@ -11,7 +12,7 @@ export class GlobalTransferInfoComponent implements OnInit {
 
   public data: GlobalTransferInfo = null;
 
-  constructor(private data_store: TorrentDataStoreService) { }
+  constructor(private data_store: TorrentDataStoreService, private units_helper: UnitsHelperService) { }
 
   ngOnInit(): void {
     
@@ -26,6 +27,26 @@ export class GlobalTransferInfoComponent implements OnInit {
   handleDataChange(newData: GlobalTransferInfo): void {
     console.log(newData);
     this.data = newData;
+  }
+
+  getDownloadSpeedString() {
+    return `${this.units_helper.GetFileSizeString(this.data.dl_info_speed)}/s`;
+  }
+
+  getDownloadedString() {
+    return `${this.units_helper.GetFileSizeString(this.data.dl_info_data)}`;
+  }
+
+  getUploadSpeedString() {
+    return `${this.units_helper.GetFileSizeString(this.data.up_info_speed)}/s`;
+  }
+
+  getUploadedString() {
+    return `${this.units_helper.GetFileSizeString(this.data.up_info_data)}`;
+  }
+
+  getFreeSpaceOnDisk() {
+    return `${this.units_helper.GetFileSizeString(this.data.free_space_on_disk)}`;
   }
 
   isLoading(): boolean {

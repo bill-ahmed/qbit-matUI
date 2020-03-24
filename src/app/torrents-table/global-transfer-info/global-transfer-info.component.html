@@ -1,13 +1,39 @@
-<div class="mat-elevation-z2 global-transfer-info-container">
-    <h3>
-        <b>Global Transfer Summary</b>
-    </h3>
+<div class="global-transfer-info-container">
+    <div class="mat-elevation-z2 disks-transfer-information">
+        <h3>
+            <b>Disk Summary</b>
+        </h3>
+        
+        <div>
+            <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
+    
+            <div *ngIf="!isLoading()" id="summaryContent">
+                <mat-icon color="primary">storage</mat-icon>
+                <h4>Free Space: {{getFreeSpaceOnDisk()}}</h4>
+            </div>
+        </div>
 
-    <div>
-        <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
+    </div>
 
-        <div *ngIf="!isLoading()" id="summaryContent">
-            <h4>Test</h4>
+    <div class="mat-elevation-z2 torrent-transfer-info-container">
+        <h3>
+            <b>Global Transfer</b>
+        </h3>
+    
+        <div>
+            <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
+    
+            <div *ngIf="!isLoading()" id="summaryContent">
+
+                <mat-icon color="primary">arrow_downward</mat-icon>
+                <h4>{{getDownloadSpeedString()}} ({{getDownloadedString()}})</h4>
+    
+                <mat-divider id="summaryContentDivider" [vertical]="true"></mat-divider>
+    
+                <mat-icon color="accent">arrow_upward</mat-icon>
+                <h4>{{getUploadSpeedString()}} ({{getUploadedString()}})</h4>
+    
+            </div>
         </div>
     </div>
 </div>
