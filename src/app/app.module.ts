@@ -33,6 +33,7 @@ import { GlobalTransferInfoComponent } from './torrents-table/global-transfer-in
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatChipsModule } from '@angular/material/chips';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './torrent-info-dialog/torrent-info-dialog.component';
 
@@ -84,7 +85,8 @@ if(!environment.production){
     MatCardModule,
     MatSnackBarModule,
     MatDividerModule,
-    MatTabsModule
+    MatTabsModule,
+    MatChipsModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

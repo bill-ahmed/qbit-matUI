@@ -37,7 +37,8 @@ export interface Torrent {
     f_l_piece_prio: boolean,
     category: string,
     super_seeding: boolean,
-    force_start: boolean
+    force_start: boolean,
+    save_path: string
 }
 
 /** Global states of server, such as global download, upload, etc. */

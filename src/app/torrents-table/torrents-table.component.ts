@@ -211,7 +211,7 @@ export class TorrentsTableComponent implements OnInit {
   openInfoTorrentDialog(event: any, tor: Torrent): void {
     if(event) { event.stopPropagation(); }
 
-    this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}})
+    this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}, autoFocus: false})
 
     this.infoTorDialogRef.afterClosed().subscribe((result: any) => {
       console.log("Closed info modal", result);

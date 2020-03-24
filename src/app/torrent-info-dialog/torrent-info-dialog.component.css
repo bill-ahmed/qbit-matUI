@@ -3,11 +3,13 @@
 }
 
 .torrent-info-general-content, .torrent-info-content-content {
-    margin: 10px;
+    margin: 20px 10px 10px 10px;
 
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
 
-    flex-wrap: nowrap;
+mat-chip-list {
+    align-self: flex-end;
 }

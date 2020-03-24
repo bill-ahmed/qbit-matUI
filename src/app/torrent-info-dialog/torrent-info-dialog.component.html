@@ -1,6 +1,14 @@
-<h2 mat-dialog-title>{{torrent.name}}</h2>
+<h2 mat-dialog-title>
+    {{torrent.name}}
+    <p></p>
+    <mat-chip-list id="torrent-info-chip-list">
+        <mat-chip color="primary" selected>{{state()}}</mat-chip>
+        <mat-chip *ngIf="torrent.force_start" color="accent" selected>Forced Start</mat-chip>
+    </mat-chip-list>
+</h2>
+
 <mat-dialog-content class="mat-typography torrent-info-container">
-    <mat-tab-group mat-align-tabs="end">
+    <mat-tab-group mat-align-tabs="start">
 
         <mat-tab label="General">
             <div class="torrent-info-general-content">
@@ -8,6 +16,7 @@
                     <p><b>Name:</b> {{torrent.name}}</p>
                     <p><b>Total Size:</b> {{total_size()}}</p>
                     <p><b>Downloaded:</b> {{downloaded()}} / {{total_size()}}</p>
+                    <p><b>Save Location:</b> {{torrent.save_path}}</p>
                 </div>
                 
                 <div class="rightPanel">
