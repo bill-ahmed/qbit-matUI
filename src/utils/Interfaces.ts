@@ -14,6 +14,8 @@ export interface Torrent {
     hash: string,
     name: string,
     size: number,
+    total_size: number,
+    downloaded: number,
     progress: number,
     dlspeed: number,
     upspeed: number,
@@ -23,6 +25,11 @@ export interface Torrent {
     num_incomplete: number,
     /**Unix timestamp of when torrent was completed */
     completion_on: number | undefined,
+    added_on: number,
+    /**Unix timestamp of when torrent was last active */
+    last_activity: number,
+    /**Unix timestamp of how long this torrent has been active */
+    time_active: number,
     ratio: number,
     eta: number,
     state: "forcedUP" | "error" | "pausedUP" | "pausedDL" | "queuedUP" | "queuedDL" | "uploading" | "stalledUP" | "checkingUP" | "checkingDL" | "downloading" | "stalledDL" | "metaDL",
