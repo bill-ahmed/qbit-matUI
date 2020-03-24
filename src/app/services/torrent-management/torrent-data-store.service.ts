@@ -9,10 +9,10 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class TorrentDataStoreService {
 
   private rawData: any;
-  private _rawDataSource = new BehaviorSubject<MainData>(null);
+  private _torrentMainDataSource = new BehaviorSubject<MainData>(null);
 
   private TorrentMainData: MainData;
-  private _torrentMainDataValue = this._rawDataSource.asObservable();
+  private _torrentMainDataValue = this._torrentMainDataSource.asObservable();
 
   constructor(private torrent_http_service: TorrentDataHTTPService) { }
 
@@ -51,7 +51,7 @@ export class TorrentDataStoreService {
 
   /** Update observable with new data */
   private _updateDataSource(source: MainData): void {
-    this._rawDataSource.next(source);
+    this._torrentMainDataSource.next(source);
   }
 
   /** Clean the response given from server */
@@ -89,7 +89,7 @@ export class TorrentDataStoreService {
     }
 
     for(const key of Object.keys(data)){
-      this.rawData.server_state[key] = data[key];
+      this.TorrentMainData.server_state[key] = data[key];
     }
   }
 

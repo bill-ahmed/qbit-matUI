@@ -25,7 +25,6 @@ export class GlobalTransferInfoComponent implements OnInit {
   }
 
   handleDataChange(newData: GlobalTransferInfo): void {
-    console.log(newData);
     this.data = newData;
   }
 
