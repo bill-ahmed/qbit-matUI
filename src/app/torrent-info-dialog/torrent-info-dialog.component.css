@@ -1,0 +1,13 @@
+.torrent-info-container {
+    min-width: 50vw;
+}
+
+.torrent-info-general-content, .torrent-info-content-content {
+    margin: 10px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    flex-wrap: nowrap;
+}

@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>{{torrent.name}}</h2>
+<mat-dialog-content class="mat-typography torrent-info-container">
+    <mat-tab-group mat-align-tabs="end">
+
+        <mat-tab label="General">
+            <div class="torrent-info-general-content">
+                <div class="leftPanel">
+                    <p><b>Name:</b> {{torrent.name}}</p>
+                    <p><b>Total Size:</b> {{total_size()}}</p>
+                    <p><b>Downloaded:</b> {{downloaded()}} / {{total_size()}}</p>
+                </div>
+                
+                <div class="rightPanel">
+                    <p><b>Added On:</b> {{added_on()}}</p>
+                    <p><b>Completed On:</b> {{completed_on()}}</p>
+                    <p><b>Last Activity:</b> {{last_activity()}}</p>
+                </div>
+                
+            </div>
+        </mat-tab>
+
+        <!-- <mat-tab label="Content">
+            <div class="torrent-info-content-content">
+                <div class="leftPanel">
+                    <p>Overview Stuff</p>
+                </div>
+                
+                <div class="rightPanel">
+                    <p>Right Panel</p>
+                </div>
+            </div>
+        </mat-tab> -->
+
+    </mat-tab-group>
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions>

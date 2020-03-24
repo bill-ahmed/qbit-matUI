@@ -28,7 +28,7 @@
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let torrent">
 
-                <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="below" (click)="$event.stopPropagation()">
+                <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="below" (click)="openInfoTorrentDialog($event, torrent)">
                     <mat-icon>info</mat-icon>
                 </button>
                 

@@ -21,6 +21,7 @@ import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-
 import { BulkUpdateTorrentsComponent } from './bulk-update-torrents/bulk-update-torrents.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RowSelectionService } from '../services/torrent-management/row-selection.service';
+import { TorrentInfoDialogComponent } from '../torrent-info-dialog/torrent-info-dialog.component';
 
 @Component({
   selector: 'app-torrents-table',
@@ -44,6 +45,7 @@ export class TorrentsTableComponent implements OnInit {
   private isFetchingData: boolean = false;
   private RID = 0;
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
+  private infoTorDialogRef: MatDialogRef<TorrentInfoDialogComponent, any>;
   private snackbarREF: MatSnackBarRef<BulkUpdateTorrentsComponent>;
   private currentMatSort = {active: "Completed_On", direction: "desc"};
   private torrentSearchValue = "";
@@ -52,8 +54,8 @@ export class TorrentsTableComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
-              private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private torrentSearchService: TorrentSearchServiceService,
-              private torrentsSelectedService: RowSelectionService ,private snackBar: MatSnackBar) { }
+              private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, 
+              private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService ,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
 
@@ -203,6 +205,17 @@ export class TorrentsTableComponent implements OnInit {
       console.log(result);
       if (result.attemptedDelete) { this.torrentDeleteFinishCallback() }
     });
+  }
+
+  /** Open modal for viewing details torrent information */
+  openInfoTorrentDialog(event: any, tor: Torrent): void {
+    if(event) { event.stopPropagation(); }
+
+    this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}})
+
+    this.infoTorDialogRef.afterClosed().subscribe((result: any) => {
+      console.log("Closed info modal", result);
+    })
   }
 
   /** Open snackbar for bulk editing deleting/pausing/playing torrents */
