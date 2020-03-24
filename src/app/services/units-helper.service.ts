@@ -11,7 +11,7 @@ export class UnitsHelperService {
    * e.g. 2,560 -> 2.56 KB
    * e.g. 1,572,864 -> 1.57 MB
    */
-  GetFileSizeString(size: number): string {
+  public GetFileSizeString(size: number): string {
     const DP = 2;   // Number of fixed decimal places for rounding
 
     const B = 1;
@@ -19,12 +19,14 @@ export class UnitsHelperService {
     const MB = 1048576;
     const GB = 1073741824;
     const TB = 1099511627776;
+    const PB = 1125899906842624;
 
     const B_s = `${(size / B).toFixed(DP)} B`;
     const KB_s = `${(size / KB).toFixed(DP)} KB`;
     const MB_s = `${(size / MB).toFixed(DP)} MB`;
     const GB_s = `${(size / GB).toFixed(DP)} GB`;
     const TB_s = `${(size / TB).toFixed(DP)} TB`;
+    const PB_s = `${(size / PB).toFixed(DP)} PB`;
 
     let result = `${size} B`;
 
@@ -43,15 +45,19 @@ export class UnitsHelperService {
     if(size < TB){
       return GB_s;
     }
+    if(size < PB) {
+      return TB_s;
+    }
 
-    return "ERROR -- Could not too large";
+    return "ERROR -- Too large";
   }
 
   /** Get string representation of a given number of seconds
   * @param seconds The time elapsed, in seconds.
   */
-  GetSecondsString(seconds: number): string {
-    interface TimeNotation{
+  public GetSecondsString(seconds: number): string {
+
+    interface TimeNotation {
         seconds: number,
         type: string
     }
