@@ -42,8 +42,6 @@ progress-bar {
 }
 
 #deleteTorrents {
-    /* background: #ff1744;
-    color: white; */
     margin: 15px;
     margin-left: 10px;
 }
@@ -56,7 +54,7 @@ progress-bar {
 
 /** Sizes of each column */
 .mat-column-Name {
-    flex: 0 0 30% !important;
+    flex: 0 0 27% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;

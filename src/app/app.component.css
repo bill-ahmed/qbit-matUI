@@ -16,6 +16,9 @@
     color: white;
 
     min-height: 61px;
+
+    position: relative;
+    bottom: 0;
 }
 
 .footer a {
