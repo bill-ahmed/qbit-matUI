@@ -3,9 +3,13 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    
+    flex-wrap: wrap;
+    min-width: 800px;
 }
 
 .torrent-transfer-info-container, .disks-transfer-information {
+    min-width: 500px;
     width: 40%;
     height: 50px;
 
@@ -19,6 +23,7 @@
     flex-direction: row;
     justify-content: space-between;
 
+    flex-wrap: wrap;
     vertical-align: middle;
 }
 
