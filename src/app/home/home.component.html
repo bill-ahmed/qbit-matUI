@@ -13,15 +13,19 @@
     <span>
       <div id="toolbar_actions">
 
-        <button mat-fab matTooltip="Add Torrent" id="addTorrentFAB" color="accent" (click)="openAddTorrentDialog()">
+        <button mat-fab matTooltip="Add Torrent" id="addTorrentFAB" color="warn" (click)="openAddTorrentDialog()">
           <mat-icon>add</mat-icon>
         </button>
 
-        <button mat-raised-button id="addTorrentButton" color="accent" (click)="openAddTorrentDialog()">
+        <button mat-mini-fab matTooltip="Logout" id="logoutFAB" color="basic" (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+        </button>
+
+        <button mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
           Upload
         </button>
   
-        <button mat-raised-button (click)="logout()" >
+        <button mat-raised-button id="logoutButton" (click)="logout()" >
           Logout
         </button>
       </div>

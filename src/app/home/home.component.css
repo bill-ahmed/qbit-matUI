@@ -3,7 +3,7 @@
     color: white;
     
     padding: 25px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 
     height: 80px;
 
@@ -29,14 +29,12 @@
     margin-left: 25px;
 }
 
-#addTorrentFAB {
+#addTorrentFAB, #logoutFAB {
     /* background: #ff1744; */
     
     position: relative;
     top: 38px;
     right: 10px;
-
-    margin-right: 40px;
 
     display: none;
 }
@@ -75,11 +73,11 @@ app-search-torrents {
 
 /** For phone screens */
 @media only screen and (max-width: 768px) {
-    #addTorrentButton {
+    #addTorrentButton, #logoutButton {
         display: none;
     }
 
-    #addTorrentFAB {
+    #addTorrentFAB, #logoutFAB {
         display: unset;
     }
 }

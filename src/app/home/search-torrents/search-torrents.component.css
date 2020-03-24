@@ -5,9 +5,12 @@
     align-items: center;
 
     padding: 5px;
-    height: 40px;
+    height: 60px;
 
     width: 100%;
+
+    position: relative;
+    bottom: -35px;
 }
 
 .searchTorrentsInput {

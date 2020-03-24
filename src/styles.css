@@ -9,7 +9,8 @@ body {
 
 /*** CUSTOM SCROLLBAR ***/
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 5px;   /** Target vertical scroll-bars */
+    height: 5px;  /** Target horizontal scroll-bars */
   }
   
   /* Track */
