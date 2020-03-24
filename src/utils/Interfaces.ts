@@ -35,6 +35,10 @@ export interface Torrent {
 
 /** Global states of server, such as global download, upload, etc. */
 export interface GlobalTransferInfo {
+    /** Total size of data ever downloaded */
+    alltime_dl: number,
+    /** Total size of data ever downloaded */
+    alltime_ul: number,
     /** Global download rate (bytes/s) */
     dl_info_speed: number,
     /** Data downloaded this session (bytes) */
@@ -49,7 +53,11 @@ export interface GlobalTransferInfo {
     up_rate_limit: number,
     /** DHT nodes connected to */
     dht_nodes: number,
-    connection_status: "connected" | "firewalled" | "disconnected"
+    connection_status: "connected" | "firewalled" | "disconnected",
+    /** Total free space on disk (bytes) */
+    free_space_on_disk: number,
+    total_peer_connections: number,
+
 }
 
 /** Response when requesting torrent data from server */
