@@ -3,6 +3,11 @@ var GetRandomInt = require('./utils.js').GetRandomInt;
 // Maximum upload/download speeds for mock data
 const MIN_SPEED = 0;
 const MAX_SPEED = 90000000;
+
+// Max/Min file sizes possible
+const MIN_FILE_SIZE = 0;
+const MAX_FILE_SIZE = 900000000000;
+
 var RID = -1;    // For /sync/maindata endpoint
 
 function getRandomId() {
@@ -23,10 +28,10 @@ function GetMainData(){
                 "average_time_queue": 3787,
                 "connection_status": "connected",
                 "dht_nodes": 393,
-                "dl_info_data": 0,
+                "dl_info_data": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                 "dl_info_speed": GetRandomInt(MIN_SPEED, MAX_SPEED),
                 "dl_rate_limit": 0,
-                "free_space_on_disk": 191069335552,
+                "free_space_on_disk": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE * 100),
                 "global_ratio": "1.25",
                 "queued_io_jobs": 0,
                 "queueing": true,
@@ -37,7 +42,7 @@ function GetMainData(){
                 "total_peer_connections": 10,
                 "total_queued_size": 0,
                 "total_wasted_session": 0,
-                "up_info_data": 2881417756,
+                "up_info_data": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                 "up_info_speed": GetRandomInt(MIN_SPEED, MAX_SPEED),
                 "up_rate_limit": 0,
                 "use_alt_speed_limits": false,
@@ -75,12 +80,12 @@ function GetMainData(){
                     "seeding_time_limit": -2,
                     "seen_complete": 1583845906,
                     "seq_dl": false,
-                    "size": 6211419,
+                    "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                     "state": "forcedUP",
                     "super_seeding": false,
                     "tags": "",
                     "time_active": 5328405,
-                    "total_size": 6211419,
+                    "total_size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                     "tracker": "some tracker #0",
                     "up_limit": -1,
                     "uploaded": 2127872,
@@ -118,12 +123,12 @@ function GetMainData(){
                     "seeding_time_limit": -2,
                     "seen_complete": 1580860752,
                     "seq_dl": false,
-                    "size": 209869298,
+                    "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                     "state": "forcedUP",
                     "super_seeding": false,
                     "tags": "",
                     "time_active": 718637,
-                    "total_size": 209869298,
+                    "total_size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                     "tracker": "https some tracker",
                     "up_limit": -1,
                     "uploaded": 219955284,
@@ -161,12 +166,12 @@ function GetMainData(){
                     "seeding_time_limit": -2,
                     "seen_complete": 1583660691,
                     "seq_dl": false,
-                    "size": 310964698,
+                    "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                     "state": "forcedUP",
                     "super_seeding": false,
                     "tags": "",
                     "time_active": 876906,
-                    "total_size": 310964698,
+                    "total_size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                     "tracker": "https tracker",
                     "up_limit": -1,
                     "uploaded": 171602394,
@@ -204,12 +209,12 @@ function GetMainData(){
                     "seeding_time_limit": -2,
                     "seen_complete": 1566641377,
                     "seq_dl": false,
-                    "size": 966283000,
+                    "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                     "state": "forcedUP",
                     "super_seeding": false,
                     "tags": "",
                     "time_active": 10218680,
-                    "total_size": 966283000,
+                    "total_size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                     "tracker": "https my tracker #3",
                     "up_limit": -1,
                     "uploaded": 1084019267,

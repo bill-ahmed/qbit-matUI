@@ -28,8 +28,6 @@ export class UnitsHelperService {
     const TB_s = `${(size / TB).toFixed(DP)} TB`;
     const PB_s = `${(size / PB).toFixed(DP)} PB`;
 
-    let result = `${size} B`;
-
     if(size < B){
       return B_s;
     }
