@@ -13,7 +13,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Download To...</mat-label>
-    <input value="{{filesDestination}}" (change)="updateFileDestination($event)" matInput >
+    <input value="{{filesDestination}}" name="savepath" type="text" id="savepath" (change)="updateFileDestination($event)" matInput >
     <mat-icon matSuffix>folder_open</mat-icon>
   </mat-form-field>
  
