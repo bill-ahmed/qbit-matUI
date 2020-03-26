@@ -1,5 +1,12 @@
 <h2 mat-dialog-title>Choose Save Location</h2>
-<button (click)="navigateUp()">Back</button>
+
+<button color="primary" mat-button (click)="navigateUp()">
+    <mat-icon mat-list-icon>arrow_back</mat-icon>
+    Back
+</button>
+<br/>
+<br/>
+
 <mat-divider></mat-divider>
 <mat-dialog-content class="mat-typography">
 
@@ -7,23 +14,29 @@
         <mat-sidenav class="leftNavigation" mode="side" opened>
             <mat-nav-list role="list" matRipple>
                 <mat-list-item *ngFor="let dir of leftChildren" (click)="navigateToDir(dir, 'parent')">
-                    <mat-icon mat-list-icon>folder</mat-icon>
+                    <mat-icon color="accent" mat-list-icon>folder</mat-icon>
                     <div mat-line>{{dir.value}}</div>
                 </mat-list-item>
             </mat-nav-list>
         </mat-sidenav>
 
         <mat-sidenav-content class="directoryContents">
+            <p *ngIf="rightPanelHasContent()">Empty folder.</p>
             <mat-nav-list role="list" matRipple>
                 <mat-list-item *ngFor="let dir of rightChildren" (click)="navigateToDir(dir, 'child')">
-                    <mat-icon mat-list-icon>folder</mat-icon>
+                    <mat-icon color="accent" mat-list-icon>folder</mat-icon>
                     <div mat-line>{{dir.value}}</div>
                 </mat-list-item>
             </mat-nav-list>
         </mat-sidenav-content>
     </mat-sidenav-container>
 
+    <br/>
+    <br/>
+    <p id="saveLocation"><b>Save Location: </b>{{getFilePath()}}</p>
+    
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-raised-button (click)="closeDialog()" color="primary" cdkFocusInitial>Done</button>
+    <button mat-button [mat-dialog-close]="true"> Cancel </button>
+    <button mat-raised-button (click)="closeDialog()" color="primary"> Confirm </button>
 </mat-dialog-actions>

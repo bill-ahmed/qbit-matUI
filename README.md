@@ -7,13 +7,20 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 * Searching by name
 * Bulk edit (currently delete, more actions are WIP)
 * Sorting by different metrics (name, size, etc.)
+* File System Navigation (easily choose where to save a torrent)
 * A fully material-themed UI
 * ... More to come!
 
 ## Configuration
-This app relies on a couple files to work properly. Under `src/assets/` there are two files: `http_config.json` and `http_config.prod.json`. During the production build, the former is replaced with the latter file. 
+This app relies on a couple files to work properly. 
+
+### HTTP_Config
+Under `src/assets/` there are two files: `http_config.json` and `http_config.prod.json`. During the production build, the former is replaced with the latter file. 
 
 If you wish to configure your endpoints and other data for dev/prod, do so here.
+
+### General Config
+Under `src/assets/` there are two files: `config.json` and `config.prod.json`. This will store general configuration, such as the delimeter used when parsing file paths (Unix vs. Windows).
 
 ## Running the App -- Development server
 To install the dependencies, run `npm install` in both the root directory and the `mock_backend/` folder.

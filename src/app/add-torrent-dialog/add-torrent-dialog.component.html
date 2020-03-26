@@ -6,10 +6,19 @@
   <input multiple type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
   <br/>
   <br/>
+  <br/>
 
   
   <h3>Save Location</h3>
-  <p>Choose a location to save the files. If none is chosen, the default shown will be used instead.</p>
+  <p>Pick a location to save the files. If none is chosen, the default shown will be used instead.</p>
+
+  <button color="primary" mat-raised-button (click)="openFileSystemExplorerDialog($event)">
+    Choose Save Location
+    <mat-icon mat-list-icon>create_new_folder</mat-icon>
+  </button>
+
+  <br/>
+  <br/>
 
   <mat-form-field appearance="outline">
     <mat-label>Download To...</mat-label>
@@ -17,7 +26,8 @@
     <mat-icon matSuffix>folder_open</mat-icon>
   </mat-form-field>
 
-  <button (click)="openFileSystemExplorerDialog($event)">file system explorer</button>
+  <br/>
+  <br/>
  
 </mat-dialog-content>
 <mat-dialog-actions align="end">

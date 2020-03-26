@@ -9,3 +9,7 @@
 .leftNavigation {
     padding-left: 0;
 }
+
+#saveLocation {
+    font-size: medium;
+}
