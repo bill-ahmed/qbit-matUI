@@ -70,4 +70,24 @@ export default class TreeNode {
     public removeChild(childValue: any): void {
         this.children = this.children.filter((elem: TreeNode) => {elem.value !== childValue})
     }
+
+    public static sort() {
+        return function(a: TreeNode, b: TreeNode) {
+            if(a.value > b.value) {
+                return 1;
+            } else if (a.value < b.value) {
+                return -1;
+            }
+            return 0;
+        }
+    }
+
+    public static GetChildFromChildrenList(children: TreeNode[], child: TreeNode): TreeNode {
+        for(const ch of children) {
+            if(ch.value === child.value) {
+                return ch;
+            }
+        }
+        return null;
+    }
 }

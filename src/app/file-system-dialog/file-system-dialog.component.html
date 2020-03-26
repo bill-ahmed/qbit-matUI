@@ -1,18 +1,26 @@
 <h2 mat-dialog-title>Choose Save Location</h2>
+<button (click)="navigateUp()">Back</button>
 <mat-divider></mat-divider>
 <mat-dialog-content class="mat-typography">
 
-    <mat-sidenav-container class="file-systme-explorer-container">
+    <mat-sidenav-container autosize class="file-systme-explorer-container">
         <mat-sidenav class="leftNavigation" mode="side" opened>
             <mat-nav-list role="list" matRipple>
-                <mat-list-item *ngFor="let dir of rootFolders">
+                <mat-list-item *ngFor="let dir of leftChildren" (click)="navigateToDir(dir, 'parent')">
                     <mat-icon mat-list-icon>folder</mat-icon>
-                    <div mat-line>{{dir}}</div>
+                    <div mat-line>{{dir.value}}</div>
                 </mat-list-item>
             </mat-nav-list>
         </mat-sidenav>
 
-        <mat-sidenav-content class="directoryContents">Main content</mat-sidenav-content>
+        <mat-sidenav-content class="directoryContents">
+            <mat-nav-list role="list" matRipple>
+                <mat-list-item *ngFor="let dir of rightChildren" (click)="navigateToDir(dir, 'child')">
+                    <mat-icon mat-list-icon>folder</mat-icon>
+                    <div mat-line>{{dir.value}}</div>
+                </mat-list-item>
+            </mat-nav-list>
+        </mat-sidenav-content>
     </mat-sidenav-container>
 
 </mat-dialog-content>
