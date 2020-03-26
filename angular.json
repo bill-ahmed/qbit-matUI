@@ -42,6 +42,10 @@
                 {
                   "replace": "src/assets/http_config.json",
                   "with": "src/assets/http_config.prod.json"
+                },
+                {
+                  "replace": "src/assets/config.json",
+                  "with": "src/assets/config.prod.json"
                 }
               ],
               "optimization": true,
