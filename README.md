@@ -12,7 +12,7 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 * ... More to come!
 
 ## Configuration
-This app relies on a couple files to work properly. 
+This app relies on a couple files to work properly. This app also requires **API v4** or higher to function properly.
 
 ### HTTP_Config
 Under `src/assets/` there are two files: `http_config.json` and `http_config.prod.json`. During the production build, the former is replaced with the latter file. 
@@ -51,4 +51,15 @@ Once you've completed that:
 
 Alternatively, you can take a production-ready build from the `builds` directory in this project. The latest version is zipped.
 
-That's all!
+## Screenshots
+The following are some snippets from the alternate UI. They may (or may not) be outdated. To get the best idea of where the app currently is, consider running it locally.
+
+#### Home Page
+![Home Page](/builds/images/home_page.jpg)
+
+
+#### Upload Torrent
+![Upload a Torrent](/builds/images/upload_torrent.jpg)
+
+#### File Explorer
+![Explore the file system](/builds/images/file_explorer.jpg)
