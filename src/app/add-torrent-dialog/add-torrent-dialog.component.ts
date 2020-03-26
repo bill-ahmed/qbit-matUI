@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MatDialogRef } from '@angular/material/dialog';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
+import { FileDirectoryExplorerService } from '../services/file-system/file-directory-explorer.service';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -16,7 +17,7 @@ export class AddTorrentDialogComponent implements OnInit {
   public filesDestination = "";
   public isLoading = false;
 
-  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService) { }
+  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService, private fs: FileDirectoryExplorerService) { }
 
   ngOnInit(): void {
     this.updateDefaultSaveLocationFromDisk();

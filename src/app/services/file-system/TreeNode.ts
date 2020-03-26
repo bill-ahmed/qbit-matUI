@@ -1,4 +1,4 @@
-class TreeNode {
+export default class TreeNode {
     private value: any = null;
     private children: TreeNode[] = [];
 
@@ -15,7 +15,16 @@ class TreeNode {
         return this.children
     }
 
-    /** Given a value of a child, add them along with other children 
+    /** Get a pointer to a child with given value. If no such child exists, null is returned*/
+    public getChild(val: any): TreeNode {
+        for(const child of this.children){
+            if (child.value === val) { return child; }
+        }
+        return null;
+    }
+
+    /** Given a value of a child, add them along with other children. Will do nothing if child with
+     * given value already exists (using ===)
      * @param childValue The value of the child to add
     */
     public addChild(childValue: any): void {
@@ -23,11 +32,26 @@ class TreeNode {
         this.addChildNode(newNode);
     }
 
-    /** Add a node to the tree
+    /** Add a node to the tree.  Will do nothing if child with same value already exists (using ===)
      * @param child The new child to add
      */
     public addChildNode(child: TreeNode): void {
-        this.children.push(child);
+        if(!this.hasChild(child.value)) {
+            this.children.push(child);
+        }
+    }
+
+    /** Determine if this node already has a child with given value (uses === comparison)
+     * True iff the child exists, false otherwise.
+     * 
+     * @param val The value of the child to look for
+     *   
+     * */
+    public hasChild(val: any): boolean {
+        for(const child of this.children){
+            if (child.value === val) { return true; }
+        }
+        return false;
     }
 
     /** Removes all instances of a child with given value from the set of children using "===" comparison.
