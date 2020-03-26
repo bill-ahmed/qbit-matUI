@@ -1,11 +1,52 @@
 .bulkUpdateTorrentsContainer {
-    width: 100%;
-    height: 100%;
+
+    pointer-events: none;
+    background: none;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+mat-card {
+    /* padding-left: 15px;
+    padding-right: 5px; */
+
+    min-width: 500px;
+
+    position: absolute;
+    bottom: 0;
+
+    pointer-events: all;
+}
+
+mat-card-content {
 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
+    flex-wrap: nowrap;
+}
+
+mat-card-actions {
+    justify-content: flex-end;
+}
+
+/** For when the user opens advanced menu **/
+.mat-card-actions {
+    display: flex;
+    justify-content: center;
+
+    margin: 0;
+
+    width: 100%;
+}
+
+#bulkUpdateActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 
 #bulkMessageHeading {

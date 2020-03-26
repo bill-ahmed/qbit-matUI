@@ -33,6 +33,7 @@ export class TorrentsTableComponent implements OnInit {
   public allTorrentData : Torrent[];
   public filteredTorrentData: Torrent[];
   public cookieValueSID: string;
+  public bulkEditOpen: boolean = false;        // Is bulk edit open or not
   selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
@@ -50,7 +51,6 @@ export class TorrentsTableComponent implements OnInit {
   private currentMatSort = {active: "Completed_On", direction: "desc"};
   private torrentSearchValue = "";
   private torrentsSelected: Torrent[] = [];     // Keep track of which torrents are currently selected
-  private bulkActionType: string = ""           // Keep track of what action user chose in bulk update 
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
@@ -188,11 +188,11 @@ export class TorrentsTableComponent implements OnInit {
   _updateSelectionService() {
     this.torrentsSelectedService.updateTorrentsSelected(this.selection.selected.map(elem => elem.hash));
     if(this.selection.selected.length > 0)  {   // If user has selected at least one torrent
-      if(!this.snackbarREF) { // And snackbar isn't already open
-        this.openSnackBar() 
+      if(!this.snackbarREF) { // And bulk edit isn't already open
+        this.openBulkEdit() 
       }
     }
-    else { this.closeSnackBar() } // Otherwise, close it
+    else { this.closeBulkEdit() } // Otherwise, close it
   }
 
   /** Open the modal for deleting a new torrent */
@@ -219,46 +219,21 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   /** Open snackbar for bulk editing deleting/pausing/playing torrents */
-  openSnackBar(): void {
-    this.snackbarREF = this.snackBar.openFromComponent(BulkUpdateTorrentsComponent);
+  public openBulkEdit(): void {
+    this.bulkEditOpen = true;
+  }
 
-    this.snackbarREF.afterDismissed().subscribe(
-      (result: any) => {
+  private closeBulkEdit(): void {
+    this.bulkEditOpen = false;
+  }
 
-        this.handleBulkTorrentAction(result);
-
-    }, (error: any) => {
-      console.error("Error with bulk edit.", error);
-    } );
+  public isBulkEditOpen(): boolean {
+    return this.bulkEditOpen;
   }
 
   torrentDeleteFinishCallback(): void {
     this.deleteTorDialogRef.close();
     this.ResetAllTableData();   // TODO: Once merging deleted torrent changes are included, this can be removed.
-  }
-
-  /** Callback for when user completes an action
-   * 
-   * TODO: This only handles DELETE. Need to account for more actions in the future!
-   */
-  handleBulkTorrentAction(action: any) {
-    
-    // Trigger deletion modal
-    if(action.dismissedByAction) {
-      this.openDeleteTorrentDialog(null, this.selection.selected);
-      this.openSnackBar();    // Keep opening snackbar until user cancels bulk delete
-    } else {
-      // Otherwise, close the snackbar and clear all selected items
-      this.closeSnackBar();
-      this.selection.clear();
-    }
-  }
-
-  private closeSnackBar(): void {
-    if (this.snackbarREF) { 
-      this.snackbarREF.dismiss();
-      this.snackbarREF = null;
-    }
   }
 
   /**Set interval for getting torrents
@@ -340,7 +315,7 @@ export class TorrentsTableComponent implements OnInit {
    * NOTE: THIS MAY CAUSE PERFORMANCE ISSUES -- USE ONLY WHEN NEEDED.
    */
   private ResetAllTableData(): void {
-    this.closeSnackBar();
+    this.closeBulkEdit();
     this.selection.clear();
 
     this.allTorrentInformation = null;
