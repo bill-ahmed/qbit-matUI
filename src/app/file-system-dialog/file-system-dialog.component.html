@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Choose Save Location</h2>
+<mat-divider></mat-divider>
+<mat-dialog-content class="mat-typography">
+
+    <mat-sidenav-container>
+        <mat-sidenav class="leftNavigation" mode="side" opened>
+            <mat-selection-list>
+                <mat-list-option>
+                  Folder 1
+                </mat-list-option>
+                <mat-list-option>
+                    Folder 2
+                </mat-list-option>
+                <mat-list-option>
+                    Folder 3
+                </mat-list-option>
+            </mat-selection-list>
+        </mat-sidenav>
+
+        <mat-sidenav-content class="directoryContents">Main content</mat-sidenav-content>
+    </mat-sidenav-container>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button (click)="closeDialog()" color="primary" cdkFocusInitial>Done</button>
+</mat-dialog-actions>

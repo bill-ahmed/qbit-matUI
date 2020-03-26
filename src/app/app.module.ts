@@ -34,8 +34,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './torrent-info-dialog/torrent-info-dialog.component';
+import { FileSystemDialogComponent } from './file-system-dialog/file-system-dialog.component';
 
 var appRoutes: Routes;
 
@@ -62,7 +65,8 @@ if(!environment.production){
     SearchTorrentsComponent,
     GlobalTransferInfoComponent,
     BulkUpdateTorrentsComponent,
-    TorrentInfoDialogComponent
+    TorrentInfoDialogComponent,
+    FileSystemDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +90,9 @@ if(!environment.production){
     MatSnackBarModule,
     MatDividerModule,
     MatTabsModule,
-    MatChipsModule
+    MatChipsModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

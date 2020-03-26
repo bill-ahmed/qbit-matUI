@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 // Material UI Components
 import { MatFormField } from '@angular/material/form-field';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 import { FileDirectoryExplorerService } from '../services/file-system/file-directory-explorer.service';
+import { FileSystemDialogComponent } from '../file-system-dialog/file-system-dialog.component';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -17,7 +18,10 @@ export class AddTorrentDialogComponent implements OnInit {
   public filesDestination = "";
   public isLoading = false;
 
-  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService, private fs: FileDirectoryExplorerService) { }
+  private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
+
+  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService, 
+              private fs: FileDirectoryExplorerService, public fileSystemDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.updateDefaultSaveLocationFromDisk();
@@ -71,6 +75,15 @@ export class AddTorrentDialogComponent implements OnInit {
   private uploadFileCompletionCallback(data: any): void {
     this.isLoading = false;
     this.dialogRef.close(data);
+  }
+
+  /** Handle opening file explorer dialog & handling any callbacks */
+  public openFileSystemExplorerDialog(event: any): void {
+    this.fileSystemExplorerDialogREF = this.fileSystemDialog.open(FileSystemDialogComponent, {minWidth: "50%"});
+
+    this.fileSystemExplorerDialogREF.afterClosed().subscribe((res: any) => {
+      console.log("Closed file system explorer dialog", res);
+    })
   }
 
 }

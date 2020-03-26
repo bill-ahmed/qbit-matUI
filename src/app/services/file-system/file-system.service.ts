@@ -12,8 +12,10 @@ export class FileSystemService {
 
   constructor() { 
     this.root = new TreeNode("");
+  }
 
-    console.log(this.root.getChildren(), this.root.getValue());
+  public getFileSystem(): TreeNode {
+    return this.root;
   }
 
   /** Given a list of file paths, construct a file-system

@@ -22,6 +22,10 @@ export class FileDirectoryExplorerService {
     });
   }
 
+  public getFileSystem(): TreeNode {
+    return this.fs.getFileSystem();
+  }
+
 
   /**Callback for when data in data_store is updated */
   private async updateDirectories(torrents: Torrent[]): Promise<void> {
