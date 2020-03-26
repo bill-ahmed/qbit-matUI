@@ -2,19 +2,14 @@
 <mat-divider></mat-divider>
 <mat-dialog-content class="mat-typography">
 
-    <mat-sidenav-container>
+    <mat-sidenav-container class="file-systme-explorer-container">
         <mat-sidenav class="leftNavigation" mode="side" opened>
-            <mat-selection-list>
-                <mat-list-option>
-                  Folder 1
-                </mat-list-option>
-                <mat-list-option>
-                    Folder 2
-                </mat-list-option>
-                <mat-list-option>
-                    Folder 3
-                </mat-list-option>
-            </mat-selection-list>
+            <mat-nav-list role="list" matRipple>
+                <mat-list-item *ngFor="let dir of rootFolders">
+                    <mat-icon mat-list-icon>folder</mat-icon>
+                    <div mat-line>{{dir}}</div>
+                </mat-list-item>
+            </mat-nav-list>
         </mat-sidenav>
 
         <mat-sidenav-content class="directoryContents">Main content</mat-sidenav-content>

@@ -1,10 +1,19 @@
 export default class TreeNode {
     private value: any = null;
+    private parent: TreeNode = null;
     private children: TreeNode[] = [];
 
     constructor(value: any, children?: TreeNode[]) {
         this.value = value;
         if(children) { this.children = children; }
+    }
+
+    public getParent(): TreeNode {
+        return this.parent;
+    }
+
+    public setParent(par: TreeNode): void {
+        this.parent = par;
     }
 
     public getValue(): any {
@@ -37,6 +46,7 @@ export default class TreeNode {
      */
     public addChildNode(child: TreeNode): void {
         if(!this.hasChild(child.value)) {
+            child.setParent(this);
             this.children.push(child);
         }
     }

@@ -1,3 +1,11 @@
 .leftNavigation, .directoryContents {
     padding: 10px;
 }
+
+.file-systme-explorer-container {
+    min-height: 50vh;
+}
+
+.leftNavigation {
+    padding-left: 0;
+}
