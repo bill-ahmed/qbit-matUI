@@ -4,12 +4,33 @@
 
 .file-systme-explorer-container {
     min-height: 50vh;
+
+    display: flex;
+    flex-direction: row;
 }
 
 .leftNavigation {
     padding-left: 0;
+    flex-grow: 1;
+
+    max-width: 200px;
+    max-height: 500px;
+
+    overflow: scroll;
+}
+
+.directoryContents {
+    flex-grow: 4;
+
+    max-height: 500px;
+
+    overflow: scroll;
 }
 
 #saveLocation {
     font-size: medium;
+}
+
+#isFolderSelected {
+    justify-self: flex-end;
 }

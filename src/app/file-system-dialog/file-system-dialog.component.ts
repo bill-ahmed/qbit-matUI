@@ -14,6 +14,7 @@ export class FileSystemDialogComponent implements OnInit {
   public filePath: string[] = [];
   public leftChildren: TreeNode[] = [];              // Keep track of what folders to show in left nav
   public rightChildren: TreeNode[] = [];
+  public selectedDir: TreeNode = null;               // Keep track of what folder the user last selected
 
   constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService) { }
 
@@ -51,6 +52,7 @@ export class FileSystemDialogComponent implements OnInit {
     }
 
     this.filePath.push(dir.getValue());
+    this.selectedDir = dir;
   }
 
   public navigateUp(): void {
@@ -65,6 +67,8 @@ export class FileSystemDialogComponent implements OnInit {
 
       this.leftChildren.sort(TreeNode.sort());
       this.rightChildren.sort(TreeNode.sort());
+
+      this.selectedDir = parent;
     }
   }
 
@@ -74,6 +78,13 @@ export class FileSystemDialogComponent implements OnInit {
 
   public getFilePath(): string {
     return this.filePath.join(config.filePathDelimeter);
+  }
+
+  public isDirectorySelected(dir: TreeNode) {
+    if(this.selectedDir) {
+      return this.selectedDir.getValue() === dir.getValue();
+    }
+    return false;
   }
 
 }

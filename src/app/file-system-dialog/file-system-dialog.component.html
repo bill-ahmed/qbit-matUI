@@ -10,17 +10,20 @@
 <mat-divider></mat-divider>
 <mat-dialog-content class="mat-typography">
 
-    <mat-sidenav-container autosize class="file-systme-explorer-container">
-        <mat-sidenav class="leftNavigation" mode="side" opened>
+    <div class="file-systme-explorer-container">
+        <div class="leftNavigation" mode="side" opened>
             <mat-nav-list role="list" matRipple>
                 <mat-list-item *ngFor="let dir of leftChildren" (click)="navigateToDir(dir, 'parent')">
-                    <mat-icon color="accent" mat-list-icon>folder</mat-icon>
+
+                    <mat-icon *ngIf="!isDirectorySelected(dir)" color="accent" mat-list-icon>folder</mat-icon>
+                    <mat-icon *ngIf="isDirectorySelected(dir)" color="accent" mat-list-icon>folder_open</mat-icon>
                     <div mat-line>{{dir.value}}</div>
+
                 </mat-list-item>
             </mat-nav-list>
-        </mat-sidenav>
+        </div>
 
-        <mat-sidenav-content class="directoryContents">
+        <div class="directoryContents">
             <p *ngIf="rightPanelHasContent()">Empty folder.</p>
             <mat-nav-list role="list" matRipple>
                 <mat-list-item *ngFor="let dir of rightChildren" (click)="navigateToDir(dir, 'child')">
@@ -28,8 +31,8 @@
                     <div mat-line>{{dir.value}}</div>
                 </mat-list-item>
             </mat-nav-list>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+        </div>
+    </div>
 
     <br/>
     <br/>

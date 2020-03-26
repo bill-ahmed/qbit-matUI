@@ -17,7 +17,7 @@ function getRandomId() {
 /**Mock data for /sync/maindata endpoint */
 function GetMainData(){
     RID += 1;
-    return (
+    let result =
         {
             "categories": {},
             "full_update": true,
@@ -76,7 +76,7 @@ function GetMainData(){
                     "progress": Math.random(),
                     "ratio": 0.2930033799312006,
                     "ratio_limit": -2,
-                    "save_path": "D:/Jumped Over/Some Lazy Dog/",
+                    "save_path": "D:/",
                     "seeding_time_limit": -2,
                     "seen_complete": 1583845906,
                     "seq_dl": false,
@@ -120,92 +120,6 @@ function GetMainData(){
                     "ratio": 1.0442750048657679,
                     "ratio_limit": -2,
                     "save_path": "A:/Movies & TV/Some show/",
-                    "seeding_time_limit": -2,
-                    "seen_complete": 1580860752,
-                    "seq_dl": false,
-                    "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
-                    "state": "forcedUP",
-                    "super_seeding": false,
-                    "tags": "",
-                    "time_active": 718637,
-                    "total_size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
-                    "tracker": "https some tracker",
-                    "up_limit": -1,
-                    "uploaded": 219955284,
-                    "uploaded_session": 0,
-                    "upspeed": GetRandomInt(MIN_SPEED, MAX_SPEED)
-                },
-                "0daea5cece5sfd": {
-                    "added_on": 1574566015,
-                    "amount_left": 0,
-                    "auto_tmm": false,
-                    "category": "",
-                    "completed": 209869298,
-                    "completion_on": 1574566120,
-                    "dl_limit": -1,
-                    "dlspeed": GetRandomInt(MIN_SPEED, MAX_SPEED),
-                    "downloaded": 210629655,
-                    "downloaded_session": 0,
-                    "eta": 8640000,
-                    "f_l_piece_prio": false,
-                    "force_start": true,
-                    "last_activity": 1583690488,
-                    "magnet_uri": "magnet_uri",
-                    "max_ratio": -1,
-                    "max_seeding_time": -1,
-                    "name": "Some show #1 with super loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name",
-                    "num_complete": 18,
-                    "num_incomplete": 1,
-                    "num_leechs": 0,
-                    "num_seeds": 0,
-                    "priority": 0,
-                    "progress": Math.random(),
-                    "ratio": 1.0442750048657679,
-                    "ratio_limit": -2,
-                    "save_path": "A:/Other/Other child/",
-                    "seeding_time_limit": -2,
-                    "seen_complete": 1580860752,
-                    "seq_dl": false,
-                    "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
-                    "state": "forcedUP",
-                    "super_seeding": false,
-                    "tags": "",
-                    "time_active": 718637,
-                    "total_size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
-                    "tracker": "https some tracker",
-                    "up_limit": -1,
-                    "uploaded": 219955284,
-                    "uploaded_session": 0,
-                    "upspeed": GetRandomInt(MIN_SPEED, MAX_SPEED)
-                },
-                "0daea5cece5555": {
-                    "added_on": 1574566015,
-                    "amount_left": 0,
-                    "auto_tmm": false,
-                    "category": "",
-                    "completed": 209869298,
-                    "completion_on": 1574566120,
-                    "dl_limit": -1,
-                    "dlspeed": GetRandomInt(MIN_SPEED, MAX_SPEED),
-                    "downloaded": 210629655,
-                    "downloaded_session": 0,
-                    "eta": 8640000,
-                    "f_l_piece_prio": false,
-                    "force_start": true,
-                    "last_activity": 1583690488,
-                    "magnet_uri": "magnet_uri",
-                    "max_ratio": -1,
-                    "max_seeding_time": -1,
-                    "name": "Some show #1 with super loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name",
-                    "num_complete": 18,
-                    "num_incomplete": 1,
-                    "num_leechs": 0,
-                    "num_seeds": 0,
-                    "priority": 0,
-                    "progress": Math.random(),
-                    "ratio": 1.0442750048657679,
-                    "ratio_limit": -2,
-                    "save_path": "A:/Movies & TV/Some show #2/",
                     "seeding_time_limit": -2,
                     "seen_complete": 1580860752,
                     "seq_dl": false,
@@ -308,8 +222,65 @@ function GetMainData(){
                     "upspeed": GetRandomInt(MIN_SPEED, MAX_SPEED)
                 }
             }
+        };
+    _addTorrentEntriesToMockData(25, result.torrents);
+    return result;
+}
+
+/** Given some mock MainData, add num_entries copies of some data to list of torrents
+ * @param num_entries The number of entries to add
+ * @param data The raw data to append to
+ */
+function _addTorrentEntriesToMockData(num_entries, data) {
+    let key = "0daea5cece5555";
+    let name = "Ubuntu LTS ";
+    let savePath = "A:/Images/";
+    for(let i = 0; i < num_entries; i++) {
+        data[key + i] = 
+        {
+            "added_on": 1574566015,
+            "amount_left": 0,
+            "auto_tmm": false,
+            "category": "",
+            "completed": 209869298,
+            "completion_on": 1574566120,
+            "dl_limit": -1,
+            "dlspeed": GetRandomInt(MIN_SPEED, MAX_SPEED),
+            "downloaded": 210629655,
+            "downloaded_session": 0,
+            "eta": 8640000,
+            "f_l_piece_prio": false,
+            "force_start": true,
+            "last_activity": 1583690488,
+            "magnet_uri": "magnet_uri",
+            "max_ratio": -1,
+            "max_seeding_time": -1,
+            "name": name + i,
+            "num_complete": 18,
+            "num_incomplete": 1,
+            "num_leechs": 0,
+            "num_seeds": 0,
+            "priority": 0,
+            "progress": Math.random(),
+            "ratio": 1.0442750048657679,
+            "ratio_limit": -2,
+            "save_path": savePath + name + i,
+            "seeding_time_limit": -2,
+            "seen_complete": 1580860752,
+            "seq_dl": false,
+            "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
+            "state": "forcedUP",
+            "super_seeding": false,
+            "tags": "",
+            "time_active": 718637,
+            "total_size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
+            "tracker": "https some tracker",
+            "up_limit": -1,
+            "uploaded": 219955284,
+            "uploaded_session": 0,
+            "upspeed": GetRandomInt(MIN_SPEED, MAX_SPEED)   
         }
-    );
+    }
 }
 
 /** Mock object to represent this user's preference
