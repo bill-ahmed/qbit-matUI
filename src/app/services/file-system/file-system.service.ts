@@ -40,7 +40,7 @@ export class FileSystemService {
 
     // For each directory in the path, create it and move the pointer
     for(const dir of dirsToCreate) {
-      if(!this.root.hasChild(dir)) {
+      if(!curr.hasChild(dir)) {
 
         let newDirNode = new TreeNode(dir);
 

@@ -54,6 +54,7 @@ export default class TreeNode {
     /** Determine if this node already has a child with given value (uses === comparison)
      * True iff the child exists, false otherwise.
      * 
+     * @param children The group of children to check in
      * @param val The value of the child to look for
      *   
      * */

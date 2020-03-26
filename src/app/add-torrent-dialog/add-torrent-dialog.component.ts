@@ -6,6 +6,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 import { FileDirectoryExplorerService } from '../services/file-system/file-directory-explorer.service';
 import { FileSystemDialogComponent } from '../file-system-dialog/file-system-dialog.component';
+import * as config from '../../assets/config.json';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -82,10 +83,9 @@ export class AddTorrentDialogComponent implements OnInit {
     this.fileSystemExplorerDialogREF = this.fileSystemDialog.open(FileSystemDialogComponent, {minWidth: "50%"});
 
     this.fileSystemExplorerDialogREF.afterClosed().subscribe((res: string) => {
-      
       // If use confirmed choice of file path
       if(res) {
-        this.filesDestination = res + "/";
+        this.filesDestination = res + config.filePathDelimeter;
       }
     })
   }

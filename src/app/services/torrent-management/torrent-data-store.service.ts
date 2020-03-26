@@ -19,7 +19,7 @@ export class TorrentDataStoreService {
   /** Get torrent all torrent data and information
    * @param rid The RID value to send to server, for changelog purposes.
    */
-  public async GetTorrentData(rid: number): Promise<any> {
+  public async GetTorrentData(rid: number): Promise<MainData> {
     let data = await this.torrent_http_service.GetAllTorrentData(rid).toPromise();
 
     // Only set raw data initially

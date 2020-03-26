@@ -14,12 +14,12 @@ export class FileDirectoryExplorerService {
   private root: TreeNode = null;
 
   constructor(private data_store: TorrentDataStoreService, private fs: FileSystemService) {
+    this.getData();
+  }
 
-    this.data_store.GetTorrentDataSubscription().subscribe((result: MainData) => {
-
-      // Only create file system if we don't already have one!
-      if(result && !this.isFileSystemLoaded) { this.updateDirectories(result.torrents); }
-    });
+  private async getData(): Promise<void> {
+    let data = await this.data_store.GetTorrentData(0);   // Need all torrents, so we use RID=0
+    this.updateDirectories(data.torrents);
   }
 
   public getFileSystem(): TreeNode {
@@ -39,7 +39,9 @@ export class FileDirectoryExplorerService {
 
     this.fs.populateFileSystem([...set_of_dir]);
 
-    this.fs.printFileSystem();
+    // console.log("\n**Printing File System **")
+    // this.fs.printFileSystem();
+    // console.log("**End of File System **\n")
 
     this.isFileSystemLoaded = true;
   }
