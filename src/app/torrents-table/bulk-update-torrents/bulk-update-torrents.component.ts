@@ -9,12 +9,28 @@ import { RowSelectionService } from 'src/app/services/torrent-management/row-sel
 })
 export class BulkUpdateTorrentsComponent implements OnInit {
 
-  @Output() onCloseDialog: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onChange: EventEmitter<string> = new EventEmitter<string>();
 
   public torrentsSelected: string[] = [];
   public canUserEdit: boolean = false;
+  private loading: boolean = false;
+  private actions: {
+    "cancel": () => void,
+    "delete": () => void,
+    "pause": () => void,
+    "play": () => void
+  };
 
-  constructor( private torrentsSelectedService: RowSelectionService ) { }
+  constructor( private torrentsSelectedService: RowSelectionService ) {
+
+    // Assign all possible actions
+    this.actions = {
+      "cancel": () => this.onChange.emit("cancel"),
+      "delete": () => this.onChange.emit("delete"),
+      "pause": () => this.onChange.emit("pause"),
+      "play": () => this.onChange.emit("play")
+    };
+   }
 
   ngOnInit(): void {
 
@@ -54,12 +70,14 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     matCardContent.style.marginLeft = "16px";
   }
 
-  public handleCancelAction(): void {
-    this.onCloseDialog.emit("cancel");
+  public handleBulkActions(action: string): void {
+    this.loading = true;
+    this.actions[action]();
+    this.loading = false;
   }
 
-  public handleDeleteAction(): void {
-    this.onCloseDialog.emit("delete");
+  public isLoading(): boolean {
+    return this.loading;
   }
 
 }

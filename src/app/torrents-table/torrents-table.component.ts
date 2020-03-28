@@ -236,6 +236,14 @@ export class TorrentsTableComponent implements OnInit {
           this.openDeleteTorrentDialog(null, this.selection.selected);
           break;
       
+        case "pause": 
+          console.log("Paused");
+          break;
+
+        case "play":
+          console.log("Played");
+          break;
+
         default:
           break;
       }

@@ -61,8 +61,8 @@ mat-card-content {
 
     width: 100%;
 
-    animation: show_content 1s ease-in 0 1;
-    -webkit-animation: show_content 1s 1 ease-in-out;
+    animation: show_content 1.3s ease-in 0 1;
+    -webkit-animation: show_content 1.3s 1 ease-in-out;
 }
 
 #bulkUpdateActions {

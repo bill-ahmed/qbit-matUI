@@ -20,21 +20,21 @@
             
                 <div *ngIf="!canUserEdit" id="bulkUpdateActions">
                     <button color="warn" mat-button (click)="handleEditAction()">MODIFY</button>
-                    <button color="primary" mat-button (click)="handleCancelAction()">CANCEL</button>
+                    <button color="primary" mat-button (click)="handleBulkActions('cancel')">CANCEL</button>
                 </div>
             </mat-card-content>
 
             <div class="mat-card-actions" *ngIf="canUserEdit">
-                <button mat-button (click)="handleCancelAction()">CANCEL</button>
-                <button color="warn" mat-button (click)="handleDeleteAction()">
+                <button mat-button (click)="handleBulkActions('cancel')">CANCEL</button>
+                <button color="warn" mat-button (click)="handleBulkActions('delete')">
                     <mat-icon>delete</mat-icon>
                     DELETE
                 </button>
-                <button color="accent" mat-button (click)="true">
+                <button color="accent" mat-button (click)="handleBulkActions('pause')">
                     <mat-icon>pause</mat-icon>
                     PAUSE
                 </button>
-                <button color="primary" mat-button (click)="true">
+                <button color="primary" mat-button (click)="handleBulkActions('play')">
                     <mat-icon>play_arrow</mat-icon>
                     RESUME
                 </button>
