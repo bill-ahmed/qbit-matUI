@@ -25,7 +25,12 @@ export class FileSystemDialogComponent implements OnInit {
   }
 
   public closeDialog(): void {
-    this.dialogRef.close(this.getFilePath());
+    if(this.filePath.length > 0) {
+      let fp = this.filePath.join(config.filePathDelimeter);
+      this.dialogRef.close(fp);
+    } else {
+      this.dialogRef.close();
+    }
   }
 
   /** Go to chosen child directory */
@@ -77,7 +82,7 @@ export class FileSystemDialogComponent implements OnInit {
   }
 
   public getFilePath(): string {
-    return this.filePath.join(config.filePathDelimeter);
+    return this.filePath.length === 0 ? "<Unchanged>" : this.filePath.join(config.filePathDelimeter);
   }
 
   public isDirectorySelected(dir: TreeNode) {
@@ -85,6 +90,16 @@ export class FileSystemDialogComponent implements OnInit {
       return this.selectedDir.getValue() === dir.getValue();
     }
     return false;
+  }
+
+  /**Get the number of children a directory has, as a string
+   * @param dir The directory to examine
+   * 
+   * E.g. "1 subfolder", "3 subfolders"
+   */
+  public getNumChildrenString(dir: TreeNode): string {
+    let len = dir.getChildren().length
+    return len < 1 ? `` : len === 1 ? `1 subfolder` : `${len} subfolders`
   }
 
 }

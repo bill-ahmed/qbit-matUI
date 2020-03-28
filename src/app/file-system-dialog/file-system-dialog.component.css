@@ -14,7 +14,7 @@
     flex-grow: 1;
 
     max-width: 200px;
-    max-height: 500px;
+    height: 450px;
 
     overflow: scroll;
 }
@@ -22,13 +22,13 @@
 .directoryContents {
     flex-grow: 4;
 
-    max-height: 500px;
+    height: 450px;
 
     overflow: scroll;
 }
 
 #saveLocation {
-    font-size: medium;
+    margin-left: 20px;
 }
 
 #isFolderSelected {

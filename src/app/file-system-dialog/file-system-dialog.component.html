@@ -18,6 +18,7 @@
                     <mat-icon *ngIf="!isDirectorySelected(dir)" color="accent" mat-list-icon>folder</mat-icon>
                     <mat-icon *ngIf="isDirectorySelected(dir)" color="accent" mat-list-icon>folder_open</mat-icon>
                     <div mat-line>{{dir.value}}</div>
+                    <div mat-line>{{getNumChildrenString(dir)}}</div>
 
                 </mat-list-item>
             </mat-nav-list>
@@ -29,6 +30,7 @@
                 <mat-list-item *ngFor="let dir of rightChildren" (click)="navigateToDir(dir, 'child')">
                     <mat-icon color="accent" mat-list-icon>folder</mat-icon>
                     <div mat-line>{{dir.value}}</div>
+                    <div mat-line>{{getNumChildrenString(dir)}}</div>
                 </mat-list-item>
             </mat-nav-list>
         </div>
@@ -36,7 +38,7 @@
 
     <br/>
     <br/>
-    <p id="saveLocation"><b>Save Location: </b>{{getFilePath()}}</p>
+    <h3 id="saveLocation"><b>Save Location: </b>{{getFilePath()}}</h3>
     
 </mat-dialog-content>
 <mat-dialog-actions align="end">
