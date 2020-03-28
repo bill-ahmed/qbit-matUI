@@ -34,17 +34,19 @@
                     <mat-icon>delete</mat-icon>
                 </button>
 
-                <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="below" (click)="openInfoTorrentDialog($event, torrent)">
-                    <mat-icon>info</mat-icon>
-                </button>
-
-                <!-- <button *ngIf="!isTorrentPaused(torrent)" mat-icon-button matTooltip="Pause Torrent" matTooltipPosition="below" (click)="handleTorrentPause($event, torrent)">
+                <button *ngIf="!isTorrentPaused(torrent)" mat-icon-button matTooltip="Pause Torrent" color="accent" matTooltipPosition="below" 
+                (click)="$event.stopPropagation();pauseTorrentsBulk([torrent])">
                     <mat-icon>pause</mat-icon>
                 </button>
 
-                <button *ngIf="isTorrentPaused(torrent)" mat-icon-button matTooltip="Resume Torrent" matTooltipPosition="below" (click)="true">
+                <button *ngIf="isTorrentPaused(torrent)" mat-icon-button matTooltip="Resume Torrent" color="primary" matTooltipPosition="below" 
+                (click)="$event.stopPropagation();resumeTorrentsBulk([torrent])">
                     <mat-icon>play_arrow</mat-icon>
-                </button> -->
+                </button>
+
+                <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="below" (click)="openInfoTorrentDialog($event, torrent)">
+                    <mat-icon>info</mat-icon>
+                </button>
 
             </mat-cell>
         </ng-container>

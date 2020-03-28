@@ -40,6 +40,10 @@ progress-bar {
     
 }
 
+.mat-cell {
+    font-size: 13.5px;
+}
+
 #deleteTorrents {
     margin: 15px;
     margin-left: 10px;

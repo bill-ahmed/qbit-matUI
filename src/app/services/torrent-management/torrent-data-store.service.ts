@@ -42,6 +42,14 @@ export class TorrentDataStoreService {
     return await this.torrent_http_service.UploadNewTorrents(files, destination)
   }
 
+  public PauseTorrents(tor: Torrent[]): Observable<any> {
+    return this.torrent_http_service.PauseTorrents(tor.map(elem => elem.hash));
+  }
+
+  public ResumeTorrents(tor: Torrent[]): Observable<any> {
+    return this.torrent_http_service.PlayTorrents(tor.map(elem => elem.hash));
+  }
+
   /** Subscribe to torrent data
    * 
    */
