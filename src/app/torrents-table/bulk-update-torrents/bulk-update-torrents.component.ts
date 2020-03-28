@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { Torrent } from 'src/utils/Interfaces';
 import { RowSelectionService } from 'src/app/services/torrent-management/row-selection.service';
 
@@ -8,6 +8,8 @@ import { RowSelectionService } from 'src/app/services/torrent-management/row-sel
   styleUrls: ['./bulk-update-torrents.component.css']
 })
 export class BulkUpdateTorrentsComponent implements OnInit {
+
+  @Output() onCloseDialog: EventEmitter<string> = new EventEmitter<string>();
 
   public torrentsSelected: string[] = [];
   public canUserEdit: boolean = false;
@@ -44,7 +46,7 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     container.style.background = "rgba(0,0,0,0.32)";
     container.style.pointerEvents = "all";
 
-    matCard.style.minWidth = "600px";
+    matCard.classList.toggle("grow");
 
     matCardContent.style.flexDirection = "column";
     matCardContent.style.justifyContent = "unset";
@@ -53,7 +55,11 @@ export class BulkUpdateTorrentsComponent implements OnInit {
   }
 
   public handleCancelAction(): void {
+    this.onCloseDialog.emit("cancel");
+  }
 
+  public handleDeleteAction(): void {
+    this.onCloseDialog.emit("delete");
   }
 
 }

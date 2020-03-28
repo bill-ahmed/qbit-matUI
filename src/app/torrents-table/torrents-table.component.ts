@@ -223,8 +223,25 @@ export class TorrentsTableComponent implements OnInit {
     this.bulkEditOpen = true;
   }
 
-  private closeBulkEdit(): void {
-    this.bulkEditOpen = false;
+  public closeBulkEdit(result?: string): void {
+
+    // Depending on the result, we need to do different actions
+    if(result) {
+      switch (result) {
+        case "cancel":
+          this.bulkEditOpen = false;
+          this.selection.clear();
+          break;
+        case "delete":
+          this.openDeleteTorrentDialog(null, this.selection.selected);
+          break;
+      
+        default:
+          break;
+      }
+    } else {
+      this.bulkEditOpen = false;  // If no event emitted, then it was an internal call
+    }
   }
 
   public isBulkEditOpen(): boolean {

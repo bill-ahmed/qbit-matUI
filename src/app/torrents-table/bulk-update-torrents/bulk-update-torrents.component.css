@@ -13,11 +13,29 @@ mat-card {
     padding-right: 5px; */
 
     min-width: 500px;
+    max-height: 70px;
 
     position: absolute;
-    bottom: 0;
+    bottom: 30px;
 
     pointer-events: all;
+
+    transition: all 0.5s ease-in-out;
+    animation: show_content;
+}
+
+mat-card.grow {
+    min-width: 600px;
+    max-height: 400px;
+    
+    /** Allow children to inherit animation **/
+    animation: show_content 0.4s ease-in 0 1;
+    -webkit-animation: show_content 0.4s 1 ease-in-out;
+}
+
+mat-card-header {
+    animation: inherit;
+    -webkit-animation: inherit;
 }
 
 mat-card-content {
@@ -29,8 +47,9 @@ mat-card-content {
     flex-wrap: nowrap;
 }
 
-mat-card-actions {
-    justify-content: flex-end;
+.bulk-update-advanced-content {
+    animation: inherit;
+    -webkit-animation: inherit;
 }
 
 /** For when the user opens advanced menu **/
@@ -41,6 +60,9 @@ mat-card-actions {
     margin: 0;
 
     width: 100%;
+
+    animation: show_content 1s ease-in 0 1;
+    -webkit-animation: show_content 1s 1 ease-in-out;
 }
 
 #bulkUpdateActions {
@@ -51,4 +73,14 @@ mat-card-actions {
 
 #bulkMessageHeading {
     margin: 0;   
+}
+
+@keyframes show_content {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
