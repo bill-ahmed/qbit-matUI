@@ -1,5 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
 import { Torrent } from 'src/utils/Interfaces';
 import { RowSelectionService } from 'src/app/services/torrent-management/row-selection.service';
 
@@ -10,10 +9,28 @@ import { RowSelectionService } from 'src/app/services/torrent-management/row-sel
 })
 export class BulkUpdateTorrentsComponent implements OnInit {
 
-  public torrentsSelected: string[] = [];
+  @Output() onChange: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(@Inject(MAT_SNACK_BAR_DATA) private data: any, private snackbarREF: MatSnackBarRef<BulkUpdateTorrentsComponent>, 
-              private torrentsSelectedService: RowSelectionService) { }
+  public torrentsSelected: string[] = [];
+  public canUserEdit: boolean = false;
+  private loading: boolean = false;
+  private actions: {
+    "cancel": () => void,
+    "delete": () => void,
+    "pause": () => void,
+    "play": () => void
+  };
+
+  constructor( private torrentsSelectedService: RowSelectionService ) {
+
+    // Assign all possible actions
+    this.actions = {
+      "cancel": () => this.onChange.emit("cancel"),
+      "delete": () => this.onChange.emit("delete"),
+      "pause": () => this.onChange.emit("pause"),
+      "play": () => this.onChange.emit("play")
+    };
+   }
 
   ngOnInit(): void {
 
@@ -31,24 +48,36 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     let numTorrentsSelected = this.torrentsSelected.length;
 
     return numTorrentsSelected === 1 ? 
-        `1 torrent selected.` : `${numTorrentsSelected} torrents selected.`;
+        `You have 1 torrent selected.` : `You have ${numTorrentsSelected} torrents selected.`;
   }
 
-  /** Programtically close the snackbar.
-   * @param withAction Whether the snackbar was dismissed with an action or not.
-   */
-  handleSnackbarClose(withAction: boolean, actionType: string): void {
-    withAction ? this.snackbarREF.dismissWithAction() : this.snackbarREF.dismiss();
+  public handleEditAction(): void {
+    this.canUserEdit = true;
+
+    // Make the mat-card much bigger
+    let container = document.getElementById('bulk-update-container');
+    let matCard = document.getElementById('bulk-update-card');
+    let matCardContent = document.getElementById('bulkd-update-card-content');
+
+    container.style.background = "rgba(0,0,0,0.32)";
+    container.style.pointerEvents = "all";
+
+    matCard.classList.toggle("grow");
+
+    matCardContent.style.flexDirection = "column";
+    matCardContent.style.justifyContent = "unset";
+    matCardContent.style.alignItems = "unset";
+    matCardContent.style.marginLeft = "16px";
   }
 
-  /** Callback for when user chooses to cancel bulk deleting torrents */
-  handleCancelAction(): void {
-    this.handleSnackbarClose(false, "CANCEL");
+  public handleBulkActions(action: string): void {
+    this.loading = true;
+    this.actions[action]();
+    this.loading = false;
   }
 
-  /** Callback for when user chooses to delete torrents */
-  handleDeleteAction(): void {
-    this.handleSnackbarClose(true, "DELETE");
+  public isLoading(): boolean {
+    return this.loading;
   }
 
 }

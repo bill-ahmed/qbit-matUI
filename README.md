@@ -5,7 +5,7 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 * Adding torrents
 * Deleting torrents
 * Searching by name
-* Bulk edit (currently delete, more actions are WIP)
+* Bulk edit (pause, resume, delete)
 * Sorting by different metrics (name, size, etc.)
 * File System Navigation (easily choose where to save a torrent)
 * A fully material-themed UI

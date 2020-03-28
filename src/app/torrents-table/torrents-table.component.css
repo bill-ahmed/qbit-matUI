@@ -20,9 +20,8 @@ mat-spinner {
 
 mat-table {
     height: 80vh;
-    min-width: 98vw;
 
-    margin: 20px 10px 10px 10px;
+    margin: 20px 3% 10px 3%;
 
     overflow: scroll;
 }
@@ -39,6 +38,10 @@ progress-bar {
 .mat-row:hover {
     background-color: #e5e5e5;
     
+}
+
+.mat-cell {
+    font-size: 13.5px;
 }
 
 #deleteTorrents {

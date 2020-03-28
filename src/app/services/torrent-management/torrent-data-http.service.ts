@@ -67,6 +67,43 @@ export class TorrentDataHTTPService {
     return this.http.post(url, body, options);
   }
 
+  /** Pause given array of torrents
+   * @param hash The hashes of the torrents to pause.
+   */
+  PauseTorrents(hash: string[]): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.pauseTorrents;
+    let url = root + endpoint;
+
+    // body parameters
+    let body = new FormData();
+    body.append("hashes", hash.join("|"));
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { } : { withCredentials: true }
+
+    return this.http.post(url, body, options);
+  }
+
+  /** Resume the given array of torrents
+   * @param hash The hashes of the torrents to resume.
+   */
+  PlayTorrents(hash: string[]): Observable<any> {
+
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.playTorrents;
+    let url = root + endpoint;
+
+    // body parameters
+    let body = new FormData();
+    body.append("hashes", hash.join("|"));
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { } : { withCredentials: true }
+
+    return this.http.post(url, body, options);
+  }
+
   /** Upload file(s) to server
    * @param files An array of File objects
    * @param endpoint The URL to send the files to

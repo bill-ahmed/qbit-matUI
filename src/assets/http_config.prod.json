@@ -5,6 +5,8 @@
         "torrentList": "/sync/maindata",
         "uploadTorrents": "/torrents/add",
         "deleteTorrent": "/torrents/delete",
+        "pauseTorrents": "/torrents/pause",
+        "playTorrents": "/torrents/resume",
         "userPreferences": "/app/preferences"
     }
 }
