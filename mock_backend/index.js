@@ -47,6 +47,15 @@ app.get('/api/v2/app/preferences', function(req, res) {
     res.json(response);
 });
 
+app.post('/api/v2/torrents/pause', function(req, res) {
+    res.status(200).send();
+});
+
+app.post('/api/v2/torrents/resume', function(req, res) {
+    res.status(200).send();
+});
+
+
 app.listen(PORT, function () {
   console.log(`Server listening on: http://localhost:${PORT}\n`);
   console.log(`Username: ${CREDS.login.username}, Password: ${CREDS.login.password}`)

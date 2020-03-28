@@ -169,12 +169,22 @@ export class TorrentsTableComponent implements OnInit {
     }
   }
 
-  /** Pause a torrent
-   * @param tor: The torrent in question.
+  /** Pause given array of torrents
+   * @param tor The torrents in question.
    */
-  handleTorrentPause(event: any, tor: Torrent) {
-    event.stopPropagation();    // Don't trigger row selection
-    alert(`PAUSE ${tor.name}`);
+  pauseTorrentsBulk(tor: Torrent[]) {
+    this.data_store.PauseTorrents(tor).subscribe(res => {
+
+    });
+  }
+
+  /** Resume given array of torrents
+   * @param tor The torrents in question
+   */
+  resumeTorrentsBulk(tor: Torrent[]) {
+    this.data_store.ResumeTorrents(tor).subscribe(res => {
+      
+    });
   }
   
   /** Callback for when a torrent is selected in the table. Update row selection service with new data
@@ -225,23 +235,30 @@ export class TorrentsTableComponent implements OnInit {
 
   public closeBulkEdit(result?: string): void {
 
+    const _clearAndClose = () => {
+      this.bulkEditOpen = false;
+      this.selection.clear();
+    }
+
     // Depending on the result, we need to do different actions
     if(result) {
       switch (result) {
         case "cancel":
-          this.bulkEditOpen = false;
-          this.selection.clear();
+          _clearAndClose();
           break;
         case "delete":
           this.openDeleteTorrentDialog(null, this.selection.selected);
           break;
       
         case "pause": 
-          console.log("Paused");
+          console.log("pause torrents")
+          this.pauseTorrentsBulk(this.selection.selected);
+          _clearAndClose();
           break;
 
         case "play":
-          console.log("Played");
+          this.resumeTorrentsBulk(this.selection.selected);
+          _clearAndClose();
           break;
 
         default:
