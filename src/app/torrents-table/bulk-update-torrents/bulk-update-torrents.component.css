@@ -6,6 +6,9 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+
+    animation: show_content 0.2s ease-in-out 0 1;
+    -webkit-animation: show_content 0.2s 1 ease-in-out;
 }
 
 mat-card {
@@ -29,7 +32,7 @@ mat-card.grow {
     max-height: 400px;
     
     /** Allow children to inherit animation **/
-    animation: show_content 0.4s ease-in 0 1;
+    animation: show_content 0.4s ease-in-out 0 1;
     -webkit-animation: show_content 0.4s 1 ease-in-out;
 }
 
@@ -61,7 +64,7 @@ mat-card-content {
 
     width: 100%;
 
-    animation: show_content 1.3s ease-in 0 1;
+    animation: show_content 1.3s ease-in-out 0 1;
     -webkit-animation: show_content 1.3s 1 ease-in-out;
 }
 
