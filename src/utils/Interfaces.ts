@@ -81,3 +81,19 @@ export interface MainData {
     queueing: boolean,
     server_state: GlobalTransferInfo
 }
+
+/** Type of network connections a user can have */
+export type NetworkType = 'slow-2g' | '2g' | '3g' | '4g';
+
+/** The general info on the user's current internet connection.
+ * More details at: https://developer.mozilla.org/en-US/docs/Web/API/NetworkInformation
+ */
+export interface NetworkConnection {
+    effectiveType: NetworkType,
+    /** The estimated round-trip time of current connection; rounded to nearest 25 milliseconds */
+    rtt: number,
+    /** Estimated download bandwith, in megabits per second. */
+    downling: number,
+    /** Whether the user has enabled a reduced data option */
+    saveData: boolean
+}
