@@ -22,6 +22,7 @@ import { BulkUpdateTorrentsComponent } from './bulk-update-torrents/bulk-update-
 import { SelectionModel } from '@angular/cdk/collections';
 import { RowSelectionService } from '../services/torrent-management/row-selection.service';
 import { TorrentInfoDialogComponent } from '../torrent-info-dialog/torrent-info-dialog.component';
+import { NetworkConnectionInformationService } from '../services/network/network-connection-information.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -41,7 +42,7 @@ export class TorrentsTableComponent implements OnInit {
   public dataSource = new MatTableDataSource(this.filteredTorrentData ? this.filteredTorrentData : []);
 
   // Other
-  private DEFAULT_REFRESH_TIMEOUT = 1000
+  private DEFAULT_REFRESH_TIMEOUT: number;
   private REFRESH_INTERVAL: any = null;
   private isFetchingData: boolean = false;
   private RID = 0;
@@ -55,7 +56,8 @@ export class TorrentsTableComponent implements OnInit {
 
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, 
-              private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService ,private snackBar: MatSnackBar) { }
+              private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService ,private snackBar: MatSnackBar,
+              private networkInfo: NetworkConnectionInformationService) { }
 
   ngOnInit(): void {
 
@@ -72,6 +74,9 @@ export class TorrentsTableComponent implements OnInit {
     // Retrieve updated torrent data on interval
     this.allTorrentData = null;
     this.filteredTorrentData = null;
+
+    // How frequently to fetch data
+    this.DEFAULT_REFRESH_TIMEOUT = this.networkInfo.get_recommended_torrent_refresh_interval();
     this.SetTorrentRefreshInterval(this.DEFAULT_REFRESH_TIMEOUT)
   }
 
@@ -283,6 +288,8 @@ export class TorrentsTableComponent implements OnInit {
    * If none is given, REFRESH_INTERVAL will be used.
    */
   private SetTorrentRefreshInterval(interval: number | void): void {
+    this.ClearTorrentRefreshInterval();
+
     let newInterval = interval || this.DEFAULT_REFRESH_TIMEOUT;
     this.REFRESH_INTERVAL = setInterval(() => this.getTorrentData(), newInterval);
   }

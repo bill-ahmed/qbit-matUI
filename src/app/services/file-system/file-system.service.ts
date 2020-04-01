@@ -52,7 +52,7 @@ export class FileSystemService {
     }
   }
 
-  /** Print entire contents of file system to console._mat-animation-noopable
+  /** Print entire contents of file system to console log
    * 
    * FOR DEBUGGING PURPOSES ONLY!!
    */
