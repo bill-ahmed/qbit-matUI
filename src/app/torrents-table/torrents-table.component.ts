@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { GetCookieInfo } from '../../utils/ClientInfo';
-import { MainData, Torrent } from '../../utils/Interfaces';
+import { MainData, Torrent, NetworkConnection } from '../../utils/Interfaces';
 
 
 // UI Components
@@ -77,7 +77,14 @@ export class TorrentsTableComponent implements OnInit {
 
     // How frequently to fetch data
     this.DEFAULT_REFRESH_TIMEOUT = this.networkInfo.get_recommended_torrent_refresh_interval();
-    this.SetTorrentRefreshInterval(this.DEFAULT_REFRESH_TIMEOUT)
+    this.SetTorrentRefreshInterval();
+
+    // When the user's network status changes, update it in state
+    this.networkInfo.get_network_change_subscription().subscribe((update: NetworkConnection) => {
+      this.DEFAULT_REFRESH_TIMEOUT = this.networkInfo.get_recommended_torrent_refresh_interval()
+      this.SetTorrentRefreshInterval();
+      console.log("updated interval", this.DEFAULT_REFRESH_TIMEOUT);
+    })
   }
 
   ngOnDestroy(): void {
@@ -287,7 +294,7 @@ export class TorrentsTableComponent implements OnInit {
    * @param interval (optional) The interval to set. 
    * If none is given, REFRESH_INTERVAL will be used.
    */
-  private SetTorrentRefreshInterval(interval: number | void): void {
+  private SetTorrentRefreshInterval(interval?: number): void {
     this.ClearTorrentRefreshInterval();
 
     let newInterval = interval || this.DEFAULT_REFRESH_TIMEOUT;
