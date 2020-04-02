@@ -21,7 +21,7 @@ mat-table {
 
     margin: 20px 3% 10px 3%;
 
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 progress-bar {
@@ -36,6 +36,10 @@ progress-bar {
 .mat-row:hover {
     background-color: #e5e5e5;
     
+}
+
+.dark-theme .mat-row:hover {
+    background-color: #5c5c5c;
 }
 
 .mat-cell {

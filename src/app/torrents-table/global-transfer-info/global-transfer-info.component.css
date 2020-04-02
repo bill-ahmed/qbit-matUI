@@ -3,6 +3,9 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
     
     flex-wrap: wrap;
     min-width: 800px;
