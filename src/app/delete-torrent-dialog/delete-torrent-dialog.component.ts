@@ -7,6 +7,8 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { TorrentDataHTTPService } from '../services/torrent-management/torrent-data-http.service';
 import { Torrent } from 'src/utils/Interfaces';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ThemeService } from '../services/theme.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-delete-torrent-dialog',
@@ -20,12 +22,15 @@ export class DeleteTorrentDialogComponent implements OnInit {
   public deleteFilesOnDisk = false;
   public isLoading = false;
   private attemptedDelete = false;  // Keep track of whether any deletes were attempted
+  public isDarkTheme: Observable<boolean>;
 
-  constructor(private dialogRef:MatDialogRef<DeleteTorrentDialogComponent>, private TorrentService: TorrentDataHTTPService, @Inject(MAT_DIALOG_DATA) data) { 
+  constructor(private dialogRef:MatDialogRef<DeleteTorrentDialogComponent>, private TorrentService: TorrentDataHTTPService, @Inject(MAT_DIALOG_DATA) data, 
+              private theme: ThemeService) { 
     this.torrentsToDelete = data.torrent;
    }
 
   ngOnInit(): void {
+    this.isDarkTheme = this.theme.getThemeSubscription();
     console.log(this.torrentsToDelete);
   }
 

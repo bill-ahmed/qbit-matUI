@@ -13,6 +13,10 @@
     align-items: center;
 }
 
+.dark-theme .mat-toolbar {
+    background: #212121;
+}
+
 .mat-toolbar h1 {
     font-size: 22pt;
 }
@@ -27,6 +31,10 @@
 
 .mat-toolbar #toolbar_actions button{
     margin-left: 25px;
+}
+
+.mat-toolbar #toolbar_actions #slideToggleTheme {
+    padding-left: 30px;
 }
 
 #addTorrentFAB, #logoutFAB {
@@ -65,7 +73,6 @@ app-search-torrents {
     display: flex;
     min-height: 100%;
     width: 100%;
-    padding: 5px;
     
     flex-grow: 1;
     flex-direction: column;

@@ -7,6 +7,8 @@ import { TorrentDataStoreService } from '../services/torrent-management/torrent-
 import { FileDirectoryExplorerService } from '../services/file-system/file-directory-explorer.service';
 import { FileSystemDialogComponent } from '../file-system-dialog/file-system-dialog.component';
 import * as config from '../../assets/config.json';
+import { ThemeService } from '../services/theme.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -18,13 +20,15 @@ export class AddTorrentDialogComponent implements OnInit {
   public filesToUpload: FileList[] = null;
   public filesDestination = "";
   public isLoading = false;
+  public isDarkTheme: Observable<boolean>;
 
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
   constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService, 
-              private fs: FileDirectoryExplorerService, public fileSystemDialog: MatDialog) { }
+              private fs: FileDirectoryExplorerService, public fileSystemDialog: MatDialog, private theme: ThemeService) { }
 
   ngOnInit(): void {
+    this.isDarkTheme = this.theme.getThemeSubscription();
     this.updateDefaultSaveLocationFromDisk();
   }
 
@@ -80,7 +84,7 @@ export class AddTorrentDialogComponent implements OnInit {
 
   /** Handle opening file explorer dialog & handling any callbacks */
   public openFileSystemExplorerDialog(event: any): void {
-    this.fileSystemExplorerDialogREF = this.fileSystemDialog.open(FileSystemDialogComponent, {minWidth: "50%"});
+    this.fileSystemExplorerDialogREF = this.fileSystemDialog.open(FileSystemDialogComponent, {minWidth: "50%", panelClass: "generic-dialog"});
 
     this.fileSystemExplorerDialogREF.afterClosed().subscribe((res: string) => {
       // If use confirmed choice of file path

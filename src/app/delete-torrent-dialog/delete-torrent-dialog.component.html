@@ -1,21 +1,25 @@
-<h2 mat-dialog-title>Delete Torrent(s)</h2>
-<mat-divider></mat-divider>
-<mat-dialog-content class="mat-typography">
-  <br/>
-  <p>Are you sure you want to delete the following?</p>
-  <br/>
-  <mat-checkbox (change)="updateDeleteFilesFromDisk($event)" disabled={{isLoading}}>Also delete from disk (<b>Warning:</b> you cannot undo this action)</mat-checkbox>
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background">
 
-  <br/>
-  <br/>
-  <li *ngFor="let tor of torrentsToDelete">
-    <b>{{tor.name}}</b>
-  </li>
+  <h2 mat-dialog-title>Delete Torrent(s)</h2>
+  <mat-divider></mat-divider>
+  <mat-dialog-content class="mat-typography">
+    <br/>
+    <p>Are you sure you want to delete the following?</p>
+    <br/>
+    <mat-checkbox (change)="updateDeleteFilesFromDisk($event)" disabled={{isLoading}}>Also delete from disk (<b>Warning:</b> you cannot undo this action)</mat-checkbox>
 
-  <br/>
- 
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>
-  <button disabled={{isLoading}} mat-raised-button (click)="handleTorrentDelete()" color="warn" cdkFocusInitial>Delete</button>
-</mat-dialog-actions>
+    <br/>
+    <br/>
+    <li *ngFor="let tor of torrentsToDelete">
+      <b>{{tor.name}}</b>
+    </li>
+
+    <br/>
+  
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>
+    <button disabled={{isLoading}} mat-raised-button (click)="handleTorrentDelete()" color="warn" cdkFocusInitial>Delete</button>
+  </mat-dialog-actions>
+
+</div>

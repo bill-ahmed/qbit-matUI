@@ -1,47 +1,51 @@
-<h2 mat-dialog-title>Choose Save Location</h2>
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background">
 
-<button color="primary" mat-button (click)="navigateUp()">
-    <mat-icon mat-list-icon>arrow_back</mat-icon>
-    Back
-</button>
-<br/>
-<br/>
+    <h2 mat-dialog-title>Choose Save Location</h2>
 
-<mat-divider></mat-divider>
-<mat-dialog-content class="mat-typography">
-
-    <div class="file-systme-explorer-container">
-        <div class="leftNavigation" mode="side" opened>
-            <mat-nav-list role="list" matRipple>
-                <mat-list-item *ngFor="let dir of leftChildren" (click)="navigateToDir(dir, 'parent')">
-
-                    <mat-icon *ngIf="!isDirectorySelected(dir)" color="accent" mat-list-icon>folder</mat-icon>
-                    <mat-icon *ngIf="isDirectorySelected(dir)" color="accent" mat-list-icon>folder_open</mat-icon>
-                    <div mat-line>{{dir.value}}</div>
-                    <div mat-line>{{getNumChildrenString(dir)}}</div>
-
-                </mat-list-item>
-            </mat-nav-list>
-        </div>
-
-        <div class="directoryContents">
-            <p *ngIf="rightPanelHasContent()">Empty folder.</p>
-            <mat-nav-list role="list" matRipple>
-                <mat-list-item *ngFor="let dir of rightChildren" (click)="navigateToDir(dir, 'child')">
-                    <mat-icon color="accent" mat-list-icon>folder</mat-icon>
-                    <div mat-line>{{dir.value}}</div>
-                    <div mat-line>{{getNumChildrenString(dir)}}</div>
-                </mat-list-item>
-            </mat-nav-list>
-        </div>
-    </div>
-
+    <button color="primary" mat-button (click)="navigateUp()">
+        <mat-icon mat-list-icon>arrow_back</mat-icon>
+        Back
+    </button>
     <br/>
     <br/>
-    <h3 id="saveLocation"><b>Save Location: </b>{{getFilePath()}}</h3>
-    
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="false"> Cancel </button>
-    <button mat-raised-button (click)="closeDialog()" color="primary"> Confirm </button>
-</mat-dialog-actions>
+
+    <mat-divider></mat-divider>
+    <mat-dialog-content class="mat-typography">
+
+        <div class="file-systme-explorer-container">
+            <div class="leftNavigation" mode="side" opened>
+                <mat-nav-list role="list" matRipple>
+                    <mat-list-item *ngFor="let dir of leftChildren" (click)="navigateToDir(dir, 'parent')">
+
+                        <mat-icon *ngIf="!isDirectorySelected(dir)" color="accent" mat-list-icon>folder</mat-icon>
+                        <mat-icon *ngIf="isDirectorySelected(dir)" color="accent" mat-list-icon>folder_open</mat-icon>
+                        <div mat-line>{{dir.value}}</div>
+                        <div mat-line>{{getNumChildrenString(dir)}}</div>
+
+                    </mat-list-item>
+                </mat-nav-list>
+            </div>
+
+            <div class="directoryContents">
+                <p *ngIf="rightPanelHasContent()">Empty folder.</p>
+                <mat-nav-list role="list" matRipple>
+                    <mat-list-item *ngFor="let dir of rightChildren" (click)="navigateToDir(dir, 'child')">
+                        <mat-icon color="accent" mat-list-icon>folder</mat-icon>
+                        <div mat-line>{{dir.value}}</div>
+                        <div mat-line>{{getNumChildrenString(dir)}}</div>
+                    </mat-list-item>
+                </mat-nav-list>
+            </div>
+        </div>
+
+        <br/>
+        <br/>
+        <h3 id="saveLocation"><b>Save Location: </b>{{getFilePath()}}</h3>
+        
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="false"> Cancel </button>
+        <button mat-raised-button (click)="closeDialog()" color="primary"> Confirm </button>
+    </mat-dialog-actions>
+
+</div>

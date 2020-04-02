@@ -15,7 +15,7 @@
 
 .searchTorrentsInput {
     font-size: 12pt;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
 
     border: 0px solid;
     outline: none;
@@ -25,4 +25,7 @@
     margin-left: 10px;
 
     flex-grow: 1;
+
+    background: inherit;
+    color: inherit;
 }

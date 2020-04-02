@@ -1,49 +1,53 @@
-<h2 mat-dialog-title>
-    {{torrent.name}}
-    <p></p>
-    <mat-chip-list id="torrent-info-chip-list">
-        <mat-chip color="primary" selected>{{state()}}</mat-chip>
-        <mat-chip *ngIf="torrent.force_start" color="accent" selected>Forced Start</mat-chip>
-    </mat-chip-list>
-</h2>
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background">
 
-<mat-dialog-content class="mat-typography torrent-info-container">
-    <mat-tab-group mat-align-tabs="start">
+    <h2 mat-dialog-title>
+        {{torrent.name}}
+        <p></p>
+        <mat-chip-list id="torrent-info-chip-list">
+            <mat-chip color="primary" selected>{{state()}}</mat-chip>
+            <mat-chip *ngIf="torrent.force_start" color="accent" selected>Forced Start</mat-chip>
+        </mat-chip-list>
+    </h2>
 
-        <mat-tab label="General">
-            <div class="torrent-info-general-content">
-                <div class="leftPanel">
-                    <p><b>Name:</b> {{torrent.name}}</p>
-                    <p><b>Total Size:</b> {{total_size()}}</p>
-                    <p><b>Downloaded:</b> {{downloaded()}} / {{total_size()}}</p>
-                    <p><b>Save Location:</b> {{torrent.save_path}}</p>
+    <mat-dialog-content class="mat-typography torrent-info-container">
+        <mat-tab-group mat-align-tabs="start">
+
+            <mat-tab label="General">
+                <div class="torrent-info-general-content">
+                    <div class="leftPanel">
+                        <p><b>Name:</b> {{torrent.name}}</p>
+                        <p><b>Total Size:</b> {{total_size()}}</p>
+                        <p><b>Downloaded:</b> {{downloaded()}} / {{total_size()}}</p>
+                        <p><b>Save Location:</b> {{torrent.save_path}}</p>
+                    </div>
+                    
+                    <div class="rightPanel">
+                        <p><b>Added On:</b> {{added_on()}}</p>
+                        <p><b>Completed On:</b> {{completed_on()}}</p>
+                        <p><b>Last Activity:</b> {{last_activity()}}</p>
+                    </div>
+                    
                 </div>
-                
-                <div class="rightPanel">
-                    <p><b>Added On:</b> {{added_on()}}</p>
-                    <p><b>Completed On:</b> {{completed_on()}}</p>
-                    <p><b>Last Activity:</b> {{last_activity()}}</p>
-                </div>
-                
-            </div>
-        </mat-tab>
+            </mat-tab>
 
-        <!-- <mat-tab label="Content">
-            <div class="torrent-info-content-content">
-                <div class="leftPanel">
-                    <p>Overview Stuff</p>
+            <!-- <mat-tab label="Content">
+                <div class="torrent-info-content-content">
+                    <div class="leftPanel">
+                        <p>Overview Stuff</p>
+                    </div>
+                    
+                    <div class="rightPanel">
+                        <p>Right Panel</p>
+                    </div>
                 </div>
-                
-                <div class="rightPanel">
-                    <p>Right Panel</p>
-                </div>
-            </div>
-        </mat-tab> -->
+            </mat-tab> -->
 
-    </mat-tab-group>
- 
-</mat-dialog-content>
+        </mat-tab-group>
+    
+    </mat-dialog-content>
 
-<mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="true">Close</button>
-</mat-dialog-actions>
+    <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true">Close</button>
+    </mat-dialog-actions>
+
+</div>

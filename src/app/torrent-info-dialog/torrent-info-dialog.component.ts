@@ -3,6 +3,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Torrent } from 'src/utils/Interfaces';
 import { UnitsHelperService } from '../services/units-helper.service';
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
+import { ThemeService } from '../services/theme.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-torrent-info-dialog',
@@ -12,12 +14,14 @@ import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-
 export class TorrentInfoDialogComponent implements OnInit {
 
   public torrent: Torrent = null;
+  public isDarkTheme: Observable<boolean>;
 
-  constructor(@Inject(MAT_DIALOG_DATA) data: any, private units_helper: UnitsHelperService, private pp: PrettyPrintTorrentDataService) { 
+  constructor(@Inject(MAT_DIALOG_DATA) data: any, private units_helper: UnitsHelperService, private pp: PrettyPrintTorrentDataService, private theme: ThemeService) { 
     this.torrent = data.torrent;
   }
 
   ngOnInit(): void {
+    this.isDarkTheme = this.theme.getThemeSubscription();
     console.log(this.torrent);
   }
 

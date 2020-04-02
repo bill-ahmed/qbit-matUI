@@ -1,4 +1,4 @@
-<div class="torrent-table-container">
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="torrent-table-container">
     <!-- <button (click)="getTorrentData()">Get Torrents</button> -->
     
     <mat-spinner diameter=50 *ngIf="isLoading()"></mat-spinner>
@@ -64,7 +64,7 @@
         <ng-container  matColumnDef="Progress">
             <mat-header-cell *matHeaderCellDef>Progress</mat-header-cell>
             <mat-cell *matCellDef="let torrent">
-                <progress-bar progress="{{torrent.progress * 100}}" [color]="'#488aff'">
+                <progress-bar progress="{{torrent.progress * 100}}" [color]="'#03A9F4'">
                 </progress-bar>
             </mat-cell>
         </ng-container>
