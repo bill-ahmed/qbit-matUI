@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
 
   public toggleTheme(): void {
     this.theme.setDarkTheme(!this.theme.getCurrentValue());
+    localStorage.setItem("dark-mode-enabled", `${this.theme.getCurrentValue()}`)
   }
 
   handleSlideToggle(event: any): void {
@@ -90,6 +91,11 @@ export class HomeComponent implements OnInit {
     {
       this.persistUserPreferences(data);
     });
+
+    let shouldDarkModeBeEnabled = localStorage.getItem("dark-mode-enabled") === "true";
+    if(shouldDarkModeBeEnabled) {
+      this.theme.setDarkTheme(true);
+    }
   }
 
   /** Store user preferences in local storage */
