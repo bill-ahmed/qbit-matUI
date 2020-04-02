@@ -8,7 +8,7 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 * Bulk edit (pause, resume, delete)
 * Sorting by different metrics (name, size, etc.)
 * File System Navigation (easily choose where to save a torrent)
-* A fully material-themed UI
+* A fully material-themed UI (Light & Dark themes)
 * ... More to come!
 
 ## Configuration
@@ -57,6 +57,8 @@ The following are some snippets from the alternate UI. They may (or may not) be 
 #### Home Page
 ![Home Page](/builds/images/home_page.jpg)
 
+### Home Page -- Dark Mode!
+![Home Page with Dark Theme](/builds/images/home_page_dark.jpg)
 
 #### Upload Torrent
 ![Upload a Torrent](/builds/images/upload_torrent.jpg)
