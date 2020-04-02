@@ -1,5 +1,5 @@
 .mat-toolbar {
-    /* background: #1976D2; */
+    background: #1976D2;
     color: white;
     
     padding: 25px;
@@ -11,6 +11,10 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.dark-theme .mat-toolbar {
+    background: #212121;
 }
 
 .mat-toolbar h1 {
@@ -65,7 +69,6 @@ app-search-torrents {
     display: flex;
     min-height: 100%;
     width: 100%;
-    padding: 5px;
     
     flex-grow: 1;
     flex-direction: column;

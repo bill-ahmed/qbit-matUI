@@ -1,41 +1,43 @@
-<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="homeContainer">
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="homeContainer mat-app-background">
   
   <!-- Toolbar -->
-  <mat-toolbar>
-    <span> 
-      <h1>
-        Manage Torrents
-      </h1> 
-    </span>
+  <div class="toolbar">
+    <mat-toolbar>
+      <span> 
+        <h1>
+          Manage Torrents
+        </h1> 
+      </span>
 
-    <app-search-torrents></app-search-torrents>
+      <app-search-torrents></app-search-torrents>
 
-    <span>
-      <div id="toolbar_actions">
+      <span>
+        <div id="toolbar_actions">
 
-        <button mat-fab matTooltip="Add Torrent" id="addTorrentFAB" color="warn" (click)="openAddTorrentDialog()">
-          <mat-icon>add</mat-icon>
-        </button>
+          <button mat-fab matTooltip="Add Torrent" id="addTorrentFAB" color="warn" (click)="openAddTorrentDialog()">
+            <mat-icon>add</mat-icon>
+          </button>
 
-        <!-- <button mat-mini-fab matTooltip="Logout" id="logoutFAB" color="basic" (click)="logout()">
-          <mat-icon>exit_to_app</mat-icon>
-        </button> -->
+          <!-- <button mat-mini-fab matTooltip="Logout" id="logoutFAB" color="basic" (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+          </button> -->
 
-        <button (click)="toggleTheme(true)">
-          toggle theme
-        </button>
+          <button (click)="toggleTheme(true)">
+            toggle theme
+          </button>
 
-        <button mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
-          Upload
-        </button>
-  
-        <!-- <button mat-raised-button id="logoutButton" (click)="logout()" >
-          Logout
-        </button> -->
-      </div>
-    </span>
+          <button mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
+            Upload
+          </button>
+    
+          <!-- <button mat-raised-button id="logoutButton" (click)="logout()" >
+            Logout
+          </button> -->
+        </div>
+      </span>
 
-  </mat-toolbar>
+    </mat-toolbar>
+  </div>
 
   <!-- Main Content -->
   <div class="content" role="main">
