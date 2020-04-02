@@ -1,5 +1,5 @@
-<div class="global-transfer-info-container">
-    <div class="mat-elevation-z1 disks-transfer-information">
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="global-transfer-info-container">
+    <mat-card class="mat-elevation-z1 disks-transfer-information">
         <h3>
             <b>Disk Summary</b>
         </h3>
@@ -13,9 +13,9 @@
             </div>
         </div>
 
-    </div>
+    </mat-card>
 
-    <div class="mat-elevation-z2 torrent-transfer-info-container">
+    <mat-card class="mat-elevation-z2 torrent-transfer-info-container">
         <h3>
             <b>Global Transfer</b>
         </h3>
@@ -35,5 +35,5 @@
     
             </div>
         </div>
-    </div>
+    </mat-card>
 </div>

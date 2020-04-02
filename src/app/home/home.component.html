@@ -1,4 +1,4 @@
-<div class="homeContainer">
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="homeContainer">
   
   <!-- Toolbar -->
   <mat-toolbar>
@@ -20,6 +20,10 @@
         <!-- <button mat-mini-fab matTooltip="Logout" id="logoutFAB" color="basic" (click)="logout()">
           <mat-icon>exit_to_app</mat-icon>
         </button> -->
+
+        <button (click)="toggleTheme(true)">
+          toggle theme
+        </button>
 
         <button mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
           Upload

@@ -23,6 +23,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { RowSelectionService } from '../services/torrent-management/row-selection.service';
 import { TorrentInfoDialogComponent } from '../torrent-info-dialog/torrent-info-dialog.component';
 import { NetworkConnectionInformationService } from '../services/network/network-connection-information.service';
+import { ThemeService } from '../services/theme.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-torrents-table',
@@ -35,6 +37,7 @@ export class TorrentsTableComponent implements OnInit {
   public filteredTorrentData: Torrent[];
   public cookieValueSID: string;
   public bulkEditOpen: boolean = false;        // Is bulk edit open or not
+  public isDarkTheme: Observable<boolean>;
   selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
@@ -57,7 +60,7 @@ export class TorrentsTableComponent implements OnInit {
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, 
               private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService ,private snackBar: MatSnackBar,
-              private networkInfo: NetworkConnectionInformationService) { }
+              private networkInfo: NetworkConnectionInformationService, private theme: ThemeService) { }
 
   ngOnInit(): void {
 
@@ -85,6 +88,9 @@ export class TorrentsTableComponent implements OnInit {
       this.SetTorrentRefreshInterval();
       console.log("updated interval", this.DEFAULT_REFRESH_TIMEOUT);
     })
+
+    // Themeing
+    this.isDarkTheme = this.theme.getThemeSubscription();
   }
 
   ngOnDestroy(): void {
