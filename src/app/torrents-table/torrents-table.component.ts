@@ -227,7 +227,7 @@ export class TorrentsTableComponent implements OnInit {
   openDeleteTorrentDialog(event: any, tors: Torrent[]): void {
     if(event) { event.stopPropagation() };
 
-    this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}});
+    this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}, panelClass: "generic-dialog"});
 
     this.deleteTorDialogRef.afterClosed().subscribe((result: any) => {
       console.log(result);
@@ -239,7 +239,7 @@ export class TorrentsTableComponent implements OnInit {
   openInfoTorrentDialog(event: any, tor: Torrent): void {
     if(event) { event.stopPropagation(); }
 
-    this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}, autoFocus: false})
+    this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}, autoFocus: false, panelClass: "generic-dialog"})
 
     this.infoTorDialogRef.afterClosed().subscribe((result: any) => {
       console.log("Closed info modal", result);

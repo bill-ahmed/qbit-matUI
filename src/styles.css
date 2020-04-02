@@ -8,6 +8,15 @@ body {
 
 }
 
+/** Styles applicable for all material dialogs */
+.generic-dialog .mat-dialog-container {
+  padding: 0;
+}
+
+.mat-dialog-inner-container {
+  padding: 24px;
+}
+
 /*** CUSTOM SCROLLBAR ***/
 ::-webkit-scrollbar {
   width: 5px;   /** Target vertical scroll-bars */

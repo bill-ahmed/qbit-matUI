@@ -3,6 +3,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FileDirectoryExplorerService } from '../services/file-system/file-directory-explorer.service';
 import TreeNode from '../services/file-system/TreeNode';
 import * as config from '../../assets/config.json';
+import { ThemeService } from '../services/theme.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-file-system-dialog',
@@ -15,10 +17,12 @@ export class FileSystemDialogComponent implements OnInit {
   public leftChildren: TreeNode[] = [];              // Keep track of what folders to show in left nav
   public rightChildren: TreeNode[] = [];
   public selectedDir: TreeNode = null;               // Keep track of what folder the user last selected
+  public isDarkTheme: Observable<boolean>;
 
-  constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService) { }
+  constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService, private theme: ThemeService) { }
 
   ngOnInit(): void {
+    this.isDarkTheme = this.theme.getThemeSubscription();
     let root = this.fs.getFileSystem();
     this.leftChildren = root.getChildren();
     this.leftChildren.sort(TreeNode.sort());

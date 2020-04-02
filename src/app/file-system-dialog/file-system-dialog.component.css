@@ -7,6 +7,8 @@
 
     display: flex;
     flex-direction: row;
+
+    overflow: hidden;
 }
 
 .leftNavigation {
@@ -16,7 +18,7 @@
     max-width: 200px;
     height: 450px;
 
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 .directoryContents {
@@ -24,7 +26,7 @@
 
     height: 450px;
 
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 #saveLocation {

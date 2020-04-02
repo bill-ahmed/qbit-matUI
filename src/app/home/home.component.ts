@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
 
   /** Open the modal for adding a new torrent */
   openAddTorrentDialog(): void {
-    const addTorDialogRef = this.addTorrentDialog.open(AddTorrentDialogComponent, {disableClose: true});
+    const addTorDialogRef = this.addTorrentDialog.open(AddTorrentDialogComponent, {disableClose: true, panelClass: "generic-dialog"});
 
     addTorDialogRef.afterClosed().subscribe((result: any) => {
       this.handleAddTorrentDialogClosed(result);
