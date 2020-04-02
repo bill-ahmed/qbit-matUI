@@ -36,6 +36,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './torrent-info-dialog/torrent-info-dialog.component';
 import { FileSystemDialogComponent } from './file-system-dialog/file-system-dialog.component';
@@ -92,7 +93,8 @@ if(!environment.production){
     MatTabsModule,
     MatChipsModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    MatSlideToggleModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

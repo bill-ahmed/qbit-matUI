@@ -18,21 +18,14 @@
             <mat-icon>add</mat-icon>
           </button>
 
-          <!-- <button mat-mini-fab matTooltip="Logout" id="logoutFAB" color="basic" (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
-          </button> -->
-
-          <button (click)="toggleTheme(true)">
-            toggle theme
-          </button>
-
           <button mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
             Upload
           </button>
-    
-          <!-- <button mat-raised-button id="logoutButton" (click)="logout()" >
-            Logout
-          </button> -->
+
+          <mat-slide-toggle id="slideToggleTheme" (change)="handleSlideToggle($event)" [checked]="isDarkThemeEnabled()" color="primary">
+            <mat-icon>nights_stay</mat-icon>
+          </mat-slide-toggle>
+
         </div>
       </span>
 

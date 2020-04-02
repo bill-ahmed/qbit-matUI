@@ -33,6 +33,10 @@
     margin-left: 25px;
 }
 
+.mat-toolbar #toolbar_actions #slideToggleTheme {
+    padding-left: 30px;
+}
+
 #addTorrentFAB, #logoutFAB {
     /* background: #ff1744; */
     

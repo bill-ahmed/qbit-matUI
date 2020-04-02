@@ -64,8 +64,16 @@ export class HomeComponent implements OnInit {
     console.log('Dialog closed:', data);
   }
 
-  public toggleTheme(val: boolean): void {
+  public toggleTheme(): void {
     this.theme.setDarkTheme(!this.theme.getCurrentValue());
+  }
+
+  handleSlideToggle(event: any): void {
+    this.toggleTheme();
+  }
+
+  isDarkThemeEnabled(): boolean {
+    return this.theme.getCurrentValue();
   }
 
   private async getUserPreferences(): Promise<void> {
