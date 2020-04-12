@@ -1,12 +1,12 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="homeContainer mat-app-background">
-  
+
   <!-- Toolbar -->
   <div class="toolbar">
     <mat-toolbar>
-      <span> 
+      <span>
         <h1>
           Manage Torrents
-        </h1> 
+        </h1>
       </span>
 
       <app-search-torrents></app-search-torrents>
@@ -19,7 +19,8 @@
           </button>
 
           <button mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
-            Upload
+            <mat-icon>cloud_upload</mat-icon>
+            &nbsp; Upload
           </button>
 
           <mat-slide-toggle id="slideToggleTheme" (change)="handleSlideToggle($event)" [checked]="isDarkThemeEnabled()" color="primary">

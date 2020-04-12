@@ -10,13 +10,13 @@
     <br/>
     <br/>
 
-    
+
     <h3>Save Location</h3>
     <p>Pick a location to save the files. If none is chosen, the default shown will be used instead.</p>
 
     <button color="primary" mat-raised-button (click)="openFileSystemExplorerDialog($event)">
-      Choose Save Location
-      <mat-icon mat-list-icon>create_new_folder</mat-icon>
+      <mat-icon>folder</mat-icon>
+      &nbsp; Choose Save Location
     </button>
 
     <br/>
@@ -30,7 +30,7 @@
 
     <br/>
     <br/>
-  
+
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>

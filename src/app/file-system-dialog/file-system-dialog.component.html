@@ -45,8 +45,8 @@
                     <input matInput (keyup)="handleFolderNameChange($event)" type="text" placeholder="Folder Name..." />
                   </mat-form-field>
 
-                  <button matSuffix (click)="cancelFolderCreation()" color="warn" mat-icon-button>
-                    <mat-icon>cancel</mat-icon>
+                  <button matSuffix (click)="cancelFolderCreation()" color="default" mat-icon-button>
+                    <mat-icon>clear</mat-icon>
                   </button>
 
                   <button type="submit" color="primary" (click)="createFolder()" mat-icon-button>

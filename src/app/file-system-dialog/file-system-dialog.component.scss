@@ -4,6 +4,7 @@
 
 .file-systme-explorer-container {
     min-height: 50vh;
+    min-width: 70vw;
 
     display: flex;
     flex-direction: row;
@@ -21,7 +22,7 @@
     padding-left: 0;
     flex-grow: 1;
 
-    max-width: 200px;
+    max-width: 300px;
     height: 450px;
 
     overflow-y: scroll;
