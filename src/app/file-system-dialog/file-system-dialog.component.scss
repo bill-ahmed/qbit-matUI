@@ -11,6 +11,12 @@
     overflow: hidden;
 }
 
+.file-explorer-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .leftNavigation {
     padding-left: 0;
     flex-grow: 1;
@@ -27,6 +33,14 @@
     height: 450px;
 
     overflow-y: scroll;
+
+    .create-new-folder-input {
+      min-width: 60%;
+    }
+
+    .new-folder-actions {
+
+    }
 }
 
 #saveLocation {

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-file-system-dialog',
   templateUrl: './file-system-dialog.component.html',
-  styleUrls: ['./file-system-dialog.component.css']
+  styleUrls: ['./file-system-dialog.component.scss']
 })
 export class FileSystemDialogComponent implements OnInit {
 
@@ -18,6 +18,7 @@ export class FileSystemDialogComponent implements OnInit {
   public rightChildren: TreeNode[] = [];
   public selectedDir: TreeNode = null;               // Keep track of what folder the user last selected
   public isDarkTheme: Observable<boolean>;
+  public isCreatingNewFolder: boolean = false;       // Keep track of when user wants to create a new folder
 
   constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService, private theme: ThemeService) { }
 
@@ -39,6 +40,8 @@ export class FileSystemDialogComponent implements OnInit {
 
   /** Go to chosen child directory */
   public navigateToDir(dir: TreeNode, type: string): void {
+
+    this.isCreatingNewFolder = false;
 
     // Refresh children shown in right panel
     if(type === "parent") {
@@ -81,6 +84,16 @@ export class FileSystemDialogComponent implements OnInit {
     }
   }
 
+  /** Create a new folder with given name and parent */
+  public createFolder(name: string, parent: TreeNode): void {
+
+  }
+
+  /** Callback for when user decides to create a new folder */
+  public handleCreateFolderAction(): void {
+    this.isCreatingNewFolder = true;
+  }
+
   public rightPanelHasContent(): boolean {
     return this.rightChildren.length === 0;
   }
@@ -98,7 +111,7 @@ export class FileSystemDialogComponent implements OnInit {
 
   /**Get the number of children a directory has, as a string
    * @param dir The directory to examine
-   * 
+   *
    * E.g. "1 subfolder", "3 subfolders"
    */
   public getNumChildrenString(dir: TreeNode): string {

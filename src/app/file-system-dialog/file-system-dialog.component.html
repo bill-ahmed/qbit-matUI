@@ -2,10 +2,17 @@
 
     <h2 mat-dialog-title>Choose Save Location</h2>
 
-    <button color="primary" mat-button (click)="navigateUp()">
+    <div class="file-explorer-actions">
+      <button color="primary" mat-button (click)="navigateUp()">
         <mat-icon mat-list-icon>arrow_back</mat-icon>
         Back
-    </button>
+      </button>
+
+      <button color="accent" mat-button (click)="handleCreateFolderAction()">
+        <mat-icon mat-list-icon>add</mat-icon>
+        New Folder
+      </button>
+    </div>
     <br/>
     <br/>
 
@@ -27,7 +34,24 @@
             </div>
 
             <div class="directoryContents">
-                <p *ngIf="rightPanelHasContent()">Empty folder.</p>
+                <p *ngIf="rightPanelHasContent() && !isCreatingNewFolder">Empty folder.</p>
+
+                <mat-list-item disableRipple *ngIf="isCreatingNewFolder">
+                  <mat-form-field class="create-new-folder-input">
+                    <span matPrefix>
+                      <mat-icon color="accent">create_new_folder</mat-icon>
+                      &nbsp;
+                    </span>
+                    <input matInput type="text" placeholder="Folder Name..." />
+                  </mat-form-field>
+                  <button matSuffix color="warn" mat-icon-button>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                  <button color="primary" mat-icon-button>
+                    <mat-icon>done</mat-icon>
+                  </button>
+                </mat-list-item>
+
                 <mat-nav-list role="list" matRipple>
                     <mat-list-item *ngFor="let dir of rightChildren" (click)="navigateToDir(dir, 'child')">
                         <mat-icon color="accent" mat-list-icon>folder</mat-icon>
@@ -41,7 +65,7 @@
         <br/>
         <br/>
         <h3 id="saveLocation"><b>Save Location: </b>{{getFilePath()}}</h3>
-        
+
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-button [mat-dialog-close]="false"> Cancel </button>
