@@ -16,9 +16,11 @@ export class FileSystemDialogComponent implements OnInit {
   public filePath: string[] = [];
   public leftChildren: TreeNode[] = [];              // Keep track of what folders to show in left nav
   public rightChildren: TreeNode[] = [];
-  public selectedDir: TreeNode = null;               // Keep track of what folder the user last selected
+  public selectedDir: TreeNode = null;               // Keep track of what folder the user last selected (i.e. what folder they're currently in)
   public isDarkTheme: Observable<boolean>;
   public isCreatingNewFolder: boolean = false;       // Keep track of when user wants to create a new folder
+
+  private newDirValue: string = ""                   // Name of new folder to create
 
   constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService, private theme: ThemeService) { }
 
@@ -41,7 +43,7 @@ export class FileSystemDialogComponent implements OnInit {
   /** Go to chosen child directory */
   public navigateToDir(dir: TreeNode, type: string): void {
 
-    this.isCreatingNewFolder = false;
+    this.cancelFolderCreation();
 
     // Refresh children shown in right panel
     if(type === "parent") {
@@ -81,17 +83,45 @@ export class FileSystemDialogComponent implements OnInit {
       this.rightChildren.sort(TreeNode.sort());
 
       this.selectedDir = parent;
+    } else {
+      // We're trying to go up to far, so reset the file explorer to how it looked initially
+      this.selectedDir = null;
+      this.rightChildren = [];
     }
   }
 
-  /** Create a new folder with given name and parent */
-  public createFolder(name: string, parent: TreeNode): void {
+  /** Create a new folder with given name in current directory */
+  public createFolder(): void {
+    let name = this.newDirValue.trim();
 
+    if(name === "") {
+      alert("Folder name can't be empty!");
+      return;
+    }
+
+    if (this.selectedDir != null) { this.selectedDir.addChild(name); }
+    else { alert("Can't create a directory at the root!"); }
+
+    this.cancelFolderCreation();
+    this.rightChildren.sort(TreeNode.sort());
   }
 
   /** Callback for when user decides to create a new folder */
   public handleCreateFolderAction(): void {
     this.isCreatingNewFolder = true;
+  }
+
+  public handleFolderNameChange(event: any): void {
+    this.newDirValue = event.target.value;
+
+    // Handle Enter button press
+    if (event.key === "Enter") { this.createFolder(); }
+  }
+
+  /** Stop user from creating a directory */
+  public cancelFolderCreation(): void {
+    this.newDirValue = "";
+    this.isCreatingNewFolder = false;
   }
 
   public rightPanelHasContent(): boolean {
