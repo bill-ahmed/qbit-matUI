@@ -24,7 +24,7 @@ export class AddTorrentDialogComponent implements OnInit {
 
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
-  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService, 
+  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService,
               private fs: FileDirectoryExplorerService, public fileSystemDialog: MatDialog, private theme: ThemeService) { }
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class AddTorrentDialogComponent implements OnInit {
     .then((resp: any) => {
       this.uploadFileCompletionCallback(resp);
 
-    }, 
+    },
     (error: any) => {
       this.uploadFileCompletionCallback(error);
     });
@@ -53,7 +53,7 @@ export class AddTorrentDialogComponent implements OnInit {
 
   /** Whether the Upload button should be disabled or not */
   isUploadDisabled(): boolean {
-    return (this.isLoading || !this.filesToUpload || (this.filesToUpload.length === 0)); 
+    return (this.isLoading || !this.filesToUpload || (this.filesToUpload.length === 0));
   }
 
   /** Retrieve default save location for torrents and update state */
@@ -84,7 +84,8 @@ export class AddTorrentDialogComponent implements OnInit {
 
   /** Handle opening file explorer dialog & handling any callbacks */
   public openFileSystemExplorerDialog(event: any): void {
-    this.fileSystemExplorerDialogREF = this.fileSystemDialog.open(FileSystemDialogComponent, {minWidth: "50%", panelClass: "generic-dialog"});
+    this.fileSystemExplorerDialogREF = this.fileSystemDialog.open(FileSystemDialogComponent,
+      {minWidth: "50%", panelClass: "generic-dialog", autoFocus: false});
 
     this.fileSystemExplorerDialogREF.afterClosed().subscribe((res: string) => {
       // If use confirmed choice of file path

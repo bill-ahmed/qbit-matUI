@@ -1,15 +1,23 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background">
 
     <h2 mat-dialog-title>Choose Save Location</h2>
-
-    <button color="primary" mat-button (click)="navigateUp()">
-        <mat-icon mat-list-icon>arrow_back</mat-icon>
-        Back
-    </button>
-    <br/>
-    <br/>
+    <mat-card-subtitle>Note: Any un-used folders you create will not be saved.</mat-card-subtitle>
 
     <mat-divider></mat-divider>
+    <br/>
+
+    <div class="file-explorer-actions">
+      <button color="primary" mat-button (click)="navigateUp()">
+        <mat-icon mat-list-icon>arrow_back</mat-icon>
+        Back
+      </button>
+
+      <button color="accent"mat-flat-button (click)="handleCreateFolderAction()">
+        <mat-icon mat-list-icon>add</mat-icon>
+        New Folder
+      </button>
+    </div>
+
     <mat-dialog-content class="mat-typography">
 
         <div class="file-systme-explorer-container">
@@ -27,7 +35,26 @@
             </div>
 
             <div class="directoryContents">
-                <p *ngIf="rightPanelHasContent()">Empty folder.</p>
+                <p *ngIf="rightPanelHasContent() && !isCreatingNewFolder">Empty folder.</p>
+
+                <mat-list-item disableRipple *ngIf="isCreatingNewFolder">
+                  <mat-form-field class="create-new-folder-input">
+                    <span matPrefix>
+                      <mat-icon color="accent">create_new_folder</mat-icon>
+                      &nbsp;
+                    </span>
+                    <input matInput (keyup)="handleFolderNameChange($event)" type="text" placeholder="Folder Name..." />
+                  </mat-form-field>
+
+                  <button matSuffix (click)="cancelFolderCreation()" color="default" mat-icon-button>
+                    <mat-icon>clear</mat-icon>
+                  </button>
+
+                  <button type="submit" color="primary" (click)="createFolder()" mat-icon-button>
+                    <mat-icon>done</mat-icon>
+                  </button>
+                </mat-list-item>
+
                 <mat-nav-list role="list" matRipple>
                     <mat-list-item *ngFor="let dir of rightChildren" (click)="navigateToDir(dir, 'child')">
                         <mat-icon color="accent" mat-list-icon>folder</mat-icon>
@@ -41,7 +68,7 @@
         <br/>
         <br/>
         <h3 id="saveLocation"><b>Save Location: </b>{{getFilePath()}}</h3>
-        
+
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-button [mat-dialog-close]="false"> Cancel </button>
