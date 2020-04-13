@@ -129,7 +129,7 @@ export class FileSystemDialogComponent implements OnInit {
   }
 
   public getFilePath(): string {
-    return this.filePath.length === 0 ? "<Unchanged>" : this.filePath.join(config.filePathDelimeter);
+    return this.filePath.length === 0 ? "{ Unchanged }" : this.filePath.join(config.filePathDelimeter);
   }
 
   public isDirectorySelected(dir: TreeNode) {
