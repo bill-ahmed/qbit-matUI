@@ -1,7 +1,7 @@
 .mat-toolbar {
     background: #1976D2;
     color: white;
-    
+
     padding: 25px;
     margin-bottom: 30px;
 
@@ -39,7 +39,7 @@
 
 #addTorrentFAB, #logoutFAB {
     /* background: #ff1744; */
-    
+
     position: relative;
     top: 38px;
     right: 10px;
@@ -50,6 +50,7 @@
 #addTorrentButton {
     color: white;
     margin-right: 20px;
+    font-size: 13.5pt;
 }
 
 app-search-torrents {
@@ -73,7 +74,7 @@ app-search-torrents {
     display: flex;
     min-height: 100%;
     width: 100%;
-    
+
     flex-grow: 1;
     flex-direction: column;
 }

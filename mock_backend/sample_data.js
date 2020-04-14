@@ -236,7 +236,7 @@ function _addTorrentEntriesToMockData(num_entries, data) {
     let name = "Ubuntu LTS ";
     let savePath = "A:/Images/";
     for(let i = 0; i < num_entries; i++) {
-        data[key + i] = 
+        data[key + i] =
         {
             "added_on": 1574566015,
             "amount_left": 0,
@@ -278,7 +278,7 @@ function _addTorrentEntriesToMockData(num_entries, data) {
             "up_limit": -1,
             "uploaded": 219955284,
             "uploaded_session": 0,
-            "upspeed": GetRandomInt(MIN_SPEED, MAX_SPEED)   
+            "upspeed": GetRandomInt(MIN_SPEED, MAX_SPEED)
         }
     }
 }
@@ -313,5 +313,15 @@ function GetUserPreferences() {
     );
 }
 
+function GetAppVersion() {
+  return "v4.1.3";
+}
+
+function GetAPIVersion() {
+  return "2.0";
+}
+
 module.exports.GetMainData = GetMainData;
 module.exports.GetUserPreferences = GetUserPreferences;
+module.exports.GetAppVersion = GetAppVersion;
+module.exports.GetAPIVersion = GetAPIVersion;

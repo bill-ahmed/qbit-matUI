@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MainData, Torrent, GlobalTransferInfo } from 'src/utils/Interfaces';
+import { MainData, Torrent, GlobalTransferInfo, ApplicationBuildInfo } from 'src/utils/Interfaces';
 import { TorrentDataHTTPService } from './torrent-data-http.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -27,7 +27,7 @@ export class TorrentDataStoreService {
       this.rawData = JSON.parse(JSON.stringify(data));
     }
 
-    // Update state with new 
+    // Update state with new
     // TODO: When a torrent gets removed, we need to refresh our data
     this.setFormattedResponse(data);
     this._updateDataSource(this.TorrentMainData);
@@ -51,10 +51,14 @@ export class TorrentDataStoreService {
   }
 
   /** Subscribe to torrent data
-   * 
+   *
    */
   public GetTorrentDataSubscription(): Observable<MainData> {
     return this._torrentMainDataValue;
+  }
+
+  public async GetApplicationBuildInfo(): Promise<ApplicationBuildInfo> {
+    return await this.torrent_http_service.GetApplicationBuildInfo();
   }
 
   /** Update observable with new data */
@@ -84,7 +88,7 @@ export class TorrentDataStoreService {
       } else {
         cleanTorrentData = [this.rawData.torrents[key]];
       }
-      
+
     }
 
     this.TorrentMainData.torrents = cleanTorrentData;
@@ -120,14 +124,14 @@ export class TorrentDataStoreService {
 
       if(data[torID]){
         for(const torKey of Object.keys(data[torID])){
-          this.rawData.torrents[torID][torKey] = data[torID][torKey]; 
+          this.rawData.torrents[torID][torKey] = data[torID][torKey];
         }
       }
     }
   }
 
   /** Delete all data in store
-   * 
+   *
    * CAUTION: MAKE SURE THAT (RID = 0) IS SENT AS THE NEXT REQUEST...or else
    */
   public ResetAllData(): void {

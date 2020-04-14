@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser')
 var multer = require('multer');
 var GetMainData = require('./sample_data').GetMainData;
 var GetUserPreferences = require('./sample_data').GetUserPreferences;
+var GetAppVersion = require('./sample_data').GetAppVersion;
+var GetAPIVersion = require('./sample_data').GetAPIVersion;
 
 var upload = multer();
 var app = express();
@@ -15,11 +17,11 @@ const CREDS = require('./config.json');
 app.use(cors());
 app.use(cookieParser());
 
-app.use(bodyParser.json()); 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 // For parsing multipart/form-data
-app.use(upload.array()); 
+app.use(upload.array());
 app.use(express.static('public'));
 
 app.post('/api/v2/auth/login', function (req, res, next) {
@@ -37,14 +39,22 @@ app.post('/api/v2/auth/login', function (req, res, next) {
 
 app.get('/api/v2/sync/maindata', function(req, res) {
     let response = GetMainData();
-
     res.json(response);
 });
 
 app.get('/api/v2/app/preferences', function(req, res) {
     let response = GetUserPreferences();
-
     res.json(response);
+});
+
+app.get('/api/v2/app/version', function(req, res) {
+  let response = GetAppVersion();
+  res.send(response);
+});
+
+app.get('/api/v2/app/webapiVersion', function(req, res) {
+  let response = GetAPIVersion();
+  res.send(response);
 });
 
 app.post('/api/v2/torrents/pause', function(req, res) {

@@ -3,11 +3,14 @@
   <!-- Toolbar -->
   <div class="toolbar">
     <mat-toolbar>
-      <span>
+      <div>
         <h1>
           Manage Torrents
         </h1>
-      </span>
+        <p style="margin-bottom: 0; font-size: 11pt;">
+          Qbittorrent {{getAppVersion()}}, API v{{getAPIVersion()}}
+        </p>
+      </div>
 
       <app-search-torrents></app-search-torrents>
 

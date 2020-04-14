@@ -97,3 +97,8 @@ export interface NetworkConnection {
     /** Whether the user has enabled a reduced data option */
     saveData: boolean
 }
+
+export interface ApplicationBuildInfo {
+  appVersion: string,
+  apiVersion: string
+}

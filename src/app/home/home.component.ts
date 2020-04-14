@@ -17,6 +17,8 @@ import { HttpClient } from '@angular/common/http';
 import { IsDevEnv } from '../../utils/Environment';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
+import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
+import { ApplicationBuildInfo } from 'src/utils/Interfaces';
 
 @Component({
   selector: 'app-home',
@@ -24,13 +26,15 @@ import { Observable } from 'rxjs';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  
+
   private cookieSID: string;
   private isPageLoading: boolean;
   private http_endpoints: any;
+  public applicationBuildInfo: ApplicationBuildInfo;
   public isDarkTheme: Observable<boolean>;
 
-  constructor(private router: Router, private cs: CookieService, private http: HttpClient, public addTorrentDialog: MatDialog, private theme: ThemeService) {
+  constructor(private router: Router, private cs: CookieService, private http: HttpClient, public addTorrentDialog: MatDialog, private theme: ThemeService,
+              private data_store: TorrentDataStoreService) {
     this.http_endpoints = http_endpoints
    }
 
@@ -48,6 +52,10 @@ export class HomeComponent implements OnInit {
     // Get user preferences
     this.getUserPreferences();
     this.isDarkTheme = this.theme.getThemeSubscription();
+
+    this.data_store.GetApplicationBuildInfo()
+    .then(res => { this.applicationBuildInfo = res; })
+    .catch(err => { console.log(err); this.applicationBuildInfo = { appVersion: "N/A", apiVersion: "N/A" } });
   }
 
   /** Open the modal for adding a new torrent */
@@ -77,6 +85,14 @@ export class HomeComponent implements OnInit {
     return this.theme.getCurrentValue();
   }
 
+  getAppVersion(): string {
+    return this.applicationBuildInfo ? this.applicationBuildInfo.appVersion : "N/A";
+  }
+
+  getAPIVersion(): string {
+    return this.applicationBuildInfo ? this.applicationBuildInfo.apiVersion : "N/A";
+  }
+
   private async getUserPreferences(): Promise<void> {
 
     let root = this.http_endpoints.default.endpoints.root;
@@ -87,7 +103,7 @@ export class HomeComponent implements OnInit {
     let options = IsDevEnv() ? { } : { withCredentials: true }
 
     this.http.get(url, options)
-    .subscribe((data: any) => 
+    .subscribe((data: any) =>
     {
       this.persistUserPreferences(data);
     });

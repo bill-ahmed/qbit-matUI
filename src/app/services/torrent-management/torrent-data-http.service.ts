@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MainData } from 'src/utils/Interfaces';
+import { MainData, ApplicationBuildInfo } from 'src/utils/Interfaces';
 import { Observable } from 'rxjs';
 
 // Utils
@@ -20,7 +20,7 @@ export class TorrentDataHTTPService {
    * @param RID The rid key for changelogs. Set to 0 if you want all data instead of changes from previous.
    */
   GetAllTorrentData(RID: number): Observable<MainData> {
-    
+
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.torrentList;
     let url = root + endpoint + `?rid=${RID}`;
@@ -48,7 +48,7 @@ export class TorrentDataHTTPService {
 
   /** Delete a torrent.
    * @param hash The unique hash of the torrent.
-   * @param deleteFromDisk If the files should be deleted as well (true), 
+   * @param deleteFromDisk If the files should be deleted as well (true),
    * or if they should persist (false).
    */
   DeleteTorrent(hash: string[], deleteFromDisk: boolean): Observable<any> {
@@ -102,6 +102,22 @@ export class TorrentDataHTTPService {
     let options = IsDevEnv() ? { } : { withCredentials: true }
 
     return this.http.post(url, body, options);
+  }
+
+  async GetApplicationBuildInfo(): Promise<ApplicationBuildInfo> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.applicationVersion;
+    let endpoint_2 = this.http_endpoints.apiVersion;
+    let url = root + endpoint;
+    let url_2 = root + endpoint_2;
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { responseType: 'text' } : { withCredentials: true, responseType: 'text'}
+
+    let app_version = await this.http.get<string>(url, options).toPromise()
+    let api_version = await this.http.get<string>(url_2, options).toPromise();
+
+    return { appVersion: app_version, apiVersion: api_version };
   }
 
   /** Upload file(s) to server

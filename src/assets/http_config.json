@@ -7,7 +7,9 @@
         "deleteTorrent": "/torrents/delete",
         "pauseTorrents": "/torrents/pause",
         "playTorrents": "/torrents/resume",
-        "userPreferences": "/app/preferences"
+        "userPreferences": "/app/preferences",
+        "applicationVersion": "/app/version",
+        "apiVersion": "/app/webapiVersion"
     },
     "devCookie": "8c212779b4abde7A"
 }
