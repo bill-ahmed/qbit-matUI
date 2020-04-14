@@ -51,8 +51,11 @@ Once you've completed that:
 
 Alternatively, you can take a production-ready build from the `builds` directory in this project. The latest version is zipped.
 
+## Demo!
+A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
+
 ## Screenshots
-The following are some snippets from the alternate UI. They may (or may not) be outdated. To get the best idea of where the app currently is, consider running it locally.
+The following are some snippets from the alternate UI. They may (or may not) be outdated. To get the best idea of where the app currently is, consider trying out the live demo above or running the app locally.
 
 #### Home Page
 ![Home Page](/builds/images/home_page.jpg)
