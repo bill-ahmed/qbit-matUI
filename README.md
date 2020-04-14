@@ -11,6 +11,9 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 * A fully material-themed UI (Light & Dark themes)
 * ... More to come!
 
+## Demo!
+A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
+
 ## Configuration
 This app relies on a couple files to work properly. This app also requires **API v4** or higher to function properly.
 
@@ -50,9 +53,6 @@ Once you've completed that:
 4. Replace all the contents of the `private` folder with the contents of `dist/` from the project directoy
 
 Alternatively, you can take a production-ready build from the `builds` directory in this project. The latest version is zipped.
-
-## Demo!
-A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 
 ## Screenshots
 The following are some snippets from the alternate UI. They may (or may not) be outdated. To get the best idea of where the app currently is, consider trying out the live demo above or running the app locally.
