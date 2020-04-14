@@ -114,7 +114,10 @@ export class TorrentDataHTTPService {
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { responseType: 'text' } : { withCredentials: true, responseType: 'text'}
 
+    //@ts-ignore
     let app_version = await this.http.get<string>(url, options).toPromise()
+
+    //@ts-ignore It keeps complaining about the 'text' response type
     let api_version = await this.http.get<string>(url_2, options).toPromise();
 
     return { appVersion: app_version, apiVersion: api_version };
