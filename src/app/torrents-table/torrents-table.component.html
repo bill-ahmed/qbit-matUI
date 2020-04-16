@@ -51,22 +51,22 @@
 
 
                 <mat-menu #menu="matMenu">
-                  <button (click)="maximumPriority(torrent)" mat-menu-item>
+                  <button (click)="maximumPriorityBulk([torrent])" mat-menu-item>
                     <mat-icon>vertical_align_top</mat-icon>
                     <span>Highest Priority</span>
                   </button>
 
-                  <button (click)="increasePriority(torrent)" mat-menu-item>
+                  <button (click)="increasePriorityBulk([torrent])" mat-menu-item>
                     <mat-icon>arrow_upward</mat-icon>
                     <span>Increase Priority</span>
                   </button>
 
-                  <button (click)="decreasePriority(torrent)" mat-menu-item>
+                  <button (click)="decreasePriorityBulk([torrent])" mat-menu-item>
                     <mat-icon>arrow_downward</mat-icon>
                     <span>Decrease Priority</span>
                   </button>
 
-                  <button (click)="minimumPriority(torrent)" mat-menu-item>
+                  <button (click)="minimumPriorityBulk([torrent])" mat-menu-item>
                     <mat-icon>vertical_align_bottom</mat-icon>
                     <span>Lowest Priority</span>
                   </button>
@@ -128,5 +128,7 @@
         <mat-header-row *matHeaderRowDef="tableColumns; sticky: true"></mat-header-row>
         <mat-row (click)="handleTorrentSelected(row)" *matRowDef="let row; columns: tableColumns"></mat-row>
     </mat-table>
+
+    <app-global-transfer-info *ngIf="!isLoading()"></app-global-transfer-info>
 </div>
 

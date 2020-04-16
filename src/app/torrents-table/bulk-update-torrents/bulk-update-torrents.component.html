@@ -1,14 +1,18 @@
 <div class="cdk-overlay-container">
     <div id="bulk-update-container" class="bulkUpdateTorrentsContainer cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing cdk-global-overlay-wrapper">
-        
+
         <mat-card id="bulk-update-card" class="mat-elevation-z6">
             <mat-card-header *ngIf="canUserEdit">
                 <mat-card-title>Bulk Update Torrents</mat-card-title>
                 <mat-card-subtitle>{{getSnackbarMessage()}}</mat-card-subtitle>
+
+                <button (click)="handleBulkActions('cancel')" mat-icon-button aria-label="Close bulk edit">
+                  <mat-icon>close</mat-icon>
+                </button>
             </mat-card-header>
 
             <mat-card-content id="bulkd-update-card-content">
-                
+
                 <div class="bulk-update-advanced-content" *ngIf="canUserEdit">
                     <p> What would you like to do? </p>
                 </div>
@@ -17,7 +21,7 @@
                 <div *ngIf="!canUserEdit" id="bulkUpdateMessage">
                     <h3 id="bulkMessageHeading">{{getSnackbarMessage()}}</h3>
                 </div>
-            
+
                 <div *ngIf="!canUserEdit" id="bulkUpdateActions">
                     <button color="warn" mat-button (click)="handleEditAction()">MODIFY</button>
                     <button color="primary" mat-button (click)="handleBulkActions('cancel')">CANCEL</button>
@@ -25,19 +29,43 @@
             </mat-card-content>
 
             <div class="mat-card-actions" *ngIf="canUserEdit">
-                <button mat-button (click)="handleBulkActions('cancel')">CANCEL</button>
+
                 <button color="warn" mat-button (click)="handleBulkActions('delete')">
                     <mat-icon>delete</mat-icon>
                     DELETE
                 </button>
-                <button color="accent" mat-button (click)="handleBulkActions('pause')">
-                    <mat-icon>pause</mat-icon>
-                    PAUSE
-                </button>
+
                 <button color="primary" mat-button (click)="handleBulkActions('play')">
                     <mat-icon>play_arrow</mat-icon>
                     RESUME
                 </button>
+
+                <button color="accent" mat-button (click)="handleBulkActions('pause')">
+                    <mat-icon>pause</mat-icon>
+                    PAUSE
+                </button>
+
+                <button color="default" mat-button (click)="handleBulkActions('increasePrio')">
+                    <mat-icon>arrow_upward</mat-icon>
+                    Increase Priority
+                </button>
+
+                <button color="default" mat-button (click)="handleBulkActions('decreasePrio')">
+                  <mat-icon>arrow_downward</mat-icon>
+                  Decrease Priority
+                </button>
+
+                <button color="default" mat-button (click)="handleBulkActions('maxPrio')">
+                    <mat-icon>vertical_align_top</mat-icon>
+                    Highest Priority
+                </button>
+
+                <button color="default" mat-button (click)="handleBulkActions('minPrio')">
+                    <mat-icon>vertical_align_bottom</mat-icon>
+                    Lowest Priority
+                </button>
+
+                <!-- <button mat-button (click)="handleBulkActions('cancel')">CANCEL</button> -->
             </div>
         </mat-card>
     </div>

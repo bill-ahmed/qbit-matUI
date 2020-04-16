@@ -36,6 +36,7 @@ mat-card.grow {
 }
 
 mat-card-header {
+  justify-content: space-between;
   animation: inherit;
   -webkit-animation: inherit;
 }
@@ -57,10 +58,12 @@ mat-card-content {
 .mat-card-actions {
   display: flex;
   justify-content: center;
+  align-items: baseline;
+  flex-wrap: wrap;
 
   margin: 0;
 
-  width: 100%;
+  max-width: 800px;
 
   animation: show_content 1.3s ease-in-out 0 1;
   -webkit-animation: show_content 1.3s 1 ease-in-out;

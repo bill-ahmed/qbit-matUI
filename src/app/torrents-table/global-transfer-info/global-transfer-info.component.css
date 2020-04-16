@@ -1,12 +1,12 @@
 .global-transfer-info-container {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
 
-    padding-top: 20px;
-    padding-bottom: 20px;
-    
+    padding-top: 5px;
+    margin: 5px 3% 0 3%;
+
     flex-wrap: wrap;
     min-width: 800px;
 }
@@ -14,11 +14,10 @@
 .torrent-transfer-info-container, .disks-transfer-information {
     min-width: 500px;
     width: 40%;
-    height: 50px;
+    max-height: 40px;
 
     margin: 0px 0 10px 0;
-    padding: 10px;
-    padding-bottom: 0px;
+    padding: 5px 10px 0 10px;
 
     display: flex;
     flex-direction: row;
