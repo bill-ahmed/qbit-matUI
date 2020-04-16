@@ -35,7 +35,7 @@ progress-bar {
 
 .mat-row:hover {
     background-color: #e5e5e5;
-    
+
 }
 
 .dark-theme .mat-row:hover {
@@ -65,7 +65,7 @@ progress-bar {
     word-wrap: break-word;
     word-break: break-word;
 
-    margin-left: 40px;
+    margin-left: 20px;
 
     min-width: 300px;
 }
@@ -92,7 +92,7 @@ progress-bar {
 
     margin: 2px;
 
-    min-width: 150px;
+    min-width: 200px;
 }
 
 .mat-column-Size {

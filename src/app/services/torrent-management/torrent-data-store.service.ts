@@ -50,6 +50,22 @@ export class TorrentDataStoreService {
     return this.torrent_http_service.PlayTorrents(tor.map(elem => elem.hash));
   }
 
+  public IncreaseTorrentPriority(tor: Torrent[]): Observable<any> {
+    return this.torrent_http_service.IncreaseTorrentPriority(tor.map(elem => elem.hash))
+  }
+
+  public DecreaseTorrentPriority(tor: Torrent[]): Observable<any> {
+    return this.torrent_http_service.DecreaseTorrentPriority(tor.map(elem => elem.hash))
+  }
+
+  public AssignTopPriority(tor: Torrent[]): Observable<any> {
+    return this.torrent_http_service.SetMaximumPriority(tor.map(elem => elem.hash));
+  }
+
+  public AssignLowestPriority(tor: Torrent[]): Observable<any> {
+    return this.torrent_http_service.SetMinimumPriority(tor.map(elem => elem.hash));
+  }
+
   /** Subscribe to torrent data
    *
    */

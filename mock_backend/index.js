@@ -57,14 +57,12 @@ app.get('/api/v2/app/webapiVersion', function(req, res) {
   res.send(response);
 });
 
-app.post('/api/v2/torrents/pause', function(req, res) {
-    res.status(200).send();
+/** KEEP THIS AT THE END!
+ * All un-set routes will go through here.
+ */
+app.use(function(req, res){
+  res.status(200).send();
 });
-
-app.post('/api/v2/torrents/resume', function(req, res) {
-    res.status(200).send();
-});
-
 
 app.listen(PORT, function () {
   console.log(`Server listening on: http://localhost:${PORT}\n`);
