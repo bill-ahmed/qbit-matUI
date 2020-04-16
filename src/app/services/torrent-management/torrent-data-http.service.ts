@@ -104,6 +104,78 @@ export class TorrentDataHTTPService {
     return this.http.post(url, body, options);
   }
 
+  /** Increase the priority of given torrents
+   * @param hashes The hashes of torrents to modify
+   */
+  IncreaseTorrentPriority(hashes: string[]): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.increasePrio;
+    let url = root + endpoint;
+
+    // body parameters
+    let body = new FormData();
+    body.append("hashes", hashes.join("|"));
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { } : { withCredentials: true }
+
+    return this.http.post(url, body, options);
+  }
+
+  /** Decrease the priority of given torrents
+   * @param hashes The hashes of torrents to modify
+   */
+  DecreaseTorrentPriority(hashes: string[]): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.decreasePrio;
+    let url = root + endpoint;
+
+    // body parameters
+    let body = new FormData();
+    body.append("hashes", hashes.join("|"));
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { } : { withCredentials: true }
+
+    return this.http.post(url, body, options);
+  }
+
+  /** Give the torrents maximum possible priority
+   * @param hashes The hashes of torrents to modify
+   */
+  SetMaximumPriority(hashes: string[]): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.maxPrio;
+    let url = root + endpoint;
+
+    // body parameters
+    let body = new FormData();
+    body.append("hashes", hashes.join("|"));
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { } : { withCredentials: true }
+
+    return this.http.post(url, body, options);
+  }
+
+  /** Given the torrents lowest possible priority
+   * @param hashes The hashes of torrents to modify
+   */
+  SetMinimumPriority(hashes: string[]): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.minPrio;
+    let url = root + endpoint;
+
+    // body parameters
+    let body = new FormData();
+    body.append("hashes", hashes.join("|"));
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { } : { withCredentials: true }
+
+    return this.http.post(url, body, options);
+  }
+
   async GetApplicationBuildInfo(): Promise<ApplicationBuildInfo> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.applicationVersion;
