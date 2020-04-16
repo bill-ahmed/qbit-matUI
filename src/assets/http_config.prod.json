@@ -7,6 +7,10 @@
         "deleteTorrent": "/torrents/delete",
         "pauseTorrents": "/torrents/pause",
         "playTorrents": "/torrents/resume",
+        "increasePrio": "/torrents/increasePrio",
+        "decreasePrio": "/torrents/decreasePrio",
+        "maxPrio": "/torrents/topPrio",
+        "minPrio": "/torrents/bottomPrio",
         "userPreferences": "/app/preferences",
         "applicationVersion": "/app/version",
         "apiVersion": "/app/webapiVersion"

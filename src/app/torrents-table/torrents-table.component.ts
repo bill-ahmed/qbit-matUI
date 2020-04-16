@@ -57,8 +57,8 @@ export class TorrentsTableComponent implements OnInit {
   private torrentsSelected: Torrent[] = [];     // Keep track of which torrents are currently selected
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService, 
-              private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, 
+  constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService,
+              private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog,
               private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService ,private snackBar: MatSnackBar,
               private networkInfo: NetworkConnectionInformationService, private theme: ThemeService) { }
 
@@ -136,7 +136,7 @@ export class TorrentsTableComponent implements OnInit {
 
   /** Get all torrent data and update the table */
   private async getTorrentData(): Promise<void>{
-    
+
     // Don't request if we're already in the middle of one
     if(this.isFetchingData){
       return;
@@ -167,8 +167,8 @@ export class TorrentsTableComponent implements OnInit {
     this.updateTorrentsBasedOnSearchValue()
   }
 
-  /** Callback for when user is searching for a torrent. Filter all torrents displayed that match torrent criteria 
-   * 
+  /** Callback for when user is searching for a torrent. Filter all torrents displayed that match torrent criteria
+   *
    * NOTE: If search value in state is empty, no filtering is done
   */
   updateTorrentsBasedOnSearchValue(): void {
@@ -181,9 +181,9 @@ export class TorrentsTableComponent implements OnInit {
       });
 
       this.refreshDataSource();
-    } 
+    }
     else if(this.torrentSearchValue === "") {   // If searching for value is empty, restore filteredTorrentData
-      this.filteredTorrentData = this.allTorrentData  
+      this.filteredTorrentData = this.allTorrentData
     }
   }
 
@@ -191,20 +191,32 @@ export class TorrentsTableComponent implements OnInit {
    * @param tor The torrents in question.
    */
   pauseTorrentsBulk(tor: Torrent[]) {
-    this.data_store.PauseTorrents(tor).subscribe(res => {
-
-    });
+    this.data_store.PauseTorrents(tor).subscribe(res => { });
   }
 
   /** Resume given array of torrents
    * @param tor The torrents in question
    */
   resumeTorrentsBulk(tor: Torrent[]) {
-    this.data_store.ResumeTorrents(tor).subscribe(res => {
-      
-    });
+    this.data_store.ResumeTorrents(tor).subscribe(res => { });
   }
-  
+
+  increasePriorityBulk(tor: Torrent[]) {
+    this.data_store.IncreaseTorrentPriority(tor).subscribe(res => { });
+  }
+
+  decreasePriorityBulk(tor: Torrent[]) {
+    this.data_store.DecreaseTorrentPriority(tor).subscribe(res => { })
+  }
+
+  maximumPriorityBulk(tor: Torrent[]) {
+    this.data_store.AssignTopPriority(tor).subscribe(res => { });
+  }
+
+  minimumPriorityBulk(tor: Torrent[]) {
+    this.data_store.AssignLowestPriority(tor).subscribe(res => { });
+  }
+
   /** Callback for when a torrent is selected in the table. Update row selection service with new data
    * @param event The event thrown.
    */
@@ -217,7 +229,7 @@ export class TorrentsTableComponent implements OnInit {
     this.torrentsSelectedService.updateTorrentsSelected(this.selection.selected.map(elem => elem.hash));
     if(this.selection.selected.length > 0)  {   // If user has selected at least one torrent
       if(!this.snackbarREF) { // And bulk edit isn't already open
-        this.openBulkEdit() 
+        this.openBulkEdit()
       }
     }
     else { this.closeBulkEdit() } // Otherwise, close it
@@ -267,8 +279,8 @@ export class TorrentsTableComponent implements OnInit {
         case "delete":
           this.openDeleteTorrentDialog(null, this.selection.selected);
           break;
-      
-        case "pause": 
+
+        case "pause":
           console.log("pause torrents")
           this.pauseTorrentsBulk(this.selection.selected);
           _clearAndClose();
@@ -276,6 +288,26 @@ export class TorrentsTableComponent implements OnInit {
 
         case "play":
           this.resumeTorrentsBulk(this.selection.selected);
+          _clearAndClose();
+          break;
+
+        case "increasePrio":
+          this.increasePriorityBulk(this.selection.selected);
+          _clearAndClose();
+          break;
+
+        case "decreasePrio":
+          this.decreasePriorityBulk(this.selection.selected);
+          _clearAndClose();
+          break;
+
+        case "maxPrio":
+          this.maximumPriorityBulk(this.selection.selected);
+          _clearAndClose();
+          break;
+
+        case "minPrio":
+          this.minimumPriorityBulk(this.selection.selected);
           _clearAndClose();
           break;
 
@@ -297,7 +329,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   /**Set interval for getting torrents
-   * @param interval (optional) The interval to set. 
+   * @param interval (optional) The interval to set.
    * If none is given, REFRESH_INTERVAL will be used.
    */
   private SetTorrentRefreshInterval(interval?: number): void {
@@ -373,7 +405,7 @@ export class TorrentsTableComponent implements OnInit {
 
   /** Reset all data in torrents table. This will also grab the entire
    * torrent list again (rid = 0) via http request, and re-build the table.
-   * 
+   *
    * NOTE: THIS MAY CAUSE PERFORMANCE ISSUES -- USE ONLY WHEN NEEDED.
    */
   private ResetAllTableData(): void {

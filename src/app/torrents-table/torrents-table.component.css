@@ -19,7 +19,7 @@ mat-spinner {
 mat-table {
     height: 80vh;
 
-    margin: 20px 3% 10px 3%;
+    margin: 20px 3% 0 3%;
 
     overflow-y: scroll;
 }
@@ -34,8 +34,8 @@ progress-bar {
 }
 
 .mat-row:hover {
-    background-color: #e5e5e5;
-    
+    background-color: #f2f2f2;
+
 }
 
 .dark-theme .mat-row:hover {
@@ -65,7 +65,7 @@ progress-bar {
     word-wrap: break-word;
     word-break: break-word;
 
-    margin-left: 40px;
+    margin-left: 20px;
 
     min-width: 300px;
 }
@@ -92,7 +92,7 @@ progress-bar {
 
     margin: 2px;
 
-    min-width: 150px;
+    min-width: 200px;
 }
 
 .mat-column-Size {

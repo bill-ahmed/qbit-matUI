@@ -1,6 +1,6 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="torrent-table-container">
     <!-- <button (click)="getTorrentData()">Get Torrents</button> -->
-    
+
     <mat-spinner diameter=50 *ngIf="isLoading()"></mat-spinner>
     <p id="loading_p" *ngIf="isLoading()">Loading...</p>
 
@@ -29,20 +29,48 @@
         <ng-container  matColumnDef="Actions">
             <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
             <mat-cell *matCellDef="let torrent">
-                
+
                 <button color="warn" mat-icon-button matTooltip="Delete Torrent" matTooltipPosition="below" (click)="openDeleteTorrentDialog($event, [torrent])">
                     <mat-icon>delete</mat-icon>
                 </button>
 
-                <button *ngIf="!isTorrentPaused(torrent)" mat-icon-button matTooltip="Pause Torrent" color="accent" matTooltipPosition="below" 
+                <button *ngIf="!isTorrentPaused(torrent)" mat-icon-button matTooltip="Pause Torrent" color="accent" matTooltipPosition="below"
                 (click)="$event.stopPropagation();pauseTorrentsBulk([torrent])">
                     <mat-icon>pause</mat-icon>
                 </button>
 
-                <button *ngIf="isTorrentPaused(torrent)" mat-icon-button matTooltip="Resume Torrent" color="primary" matTooltipPosition="below" 
+                <button *ngIf="isTorrentPaused(torrent)" mat-icon-button matTooltip="Resume Torrent" color="primary" matTooltipPosition="below"
                 (click)="$event.stopPropagation();resumeTorrentsBulk([torrent])">
                     <mat-icon>play_arrow</mat-icon>
                 </button>
+
+                <!-- Throw additional actions inside a menu -->
+                <button (click)="$event.stopPropagation();" mat-icon-button [matMenuTriggerFor]="menu" aria-label="More torrent options">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+
+
+                <mat-menu #menu="matMenu">
+                  <button (click)="maximumPriorityBulk([torrent])" mat-menu-item>
+                    <mat-icon>vertical_align_top</mat-icon>
+                    <span>Highest Priority</span>
+                  </button>
+
+                  <button (click)="increasePriorityBulk([torrent])" mat-menu-item>
+                    <mat-icon>arrow_upward</mat-icon>
+                    <span>Increase Priority</span>
+                  </button>
+
+                  <button (click)="decreasePriorityBulk([torrent])" mat-menu-item>
+                    <mat-icon>arrow_downward</mat-icon>
+                    <span>Decrease Priority</span>
+                  </button>
+
+                  <button (click)="minimumPriorityBulk([torrent])" mat-menu-item>
+                    <mat-icon>vertical_align_bottom</mat-icon>
+                    <span>Lowest Priority</span>
+                  </button>
+                </mat-menu>
 
                 <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="below" (click)="openInfoTorrentDialog($event, torrent)">
                     <mat-icon>info</mat-icon>
@@ -73,7 +101,7 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
             <mat-cell *matCellDef="let torrent">{{getStatusString(torrent.state)}}</mat-cell>
         </ng-container>
-        
+
         <ng-container  matColumnDef="Down_Speed">
             <mat-header-cell *matHeaderCellDef>Down Speed</mat-header-cell>
             <mat-cell *matCellDef="let torrent">{{getFileSizeString(torrent.dlspeed)}}/s</mat-cell>
@@ -100,5 +128,7 @@
         <mat-header-row *matHeaderRowDef="tableColumns; sticky: true"></mat-header-row>
         <mat-row (click)="handleTorrentSelected(row)" *matRowDef="let row; columns: tableColumns"></mat-row>
     </mat-table>
+
+    <app-global-transfer-info *ngIf="!isLoading()"></app-global-transfer-info>
 </div>
 

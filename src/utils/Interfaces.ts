@@ -32,7 +32,10 @@ export interface Torrent {
     time_active: number,
     ratio: number,
     eta: number,
-    state: "forcedUP" | "error" | "pausedUP" | "pausedDL" | "queuedUP" | "queuedDL" | "uploading" | "stalledUP" | "checkingUP" | "checkingDL" | "downloading" | "stalledDL" | "metaDL",
+    state: "forcedUP" | "error" | "pausedUP" | "pausedDL" |
+    "queuedUP" | "queuedDL" | "uploading" | "stalledUP" |
+    "checkingUP" | "checkingDL" | "downloading" | "stalledDL" |
+    "metaDL" | "moving" | "forcedDL" | "unknown",
     seq_dl: boolean,
     f_l_piece_prio: boolean,
     category: string,

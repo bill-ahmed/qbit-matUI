@@ -8,7 +8,7 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-  
+
     h1,
     h2,
     h3,
@@ -31,16 +31,16 @@
       color: #1976d2;
       text-decoration: none;
     }
-  
+
     a:hover {
       color: #125699;
     }
-  
+
     button {
       margin: 5px;
     }
-  
-  
+
+
     footer {
       position: absolute;
       bottom: 0;
@@ -48,7 +48,7 @@
       align-items: center;
       line-height: 20px;
     }
-  
+
     footer a {
       display: flex;
       align-items: center;
@@ -57,14 +57,13 @@
 </style>
 
 <router-outlet></router-outlet>
-<div class="container">
-  <app-global-transfer-info></app-global-transfer-info>
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="container">
   <!-- Footer -->
-  <div class="footer mat-app-background">
+  <!-- <div class="footer mat-app-background">
     <h3>
-      Made by Bilal Ahmed. Source code is on 
-      <a href="https://github.com/bill-ahmed" target="_blank" rel="noopener noreferrer"> <u>GitHub.</u> </a> 
+      Made by Bilal Ahmed. Source code is on
+      <a href="https://github.com/bill-ahmed" target="_blank" rel="noopener noreferrer"> <u>GitHub.</u> </a>
       😊
     </h3>
-  </div>
+  </div> -->
 </div>

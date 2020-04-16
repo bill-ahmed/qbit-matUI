@@ -18,7 +18,11 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     "cancel": () => void,
     "delete": () => void,
     "pause": () => void,
-    "play": () => void
+    "play": () => void,
+    "increasePrio": () => void,
+    "decreasePrio": () => void,
+    "maxPrio": () => void,
+    "minPrio": () => void
   };
 
   constructor( private torrentsSelectedService: RowSelectionService ) {
@@ -28,7 +32,11 @@ export class BulkUpdateTorrentsComponent implements OnInit {
       "cancel": () => this.onChange.emit("cancel"),
       "delete": () => this.onChange.emit("delete"),
       "pause": () => this.onChange.emit("pause"),
-      "play": () => this.onChange.emit("play")
+      "play": () => this.onChange.emit("play"),
+      "increasePrio": () => this.onChange.emit("increasePrio"),
+      "decreasePrio": () => this.onChange.emit("decreasePrio"),
+      "maxPrio": () => this.onChange.emit("maxPrio"),
+      "minPrio": () => this.onChange.emit("minPrio")
     };
    }
 
@@ -38,7 +46,7 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     this.torrentsSelectedService
     .getTorrentsSelected()
     .subscribe((newTorrents: string[]) => {
-      
+
       this.torrentsSelected = newTorrents;
     })
   }
@@ -47,7 +55,7 @@ export class BulkUpdateTorrentsComponent implements OnInit {
   public getSnackbarMessage(): string {
     let numTorrentsSelected = this.torrentsSelected.length;
 
-    return numTorrentsSelected === 1 ? 
+    return numTorrentsSelected === 1 ?
         `You have 1 torrent selected.` : `You have ${numTorrentsSelected} torrents selected.`;
   }
 
