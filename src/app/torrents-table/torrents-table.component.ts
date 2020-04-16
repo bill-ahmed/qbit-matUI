@@ -201,12 +201,20 @@ export class TorrentsTableComponent implements OnInit {
     this.data_store.ResumeTorrents(tor).subscribe(res => { });
   }
 
-  increasePriorityBulk(tor: Torrent[]) {
-    this.data_store.IncreaseTorrentPriority(tor).subscribe(res => { });
+  increasePriority(tor: Torrent) {
+    this.data_store.IncreaseTorrentPriority([tor]).subscribe(res => { });
   }
 
-  decreasePriorityBulk(tor: Torrent[]) {
-    this.data_store.DecreaseTorrentPriority(tor).subscribe(res => { })
+  decreasePriority(tor: Torrent) {
+    this.data_store.DecreaseTorrentPriority([tor]).subscribe(res => { })
+  }
+
+  maximumPriority(tor: Torrent) {
+    this.data_store.AssignTopPriority([tor]).subscribe(res => { });
+  }
+
+  minimumPriority(tor: Torrent) {
+    this.data_store.AssignLowestPriority([tor]).subscribe(res => { });
   }
 
   /** Callback for when a torrent is selected in the table. Update row selection service with new data

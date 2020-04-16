@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Material theme components
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTableModule } from '@angular/material/table';  
+import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -37,6 +37,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatMenuModule } from '@angular/material/menu';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './torrent-info-dialog/torrent-info-dialog.component';
 import { FileSystemDialogComponent } from './file-system-dialog/file-system-dialog.component';
@@ -94,7 +95,8 @@ if(!environment.production){
     MatChipsModule,
     MatSidenavModule,
     MatListModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatMenuModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]

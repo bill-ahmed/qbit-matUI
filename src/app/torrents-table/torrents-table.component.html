@@ -44,15 +44,33 @@
                     <mat-icon>play_arrow</mat-icon>
                 </button>
 
-                <button color="default" mat-icon-button matTooltip="Increase Priority" matTooltipPosition="below"
-                (click)="$event.stopPropagation();increasePriorityBulk([torrent])">
-                  <mat-icon>arrow_upward</mat-icon>
+                <!-- Throw additional actions inside a menu -->
+                <button (click)="$event.stopPropagation();" mat-icon-button [matMenuTriggerFor]="menu" aria-label="More torrent options">
+                  <mat-icon>more_vert</mat-icon>
                 </button>
 
-                <button color="default" mat-icon-button matTooltip="Decrease Priority" matTooltipPosition="below"
-                (click)="$event.stopPropagation();decreasePriorityBulk([torrent])">
-                  <mat-icon>arrow_downward</mat-icon>
-                </button>
+
+                <mat-menu #menu="matMenu">
+                  <button (click)="maximumPriority(torrent)" mat-menu-item>
+                    <mat-icon>vertical_align_top</mat-icon>
+                    <span>Highest Priority</span>
+                  </button>
+
+                  <button (click)="increasePriority(torrent)" mat-menu-item>
+                    <mat-icon>arrow_upward</mat-icon>
+                    <span>Increase Priority</span>
+                  </button>
+
+                  <button (click)="decreasePriority(torrent)" mat-menu-item>
+                    <mat-icon>arrow_downward</mat-icon>
+                    <span>Decrease Priority</span>
+                  </button>
+
+                  <button (click)="minimumPriority(torrent)" mat-menu-item>
+                    <mat-icon>vertical_align_bottom</mat-icon>
+                    <span>Lowest Priority</span>
+                  </button>
+                </mat-menu>
 
                 <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="below" (click)="openInfoTorrentDialog($event, torrent)">
                     <mat-icon>info</mat-icon>
