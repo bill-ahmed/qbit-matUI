@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path')
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var cookieParser = require('cookie-parser')
@@ -11,7 +12,7 @@ var GetAPIVersion = require('./sample_data').GetAPIVersion;
 var upload = multer();
 var app = express();
 
-const PORT = 4300;
+const PORT = process.env.PORT || 4300;
 const CREDS = require('./config.json');
 
 app.use(cors());
@@ -22,7 +23,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // For parsing multipart/form-data
 app.use(upload.array());
-app.use(express.static('public'));
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 app.post('/api/v2/auth/login', function (req, res, next) {
     var user = req.body.username;
@@ -35,6 +36,10 @@ app.post('/api/v2/auth/login', function (req, res, next) {
         res.send("Fail.");
     }
     next();
+});
+
+app.get('/', function(req, res) {
+  res.render('public/index');
 });
 
 app.get('/api/v2/sync/maindata', function(req, res) {
