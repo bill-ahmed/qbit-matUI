@@ -57,7 +57,7 @@
 </style>
 
 <router-outlet></router-outlet>
-<div class="container">
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="container">
   <!-- Footer -->
   <!-- <div class="footer mat-app-background">
     <h3>
