@@ -5,9 +5,9 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 * Adding torrents
 * Deleting torrents
 * Searching by name
-* Bulk edit (pause, resume, delete)
+* Bulk edit (pause, resume, delete, and more!)
 * Sorting by different metrics (name, size, etc.)
-* File System Navigation (easily choose where to save a torrent)
+* File System Navigation (easily choose where to save a torrent, create sub-folders, etc.)
 * A fully material-themed UI (Light & Dark themes)
 * ... More to come!
 
@@ -15,9 +15,9 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 
 ## Configuration
-This app relies on a couple files to work properly. This app also requires **API v4** or higher to function properly.
+This app relies on a couple files to work properly. This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
 
-### HTTP_Config
+### HTTP Config
 Under `src/assets/` there are two files: `http_config.json` and `http_config.prod.json`. During the production build, the former is replaced with the latter file. 
 
 If you wish to configure your endpoints and other data for dev/prod, do so here.
