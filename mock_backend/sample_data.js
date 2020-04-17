@@ -15,7 +15,7 @@ const MAX_ETA_SIZE = 28800; // 8 hours
 // Some possible states a torrent can be in
 const torrent_states = [
   'forcedUP', 'error', 'pausedUP', 'pausedDL', 'queuedUP', 'uploading',
-  'stalledUP', 'downloading', 'stalledDL', 'unknown'
+  'stalledUP', 'downloading', 'stalledDL'
 ];
 
 var RID = -1;    // For /sync/maindata endpoint
@@ -280,7 +280,7 @@ function _addTorrentEntriesToMockData(num_entries, data) {
             "seen_complete": 1580860752,
             "seq_dl": false,
             "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
-            "state": "forcedUP",
+            "state": torrent_states[GetRandomInt(0, states_length)],
             "super_seeding": false,
             "tags": "",
             "time_active": 718637,
