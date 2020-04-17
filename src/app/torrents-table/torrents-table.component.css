@@ -123,7 +123,7 @@ progress-bar {
 }
 
 .mat-column-Status {
-    flex: 0 0 5% !important;
+    flex: 0 0 !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -131,7 +131,7 @@ progress-bar {
 
     justify-content: center;
 
-    min-width: 80px;
+    min-width: 120px;
     margin-left: 10px;
     margin-right: 10px;
 }

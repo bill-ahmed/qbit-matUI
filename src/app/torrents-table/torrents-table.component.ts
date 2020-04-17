@@ -406,6 +406,12 @@ export class TorrentsTableComponent implements OnInit {
     });
   }
 
+  /** Determine if torrent is in a error state */
+  public isTorrentError(tor: Torrent): boolean {
+    let errors = ['error', 'stalledUP', 'stalledDL', 'unknown'];
+    return errors.includes(tor.state);
+  }
+
   private refreshDataSource(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.data = (this.filteredTorrentData ? this.filteredTorrentData : []);

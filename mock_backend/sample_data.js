@@ -12,8 +12,14 @@ const MAX_FILE_SIZE = 900000000000;
 const MIN_ETA_SIZE = 0;
 const MAX_ETA_SIZE = 28800; // 8 hours
 
+// Some possible states a torrent can be in
+const torrent_states = [
+  'forcedUP', 'error', 'pausedUP', 'pausedDL', 'queuedUP', 'uploading',
+  'stalledUP', 'downloading', 'stalledDL', 'unknown'
+];
 
 var RID = -1;    // For /sync/maindata endpoint
+var states_length = torrent_states.length - 1;
 
 function getRandomId() {
     return Math.random().toString(36).substring(15);
@@ -86,7 +92,7 @@ function GetMainData(){
                     "seen_complete": 1583845906,
                     "seq_dl": false,
                     "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
-                    "state": "forcedUP",
+                    "state": torrent_states[GetRandomInt(0, states_length)],
                     "super_seeding": false,
                     "tags": "",
                     "time_active": 5328405,
@@ -129,7 +135,7 @@ function GetMainData(){
                     "seen_complete": 1580860752,
                     "seq_dl": false,
                     "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
-                    "state": "forcedUP",
+                    "state": torrent_states[GetRandomInt(0, states_length)],
                     "super_seeding": false,
                     "tags": "",
                     "time_active": 718637,
@@ -172,7 +178,7 @@ function GetMainData(){
                     "seen_complete": 1583660691,
                     "seq_dl": false,
                     "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
-                    "state": "forcedUP",
+                    "state": torrent_states[GetRandomInt(0, states_length)],
                     "super_seeding": false,
                     "tags": "",
                     "time_active": 876906,
@@ -215,7 +221,7 @@ function GetMainData(){
                     "seen_complete": 1566641377,
                     "seq_dl": false,
                     "size": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
-                    "state": "forcedUP",
+                    "state": torrent_states[GetRandomInt(0, states_length)],
                     "super_seeding": false,
                     "tags": "",
                     "time_active": 10218680,
