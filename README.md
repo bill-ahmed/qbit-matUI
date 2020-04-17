@@ -1,13 +1,13 @@
-# QbitWebUI
+# Qbit Material WebUI
 
 An alternative Web Interface to the original [qBittorrent Web UI](https://github.com/qbittorrent/qBittorrent). This interface is very slimmed down and contains the following features
 
-* Adding torrents
-* Deleting torrents
-* Searching by name
-* Bulk edit (pause, resume, delete, and more!)
-* Sorting by different metrics (name, size, etc.)
-* File System Navigation (easily choose where to save a torrent, create sub-folders, etc.)
+* Adding/Deleting torrents
+* Filtering by name
+* Adjusting download priority of torrents
+* Bulk edit (pause, resume, delete, and more)
+* Sorting by different metrics (name, size, date completed, etc.)
+* File System Navigation (choose where to save a torrent, create sub-folders, etc.)
 * A fully material-themed UI (Light & Dark themes)
 * ... More to come!
 
