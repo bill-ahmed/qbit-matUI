@@ -359,6 +359,9 @@ export class TorrentsTableComponent implements OnInit {
       case "Size":
         this.sortTorrentsBySize(event.direction);
         break;
+      case "ETA":
+        this.sortByETA(event.direction);
+        break;
 
       default:
         return;
@@ -375,11 +378,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private sortTorrentsByCompletedOn(direction: string): void {
-    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
-      let res = (a.completion_on === b.completion_on ? 0 : (a.completion_on < b.completion_on ? -1 : 1))
-      if(direction === "desc") { res = res * (-1) }
-      return res;
-    });
+    this._sortByNumber("completion_on", direction);
   }
 
   private sortTorrentsByStatus(direction: string): void {
@@ -391,8 +390,17 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private sortTorrentsBySize(direction: string): void {
+    this._sortByNumber("size", direction);
+  }
+
+  private sortByETA(direction: string): void {
+    this._sortByNumber("eta", direction);
+  }
+
+  /** Sort a object's property that is a number */
+  private _sortByNumber(field: string, direction: string): void {
     this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
-      let res = (a.size === b.size ? 0 : (a.size < b.size ? -1 : 1))
+      let res = (a[field] === b[field] ? 0 : (a[field] < b[field] ? -1 : 1))
       if(direction === "desc") { res = res * (-1) }
       return res;
     });

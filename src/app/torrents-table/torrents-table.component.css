@@ -161,15 +161,18 @@ progress-bar {
 }
 
 .mat-column-ETA {
-    flex: 0 0 6% !important;
+    flex: 0 0 !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
     word-break: break-word;
 
+    padding-left: 5px;
+    padding-right: 5px;
+
     justify-content: center;
 
-    min-width: 80px;
+    min-width: 140px;
 }
 
 

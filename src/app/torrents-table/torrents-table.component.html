@@ -113,7 +113,7 @@
         </ng-container>
 
         <ng-container  matColumnDef="ETA">
-            <mat-header-cell *matHeaderCellDef>ETA</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>ETA</mat-header-cell>
             <mat-cell *matCellDef="let torrent">{{getTorrentETAString(torrent)}}</mat-cell>
         </ng-container>
 
