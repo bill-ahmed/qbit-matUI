@@ -45,13 +45,20 @@ export class SearchTorrentsComponent implements OnInit {
   }
 
   /** Helper to update names of torrents in state */
-  private _updateOptions(tor: Torrent[]): void {
+  private async _updateOptions(tor: Torrent[]): Promise<void> {
     this.options = tor.map(elem => elem.name);
   }
 
   private _filter(val: string): string[] {
     let filterValue = val.toLowerCase();
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  /** Get more human-readable name for a torrent
+   * Commonly, torrents will substitute a "." period for a space
+   */
+  private _getTorrentNiceName(name: string): string {
+    return name.replace(/\./g, " ").toLocaleLowerCase();
   }
 
 }
