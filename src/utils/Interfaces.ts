@@ -31,6 +31,7 @@ export interface Torrent {
     /**Unix timestamp of how long this torrent has been active */
     time_active: number,
     ratio: number,
+    /** Estimated time until torrent finishes, in seconds */
     eta: number,
     state: "forcedUP" | "error" | "pausedUP" | "pausedDL" |
     "queuedUP" | "queuedDL" | "uploading" | "stalledUP" |

@@ -57,14 +57,16 @@ export class UnitsHelperService {
 
     interface TimeNotation {
         seconds: number,
-        type: string
+        type: string,
+        exclude_plural: boolean,
+        exclude_space: boolean,
     }
 
-    const S = {seconds: 1, type: "Second"};
-    const M = {seconds: 60, type: "Minute"};
-    const H = {seconds: 3600, type: "Hour"};
-    const D = {seconds: 86400, type: "Day"};
-    const W = {seconds: 604800, type: "Week"};
+    const S = {seconds: 1, type: "s", exclude_plural: true, exclude_space: true};
+    const M = {seconds: 60, type: "min", exclude_plural: true};
+    const H = {seconds: 3600, type: "h", exclude_plural: true};
+    const D = {seconds: 86400, type: "day"};
+    const W = {seconds: 604800, type: "week"};
 
     let result = "";
     let time_intervals = [W, D, H, M, S];
@@ -76,13 +78,17 @@ export class UnitsHelperService {
           count += 1;
         }
         if(count > 0){
-          result += ` ${count} ${elem.type}`
-          if(count > 1){
+          result += ` ${count}`
+          result += elem.exclude_space ? `` : ` ` // If we don't want space between number and unit, e.g. "5 min" vs. "5min"
+          result += `${elem.type}`
+          if(count > 1 && !elem.exclude_plural){
             result += `s,`
           } else {
-            result += `,`
+            if(elem.type === "s") { } // Don't add comma at the end of something like "3 days, 4 h, 5 min, 5 s"
+            else { result += `,` }
+
           }
-            
+
         }
     })
 
@@ -96,8 +102,8 @@ export class UnitsHelperService {
    */
   GetDateString(timestamp: number): string {
     let date = new Date(timestamp * 1000);
-    let result = 
-    `${this.getDay(date)}/${this.getMonth(date)}/${date.getFullYear()}, 
+    let result =
+    `${this.getDay(date)}/${this.getMonth(date)}/${date.getFullYear()},
     ${this.getHours(date)}:${this.getMinutes(date)}:${this.getSeconds(date)}`;
 
     return result;

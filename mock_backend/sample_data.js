@@ -8,6 +8,11 @@ const MAX_SPEED = 90000000;
 const MIN_FILE_SIZE = 0;
 const MAX_FILE_SIZE = 900000000000;
 
+// Min and max ETA seconds
+const MIN_ETA_SIZE = 0;
+const MAX_ETA_SIZE = 28800; // 8 hours
+
+
 var RID = -1;    // For /sync/maindata endpoint
 
 function getRandomId() {
@@ -103,7 +108,7 @@ function GetMainData(){
                     "dlspeed": GetRandomInt(MIN_SPEED, MAX_SPEED),
                     "downloaded": 210629655,
                     "downloaded_session": 0,
-                    "eta": 8640000,
+                    "eta": GetRandomInt(MIN_ETA_SIZE, MAX_ETA_SIZE),
                     "f_l_piece_prio": false,
                     "force_start": true,
                     "last_activity": 1583690488,
@@ -146,7 +151,7 @@ function GetMainData(){
                     "dlspeed": GetRandomInt(MIN_SPEED, MAX_SPEED),
                     "downloaded": 311199215,
                     "downloaded_session": 0,
-                    "eta": 8640000,
+                    "eta": GetRandomInt(MIN_ETA_SIZE, MAX_ETA_SIZE),
                     "f_l_piece_prio": false,
                     "force_start": true,
                     "last_activity": 1583690567,
@@ -189,7 +194,7 @@ function GetMainData(){
                     "dlspeed": GetRandomInt(MIN_SPEED, MAX_SPEED),
                     "downloaded": 966470211,
                     "downloaded_session": 0,
-                    "eta": 8640000,
+                    "eta": GetRandomInt(MIN_ETA_SIZE, MAX_ETA_SIZE),
                     "f_l_piece_prio": false,
                     "force_start": true,
                     "last_activity": 1583770394,
@@ -248,7 +253,7 @@ function _addTorrentEntriesToMockData(num_entries, data) {
             "dlspeed": GetRandomInt(MIN_SPEED, MAX_SPEED),
             "downloaded": 210629655,
             "downloaded_session": 0,
-            "eta": 8640000,
+            "eta": GetRandomInt(MIN_ETA_SIZE, MAX_ETA_SIZE),
             "f_l_piece_prio": false,
             "force_start": true,
             "last_activity": 1583690488,
