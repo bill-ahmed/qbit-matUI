@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Torrent } from 'src/utils/Interfaces';
 import { FormControl } from '@angular/forms';
+import { GetTorrentSearchName } from 'src/utils/Helpers';
 
 @Component({
   selector: 'app-search-torrents',
@@ -50,15 +51,8 @@ export class SearchTorrentsComponent implements OnInit {
   }
 
   private _filter(val: string): string[] {
-    let filterValue = val.toLowerCase();
-    return this.options.filter(option => option.toLowerCase().includes(filterValue));
-  }
-
-  /** Get more human-readable name for a torrent
-   * Commonly, torrents will substitute a "." period for a space
-   */
-  private _getTorrentNiceName(name: string): string {
-    return name.replace(/\./g, " ").toLocaleLowerCase();
+    let filterValue = GetTorrentSearchName(val);
+    return this.options.filter(option => GetTorrentSearchName(option).includes(filterValue));
   }
 
 }

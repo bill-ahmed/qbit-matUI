@@ -121,7 +121,7 @@ function GetMainData(){
                     "magnet_uri": "magnet_uri",
                     "max_ratio": -1,
                     "max_seeding_time": -1,
-                    "name": "Some show #1 with super loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name",
+                    "name": "Some.show.#1.with.super.loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong name",
                     "num_complete": 18,
                     "num_incomplete": 1,
                     "num_leechs": 0,
