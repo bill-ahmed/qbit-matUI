@@ -12,7 +12,7 @@
         Back
       </button>
 
-      <button color="accent"mat-flat-button (click)="handleCreateFolderAction()">
+      <button color="accent" mat-flat-button (click)="handleCreateFolderAction()">
         <mat-icon mat-list-icon>add</mat-icon>
         New Folder
       </button>
@@ -33,9 +33,9 @@
                     </mat-list-item>
                 </mat-nav-list>
             </div>
-
+            <mat-divider vertical></mat-divider>
             <div class="directoryContents">
-                <p *ngIf="rightPanelHasContent() && !isCreatingNewFolder">Empty folder.</p>
+                <p *ngIf="rightPanelHasContent() && !isCreatingNewFolder">Create a folder with the "New Folder" button.</p>
 
                 <mat-list-item disableRipple *ngIf="isCreatingNewFolder">
                   <mat-form-field class="create-new-folder-input">

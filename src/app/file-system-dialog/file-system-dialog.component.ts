@@ -146,7 +146,7 @@ export class FileSystemDialogComponent implements OnInit {
    */
   public getNumChildrenString(dir: TreeNode): string {
     let len = dir.getChildren().length
-    return len < 1 ? `` : len === 1 ? `1 subfolder` : `${len} subfolders`
+    return len < 1 ? `Empty` : len === 1 ? `1 subfolder` : `${len} subfolders`
   }
 
 }

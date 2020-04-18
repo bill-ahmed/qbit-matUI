@@ -88,4 +88,8 @@ app-search-torrents {
     #addTorrentFAB, #logoutFAB {
         display: unset;
     }
+
+    #qbit_version_info {
+      display: none;
+    }
 }
