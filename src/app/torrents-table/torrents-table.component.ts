@@ -25,6 +25,7 @@ import { TorrentInfoDialogComponent } from '../torrent-info-dialog/torrent-info-
 import { NetworkConnectionInformationService } from '../services/network/network-connection-information.service';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
+import { GetTorrentSearchName } from 'src/utils/Helpers';
 
 @Component({
   selector: 'app-torrents-table',
@@ -161,7 +162,7 @@ export class TorrentsTableComponent implements OnInit {
 
   private updateTorrentSearchValue(val: string): void {
     val = val || "";  // In case null is given
-    this.torrentSearchValue = val.trim().toLowerCase();
+    this.torrentSearchValue = GetTorrentSearchName(val);
 
     // User is searching for something
     this.updateTorrentsBasedOnSearchValue()
@@ -177,7 +178,7 @@ export class TorrentsTableComponent implements OnInit {
     if(this.allTorrentData && this.torrentSearchValue) {
       this.filteredTorrentData = this.allTorrentData
       .filter((tor: Torrent) => {
-        return tor.name.toLowerCase().includes(this.torrentSearchValue);
+        return GetTorrentSearchName(tor.name).includes(this.torrentSearchValue);
       });
 
       this.refreshDataSource();
