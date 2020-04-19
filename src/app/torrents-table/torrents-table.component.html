@@ -4,7 +4,7 @@
     <mat-spinner diameter=50 *ngIf="isLoading()"></mat-spinner>
     <p id="loading_p" *ngIf="isLoading()">Loading...</p>
 
-    <app-bulk-update-torrents (onChange)="closeBulkEdit($event)" *ngIf="!isLoading()"></app-bulk-update-torrents>
+    <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading()"></app-bulk-update-torrents>
 
     <!-- Table of torrent data -->
     <mat-table *ngIf="!isLoading()" mat-table [dataSource]="dataSource" matSort (matSortChange)="onMatSortChange($event)" class="mat-elevation-z1">
@@ -72,7 +72,7 @@
                   </button>
                 </mat-menu>
 
-                <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="below" (click)="openInfoTorrentDialog($event, torrent)">
+                <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="right" (click)="openInfoTorrentDialog($event, torrent)">
                     <mat-icon>info</mat-icon>
                 </button>
 

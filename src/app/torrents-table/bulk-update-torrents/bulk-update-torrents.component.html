@@ -1,31 +1,31 @@
 <div id="bulk-update-card" class="mat-elevation-z1">
     <div class="mat-card-actions">
 
-        <button color="warn" disabled="{{!canUserEdit}}" mat-icon-button (click)="handleBulkActions('delete')">
+        <button color="warn" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Delete Torrents" matTooltipPosition="above" (click)="handleBulkActions('delete')">
             <mat-icon>delete</mat-icon>
         </button>
 
-        <button color="primary" disabled="{{!canUserEdit}}" mat-icon-button (click)="handleBulkActions('play')">
+        <button color="primary" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Resume Torrents" matTooltipPosition="above" (click)="handleBulkActions('play')">
             <mat-icon>play_arrow</mat-icon>
         </button>
 
-        <button color="accent" disabled="{{!canUserEdit}}" mat-icon-button (click)="handleBulkActions('pause')">
+        <button color="accent" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Pause Torrents" matTooltipPosition="above" (click)="handleBulkActions('pause')">
             <mat-icon>pause</mat-icon>
         </button>
 
-        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button (click)="handleBulkActions('increasePrio')">
+        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Increase Priority" matTooltipPosition="above" (click)="handleBulkActions('increasePrio')">
             <mat-icon>arrow_upward</mat-icon>
         </button>
 
-        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button (click)="handleBulkActions('decreasePrio')">
+        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Decrease Priority" matTooltipPosition="above" (click)="handleBulkActions('decreasePrio')">
           <mat-icon>arrow_downward</mat-icon>
         </button>
 
-        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button (click)="handleBulkActions('maxPrio')">
+        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Max Priority" matTooltipPosition="above" (click)="handleBulkActions('maxPrio')">
             <mat-icon>vertical_align_top</mat-icon>
         </button>
 
-        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button (click)="handleBulkActions('minPrio')">
+        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Min Priority" matTooltipPosition="above" (click)="handleBulkActions('minPrio')">
             <mat-icon>vertical_align_bottom</mat-icon>
         </button>
     </div>
