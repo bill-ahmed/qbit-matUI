@@ -77,6 +77,9 @@ app-search-torrents {
 
     flex-grow: 1;
     flex-direction: column;
+
+    padding-left: 8%;
+    padding-right: 8%;
 }
 
 /** For phone screens */

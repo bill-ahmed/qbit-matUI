@@ -13,10 +13,7 @@ mat-spinner {
 }
 
 mat-table {
-    height: 80vh;
-
-    margin: 0 7% 0 7%;
-
+    height: 73vh;
     overflow-y: scroll;
 }
 
@@ -178,5 +175,5 @@ progress-bar {
     word-wrap: break-word;
     word-break: break-word;
 
-    min-width: 200px;
+    min-width: 150px;
 }
