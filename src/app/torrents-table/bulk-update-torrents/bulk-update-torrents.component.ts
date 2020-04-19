@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
-import { Torrent } from 'src/utils/Interfaces';
 import { RowSelectionService } from 'src/app/services/torrent-management/row-selection.service';
 
 @Component({
@@ -48,19 +47,16 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     .subscribe((newTorrents: string[]) => {
 
       this.torrentsSelected = newTorrents;
+      newTorrents.length === 0 ? this.canUserEdit = false : this.canUserEdit = true;
     })
   }
 
   /** Get appropriate message to display in snackbar */
-  public getSnackbarMessage(): string {
+  public getBulkEditMessage(): string {
     let numTorrentsSelected = this.torrentsSelected.length;
 
-    return numTorrentsSelected === 1 ?
-        `You have 1 torrent selected.` : `You have ${numTorrentsSelected} torrents selected.`;
-  }
-
-  public handleEditAction(): void {
-    this.canUserEdit = true;
+    return numTorrentsSelected === 0 ? `` : numTorrentsSelected === 1 ?
+        `1 torrent selected.` : `${numTorrentsSelected} torrents selected.`;
   }
 
   public handleBulkActions(action: string): void {

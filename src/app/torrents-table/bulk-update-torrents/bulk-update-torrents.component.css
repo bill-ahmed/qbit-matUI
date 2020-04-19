@@ -1,6 +1,10 @@
 #bulk-update-card {
-  padding: 0;
+  padding: 0 95px 0 95px;
   margin: 30px 7% 0 7%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
 }
 
 .mat-card-actions {
