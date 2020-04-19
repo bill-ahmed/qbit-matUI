@@ -15,7 +15,7 @@ mat-spinner {
 mat-table {
     height: 80vh;
 
-    margin: 20px 5% 0 5%;
+    margin: 0 7% 0 7%;
 
     overflow-y: scroll;
 }

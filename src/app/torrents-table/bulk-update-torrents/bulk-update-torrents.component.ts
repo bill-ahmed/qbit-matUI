@@ -61,21 +61,6 @@ export class BulkUpdateTorrentsComponent implements OnInit {
 
   public handleEditAction(): void {
     this.canUserEdit = true;
-
-    // Make the mat-card much bigger
-    let container = document.getElementById('bulk-update-container');
-    let matCard = document.getElementById('bulk-update-card');
-    let matCardContent = document.getElementById('bulkd-update-card-content');
-
-    container.style.background = "rgba(0,0,0,0.32)";
-    container.style.pointerEvents = "all";
-
-    matCard.classList.toggle("grow");
-
-    matCardContent.style.flexDirection = "column";
-    matCardContent.style.justifyContent = "unset";
-    matCardContent.style.alignItems = "unset";
-    matCardContent.style.marginLeft = "16px";
   }
 
   public handleBulkActions(action: string): void {
