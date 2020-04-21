@@ -10,3 +10,13 @@
 .mat-card-actions {
   margin-bottom: 0;
 }
+
+.mat-card-info {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: baseline;
+}
+
+.mat-card-info button {
+  margin-left: 20px;
+}

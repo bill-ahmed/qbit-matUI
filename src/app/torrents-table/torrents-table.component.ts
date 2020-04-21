@@ -85,7 +85,16 @@ export class TorrentsTableComponent implements OnInit {
       this.DEFAULT_REFRESH_TIMEOUT = this.networkInfo.get_recommended_torrent_refresh_interval()
       this.SetTorrentRefreshInterval();
       console.log("updated interval", this.DEFAULT_REFRESH_TIMEOUT);
-    })
+    });
+
+    // Which torrents are selected
+    this.torrentsSelectedService.getTorrentsSelected().subscribe(res => {
+
+      // If empty, clear selection
+      if(res.length === 0) {
+        this.selection.clear();
+      }
+    });
 
     // Themeing
     this.isDarkTheme = this.theme.getThemeSubscription();
@@ -406,6 +415,7 @@ export class TorrentsTableComponent implements OnInit {
   private ResetAllTableData(): void {
     this.handleBulkEditChange();
     this.selection.clear();
+    this.torrentsSelectedService.clearSelection();
 
     this.allTorrentInformation = null;
     this.allTorrentData = null;

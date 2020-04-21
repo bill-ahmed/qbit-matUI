@@ -21,4 +21,9 @@ export class RowSelectionService {
   public getTorrentsSelected(): Observable<string[]> {
     return this._torrentsSelectedValue;
   }
+
+  /** Clear list of selected torrents */
+  public clearSelection(): void {
+    this.updateTorrentsSelected([]);
+  }
 }

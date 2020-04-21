@@ -65,6 +65,10 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     this.loading = false;
   }
 
+  public clearSelectedTorrents(): void {
+    this.torrentsSelectedService.clearSelection();
+  }
+
   public isLoading(): boolean {
     return this.loading;
   }
