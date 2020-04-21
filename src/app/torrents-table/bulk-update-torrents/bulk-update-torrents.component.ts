@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
-import { Torrent } from 'src/utils/Interfaces';
 import { RowSelectionService } from 'src/app/services/torrent-management/row-selection.service';
 
 @Component({
@@ -48,34 +47,16 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     .subscribe((newTorrents: string[]) => {
 
       this.torrentsSelected = newTorrents;
+      newTorrents.length === 0 ? this.canUserEdit = false : this.canUserEdit = true;
     })
   }
 
   /** Get appropriate message to display in snackbar */
-  public getSnackbarMessage(): string {
+  public getBulkEditMessage(): string {
     let numTorrentsSelected = this.torrentsSelected.length;
 
-    return numTorrentsSelected === 1 ?
-        `You have 1 torrent selected.` : `You have ${numTorrentsSelected} torrents selected.`;
-  }
-
-  public handleEditAction(): void {
-    this.canUserEdit = true;
-
-    // Make the mat-card much bigger
-    let container = document.getElementById('bulk-update-container');
-    let matCard = document.getElementById('bulk-update-card');
-    let matCardContent = document.getElementById('bulkd-update-card-content');
-
-    container.style.background = "rgba(0,0,0,0.32)";
-    container.style.pointerEvents = "all";
-
-    matCard.classList.toggle("grow");
-
-    matCardContent.style.flexDirection = "column";
-    matCardContent.style.justifyContent = "unset";
-    matCardContent.style.alignItems = "unset";
-    matCardContent.style.marginLeft = "16px";
+    return numTorrentsSelected === 0 ? `` : numTorrentsSelected === 1 ?
+        `1 torrent selected.` : `${numTorrentsSelected} torrents selected.`;
   }
 
   public handleBulkActions(action: string): void {

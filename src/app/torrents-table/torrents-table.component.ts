@@ -8,7 +8,6 @@ import { MainData, Torrent, NetworkConnection } from '../../utils/Interfaces';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatSpinner } from '@angular/material/progress-spinner';
-import {MatSnackBar, MatSnackBarRef} from '@angular/material/snack-bar';
 import { ProgressBarMode } from '@angular/material/progress-bar';
 
 // Helpers
@@ -37,7 +36,6 @@ export class TorrentsTableComponent implements OnInit {
   public allTorrentData : Torrent[];
   public filteredTorrentData: Torrent[];
   public cookieValueSID: string;
-  public bulkEditOpen: boolean = false;        // Is bulk edit open or not
   public isDarkTheme: Observable<boolean>;
   selection = new SelectionModel<Torrent>(true, []);
 
@@ -52,7 +50,6 @@ export class TorrentsTableComponent implements OnInit {
   private RID = 0;
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   private infoTorDialogRef: MatDialogRef<TorrentInfoDialogComponent, any>;
-  private snackbarREF: MatSnackBarRef<BulkUpdateTorrentsComponent>;
   private currentMatSort = {active: "Completed_On", direction: "desc"};
   private torrentSearchValue = "";
   private torrentsSelected: Torrent[] = [];     // Keep track of which torrents are currently selected
@@ -60,7 +57,7 @@ export class TorrentsTableComponent implements OnInit {
 
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog,
-              private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService ,private snackBar: MatSnackBar,
+              private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService,
               private networkInfo: NetworkConnectionInformationService, private theme: ThemeService) { }
 
   ngOnInit(): void {
@@ -228,12 +225,6 @@ export class TorrentsTableComponent implements OnInit {
 
   _updateSelectionService() {
     this.torrentsSelectedService.updateTorrentsSelected(this.selection.selected.map(elem => elem.hash));
-    if(this.selection.selected.length > 0)  {   // If user has selected at least one torrent
-      if(!this.snackbarREF) { // And bulk edit isn't already open
-        this.openBulkEdit()
-      }
-    }
-    else { this.closeBulkEdit() } // Otherwise, close it
   }
 
   /** Open the modal for deleting a new torrent */
@@ -259,16 +250,11 @@ export class TorrentsTableComponent implements OnInit {
     })
   }
 
-  /** Open snackbar for bulk editing deleting/pausing/playing torrents */
-  public openBulkEdit(): void {
-    this.bulkEditOpen = true;
-  }
-
-  public closeBulkEdit(result?: string): void {
+  public handleBulkEditChange(result?: string): void {
 
     const _clearAndClose = () => {
-      this.bulkEditOpen = false;
       this.selection.clear();
+      this._updateSelectionService();
     }
 
     // Depending on the result, we need to do different actions
@@ -315,13 +301,7 @@ export class TorrentsTableComponent implements OnInit {
         default:
           break;
       }
-    } else {
-      this.bulkEditOpen = false;  // If no event emitted, then it was an internal call
     }
-  }
-
-  public isBulkEditOpen(): boolean {
-    return this.bulkEditOpen;
   }
 
   torrentDeleteFinishCallback(): void {
@@ -424,7 +404,7 @@ export class TorrentsTableComponent implements OnInit {
    * NOTE: THIS MAY CAUSE PERFORMANCE ISSUES -- USE ONLY WHEN NEEDED.
    */
   private ResetAllTableData(): void {
-    this.closeBulkEdit();
+    this.handleBulkEditChange();
     this.selection.clear();
 
     this.allTorrentInformation = null;
