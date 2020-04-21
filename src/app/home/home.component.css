@@ -65,8 +65,7 @@ app-search-torrents {
 
 .homeContainer{
     flex: 1;
-    min-height: 90vh;
-    min-width: 800px;
+    min-height: 100%;
     width: 100%;
 }
 

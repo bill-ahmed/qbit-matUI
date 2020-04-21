@@ -8,7 +8,6 @@
     margin-top: 5px;
 
     flex-wrap: wrap;
-    min-width: 800px;
 }
 
 .torrent-transfer-info-container, .disks-transfer-information {
@@ -48,7 +47,7 @@ h3 {
 }
 
 /** For small screens */
-@media only screen and (max-width: 1067px) {
+@media only screen and (max-width: 1200px) {
   .global-transfer-info-container {
     justify-content: center;
   }
