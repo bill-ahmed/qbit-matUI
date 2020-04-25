@@ -47,18 +47,18 @@ export class TorrentDataHTTPService {
   }
 
   /** Delete a torrent.
-   * @param hash The unique hash of the torrent.
+   * @param hashes The unique hash of the torrent.
    * @param deleteFromDisk If the files should be deleted as well (true),
    * or if they should persist (false).
    */
-  DeleteTorrent(hash: string[], deleteFromDisk: boolean): Observable<any> {
+  DeleteTorrent(hashes: string[], deleteFromDisk: boolean): Observable<any> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.deleteTorrent;
     let url = root + endpoint;
 
     // body parameters
     let body = new FormData();
-    body.append("hashes", hash.join("|"));
+    body.append("hashes", hashes.join("|"));
     body.append("deleteFiles", `${deleteFromDisk}`);
 
     // Do not send cookies in dev mode
@@ -68,40 +68,37 @@ export class TorrentDataHTTPService {
   }
 
   /** Pause given array of torrents
-   * @param hash The hashes of the torrents to pause.
+   * @param hashes The hashes of the torrents to pause.
    */
-  PauseTorrents(hash: string[]): Observable<any> {
+  PauseTorrents(hashes: string[]): Observable<any> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.pauseTorrents;
     let url = root + endpoint;
 
-    // body parameters
-    let body = new FormData();
-    body.append("hashes", hash.join("|"));
-
-    // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
-
-    return this.http.post(url, body, options);
+    return this.sendTorrentHashesPOST(url, hashes);
   }
 
   /** Resume the given array of torrents
-   * @param hash The hashes of the torrents to resume.
+   * @param hashes The hashes of the torrents to resume.
    */
-  PlayTorrents(hash: string[]): Observable<any> {
+  PlayTorrents(hashes: string[]): Observable<any> {
 
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.playTorrents;
     let url = root + endpoint;
 
-    // body parameters
-    let body = new FormData();
-    body.append("hashes", hash.join("|"));
+    return this.sendTorrentHashesPOST(url, hashes);
+  }
 
-    // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
+  /** Force start the given torrents
+   * @param hashes The hashes of the torrents to force start
+   */
+  ForceStartTorrents(hashes: string[]): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.forceStart;
+    let url = root + endpoint;
 
-    return this.http.post(url, body, options);
+    return this.sendTorrentHashesPOST(url, hashes);
   }
 
   /** Increase the priority of given torrents
@@ -112,14 +109,7 @@ export class TorrentDataHTTPService {
     let endpoint = this.http_endpoints.increasePrio;
     let url = root + endpoint;
 
-    // body parameters
-    let body = new FormData();
-    body.append("hashes", hashes.join("|"));
-
-    // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
-
-    return this.http.post(url, body, options);
+    return this.sendTorrentHashesPOST(url, hashes);
   }
 
   /** Decrease the priority of given torrents
@@ -130,14 +120,7 @@ export class TorrentDataHTTPService {
     let endpoint = this.http_endpoints.decreasePrio;
     let url = root + endpoint;
 
-    // body parameters
-    let body = new FormData();
-    body.append("hashes", hashes.join("|"));
-
-    // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
-
-    return this.http.post(url, body, options);
+    return this.sendTorrentHashesPOST(url, hashes);
   }
 
   /** Give the torrents maximum possible priority
@@ -148,14 +131,7 @@ export class TorrentDataHTTPService {
     let endpoint = this.http_endpoints.maxPrio;
     let url = root + endpoint;
 
-    // body parameters
-    let body = new FormData();
-    body.append("hashes", hashes.join("|"));
-
-    // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
-
-    return this.http.post(url, body, options);
+    return this.sendTorrentHashesPOST(url, hashes);
   }
 
   /** Given the torrents lowest possible priority
@@ -166,14 +142,7 @@ export class TorrentDataHTTPService {
     let endpoint = this.http_endpoints.minPrio;
     let url = root + endpoint;
 
-    // body parameters
-    let body = new FormData();
-    body.append("hashes", hashes.join("|"));
-
-    // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
-
-    return this.http.post(url, body, options);
+    return this.sendTorrentHashesPOST(url, hashes);
   }
 
   async GetApplicationBuildInfo(): Promise<ApplicationBuildInfo> {
@@ -193,6 +162,25 @@ export class TorrentDataHTTPService {
     let api_version = await this.http.get<string>(url_2, options).toPromise();
 
     return { appVersion: app_version, apiVersion: api_version };
+  }
+
+  /** Send a list of torrent hashes joined by "|" to a given endpoint
+   * This functionality is used across many common actions
+   * @param endpoint The endpoint to send a POST request to
+   * @param options The options to pass in during POST request;
+   * default is { withCredentials: true } if prod, { } otherwise
+   * @param hashes List of torrent hashes to send
+   */
+  private sendTorrentHashesPOST(endpoint: string, hashes: string[], options?: any): Observable<any> {
+
+    // Do not send cookies in dev mode
+    options = options || IsDevEnv() ? { } : { withCredentials: true }
+
+    // body parameters
+    let body = new FormData();
+    body.append("hashes", hashes.join("|"));
+
+    return this.http.post(endpoint, body, options);
   }
 
   /** Upload file(s) to server
