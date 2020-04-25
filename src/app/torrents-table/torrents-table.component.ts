@@ -208,6 +208,10 @@ export class TorrentsTableComponent implements OnInit {
     this.data_store.ResumeTorrents(tor).subscribe(res => { });
   }
 
+  forceStartTorrentsBulk(tor: Torrent[]) {
+    this.data_store.ForceStartTorrents(tor).subscribe(res => { });
+  }
+
   increasePriorityBulk(tor: Torrent[]) {
     this.data_store.IncreaseTorrentPriority(tor).subscribe(res => { });
   }
@@ -286,6 +290,10 @@ export class TorrentsTableComponent implements OnInit {
           this.resumeTorrentsBulk(this.selection.selected);
           _clearAndClose();
           break;
+
+        case "forceStart":
+          this.forceStartTorrentsBulk(this.selection.selected);
+          _clearAndClose();
 
         case "increasePrio":
           this.increasePriorityBulk(this.selection.selected);

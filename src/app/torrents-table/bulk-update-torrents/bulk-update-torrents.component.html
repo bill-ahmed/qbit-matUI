@@ -5,6 +5,10 @@
             <mat-icon>delete</mat-icon>
         </button>
 
+        <button color="primary" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Force Start" matTooltipPosition="above" (click)="handleBulkActions('forceStart')">
+          <mat-icon>fast_forward</mat-icon>
+        </button>
+
         <button color="primary" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Resume Torrents" matTooltipPosition="above" (click)="handleBulkActions('play')">
             <mat-icon>play_arrow</mat-icon>
         </button>

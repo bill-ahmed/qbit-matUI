@@ -98,7 +98,11 @@ export class TorrentDataHTTPService {
     let endpoint = this.http_endpoints.forceStart;
     let url = root + endpoint;
 
-    return this.sendTorrentHashesPOST(url, hashes);
+    let body = new FormData();
+    body.append("hashes", hashes.join("|"));
+    body.append("value", "true");
+
+    return this.sendTorrentHashesPOST(url, hashes, null, body);
   }
 
   /** Increase the priority of given torrents
@@ -170,15 +174,15 @@ export class TorrentDataHTTPService {
    * @param options The options to pass in during POST request;
    * default is { withCredentials: true } if prod, { } otherwise
    * @param hashes List of torrent hashes to send
+   * @param body The body to use; default is FormData with hashes joined by "|"
    */
-  private sendTorrentHashesPOST(endpoint: string, hashes: string[], options?: any): Observable<any> {
+  private sendTorrentHashesPOST(endpoint: string, hashes: string[], options?: any, body?: any): Observable<any> {
 
     // Do not send cookies in dev mode
     options = options || IsDevEnv() ? { } : { withCredentials: true }
 
     // body parameters
-    let body = new FormData();
-    body.append("hashes", hashes.join("|"));
+    if(!body) { body = new FormData(); body.append("hashes", hashes.join("|")); }
 
     return this.http.post(endpoint, body, options);
   }

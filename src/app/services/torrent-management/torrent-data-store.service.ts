@@ -50,6 +50,10 @@ export class TorrentDataStoreService {
     return this.torrent_http_service.PlayTorrents(tor.map(elem => elem.hash));
   }
 
+  public ForceStartTorrents(tor: Torrent[]): Observable<any> {
+    return this.torrent_http_service.ForceStartTorrents(tor.map(elem => elem.hash));
+  }
+
   public IncreaseTorrentPriority(tor: Torrent[]): Observable<any> {
     return this.torrent_http_service.IncreaseTorrentPriority(tor.map(elem => elem.hash))
   }
