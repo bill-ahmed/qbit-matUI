@@ -10,7 +10,7 @@ export class FileSystemService {
   private root: TreeNode;
   private directoryDelimeter = config.filePathDelimeter  // How folders are split
 
-  constructor() { 
+  constructor() {
     this.root = new TreeNode("");
   }
 
@@ -20,23 +20,24 @@ export class FileSystemService {
 
   /** Given a list of file paths, construct a file-system
    * @param dirs The array of directories
-   * 
-   * E.g. dir = ["C:/Users/Dayman/Downloads", "C:/Users/Dayman/Downloads/Temp Folder", "D:/Images"]
+   * @param root The root of the file system to use. If none is specified, existing one will be used.
+   *
+   * E.g. dirs = ["C:/Users/Dayman/Downloads", "C:/Users/Dayman/Downloads/Temp Folder", "D:/Images"]
    */
-  public populateFileSystem(dirs: string[]): void {
-    
+  public populateFileSystem(dirs: string[], root?: TreeNode): void {
+
     // For each directory, we need to extract all the folders in it
-    dirs.forEach( (dir: string) => this.createDirectoryPath(dir) );
+    dirs.forEach( (dir: string) => this.createDirectoryPath(dir, root || this.root) );
   }
 
   /** Given a directory (file path), create all the necessary directories for it
-   * 
+   *
    * E.g. if dir = "C:/Downloads/Images", then the directory "C:" containing "Downloads" containing "Images" will be created.
    */
-  private createDirectoryPath(filePath: string): void {
+  private createDirectoryPath(filePath: string, root: TreeNode): void {
     let dirsToCreate = filePath.split(this.directoryDelimeter);
     dirsToCreate = dirsToCreate.filter(elem => {return !!elem});
-    let curr: TreeNode = this.root;
+    let curr: TreeNode = root;
 
     // For each directory in the path, create it and move the pointer
     for(const dir of dirsToCreate) {
@@ -53,7 +54,7 @@ export class FileSystemService {
   }
 
   /** Print entire contents of file system to console log
-   * 
+   *
    * FOR DEBUGGING PURPOSES ONLY!!
    */
   public printFileSystem(startNode?: TreeNode, indent?: number): void {

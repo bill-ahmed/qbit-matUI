@@ -173,7 +173,10 @@ export class TorrentDataHTTPService {
     let endpoint = this.http_endpoints.torrentContents;
     let url = root + endpoint;
 
-    return this.sendTorrentHashesPOST(url, [hash]);
+    let body = new FormData();
+    body.append("hash", hash);
+
+    return this.sendTorrentHashesPOST(url, [hash], null, body);
   }
 
   /** Send a list of torrent hashes joined by "|" to a given endpoint
