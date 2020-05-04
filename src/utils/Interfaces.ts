@@ -86,6 +86,22 @@ export interface MainData {
     server_state: GlobalTransferInfo
 }
 
+/** The contents of a torrent */
+export interface TorrentContents {
+  /** File name (including relative path) */
+  name: string,
+  /** File size (bytes) */
+  size: number,
+  progress: number,
+  /** 0 = Do not download; 1 = normal; 6 = high; 7 = maximal priority */
+  priority: 0 | 1 | 6 | 7,
+  /** True if file is seeding/complete */
+  is_seed: boolean,
+  piece_range: number[],
+  /** Percentage of file pieces currently available */
+  availability: number,
+}
+
 /** Type of network connections a user can have */
 export type NetworkType = 'slow-2g' | '2g' | '3g' | '4g';
 

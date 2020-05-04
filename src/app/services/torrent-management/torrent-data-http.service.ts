@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MainData, ApplicationBuildInfo } from 'src/utils/Interfaces';
+import { MainData, ApplicationBuildInfo, TorrentContents } from 'src/utils/Interfaces';
 import { Observable } from 'rxjs';
 
 // Utils
@@ -166,6 +166,14 @@ export class TorrentDataHTTPService {
     let api_version = await this.http.get<string>(url_2, options).toPromise();
 
     return { appVersion: app_version, apiVersion: api_version };
+  }
+
+  GetTorrentContents(hash: string): Observable<TorrentContents> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.torrentContents;
+    let url = root + endpoint;
+
+    return this.sendTorrentHashesPOST(url, [hash]);
   }
 
   /** Send a list of torrent hashes joined by "|" to a given endpoint

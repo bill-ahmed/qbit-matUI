@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MainData, Torrent, GlobalTransferInfo, ApplicationBuildInfo } from 'src/utils/Interfaces';
+import { MainData, Torrent, GlobalTransferInfo, ApplicationBuildInfo, TorrentContents } from 'src/utils/Interfaces';
 import { TorrentDataHTTPService } from './torrent-data-http.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -79,6 +79,10 @@ export class TorrentDataStoreService {
 
   public async GetApplicationBuildInfo(): Promise<ApplicationBuildInfo> {
     return await this.torrent_http_service.GetApplicationBuildInfo();
+  }
+
+  public GetTorrentContents(tor: Torrent): Observable<TorrentContents> {
+    return this.torrent_http_service.GetTorrentContents(tor.hash);
   }
 
   /** Update observable with new data */
