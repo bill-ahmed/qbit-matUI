@@ -3,11 +3,12 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { FileSystemService, SerializedNode } from '../services/file-system/file-system.service';
 import TreeNode, { AdvancedNode } from '../services/file-system/TreeNode';
+import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
 
 @Component({
   selector: 'app-file-system-tree-explorer',
   templateUrl: './file-system-tree-explorer.component.html',
-  styleUrls: ['./file-system-tree-explorer.component.css']
+  styleUrls: ['./file-system-tree-explorer.component.scss']
 })
 export class FileSystemTreeExplorerComponent implements OnChanges {
   @Input() directories: AdvancedNode[];
@@ -22,7 +23,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   private serialized_root: SerializedNode[] = [];
   private expanded_nodes: Set<string> = new Set<string>();
 
-  constructor(private fs: FileSystemService) { }
+  constructor(private fs: FileSystemService, private pp: PrettyPrintTorrentDataService) { }
 
   ngOnInit(): void {
     this._updateData();
@@ -77,6 +78,10 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
   isExpanded(node: SerializedNode): boolean {
     return this.expanded_nodes.has(node.name);
+  }
+
+  getNodeSize(node: SerializedNode): string {
+    return this.pp.pretty_print_file_size(node.size);
   }
 
 }

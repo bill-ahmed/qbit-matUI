@@ -1,0 +1,25 @@
+.tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.node-info {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+
+  #node-title {
+    max-width: 95%;
+    flex-wrap: wrap;
+  }
+}
+
+.grow {
+  flex-grow: 1;
+}

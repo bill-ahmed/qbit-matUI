@@ -4,8 +4,16 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
       <li class="mat-tree-node">
         <!-- use a disabled button to provide padding for tree leaf -->
-        <button mat-icon-button disabled></button>
-        {{node.name}}
+        <button mat-icon-button disabled><mat-icon color="accent">file_copy</mat-icon></button>
+        <div class="node-info">
+          <div id="node-title">
+            {{node.name}}
+          </div>
+          <div class="grow"></div>
+          <div>
+            {{getNodeSize(node)}}
+          </div>
+        </div>
       </li>
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
@@ -18,7 +26,15 @@
               {{isExpanded(node) ? 'expand_more' : 'chevron_right'}}
             </mat-icon>
           </button>
-          {{node.name}}
+          <div class="node-info">
+            <div id="node-title">
+              {{node.name}}
+            </div>
+            <div class="grow"></div>
+            <div>
+              {{getNodeSize(node)}}
+            </div>
+          </div>
         </div>
         <ul [class.tree-invisible]="!isExpanded(node)">
           <ng-container matTreeNodeOutlet></ng-container>
