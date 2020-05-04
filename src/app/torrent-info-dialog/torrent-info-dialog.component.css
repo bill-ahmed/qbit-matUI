@@ -8,6 +8,7 @@
 
 .torrent-info-general-content, .torrent-info-content-content {
     margin: 20px 10px 10px 10px;
+    min-height: 150px;
 
     display: flex;
     flex-direction: row;

@@ -16,8 +16,9 @@ import { NetworkConnectionInformationService } from '../services/network/network
 export class TorrentInfoDialogComponent implements OnInit {
 
   public torrent: Torrent = null;
-  public torrentContents: TorrentContents = null;
+  public torrentContents: TorrentContents[] = [];
   public isDarkTheme: Observable<boolean>;
+  public isLoading = true;
 
   private panelsOpen: Set<string> = new Set<string>();
   private REFRESH_INTERVAL: any;
@@ -34,6 +35,7 @@ export class TorrentInfoDialogComponent implements OnInit {
     this.REFRESH_INTERVAL = setInterval(() => {
       this.data_store.GetTorrentContents(this.torrent).subscribe(res => {
         this.torrentContents = res;
+        this.isLoading = false;
       })
     }, this.network_info.get_recommended_torrent_refresh_interval());
   }

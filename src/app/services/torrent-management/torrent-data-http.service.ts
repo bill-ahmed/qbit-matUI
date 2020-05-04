@@ -168,7 +168,7 @@ export class TorrentDataHTTPService {
     return { appVersion: app_version, apiVersion: api_version };
   }
 
-  GetTorrentContents(hash: string): Observable<TorrentContents> {
+  GetTorrentContents(hash: string): Observable<TorrentContents[]> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.torrentContents;
     let url = root + endpoint;

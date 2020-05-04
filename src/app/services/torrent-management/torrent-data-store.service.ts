@@ -81,7 +81,7 @@ export class TorrentDataStoreService {
     return await this.torrent_http_service.GetApplicationBuildInfo();
   }
 
-  public GetTorrentContents(tor: Torrent): Observable<TorrentContents> {
+  public GetTorrentContents(tor: Torrent): Observable<TorrentContents[]> {
     return this.torrent_http_service.GetTorrentContents(tor.hash);
   }
 
