@@ -136,5 +136,7 @@ export class FileSystemService {
 
 export interface SerializedNode {
   name: string,
+  type: TreeNodeType,
+  size: number,
   children?: SerializedNode[]
 }

@@ -20,6 +20,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
   private root: TreeNode;                           /** File System to keep track of the files in a torrent */
   private serialized_root: SerializedNode[] = [];
+  private expanded_nodes: Set<string> = new Set<string>();
 
   constructor(private fs: FileSystemService) { }
 
@@ -51,6 +52,31 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
   public hasChild(_: number, node: SerializedNode) {
     return !!node.children && node.children.length > 0
+  }
+
+  toggleNode(node: SerializedNode): void {
+
+    if(this.isExpanded(node)) {
+      this.collapseNode(node);
+    } else {
+      this.expandNode(node);
+    }
+  }
+
+  expandNode(node: SerializedNode): void {
+    this.expanded_nodes.add(node.name);
+  }
+
+  collapseNode(node: SerializedNode): void {
+    this.expanded_nodes.delete(node.name);
+  }
+
+  collapseAllNodes(): void {
+    this.expanded_nodes.clear();
+  }
+
+  isExpanded(node: SerializedNode): boolean {
+    return this.expanded_nodes.has(node.name);
   }
 
 }
