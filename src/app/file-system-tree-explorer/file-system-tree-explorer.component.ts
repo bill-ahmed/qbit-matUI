@@ -25,9 +25,8 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
   ngOnInit(): void {
     let dirs = this.directories;
-    console.log(dirs);
     this.fs.populateFileSystem(dirs, this.root);
-    this.fs.SerializeFileSystem(this.root).then(res => { this.serialized_root = res; console.log("got serialized", res) });
+    this.fs.SerializeFileSystem(this.root).then(res => this._updateData(res));
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -36,6 +35,13 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
     }
   }
 
+  private _updateData(data: SerializedNode[]): void {
+    this.serialized_root = data;
+    this.dataSource.data = data;
+  }
 
+  public hasChild(_: number, node: SerializedNode) {
+    return !!node.children && node.children.length > 0
+  }
 
 }

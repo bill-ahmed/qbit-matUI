@@ -41,6 +41,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatRippleModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './torrent-info-dialog/torrent-info-dialog.component';
@@ -106,6 +108,8 @@ if(!environment.production){
     MatAutocompleteModule,
     MatExpansionModule,
     MatBadgeModule,
+    MatTreeModule,
+    MatRippleModule,
     FormsModule,
     ReactiveFormsModule
   ],
