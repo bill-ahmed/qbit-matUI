@@ -35,19 +35,7 @@
                 <span matBadge="{{torrentContents.length}}" matBadgeColor="accent" matBadgeOverlap="false">Files</span>
               </ng-template>
                 <div class="torrent-info-content-content">
-                  <mat-accordion *ngIf="!isLoading" multi="true">
-                    <mat-expansion-panel *ngFor="let content of torrentContents" [expanded]="isPanelOpen(content.name)"
-                                          (opened)="openPanel(content.name)" (closed)="closePanel(content.name)">
-                      <mat-expansion-panel-header>
-                        <mat-panel-title>
-                          {{content.name}}
-                        </mat-panel-title>
-                        <mat-panel-description>
-                          Downloaded: {{(content.progress * 100).toFixed(2)}}%
-                        </mat-panel-description>
-                      </mat-expansion-panel-header>
-                    </mat-expansion-panel>
-                  </mat-accordion>
+                  <app-file-system-tree-explorer *ngIf="!isLoading" [directories]="get_content_directories()"></app-file-system-tree-explorer>
 
                   <mat-spinner *ngIf="isLoading"></mat-spinner>
                 </div>

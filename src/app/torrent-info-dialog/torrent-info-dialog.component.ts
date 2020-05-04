@@ -7,6 +7,8 @@ import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 import { NetworkConnectionInformationService } from '../services/network/network-connection-information.service';
+import { FileSystemService } from '../services/file-system/file-system.service';
+import TreeNode from '../services/file-system/TreeNode';
 
 @Component({
   selector: 'app-torrent-info-dialog',
@@ -25,23 +27,35 @@ export class TorrentInfoDialogComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any, private units_helper: UnitsHelperService,
               private pp: PrettyPrintTorrentDataService, private theme: ThemeService, private data_store: TorrentDataStoreService,
-              private network_info: NetworkConnectionInformationService) {
+              private network_info: NetworkConnectionInformationService, private fs: FileSystemService) {
     this.torrent = data.torrent;
   }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
 
+    /** Refresh torrent contents data on the recommended interval */
     this.REFRESH_INTERVAL = setInterval(() => {
-      this.data_store.GetTorrentContents(this.torrent).subscribe(res => {
-        this.torrentContents = res;
-        this.isLoading = false;
-      })
-    }, this.network_info.get_recommended_torrent_refresh_interval());
+      this.data_store.GetTorrentContents(this.torrent).subscribe(content => {
+        this.updateTorrentContents(content);
+      });
+    },
+      this.network_info.get_recommended_torrent_refresh_interval()
+    );
   }
 
   ngOnDestroy(): void {
     if(this.REFRESH_INTERVAL) { clearInterval(this.REFRESH_INTERVAL) }
+  }
+
+  private updateTorrentContents(content: TorrentContents[]): void {
+    this.torrentContents = content;
+    this.isLoading = false;
+  }
+
+  get_content_directories(): string[] {
+    if(this.torrentContents) { return this.torrentContents.map(file => file.name); }
+    else                     { return []; }
   }
 
   added_on(): string {

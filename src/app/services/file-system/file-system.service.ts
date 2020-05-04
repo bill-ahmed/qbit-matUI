@@ -34,7 +34,7 @@ export class FileSystemService {
    *
    * E.g. if dir = "C:/Downloads/Images", then the directory "C:" containing "Downloads" containing "Images" will be created.
    */
-  private createDirectoryPath(filePath: string, root: TreeNode): void {
+  private async createDirectoryPath(filePath: string, root: TreeNode): Promise<void> {
     let dirsToCreate = filePath.split(this.directoryDelimeter);
     dirsToCreate = dirsToCreate.filter(elem => {return !!elem});
     let curr: TreeNode = root;
@@ -53,11 +53,22 @@ export class FileSystemService {
     }
   }
 
+  /** Serialize a file system into array of objects, where each object
+   * represents a folder. The objects can be nested.
+   * @param root Start of the file system. If none is specified, the instantiated one
+   * belonging to `this` will be used instead.
+   */
+  public async SerializeFileSystem(root?: TreeNode): Promise<SerializedNode[]> {
+    root = root || this.root;
+    return this._convertToJSON(root);
+  }
+
   /** Print entire contents of file system to console log
    *
    * FOR DEBUGGING PURPOSES ONLY!!
    */
   public printFileSystem(startNode?: TreeNode, indent?: number): void {
+    indent = indent || 1;
     if(startNode) {
       for(const child of startNode.getChildren()) {
         // Print directory with indent
@@ -70,4 +81,21 @@ export class FileSystemService {
     }
   }
 
+  private _convertToJSON(node: TreeNode): SerializedNode[] {
+    let result = [];
+
+    for(const child of node.getChildren()) {
+      result.push({
+        name: child.getValue(),
+        children: this._convertToJSON(child)
+      });
+    }
+    return result;
+  }
+
+}
+
+export interface SerializedNode {
+  name: string,
+  children?: SerializedNode[]
 }

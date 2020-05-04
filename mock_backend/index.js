@@ -50,7 +50,7 @@ app.get('/api/v2/sync/maindata', function(req, res) {
 
 app.post('/api/v2/torrents/files', function(req, res) {
   let response = [{
-      name: "Ubuntu LTS 18.04",
+      name: "Ubuntu LTS 18.04/something.iso",
       /** File size (bytes) */
       size: GetRandomInt(0, 900000000000),
       progress: Math.random(),
@@ -59,7 +59,7 @@ app.post('/api/v2/torrents/files', function(req, res) {
       piece_range: [],
       availability: Math.random(),
   }, {
-    name: "Ubuntu LTS 20.20",
+    name: "Ubuntu LTS 20.20/another.iso",
     /** File size (bytes) */
     size: GetRandomInt(0, 900000000000),
     progress: Math.random(),

@@ -45,6 +45,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './torrent-info-dialog/torrent-info-dialog.component';
 import { FileSystemDialogComponent } from './file-system-dialog/file-system-dialog.component';
+import { FileSystemTreeExplorerComponent } from './file-system-tree-explorer/file-system-tree-explorer.component';
 
 var appRoutes: Routes;
 
@@ -72,7 +73,8 @@ if(!environment.production){
     GlobalTransferInfoComponent,
     BulkUpdateTorrentsComponent,
     TorrentInfoDialogComponent,
-    FileSystemDialogComponent
+    FileSystemDialogComponent,
+    FileSystemTreeExplorerComponent
   ],
   imports: [
     BrowserModule,
