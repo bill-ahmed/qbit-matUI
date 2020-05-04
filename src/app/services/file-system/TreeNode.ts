@@ -3,9 +3,16 @@ export default class TreeNode {
     private parent: TreeNode = null;
     private children: TreeNode[] = [];
 
-    constructor(value: any, children?: TreeNode[]) {
+    private type: TreeNodeType = "Directory";   // Defaults to a folder
+    private size: number = 0;                   // Size of node, commonly in bytes
+
+    constructor(value: any, children?: TreeNode[], type?: TreeNodeType, size?: number) {
         this.value = value;
-        if(children) { this.children = children; }
+
+        // Optional params
+        this.type = type || this.type;
+        this.size = size || this.size;
+        this.children = children || this.children;
     }
 
     public getParent(): TreeNode {
@@ -14,14 +21,28 @@ export default class TreeNode {
 
     public setParent(par: TreeNode): void {
         this.parent = par;
+        this._propogateSizeChange();
     }
 
     public getValue(): any {
         return this.value;
     }
 
+    public setValue(val: string): void {
+      this.value = val;
+    }
+
     public getChildren(): TreeNode[] {
         return this.children
+    }
+
+    public getSize(): number {
+      return this.size;
+    }
+
+    public setSize(size: number): void {
+      this.size = size;
+      this._propogateSizeChange();
     }
 
     /** Get a pointer to a child with given value. If no such child exists, null is returned*/
@@ -48,15 +69,16 @@ export default class TreeNode {
         if(!this.hasChild(child.value)) {
             child.setParent(this);
             this.children.push(child);
+            this._propogateSizeChange();
         }
     }
 
     /** Determine if this node already has a child with given value (uses === comparison)
      * True iff the child exists, false otherwise.
-     * 
+     *
      * @param children The group of children to check in
      * @param val The value of the child to look for
-     *   
+     *
      * */
     public hasChild(val: any): boolean {
         for(const child of this.children){
@@ -70,7 +92,31 @@ export default class TreeNode {
      */
     public removeChild(childValue: any): void {
         this.children = this.children.filter((elem: TreeNode) => {elem.value !== childValue})
+        this._propogateSizeChange();
     }
+
+    /** Private */
+
+    /** When this folder/file is modified, we need to propogate it's size all the way to the root
+     * This is likely more efficient than calculating the size recursively each time.
+    */
+    private _propogateSizeChange(): void {
+      let size = 0;
+      let old_size = this.size;
+      this.children.forEach(child => {size += child.getSize()});
+
+      this.size = size;
+
+      // Update sizes parent & all ancestors
+      let curr = this.parent;
+      while(curr != null) {
+        curr.setSize(curr.getSize() + (this.size - old_size));
+        curr = curr.getParent();
+      }
+    }
+
+
+    /** Static Methods */
 
     public static sort() {
         return function(a: TreeNode, b: TreeNode) {
@@ -92,3 +138,5 @@ export default class TreeNode {
         return null;
     }
 }
+
+export type TreeNodeType = "Directory" | "File"
