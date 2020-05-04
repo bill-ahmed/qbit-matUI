@@ -44,7 +44,6 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
     this.fs.populateFileSystemWithAdvancedOptions(this.directories, this.root);
     this.fs.SerializeFileSystem(this.root).then(data => {
-      console.log(data);
       this.serialized_root = data;
       this.dataSource.data = data;
     });
