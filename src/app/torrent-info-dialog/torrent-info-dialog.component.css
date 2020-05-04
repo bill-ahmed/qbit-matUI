@@ -1,5 +1,9 @@
-.torrent-info-container {
+.mat-dialog-inner-container {
     min-width: 40vw;
+}
+
+.mat-accordion {
+  width: 97%;
 }
 
 .torrent-info-general-content, .torrent-info-content-content {

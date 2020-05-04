@@ -32,13 +32,19 @@
 
             <mat-tab label="Files">
                 <div class="torrent-info-content-content">
-                    <div class="leftPanel">
-                        <p>Overview Stuff</p>
-                    </div>
-
-                    <div class="rightPanel">
-                        <p>Right Panel</p>
-                    </div>
+                  <mat-accordion multi="true">
+                    <mat-expansion-panel *ngFor="let content of torrentContents" [expanded]="isPanelOpen(content.name)"
+                                          (opened)="openPanel(content.name)" (closed)="closePanel(content.name)">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          {{content.name}}
+                        </mat-panel-title>
+                        <mat-panel-description>
+                          Downloaded: {{(content.progress * 100).toFixed(2)}}%
+                        </mat-panel-description>
+                      </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+                  </mat-accordion>
                 </div>
             </mat-tab>
 

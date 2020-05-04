@@ -19,6 +19,7 @@ export class TorrentInfoDialogComponent implements OnInit {
   public torrentContents: TorrentContents = null;
   public isDarkTheme: Observable<boolean>;
 
+  private panelsOpen: Set<string> = new Set<string>();
   private REFRESH_INTERVAL: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any, private units_helper: UnitsHelperService,
@@ -33,7 +34,6 @@ export class TorrentInfoDialogComponent implements OnInit {
     this.REFRESH_INTERVAL = setInterval(() => {
       this.data_store.GetTorrentContents(this.torrent).subscribe(res => {
         this.torrentContents = res;
-        console.log(res);
       })
     }, this.network_info.get_recommended_torrent_refresh_interval());
   }
@@ -64,6 +64,18 @@ export class TorrentInfoDialogComponent implements OnInit {
 
   state(): string {
     return this.pp.pretty_print_status(this.torrent.state);
+  }
+
+  openPanel(name: string): void {
+    this.panelsOpen.add(name);
+  }
+
+  closePanel(name: string): void {
+    this.panelsOpen.delete(name);
+  }
+
+  isPanelOpen(name: string): boolean {
+    return this.panelsOpen.has(name);
   }
 
 }
