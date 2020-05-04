@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 import { NetworkConnectionInformationService } from '../services/network/network-connection-information.service';
 import { FileSystemService } from '../services/file-system/file-system.service';
-import TreeNode from '../services/file-system/TreeNode';
+import TreeNode, { AdvancedNode } from '../services/file-system/TreeNode';
 
 @Component({
   selector: 'app-torrent-info-dialog',
@@ -19,6 +19,7 @@ export class TorrentInfoDialogComponent implements OnInit {
 
   public torrent: Torrent = null;
   public torrentContents: TorrentContents[] = [];
+  public torrentContentsAsNodes: AdvancedNode[] = [];
   public isDarkTheme: Observable<boolean>;
   public isLoading = true;
 
@@ -50,12 +51,12 @@ export class TorrentInfoDialogComponent implements OnInit {
 
   private updateTorrentContents(content: TorrentContents[]): void {
     this.torrentContents = content;
+    this.torrentContentsAsNodes = this.torrentContents.map(file => {return {name: file.name, size: file.size, type: "File" }})
     this.isLoading = false;
   }
 
-  get_content_directories(): string[] {
-    if(this.torrentContents) { return this.torrentContents.map(file => file.name); }
-    else                     { return []; }
+  get_content_directories_as_advanced_nodes(): AdvancedNode[] {
+    return this.torrentContentsAsNodes;
   }
 
   added_on(): string {

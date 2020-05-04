@@ -13,6 +13,8 @@ export default class TreeNode {
         this.type = type || this.type;
         this.size = size || this.size;
         this.children = children || this.children;
+
+        if (this.size !== 0) { this._propogateSizeChange(); }
     }
 
     public getParent(): TreeNode {
@@ -43,6 +45,10 @@ export default class TreeNode {
     public setSize(size: number): void {
       this.size = size;
       this._propogateSizeChange();
+    }
+
+    public getType(): TreeNodeType {
+      return this.type;
     }
 
     /** Get a pointer to a child with given value. If no such child exists, null is returned*/
@@ -103,7 +109,10 @@ export default class TreeNode {
     private _propogateSizeChange(): void {
       let size = 0;
       let old_size = this.size;
-      this.children.forEach(child => {size += child.getSize()});
+
+      // Only directories have size computed by their children
+      if(this.type === "Directory") { this.children.forEach(child => {size += child.getSize()}); }
+      else { size = this.size; }
 
       this.size = size;
 
@@ -140,3 +149,10 @@ export default class TreeNode {
 }
 
 export type TreeNodeType = "Directory" | "File"
+
+/** This type of node can have many important properties */
+export interface AdvancedNode {
+  name: string,
+  type: TreeNodeType,
+  size: number
+}
