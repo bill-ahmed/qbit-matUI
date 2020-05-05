@@ -18,3 +18,8 @@ app-file-system-tree-explorer {
 mat-chip-list {
     align-self: flex-end;
 }
+
+.leftPanel, .rightPanel {
+  flex-grow: 1;
+  padding: 5px;
+}

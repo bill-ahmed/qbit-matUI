@@ -16,6 +16,7 @@ export interface Torrent {
     size: number,
     total_size: number,
     downloaded: number,
+    uploaded: number,
     progress: number,
     dlspeed: number,
     upspeed: number,

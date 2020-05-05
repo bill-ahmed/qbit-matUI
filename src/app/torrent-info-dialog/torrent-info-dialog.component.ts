@@ -39,9 +39,10 @@ export class TorrentInfoDialogComponent implements OnInit {
     this.REFRESH_INTERVAL = setInterval(() => {
       this.data_store.GetTorrentContents(this.torrent).subscribe(content => {
         this.updateTorrentContents(content);
+        console.log("updating...", this.network_info.get_refresh_interval_from_network_type("medium"))
       });
     },
-      this.network_info.get_recommended_torrent_refresh_interval()
+      this.network_info.get_refresh_interval_from_network_type("medium")
     );
   }
 
@@ -77,6 +78,10 @@ export class TorrentInfoDialogComponent implements OnInit {
 
   downloaded(): string {
     return this.units_helper.GetFileSizeString(this.torrent.downloaded);
+  }
+
+  uploaded(): string {
+    return this.units_helper.GetFileSizeString(this.torrent.uploaded)
   }
 
   state(): string {

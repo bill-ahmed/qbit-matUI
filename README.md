@@ -3,18 +3,18 @@
 An alternative Web Interface to the original [qBittorrent Web UI](https://github.com/qbittorrent/qBittorrent). This interface is very slimmed down and contains the following features
 
 * Adding/Deleting torrents
-* Filtering by name
-* Adjusting download priority of torrents
-* Bulk edit (pause, resume, delete, and more)
+* Bulk edit (pause, resume, delete, prioritize, and more)
 * Sorting by different metrics (name, size, date completed, etc.)
 * File System Navigation (choose where to save a torrent, create sub-folders, etc.)
 * A fully material-themed UI (Light & Dark themes)
-* ... More to come!
+* ... and more!
 
 ## Demo!
 A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 
-## Configuration
+![Home Page](/builds/images/home_page.jpg)
+
+## Configuring the App
 This app relies on a couple files to work properly. This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
 
 ### HTTP Config
@@ -25,16 +25,19 @@ If you wish to configure your endpoints and other data for dev/prod, do so here.
 ### General Config
 Under `src/assets/` there are two files: `config.json` and `config.prod.json`. This will store general configuration, such as the delimeter used when parsing file paths (Unix vs. Windows).
 
-## Running the App -- Development server
+## Running the App -- Development
 To install the dependencies, run `npm install` in both the root directory and the `mock_backend/` folder.
+
+### Back-end
+1. Navigate to `mock_backend` directory
+2. Run `node index.js`
 
 ### Front-end:
 1. Run `ng serve` for a dev server
 2. Navigate to `http://localhost:4200/`
+3. Username: `admin`; Password: `password`; This can be changed under `mock_backend/config.json`
 
-### Back-end
-1. Navigate to `mock_backend/` directory (`cd mock_backend`)
-2. Run `node index.js`
+**Note**: Sometimes clicking the "Login" button will just refresh the page. If this happens, simply clear your cookies and try again.
 
 The app will automatically reload if you change any of the Angular source code.
 
@@ -52,19 +55,7 @@ Once you've completed that:
 3. Navigate to wherever you placed the `public`/`private` folder from (*)
 4. Replace all the contents of the `private` folder with the contents of `dist/` from the project directoy
 
-Alternatively, you can take a production-ready build from the `builds` directory in this project. The latest version is zipped.
+Alternatively, you can skip Step 1. and take a production-ready build from the `builds` directory in this project. The latest version is zipped.
 
 ## Screenshots
 The following are some snippets from the alternate UI. They may (or may not) be outdated. To get the best idea of where the app currently is, consider trying out the live demo above or running the app locally.
-
-#### Home Page
-![Home Page](/builds/images/home_page.jpg)
-
-### Home Page -- Dark Mode!
-![Home Page with Dark Theme](/builds/images/home_page_dark.jpg)
-
-#### Upload Torrent
-![Upload a Torrent](/builds/images/upload_torrent.jpg)
-
-#### File Explorer
-![Explore the file system](/builds/images/file_explorer.jpg)
