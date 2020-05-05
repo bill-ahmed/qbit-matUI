@@ -33,7 +33,7 @@
 
             <mat-tab>
               <ng-template matTabLabel>
-                <span matBadge="{{isLoading ? '...' : torrentContents.length}}" matBadgeColor="accent" matBadgeOverlap="false">Files</span>
+                <span matBadge="{{isLoading ? '—' : torrentContents.length}}" matBadgeColor="accent" matBadgeOverlap="false">Files</span>
               </ng-template>
                 <div class="torrent-info-content-content">
                   <app-file-system-tree-explorer *ngIf="!isLoading" [directories]="get_content_directories_as_advanced_nodes()"></app-file-system-tree-explorer>
