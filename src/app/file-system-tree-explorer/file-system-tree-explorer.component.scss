@@ -12,15 +12,24 @@
 .node-info {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   justify-content: space-between;
+  align-items: center;
   width: 90%;
 
   #node-title {
-    max-width: 95%;
-    flex-wrap: wrap;
+    width: 60%;
+    word-wrap: break-word;
+  }
+
+  #progress, #fileSize {
+    flex-wrap: nowrap;
   }
 }
 
 .grow {
   flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }

@@ -10,12 +10,14 @@
             {{node.name}}
           </div>
 
-          <div *ngIf="showProgress">
-            Progress: {{getNodeProgress(node)}}%
-          </div>
+          <div class="grow">
+            <div id="progress" *ngIf="showProgress">
+              Progress: {{getNodeProgress(node)}}%
+            </div>
 
-          <div>
-            {{getNodeSize(node)}}
+            <div id="fileSize">
+              {{getNodeSize(node)}}
+            </div>
           </div>
         </div>
       </li>
@@ -35,13 +37,15 @@
               {{node.name}}
             </div>
 
-            <div *ngIf="showProgress">
-              Progress: {{getNodeProgress(node)}}%
-            </div>
+            <div class="grow">
+              <div id="progress" *ngIf="showProgress">
+                Progress: {{getNodeProgress(node)}}%
+              </div>
 
-            <div>
-              {{getNodeSize(node)}}
-            </div>
+              <div id="fileSize">
+                {{getNodeSize(node)}}
+              </div>
+          </div>
           </div>
         </div>
         <ul [class.tree-invisible]="!isExpanded(node)">

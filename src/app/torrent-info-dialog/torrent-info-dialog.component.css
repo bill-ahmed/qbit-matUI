@@ -1,5 +1,5 @@
 .mat-dialog-inner-container {
-    min-width: 40vw;
+    min-width: 50vw;
 }
 
 app-file-system-tree-explorer {
@@ -20,6 +20,6 @@ mat-chip-list {
 }
 
 .leftPanel, .rightPanel {
-  flex-grow: 1;
+  /* flex-grow: 1; */
   padding: 5px;
 }
