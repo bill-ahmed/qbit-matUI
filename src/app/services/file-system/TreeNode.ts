@@ -5,16 +5,18 @@ export default class TreeNode {
 
     private type: TreeNodeType = "Directory";   // Defaults to a folder
     private size: number = 0;                   // Size of node, commonly in bytes
+    private downloaded: number = 0;             // How much of a file has been saved to disk
 
-    constructor(value: any, children?: TreeNode[], type?: TreeNodeType, size?: number) {
+    constructor(value: any, children?: TreeNode[], type?: TreeNodeType, size?: number, downloaded?: number) {
         this.value = value;
 
         // Optional params
         this.type = type || this.type;
         this.size = size || this.size;
+        this.downloaded = downloaded || this.size;    // Assume file is fully downloaded otherwise
         this.children = children || this.children;
 
-        if (this.size !== 0) { this._propogateSizeChange(); }
+        if (this.size !== 0 || this.downloaded !== 0) { this._propogateSizeChange(); }
     }
 
     public getParent(): TreeNode {
@@ -45,6 +47,23 @@ export default class TreeNode {
     public setSize(size: number): void {
       this.size = size;
       this._propogateSizeChange();
+    }
+
+    getDownloadedAmount(): number {
+      return this.downloaded;
+    }
+
+    setDownloadedAmount(val: number) {
+      this.downloaded = val;
+      this._propogateSizeChange();
+    }
+
+    /** Download progress of a file/folder as fraction between 0 and 1.
+     * Multiply by 100 to get the percentage.
+     */
+    getDownloadProgress(): number {
+      if (this.size !== 0) { return this.downloaded / this.size; }
+      else { return 1; }  // To avoid divide by zero error, a file size of 0 is already downloaded
     }
 
     public getType(): TreeNodeType {
@@ -108,18 +127,31 @@ export default class TreeNode {
     */
     private _propogateSizeChange(): void {
       let size = 0;
+      let downloaded = 0;
+
       let old_size = this.size;
+      let old_downloaded = this.downloaded;
 
       // Only directories have size computed by their children
-      if(this.type === "Directory") { this.children.forEach(child => {size += child.getSize()}); }
-      else { size = this.size; }
+      if(this.type === "Directory") {
+        this.children.forEach(child => {
+          size += child.getSize();
+          downloaded += child.getDownloadedAmount();
+        });
+      }
+      else {
+        size = this.size;
+        downloaded = this.downloaded;
+      }
 
       this.size = size;
+      this.downloaded = downloaded;
 
-      // Update sizes parent & all ancestors
+      // Update sizes of parent & all ancestors
       let curr = this.parent;
       while(curr != null) {
         curr.setSize(curr.getSize() + (this.size - old_size));
+        curr.setDownloadedAmount(curr.getDownloadedAmount() + (this.downloaded - old_downloaded));
         curr = curr.getParent();
       }
     }
@@ -154,5 +186,7 @@ export type TreeNodeType = "Directory" | "File"
 export interface AdvancedNode {
   name: string,
   type: TreeNodeType,
-  size: number
+  size: number,
+  /** A file not me fully ready. This can represent how much has been saved to disk. */
+  downloaded: number,
 }

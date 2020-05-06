@@ -127,6 +127,7 @@ export class FileSystemService {
         children: this._convertToJSON(child),
         type: child.getType(),
         size: child.getSize(),
+        downloaded: child.getDownloadedAmount(),
       });
     }
     return result;
@@ -138,5 +139,6 @@ export interface SerializedNode {
   name: string,
   type: TreeNodeType,
   size: number,
+  downloaded: number,
   children?: SerializedNode[]
 }

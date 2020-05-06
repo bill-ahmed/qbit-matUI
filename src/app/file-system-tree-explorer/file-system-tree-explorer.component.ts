@@ -83,4 +83,9 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
     return this.pp.pretty_print_file_size(node.size);
   }
 
+  getNodeProgress(node: SerializedNode): string {
+    if(node.size !== 0) { return ((node.downloaded / node.size) * 100).toFixed(2) }
+    else { return "100"; }    // To avoid divide by zero error, a file size of 0 is already downloaded
+  }
+
 }
