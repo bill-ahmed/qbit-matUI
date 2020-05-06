@@ -1,9 +1,14 @@
-.torrent-info-container {
-    min-width: 40vw;
+.mat-dialog-inner-container {
+    min-width: 50vw;
+}
+
+app-file-system-tree-explorer {
+  width: 97%;
 }
 
 .torrent-info-general-content, .torrent-info-content-content {
     margin: 20px 10px 10px 10px;
+    min-height: 150px;
 
     display: flex;
     flex-direction: row;
@@ -12,4 +17,9 @@
 
 mat-chip-list {
     align-self: flex-end;
+}
+
+.leftPanel, .rightPanel {
+  /* flex-grow: 1; */
+  padding: 5px;
 }

@@ -10,8 +10,6 @@ import { MainData, Torrent } from 'src/utils/Interfaces';
 export class FileDirectoryExplorerService {
 
   public isFileSystemLoaded = false;
-  private directories: string[] = [];
-  private root: TreeNode = null;
 
   constructor(private data_store: TorrentDataStoreService, private fs: FileSystemService) {
     this.getData();
@@ -38,11 +36,6 @@ export class FileDirectoryExplorerService {
     });
 
     this.fs.populateFileSystem([...set_of_dir]);
-
-    // console.log("\n**Printing File System **")
-    // this.fs.printFileSystem();
-    // console.log("**End of File System **\n")
-
     this.isFileSystemLoaded = true;
   }
 }

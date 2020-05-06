@@ -12,7 +12,7 @@ export class NetworkConnectionInformationService {
   private network_info_sub = this.network_info.asObservable();
   private torrent_refresh_interval: number = 1000                         // Assume fastest connection
 
-  constructor() { 
+  constructor() {
     // @ts-ignore -- Ignoring because most browsers do support it; if they don't, we won't use it.
     let con = window.navigator.connection || window.navigator.mozConnection || window.navigator.webkitConnection;
     if(con) {
@@ -25,7 +25,7 @@ export class NetworkConnectionInformationService {
   }
 
   /** Returns the type of connection a user is on.
-   * 
+   *
    * E.g. 2g, 3g, 4g, etc.
    */
   public get_connection_type(): NetworkType {
@@ -38,31 +38,35 @@ export class NetworkConnectionInformationService {
 
   private handle_network_change(event: any) {
     let network_change: NetworkConnection = event.target;
-    
+
     this.torrent_refresh_interval = this.get_refresh_interval_from_network_type(network_change.effectiveType);
     this.network_info.next(network_change);
   }
 
-  /** Calculates an appropriate refresh interval based on user's 
+  /** Calculates an appropriate refresh interval based on user's
    * current internet connection type
    */
-  private get_refresh_interval_from_network_type(net_type: NetworkType): number {
+  public get_refresh_interval_from_network_type(net_type: NetworkType | "slowest" | "slow" | "medium" | "fastest"): number {
 
     let result = 1000;
 
     switch (net_type) {
+      case "slowest":
       case "slow-2g":
         result = 8000;
         break;
-    
+
+      case "slow":
       case "2g":
         result = 5000;
         break;
 
+      case "medium":
       case "3g":
-        result = 3000;
+        result = 2000;
         break;
 
+      case "fastest":
       case "4g":
         break;
 

@@ -39,10 +39,15 @@ import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatRippleModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './torrent-info-dialog/torrent-info-dialog.component';
 import { FileSystemDialogComponent } from './file-system-dialog/file-system-dialog.component';
+import { FileSystemTreeExplorerComponent } from './file-system-tree-explorer/file-system-tree-explorer.component';
 
 var appRoutes: Routes;
 
@@ -70,7 +75,8 @@ if(!environment.production){
     GlobalTransferInfoComponent,
     BulkUpdateTorrentsComponent,
     TorrentInfoDialogComponent,
-    FileSystemDialogComponent
+    FileSystemDialogComponent,
+    FileSystemTreeExplorerComponent
   ],
   imports: [
     BrowserModule,
@@ -100,6 +106,10 @@ if(!environment.production){
     MatSlideToggleModule,
     MatMenuModule,
     MatAutocompleteModule,
+    MatExpansionModule,
+    MatBadgeModule,
+    MatTreeModule,
+    MatRippleModule,
     FormsModule,
     ReactiveFormsModule
   ],

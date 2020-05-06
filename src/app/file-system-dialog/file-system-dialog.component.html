@@ -22,7 +22,7 @@
 
         <div class="file-systme-explorer-container">
             <div class="leftNavigation" mode="side" opened>
-                <mat-nav-list role="list" matRipple>
+                <mat-nav-list role="list">
                     <mat-list-item *ngFor="let dir of leftChildren" (click)="navigateToDir(dir, 'parent')">
 
                         <mat-icon *ngIf="!isDirectorySelected(dir)" color="accent" mat-list-icon>folder</mat-icon>
@@ -55,7 +55,7 @@
                   </button>
                 </mat-list-item>
 
-                <mat-nav-list role="list" matRipple>
+                <mat-nav-list role="list">
                     <mat-list-item *ngFor="let dir of rightChildren" (click)="navigateToDir(dir, 'child')">
                         <mat-icon color="accent" mat-list-icon>folder</mat-icon>
                         <div mat-line>{{dir.value}}</div>

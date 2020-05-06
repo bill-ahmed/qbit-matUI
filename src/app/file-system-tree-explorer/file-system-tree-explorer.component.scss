@@ -1,0 +1,35 @@
+.tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.node-info {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+
+  #node-title {
+    width: 60%;
+    word-wrap: break-word;
+  }
+
+  #progress, #fileSize {
+    flex-wrap: nowrap;
+  }
+}
+
+.grow {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

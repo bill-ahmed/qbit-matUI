@@ -18,32 +18,35 @@
                         <p><b>Name:</b> {{torrent.name}}</p>
                         <p><b>Total Size:</b> {{total_size()}}</p>
                         <p><b>Downloaded:</b> {{downloaded()}} / {{total_size()}}</p>
-                        <p><b>Save Location:</b> {{torrent.save_path}}</p>
+                        <p><b>Uploaded:</b> {{uploaded()}}</p>
                     </div>
-                    
+
                     <div class="rightPanel">
                         <p><b>Added On:</b> {{added_on()}}</p>
                         <p><b>Completed On:</b> {{completed_on()}}</p>
                         <p><b>Last Activity:</b> {{last_activity()}}</p>
+                        <p><b>Save Location:</b> {{torrent.save_path}}</p>
                     </div>
-                    
+
                 </div>
             </mat-tab>
 
-            <!-- <mat-tab label="Content">
+            <mat-tab>
+              <ng-template matTabLabel>
+                <span matBadge="{{isLoading ? '—' : torrentContents.length}}" matBadgeColor="accent" matBadgeOverlap="false">Files</span>
+              </ng-template>
                 <div class="torrent-info-content-content">
-                    <div class="leftPanel">
-                        <p>Overview Stuff</p>
-                    </div>
-                    
-                    <div class="rightPanel">
-                        <p>Right Panel</p>
-                    </div>
+                  <app-file-system-tree-explorer
+                      *ngIf="!isLoading"
+                      [showProgress]="true"
+                      [directories]="get_content_directories_as_advanced_nodes()"></app-file-system-tree-explorer>
+
+                  <mat-spinner *ngIf="isLoading"></mat-spinner>
                 </div>
-            </mat-tab> -->
+            </mat-tab>
 
         </mat-tab-group>
-    
+
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
