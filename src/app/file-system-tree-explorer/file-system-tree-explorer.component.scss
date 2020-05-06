@@ -12,6 +12,7 @@
 .node-info {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   width: 90%;
 
   #node-title {

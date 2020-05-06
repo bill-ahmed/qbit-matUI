@@ -79,7 +79,7 @@ export class FileSystemService {
         let newDirNode: TreeNode;
 
         // If a folder, create directory type
-        if(dir === lastElement && data.type === "File") { newDirNode = new TreeNode(dir, null, data.type, data.size); }
+        if(dir === lastElement && data.type === "File") { newDirNode = new TreeNode(dir, null, data.type, data.size, data.progress); }
         else { newDirNode = new TreeNode(dir); }
 
         curr.addChildNode(newDirNode);
@@ -127,7 +127,7 @@ export class FileSystemService {
         children: this._convertToJSON(child),
         type: child.getType(),
         size: child.getSize(),
-        downloaded: child.getDownloadedAmount(),
+        progress: child.getProgressAmount(),
       });
     }
     return result;
@@ -139,6 +139,6 @@ export interface SerializedNode {
   name: string,
   type: TreeNodeType,
   size: number,
-  downloaded: number,
+  progress: number,
   children?: SerializedNode[]
 }

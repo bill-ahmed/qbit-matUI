@@ -52,7 +52,7 @@ export class TorrentInfoDialogComponent implements OnInit {
 
   private updateTorrentContents(content: TorrentContents[]): void {
     this.torrentContents = content;
-    this.torrentContentsAsNodes = this.torrentContents.map(file => {return {name: file.name, size: file.size, downloaded: file.progress, type: "File" }})
+    this.torrentContentsAsNodes = this.torrentContents.map(file => {return {name: file.name, size: file.size, progress: file.progress, type: "File" }})
     this.isLoading = false;
   }
 
