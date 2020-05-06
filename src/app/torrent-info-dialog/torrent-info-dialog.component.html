@@ -36,7 +36,10 @@
                 <span matBadge="{{isLoading ? '—' : torrentContents.length}}" matBadgeColor="accent" matBadgeOverlap="false">Files</span>
               </ng-template>
                 <div class="torrent-info-content-content">
-                  <app-file-system-tree-explorer *ngIf="!isLoading" [directories]="get_content_directories_as_advanced_nodes()"></app-file-system-tree-explorer>
+                  <app-file-system-tree-explorer
+                      *ngIf="!isLoading"
+                      [showProgress]="true"
+                      [directories]="get_content_directories_as_advanced_nodes()"></app-file-system-tree-explorer>
 
                   <mat-spinner *ngIf="isLoading"></mat-spinner>
                 </div>

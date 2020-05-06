@@ -12,6 +12,7 @@ import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-
 })
 export class FileSystemTreeExplorerComponent implements OnChanges {
   @Input() directories: AdvancedNode[];
+  @Input() showProgress: boolean = false;
 
   public isLoading = true;
 
@@ -33,6 +34,10 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
     if(changes.directories) {
       this.directories = changes.directories.currentValue;
       this._updateData();
+    }
+
+    if(changes.showProgress) {
+      this.showProgress = changes.showProgress.currentValue;
     }
   }
 

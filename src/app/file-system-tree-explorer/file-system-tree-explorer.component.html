@@ -10,7 +10,7 @@
             {{node.name}}
           </div>
 
-          <div>
+          <div *ngIf="showProgress">
             Progress: {{getNodeProgress(node)}}%
           </div>
 
@@ -35,7 +35,7 @@
               {{node.name}}
             </div>
 
-            <div>
+            <div *ngIf="showProgress">
               Progress: {{getNodeProgress(node)}}%
             </div>
 
