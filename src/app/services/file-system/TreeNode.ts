@@ -1,68 +1,35 @@
 export default class TreeNode {
-    private value: any = null;
-    private parent: TreeNode = null;
-    private children: TreeNode[] = [];
+    value: any = null;
+    parent: TreeNode = null;
+    children: TreeNode[] = [];
 
-    private type: TreeNodeType = "Directory";   // Defaults to a folder
-    private size: number = 0;                   // Size of node, commonly in bytes
-    private progress: number = 0;             // How much of a file has been saved to disk
-
-    constructor(value: any, children?: TreeNode[], type?: TreeNodeType, size?: number, progress?: number) {
-        this.value = value;
-
-        // Optional params
-        this.type = type || this.type;
-        this.size = size || this.size;
-        this.progress = progress || 1;              // Assume file is fully downloaded otherwise
-        this.children = children || this.children;
-
-        if (this.size !== 0 || this.progress !== 0) { this._propogateSizeChange(); }
+    constructor(options: TreeNodeConstructor) {
+        this.value = options.value;
+        this.children = options.children || this.children;
     }
 
     public getParent(): TreeNode {
         return this.parent;
     }
 
-    public setParent(par: TreeNode): void {
-        this.parent = par;
-        this._propogateSizeChange();
-    }
-
     public getValue(): any {
         return this.value;
+    }
+
+    public getChildren(): TreeNode[] {
+      return this.children
+    }
+
+    public setParent(par: TreeNode): void {
+      this.parent = par;
     }
 
     public setValue(val: string): void {
       this.value = val;
     }
 
-    public getChildren(): TreeNode[] {
-        return this.children
-    }
-
-    public getSize(): number {
-      return this.size;
-    }
-
-    public setSize(size: number): void {
-      this.size = size;
-      this._propogateSizeChange();
-    }
-
-    /** Download progress of a file/folder as fraction between 0 and 1.
-     * Multiply by 100 to get the percentage.
-     */
-    getProgressAmount(): number {
-      return this.progress;
-    }
-
-    setProgressAmount(val: number) {
-      this.progress = val;
-      this._propogateSizeChange();
-    }
-
-    public getType(): TreeNodeType {
-      return this.type;
+    public setChildren(children: TreeNode[]): void {
+      this.children = children;
     }
 
     /** Get a pointer to a child with given value. If no such child exists, null is returned*/
@@ -78,7 +45,7 @@ export default class TreeNode {
      * @param childValue The value of the child to add
     */
     public addChild(childValue: any): void {
-        let newNode = new TreeNode(childValue);
+        let newNode = new TreeNode({value: childValue});
         this.addChildNode(newNode);
     }
 
@@ -89,7 +56,6 @@ export default class TreeNode {
         if(!this.hasChild(child.value)) {
             child.setParent(this);
             this.children.push(child);
-            this._propogateSizeChange();
         }
     }
 
@@ -101,59 +67,21 @@ export default class TreeNode {
      *
      * */
     public hasChild(val: any): boolean {
-        for(const child of this.children){
-            if (child.value === val) { return true; }
-        }
-        return false;
+      if(!this.children) { return false; }
+      for(const child of this.children){
+          if (child.value === val) { return true; }
+      }
+      return false;
     }
 
     /** Removes all instances of a child with given value from the set of children using "===" comparison.
      * @param childValue The value of the child to remove
      */
     public removeChild(childValue: any): void {
+      if(this.children) {
         this.children = this.children.filter((elem: TreeNode) => {elem.value !== childValue})
-        this._propogateSizeChange();
-    }
-
-    /** Private */
-
-    /** When this folder/file is modified, we need to propogate it's size all the way to the root
-     * This is likely more efficient than calculating the size recursively each time.
-    */
-    private _propogateSizeChange(): void {
-      let size = 0;
-      let progress = 0;
-
-      let old_size = this.size;
-      let old_progress = this.progress;
-
-      // Only directories have size computed by their children
-      if(this.type === "Directory") {
-        this.children.forEach(child => {
-          size += child.getSize();
-          progress += child.getProgressAmount();
-        });
-
-        // Average out the progress
-        if(this.children.length > 0) { progress = progress / this.children.length }
-      }
-      else {
-        size = this.size;
-        progress = this.progress;
-      }
-
-      this.size = size;
-      this.progress = progress;
-
-      // Update sizes of parent & all ancestors
-      let curr = this.parent;
-      while(curr != null) {
-        curr.setSize(curr.getSize() + (this.size - old_size));
-        curr.setProgressAmount(curr.getProgressAmount() + (this.progress - old_progress));
-        curr = curr.getParent();
       }
     }
-
 
     /** Static Methods */
 
@@ -178,13 +106,10 @@ export default class TreeNode {
     }
 }
 
-export type TreeNodeType = "Directory" | "File"
-
-/** This type of node can have many important properties */
-export interface AdvancedNode {
-  name: string,
-  type: TreeNodeType,
-  size: number,
-  /** A file not me fully ready. This can represent how much has been saved to disk. */
-  progress: number,
+export interface TreeNodeConstructor {
+  value: any,
+  children?: TreeNode[],
+  size?: number
 }
+
+export type TreeNodeType = "Directory" | "File"

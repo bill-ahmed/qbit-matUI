@@ -1,21 +1,31 @@
 import { Injectable } from '@angular/core';
-import TreeNode, { TreeNodeType, AdvancedNode } from './TreeNode';
 import * as config from '../../../assets/config.json';
+import DirectoryNode from './FileSystemNodes/DirectoryNode';
+import Inode from './FileSystemNodes/Inode';
+import FileNode from './FileSystemNodes/FileNode';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FileSystemService {
 
-  private root: TreeNode;
-  private directoryDelimeter = config.filePathDelimeter  // How folders are split
+  private root: DirectoryNode;
+  private directoryDelimiter = config.filePathDelimeter  // How folders are split
 
   constructor() {
-    this.root = new TreeNode("");
+    this.root = new DirectoryNode({value: ""});
   }
 
-  public getFileSystem(): TreeNode {
+  public getFileSystem(): DirectoryNode {
     return this.root;
+  }
+
+  public getFileSystemDelimeter(): string {
+    return this.directoryDelimiter;
+  }
+
+  public setFileSystemDelimeter(val: string): void {
+    this.directoryDelimiter = val;
   }
 
   /** Given a list of file paths, construct a file-system
@@ -24,7 +34,7 @@ export class FileSystemService {
    *
    * E.g. dirs = ["C:/Users/Dayman/Downloads", "C:/Users/Dayman/Downloads/Temp Folder", "D:/Images"]
    */
-  public populateFileSystem(dirs: string[], root?: TreeNode): void {
+  public populateFileSystem(dirs: string[], root?: DirectoryNode): void {
 
     // For each directory, we need to extract all the folders in it
     if(dirs.length > 0) {
@@ -37,10 +47,10 @@ export class FileSystemService {
    * @param dirs The directories to create, with data such as type and size
    * @param root The root of the file system. If none is specified, existing one will be used.
    */
-  public populateFileSystemWithAdvancedOptions(dirs: AdvancedNode[], root?: TreeNode) {
+  public populateFileSystemWithAdvancedOptions(dirs: SerializedNode[], root?: DirectoryNode, delimiter?: string) {
     // For each directory, we need to extract all the folders in it
     if(dirs.length > 0) {
-      dirs.forEach( (dir) => this.createDirectoryPathWithAdvancedData(dir, root || this.root) );
+      dirs.forEach( (dir) => this.createDirectoryPathWithAdvancedData(dir, root || this.root, delimiter || this.directoryDelimiter) );
     }
   }
 
@@ -48,16 +58,16 @@ export class FileSystemService {
    *
    * E.g. if dir = "C:/Downloads/Images", then the directory "C:" containing "Downloads" containing "Images" will be created.
    */
-  private async createDirectoryPath(filePath: string, root: TreeNode): Promise<void> {
-    let dirsToCreate = filePath.split(this.directoryDelimeter);
+  private async createDirectoryPath(filePath: string, root: DirectoryNode): Promise<void> {
+    let dirsToCreate = filePath.split(this.directoryDelimiter);
     dirsToCreate = dirsToCreate.filter(elem => {return !!elem});
-    let curr: TreeNode = root;
+    let curr: DirectoryNode = root;
 
     // For each directory in the path, create it and move the pointer
     for(const dir of dirsToCreate) {
       if(!curr.hasChild(dir)) {
 
-        let newDirNode = new TreeNode(dir);
+        let newDirNode = new DirectoryNode({value: dir});
 
         curr.addChildNode(newDirNode);
         curr = newDirNode;
@@ -67,20 +77,20 @@ export class FileSystemService {
     }
   }
 
-  private createDirectoryPathWithAdvancedData(data: AdvancedNode, root: TreeNode) {
-    let dirsToCreate = data.name.split(this.directoryDelimeter).filter(elem => {return !!elem});
+  private createDirectoryPathWithAdvancedData(data: SerializedNode, root: DirectoryNode, delimiter?: string) {
+    let dirsToCreate = data.path.split(delimiter || this.directoryDelimiter).filter(elem => {return !!elem});
     let lastElement = dirsToCreate[dirsToCreate.length - 1];
-    let curr: TreeNode = root;
+    let curr: DirectoryNode = root;
 
     // For each directory in the path, create it and move the pointer
     for(const dir of dirsToCreate) {
       if(!curr.hasChild(dir)) {
 
-        let newDirNode: TreeNode;
+        let newDirNode: any;
 
         // If a folder, create directory type
-        if(dir === lastElement && data.type === "File") { newDirNode = new TreeNode(dir, null, data.type, data.size, data.progress); }
-        else { newDirNode = new TreeNode(dir); }
+        if(dir === lastElement && data.type === "File") { newDirNode = new FileNode({value: dir, children: null, size: data.size, progress: data.progress}); }
+        else { newDirNode = new DirectoryNode({value: dir}); }
 
         curr.addChildNode(newDirNode);
         curr = newDirNode;
@@ -95,7 +105,7 @@ export class FileSystemService {
    * @param root Start of the file system. If none is specified, the instantiated one
    * belonging to `this` will be used instead.
    */
-  public async SerializeFileSystem(root?: TreeNode): Promise<SerializedNode[]> {
+  public async SerializeFileSystem(root?: DirectoryNode): Promise<SerializedNode[]> {
     root = root || this.root;
     return this._convertToJSON(root);
   }
@@ -104,7 +114,7 @@ export class FileSystemService {
    *
    * FOR DEBUGGING PURPOSES ONLY!!
    */
-  public printFileSystem(startNode?: TreeNode, indent?: number): void {
+  public printFileSystem(startNode?: Inode, indent?: number): void {
     indent = indent || 1;
     if(startNode) {
       for(const child of startNode.getChildren()) {
@@ -118,27 +128,48 @@ export class FileSystemService {
     }
   }
 
-  private _convertToJSON(node: TreeNode): SerializedNode[] {
+  private _convertToJSON(node: Inode): SerializedNode[] {
     let result = [];
 
-    for(const child of node.getChildren()) {
-      result.push({
-        name: child.getValue(),
-        children: this._convertToJSON(child),
-        type: child.getType(),
-        size: child.getSize(),
-        progress: child.getProgressAmount(),
-      });
+    if(node.hasChildren()) {
+      for(const child of node.getChildren()) {
+        result.push({
+          name: child.getValue(),
+          path: "",
+          children: this._convertToJSON(child),
+          size: child.getSize(),
+          progress: child.getProgressAmount(),
+          type: child.type
+        });
+      }
     }
     return result;
+  }
+
+  /** Detect the file path delimiter used in a given path.
+   * Very basic method of checking, not recommended for important use.
+   *
+   * @param path The file path to consider
+   * @returns The delimiter that is most likely being used
+   */
+  public static DetectFileDelimiter(path: string): string {
+    // Probability of having backslash character in unix file/folder name is
+    // pretty unlikely LOL
+    if(path.includes("\\")) {
+      console.log("using windows")
+      return "\\";
+    }
+    console.log('using unix')
+    return "/";
   }
 
 }
 
 export interface SerializedNode {
   name: string,
-  type: TreeNodeType,
+  path: string,
   size: number,
   progress: number,
+  type: string,
   children?: SerializedNode[]
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
-import { HttpConfigType } from '../../utils/Interfaces';
 import * as http_endpoints from '../../assets/http_config.json';
 import { IsDevEnv } from '../../utils/Environment';
 
@@ -12,7 +11,7 @@ import { IsDevEnv } from '../../utils/Environment';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  
+
   private http_endpoints: any;
   private cookieValueSID: string
 
@@ -40,7 +39,7 @@ export class LoginComponent implements OnInit {
 
   /**Login a user. Will set a cookie with appropriate credentials */
   login(): void {
-    
+
     // Grab username/password info
     let usernameField: any = document.getElementById('username');
     let passwordField: any = document.getElementById('password');
@@ -63,28 +62,28 @@ export class LoginComponent implements OnInit {
     let url = root + endpoint;
 
     let xhr = new XMLHttpRequest();
- 
+
     console.log("Sent request to", url)
     try {
       this.http.post(url, body, {responseType: 'text', observe: 'response'}).subscribe(
         (data: any) => {
-  
+
           // If successful, route to home page
           if(data.status === 200 && data.body === "Ok."){
-  
+
             // When in development/testing, set cookie manually because Express server won't do it for some reason RIP IDK
             if(IsDevEnv()){
               this.cookieService.set('SID', this.http_endpoints.default.devCookie);
             }
-  
+
             this.router.navigate(['/home']);
-  
+
           } else {
             this.handleAuthErrors(data);
           }
           console.log(data)
       });
-      
+
     } catch (error) {
       this.handleAuthExceptions(error);
     }

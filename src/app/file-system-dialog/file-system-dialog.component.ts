@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FileDirectoryExplorerService } from '../services/file-system/file-directory-explorer.service';
 import TreeNode from '../services/file-system/TreeNode';
-import * as config from '../../assets/config.json';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
+import Inode from '../services/file-system/FileSystemNodes/Inode';
+import { FileSystemService } from '../services/file-system/file-system.service';
 
 @Component({
   selector: 'app-file-system-dialog',
@@ -14,15 +15,16 @@ import { Observable } from 'rxjs';
 export class FileSystemDialogComponent implements OnInit {
 
   public filePath: string[] = [];
-  public leftChildren: TreeNode[] = [];              // Keep track of what folders to show in left nav
-  public rightChildren: TreeNode[] = [];
-  public selectedDir: TreeNode = null;               // Keep track of what folder the user last selected (i.e. what folder they're currently in)
+  public leftChildren: Inode[] = [];              // Keep track of what folders to show in left nav
+  public rightChildren: Inode[] = [];
+  public selectedDir: Inode = null;               // Keep track of what folder the user last selected (i.e. what folder they're currently in)
   public isDarkTheme: Observable<boolean>;
   public isCreatingNewFolder: boolean = false;       // Keep track of when user wants to create a new folder
 
   private newDirValue: string = ""                   // Name of new folder to create
 
-  constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService, private theme: ThemeService) { }
+  constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService, private fs_service: FileSystemService,
+              private theme: ThemeService) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
@@ -33,7 +35,7 @@ export class FileSystemDialogComponent implements OnInit {
 
   public closeDialog(): void {
     if(this.filePath.length > 0) {
-      let fp = this.filePath.join(config.filePathDelimeter);
+      let fp = this.filePath.join(this.fs_service.getFileSystemDelimeter());
       this.dialogRef.close(fp);
     } else {
       this.dialogRef.close();
@@ -41,7 +43,7 @@ export class FileSystemDialogComponent implements OnInit {
   }
 
   /** Go to chosen child directory */
-  public navigateToDir(dir: TreeNode, type: string): void {
+  public navigateToDir(dir: Inode, type: string): void {
 
     this.cancelFolderCreation();
 
@@ -51,7 +53,7 @@ export class FileSystemDialogComponent implements OnInit {
         this.filePath.pop();
       }
 
-      let dirChosen = TreeNode.GetChildFromChildrenList(this.leftChildren, dir);
+      let dirChosen = Inode.GetChildFromChildrenList(this.leftChildren, dir);
       this.rightChildren = dirChosen.getChildren();
 
       this.rightChildren.sort(TreeNode.sort());
@@ -60,7 +62,7 @@ export class FileSystemDialogComponent implements OnInit {
 
       this.leftChildren = this.rightChildren;
 
-      let dirChosen = TreeNode.GetChildFromChildrenList(this.rightChildren, dir);
+      let dirChosen = Inode.GetChildFromChildrenList(this.rightChildren, dir);
       this.rightChildren = dirChosen.getChildren();
       this.rightChildren.sort(TreeNode.sort());
     }
@@ -129,10 +131,10 @@ export class FileSystemDialogComponent implements OnInit {
   }
 
   public getFilePath(): string {
-    return this.filePath.length === 0 ? "{ Unchanged }" : this.filePath.join(config.filePathDelimeter);
+    return this.filePath.length === 0 ? "{ Unchanged }" : this.filePath.join(this.fs_service.getFileSystemDelimeter());
   }
 
-  public isDirectorySelected(dir: TreeNode) {
+  public isDirectorySelected(dir: Inode) {
     if(this.selectedDir) {
       return this.selectedDir.getValue() === dir.getValue();
     }
@@ -144,7 +146,7 @@ export class FileSystemDialogComponent implements OnInit {
    *
    * E.g. "1 subfolder", "3 subfolders"
    */
-  public getNumChildrenString(dir: TreeNode): string {
+  public getNumChildrenString(dir: Inode): string {
     let len = dir.getChildren().length
     return len < 1 ? `Empty` : len === 1 ? `1 subfolder` : `${len} subfolders`
   }
