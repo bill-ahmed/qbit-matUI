@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import * as config from '../../../assets/config.json';
 import DirectoryNode from './FileSystemNodes/DirectoryNode';
 import Inode from './FileSystemNodes/Inode';
+import FileNode from './FileSystemNodes/FileNode';
 
 @Injectable({
   providedIn: 'root'
@@ -77,10 +78,10 @@ export class FileSystemService {
     for(const dir of dirsToCreate) {
       if(!curr.hasChild(dir)) {
 
-        let newDirNode: DirectoryNode;
+        let newDirNode: any;
 
         // If a folder, create directory type
-        if(dir === lastElement && data.type === "File") { newDirNode = new DirectoryNode({value: dir, children: null, size: data.size, progress: data.progress}); }
+        if(dir === lastElement && data.type === "File") { debugger; newDirNode = new FileNode({value: dir, children: null, size: data.size, progress: data.progress}); }
         else { newDirNode = new DirectoryNode({value: dir}); }
 
         curr.addChildNode(newDirNode);
@@ -122,14 +123,16 @@ export class FileSystemService {
   private _convertToJSON(node: Inode): SerializedNode[] {
     let result = [];
 
-    for(const child of node.getChildren()) {
-      result.push({
-        name: child.getValue(),
-        children: this._convertToJSON(child),
-        size: child.getSize(),
-        progress: child.getProgressAmount(),
-        type: typeof child
-      });
+    if(node.hasChildren()) {
+      for(const child of node.getChildren()) {
+        result.push({
+          name: child.getValue(),
+          children: this._convertToJSON(child),
+          size: child.getSize(),
+          progress: child.getProgressAmount(),
+          type: child.type
+        });
+      }
     }
     return result;
   }

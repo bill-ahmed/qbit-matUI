@@ -2,14 +2,10 @@ export default class TreeNode {
     value: any = null;
     parent: TreeNode = null;
     children: TreeNode[] = [];
-    size: number;
 
     constructor(options: TreeNodeConstructor) {
         this.value = options.value;
         this.children = options.children || this.children;
-        this.size = options.size || 0;
-
-        if (this.size !== 0) { this._propogateSizeChange(); }
     }
 
     public getParent(): TreeNode {
@@ -18,10 +14,6 @@ export default class TreeNode {
 
     public getValue(): any {
         return this.value;
-    }
-
-    public getSize(): number {
-      return this.size;
     }
 
     public getChildren(): TreeNode[] {
@@ -34,11 +26,6 @@ export default class TreeNode {
 
     public setValue(val: string): void {
       this.value = val;
-    }
-
-    public setSize(size: number): void {
-      this.size = size;
-      this._propogateSizeChange();
     }
 
     public setChildren(children: TreeNode[]): void {
@@ -80,43 +67,19 @@ export default class TreeNode {
      *
      * */
     public hasChild(val: any): boolean {
-        for(const child of this.children){
-            if (child.value === val) { return true; }
-        }
-        return false;
+      if(!this.children) { return false; }
+      for(const child of this.children){
+          if (child.value === val) { return true; }
+      }
+      return false;
     }
 
     /** Removes all instances of a child with given value from the set of children using "===" comparison.
      * @param childValue The value of the child to remove
      */
     public removeChild(childValue: any): void {
-        this.children = this.children.filter((elem: TreeNode) => {elem.value !== childValue})
-    }
-
-    /** When this folder/file is modified, we need to propogate it's size all the way to the root
-    * This is likely more efficient than calculating the size recursively each time.
-    */
-    private _propogateSizeChange(): void {
-      let size = 0;
-      let old_size = this.size;
-
-      // Only directories have size computed by their children
       if(this.children) {
-        this.children.forEach(child => {
-          size += child.getSize();
-        });
-      }
-      else {
-        size = this.size;
-      }
-
-      this.size = size;
-
-      // Update sizes of parent & all ancestors
-      let curr = this.parent;
-      while(curr != null) {
-        curr.setSize(curr.getSize() + (this.size - old_size));
-        curr = curr.getParent();
+        this.children = this.children.filter((elem: TreeNode) => {elem.value !== childValue})
       }
     }
 
