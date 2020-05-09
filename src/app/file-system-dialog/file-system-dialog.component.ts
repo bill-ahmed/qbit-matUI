@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FileDirectoryExplorerService } from '../services/file-system/file-directory-explorer.service';
 import TreeNode from '../services/file-system/TreeNode';
-import * as config from '../../assets/config.json';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import Inode from '../services/file-system/FileSystemNodes/Inode';

@@ -59,7 +59,6 @@ export default class FileNode extends Inode implements SerializableNode{
   */
   private _propogateProgressChange(): void {
     this.parent.refreshProgress();
-
   }
 
   /** When this folder/file is modified, we need to propogate it's size all the way to the root

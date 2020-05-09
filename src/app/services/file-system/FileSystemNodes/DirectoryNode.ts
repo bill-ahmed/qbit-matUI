@@ -73,17 +73,12 @@ export default class DirectoryNode extends Inode implements SerializableNode {
     let progress = 0;
 
     // Only directories have size computed by their children
-    if(this.type !== 'FileNode') {
-      this.children.forEach(child => {
-        progress += child.getProgressAmount();
-        });
+    this.children.forEach(child => {
+      progress += child.getProgressAmount();
+    });
 
-        // Average out the progress
-        if(this.children.length > 0) { progress = progress / this.children.length }
-      }
-    else {
-      progress = this.progress;
-    }
+    // Average out the progress
+    if(this.children.length > 0) { progress = progress / this.children.length }
 
     this.progress = progress;
 
