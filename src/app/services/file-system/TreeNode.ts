@@ -16,10 +16,6 @@ export default class TreeNode {
         return this.parent;
     }
 
-    public setParent(par: TreeNode): void {
-        this.parent = par;
-    }
-
     public getValue(): any {
         return this.value;
     }
@@ -28,17 +24,21 @@ export default class TreeNode {
       return this.size;
     }
 
-    public setSize(size: number): void {
-      this.size = size;
-      this._propogateSizeChange();
+    public getChildren(): TreeNode[] {
+      return this.children
+    }
+
+    public setParent(par: TreeNode): void {
+      this.parent = par;
     }
 
     public setValue(val: string): void {
       this.value = val;
     }
 
-    public getChildren(): TreeNode[] {
-        return this.children
+    public setSize(size: number): void {
+      this.size = size;
+      this._propogateSizeChange();
     }
 
     public setChildren(children: TreeNode[]): void {
@@ -58,7 +58,7 @@ export default class TreeNode {
      * @param childValue The value of the child to add
     */
     public addChild(childValue: any): void {
-        let newNode = new TreeNode(childValue);
+        let newNode = new TreeNode({value: childValue});
         this.addChildNode(newNode);
     }
 

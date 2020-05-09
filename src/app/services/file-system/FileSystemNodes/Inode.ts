@@ -32,7 +32,25 @@ export default class Inode extends TreeNode {
     return this.parent;
   }
 
-    /** When this folder/file is modified, we need to propogate it's size all the way to the root
+  /**
+   * @override
+   */
+  public addChild(childValue: any): void {
+    let newNode = new Inode({value: childValue});
+    this.addChildNode(newNode);
+  }
+
+  /**
+   * @override
+   */
+  public addChildNode(child: Inode): void {
+    if(!this.hasChild(child.value)) {
+      child.setParent(this);
+      this.children.push(child);
+    }
+  }
+
+  /** When this folder/file is modified, we need to propogate it's size all the way to the root
   * This is likely more efficient than calculating the size recursively each time.
   */
  private _propogateProgressChange(): void {
