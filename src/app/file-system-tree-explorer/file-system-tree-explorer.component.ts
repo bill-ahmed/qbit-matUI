@@ -45,7 +45,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
    *  expensive operation.
    */
   private async _updateData(): Promise<void> {
-    this.root = new TreeNode("");
+    this.root = new TreeNode({value: ""});
 
     this.fs.populateFileSystemWithAdvancedOptions(this.directories, this.root);
     this.fs.SerializeFileSystem(this.root).then(data => {
