@@ -1,12 +1,13 @@
 import Inode, { InodeConstructor } from "./Inode";
 import { FileNoChildrenError } from '../Exceptions/FileSystemExceptions';
+import { SerializableNode } from 'src/utils/file-system/interfaces';
 
 /** A class to represent a file. A file may not have any children. */
-export default class FileNode extends Inode{
+export default class FileNode extends Inode implements SerializableNode{
   children: null;
+  type = 'FileNode';
 
   constructor(options:FileNodeConstructor) {
-    options.children = null;  /** Enfore not having children */
     super(options);
 
     this.children = null;

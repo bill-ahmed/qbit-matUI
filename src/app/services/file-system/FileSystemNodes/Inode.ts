@@ -1,16 +1,20 @@
 import TreeNode, { TreeNodeConstructor } from "../TreeNode";
+import { SerializableNode } from 'src/utils/file-system/interfaces';
 
 /** A class to represent object in a File System. */
-export default class Inode extends TreeNode {
+export default class Inode extends TreeNode implements SerializableNode {
 
   progress: number;
   children: Inode[];
   parent: Inode;
+  type = 'Inode';
 
   constructor(options: InodeConstructor) {
     super(options);
 
     this.progress = options.progress || 1;              // Assume file is fully downloaded otherwise
+
+    if(this.progress !== 0) { this._propogateProgressChange(); }
   }
 
   /** Download progress of a file/folder as fraction between 0 and 1.
@@ -72,7 +76,7 @@ export default class Inode extends TreeNode {
    let old_progress = this.progress;
 
    // Only directories have size computed by their children
-   if(this.children) {
+   if(this.type !== 'FileNode') {
      this.children.forEach(child => {
        progress += child.getProgressAmount();
       });

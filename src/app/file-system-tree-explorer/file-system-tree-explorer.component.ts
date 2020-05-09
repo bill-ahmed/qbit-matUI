@@ -2,7 +2,6 @@ import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/cor
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { FileSystemService, SerializedNode } from '../services/file-system/file-system.service';
-import TreeNode, { AdvancedNode } from '../services/file-system/TreeNode';
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
 import DirectoryNode from '../services/file-system/FileSystemNodes/DirectoryNode';
 
@@ -12,7 +11,7 @@ import DirectoryNode from '../services/file-system/FileSystemNodes/DirectoryNode
   styleUrls: ['./file-system-tree-explorer.component.scss']
 })
 export class FileSystemTreeExplorerComponent implements OnChanges {
-  @Input() directories: AdvancedNode[];
+  @Input() directories: SerializedNode[];
   @Input() showProgress: boolean = false;
 
   public isLoading = true;
@@ -50,6 +49,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
     this.fs.populateFileSystemWithAdvancedOptions(this.directories, this.root);
     this.fs.SerializeFileSystem(this.root).then(data => {
+      console.log(data);
       this.serialized_root = data;
       this.dataSource.data = data;
     });

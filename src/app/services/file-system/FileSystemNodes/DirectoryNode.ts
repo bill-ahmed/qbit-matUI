@@ -1,8 +1,11 @@
 import Inode, { InodeConstructor } from './Inode';
 import FileNode from './FileNode';
+import { SerializableNode } from 'src/utils/file-system/interfaces';
 
 /** A class to represent a folder/directory.  */
-export default class DirectoryNode extends Inode {
+export default class DirectoryNode extends Inode implements SerializableNode {
+  type = 'DirectoryNode';
+
   constructor(options: DirectoryNodeConstructor) {
     super(options);
   }

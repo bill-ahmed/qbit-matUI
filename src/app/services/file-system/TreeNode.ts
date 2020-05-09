@@ -150,12 +150,3 @@ export interface TreeNodeConstructor {
 }
 
 export type TreeNodeType = "Directory" | "File"
-
-/** This type of node can have many important properties */
-export interface AdvancedNode {
-  name: string,
-  type: TreeNodeType,
-  size: number,
-  /** A file not me fully ready. This can represent how much has been saved to disk. */
-  progress: number,
-}

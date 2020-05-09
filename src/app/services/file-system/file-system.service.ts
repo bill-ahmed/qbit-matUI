@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import TreeNode, { TreeNodeType, AdvancedNode } from './TreeNode';
 import * as config from '../../../assets/config.json';
 import DirectoryNode from './FileSystemNodes/DirectoryNode';
 import Inode from './FileSystemNodes/Inode';
@@ -39,7 +38,7 @@ export class FileSystemService {
    * @param dirs The directories to create, with data such as type and size
    * @param root The root of the file system. If none is specified, existing one will be used.
    */
-  public populateFileSystemWithAdvancedOptions(dirs: AdvancedNode[], root?: DirectoryNode) {
+  public populateFileSystemWithAdvancedOptions(dirs: SerializedNode[], root?: DirectoryNode) {
     // For each directory, we need to extract all the folders in it
     if(dirs.length > 0) {
       dirs.forEach( (dir) => this.createDirectoryPathWithAdvancedData(dir, root || this.root) );
@@ -69,7 +68,7 @@ export class FileSystemService {
     }
   }
 
-  private createDirectoryPathWithAdvancedData(data: AdvancedNode, root: DirectoryNode) {
+  private createDirectoryPathWithAdvancedData(data: SerializedNode, root: DirectoryNode) {
     let dirsToCreate = data.name.split(this.directoryDelimeter).filter(elem => {return !!elem});
     let lastElement = dirsToCreate[dirsToCreate.length - 1];
     let curr: DirectoryNode = root;
@@ -129,6 +128,7 @@ export class FileSystemService {
         children: this._convertToJSON(child),
         size: child.getSize(),
         progress: child.getProgressAmount(),
+        type: typeof child
       });
     }
     return result;
@@ -140,5 +140,6 @@ export interface SerializedNode {
   name: string,
   size: number,
   progress: number,
+  type: string,
   children?: SerializedNode[]
 }
