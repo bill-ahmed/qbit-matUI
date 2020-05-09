@@ -50,9 +50,8 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
     delimiter = this.directories.length === 0 ? "/" : FileSystemService.DetectFileDelimiter(this.directories[0].path);
 
-    this.fs.populateFileSystemWithAdvancedOptions(this.directories, this.root);
+    this.fs.populateFileSystemWithAdvancedOptions(this.directories, this.root, delimiter);
     this.fs.SerializeFileSystem(this.root).then(data => {
-      console.log(data);
       this.serialized_root = data;
       this.dataSource.data = data;
     });
