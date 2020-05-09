@@ -47,10 +47,10 @@ export class FileSystemService {
    * @param dirs The directories to create, with data such as type and size
    * @param root The root of the file system. If none is specified, existing one will be used.
    */
-  public populateFileSystemWithAdvancedOptions(dirs: SerializedNode[], root?: DirectoryNode) {
+  public populateFileSystemWithAdvancedOptions(dirs: SerializedNode[], root?: DirectoryNode, delimiter?: string) {
     // For each directory, we need to extract all the folders in it
     if(dirs.length > 0) {
-      dirs.forEach( (dir) => this.createDirectoryPathWithAdvancedData(dir, root || this.root) );
+      dirs.forEach( (dir) => this.createDirectoryPathWithAdvancedData(dir, root || this.root, delimiter || this.directoryDelimiter) );
     }
   }
 
@@ -77,8 +77,8 @@ export class FileSystemService {
     }
   }
 
-  private createDirectoryPathWithAdvancedData(data: SerializedNode, root: DirectoryNode) {
-    let dirsToCreate = data.name.split(this.directoryDelimiter).filter(elem => {return !!elem});
+  private createDirectoryPathWithAdvancedData(data: SerializedNode, root: DirectoryNode, delimiter?: string) {
+    let dirsToCreate = data.path.split(delimiter || this.directoryDelimiter).filter(elem => {return !!elem});
     let lastElement = dirsToCreate[dirsToCreate.length - 1];
     let curr: DirectoryNode = root;
 
@@ -89,7 +89,7 @@ export class FileSystemService {
         let newDirNode: any;
 
         // If a folder, create directory type
-        if(dir === lastElement && data.type === "File") { debugger; newDirNode = new FileNode({value: dir, children: null, size: data.size, progress: data.progress}); }
+        if(dir === lastElement && data.type === "File") { newDirNode = new FileNode({value: dir, children: null, size: data.size, progress: data.progress}); }
         else { newDirNode = new DirectoryNode({value: dir}); }
 
         curr.addChildNode(newDirNode);
@@ -135,6 +135,7 @@ export class FileSystemService {
       for(const child of node.getChildren()) {
         result.push({
           name: child.getValue(),
+          path: "",
           children: this._convertToJSON(child),
           size: child.getSize(),
           progress: child.getProgressAmount(),
@@ -145,10 +146,28 @@ export class FileSystemService {
     return result;
   }
 
+  /** Detect the file path delimiter used in a given path.
+   * Very basic method of checking, not recommended for important use.
+   *
+   * @param path The file path to consider
+   * @returns The delimiter that is most likely being used
+   */
+  public static DetectFileDelimiter(path: string): string {
+    // Probability of having backslash character in unix file/folder name is
+    // pretty unlikely LOL
+    if(path.includes("\\")) {
+      console.log("using windows")
+      return "\\";
+    }
+    console.log('using unix')
+    return "/";
+  }
+
 }
 
 export interface SerializedNode {
   name: string,
+  path: string,
   size: number,
   progress: number,
   type: string,

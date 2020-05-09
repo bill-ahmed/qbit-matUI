@@ -45,7 +45,10 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
    *  expensive operation.
    */
   private async _updateData(): Promise<void> {
+    let delimiter = "";
     this.root = new DirectoryNode({value: ""});
+
+    delimiter = this.directories.length === 0 ? "/" : FileSystemService.DetectFileDelimiter(this.directories[0].path);
 
     this.fs.populateFileSystemWithAdvancedOptions(this.directories, this.root);
     this.fs.SerializeFileSystem(this.root).then(data => {
