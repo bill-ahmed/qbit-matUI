@@ -10,7 +10,7 @@ import FileNode from './FileSystemNodes/FileNode';
 export class FileSystemService {
 
   private root: DirectoryNode;
-  private directoryDelimeter = config.filePathDelimeter  // How folders are split
+  private directoryDelimiter = config.filePathDelimeter  // How folders are split
 
   constructor() {
     this.root = new DirectoryNode({value: ""});
@@ -18,6 +18,14 @@ export class FileSystemService {
 
   public getFileSystem(): DirectoryNode {
     return this.root;
+  }
+
+  public getFileSystemDelimeter(): string {
+    return this.directoryDelimiter;
+  }
+
+  public setFileSystemDelimeter(val: string): void {
+    this.directoryDelimiter = val;
   }
 
   /** Given a list of file paths, construct a file-system
@@ -51,7 +59,7 @@ export class FileSystemService {
    * E.g. if dir = "C:/Downloads/Images", then the directory "C:" containing "Downloads" containing "Images" will be created.
    */
   private async createDirectoryPath(filePath: string, root: DirectoryNode): Promise<void> {
-    let dirsToCreate = filePath.split(this.directoryDelimeter);
+    let dirsToCreate = filePath.split(this.directoryDelimiter);
     dirsToCreate = dirsToCreate.filter(elem => {return !!elem});
     let curr: DirectoryNode = root;
 
@@ -70,7 +78,7 @@ export class FileSystemService {
   }
 
   private createDirectoryPathWithAdvancedData(data: SerializedNode, root: DirectoryNode) {
-    let dirsToCreate = data.name.split(this.directoryDelimeter).filter(elem => {return !!elem});
+    let dirsToCreate = data.name.split(this.directoryDelimiter).filter(elem => {return !!elem});
     let lastElement = dirsToCreate[dirsToCreate.length - 1];
     let curr: DirectoryNode = root;
 

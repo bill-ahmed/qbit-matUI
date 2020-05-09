@@ -6,6 +6,7 @@ import * as config from '../../assets/config.json';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import Inode from '../services/file-system/FileSystemNodes/Inode';
+import { FileSystemService } from '../services/file-system/file-system.service';
 
 @Component({
   selector: 'app-file-system-dialog',
@@ -23,7 +24,8 @@ export class FileSystemDialogComponent implements OnInit {
 
   private newDirValue: string = ""                   // Name of new folder to create
 
-  constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService, private theme: ThemeService) { }
+  constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService, private fs_service: FileSystemService,
+              private theme: ThemeService) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
@@ -34,7 +36,7 @@ export class FileSystemDialogComponent implements OnInit {
 
   public closeDialog(): void {
     if(this.filePath.length > 0) {
-      let fp = this.filePath.join(config.filePathDelimeter);
+      let fp = this.filePath.join(this.fs_service.getFileSystemDelimeter());
       this.dialogRef.close(fp);
     } else {
       this.dialogRef.close();
@@ -130,7 +132,7 @@ export class FileSystemDialogComponent implements OnInit {
   }
 
   public getFilePath(): string {
-    return this.filePath.length === 0 ? "{ Unchanged }" : this.filePath.join(config.filePathDelimeter);
+    return this.filePath.length === 0 ? "{ Unchanged }" : this.filePath.join(this.fs_service.getFileSystemDelimeter());
   }
 
   public isDirectorySelected(dir: Inode) {

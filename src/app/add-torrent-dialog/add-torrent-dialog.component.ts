@@ -9,6 +9,7 @@ import { FileSystemDialogComponent } from '../file-system-dialog/file-system-dia
 import * as config from '../../assets/config.json';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
+import { FileSystemService } from '../services/file-system/file-system.service';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -25,7 +26,7 @@ export class AddTorrentDialogComponent implements OnInit {
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
   constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService,
-              private fs: FileDirectoryExplorerService, public fileSystemDialog: MatDialog, private theme: ThemeService) { }
+              private fs: FileDirectoryExplorerService, public fileSystemDialog: MatDialog, private fs_service: FileSystemService, private theme: ThemeService) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
@@ -90,7 +91,7 @@ export class AddTorrentDialogComponent implements OnInit {
     this.fileSystemExplorerDialogREF.afterClosed().subscribe((res: string) => {
       // If use confirmed choice of file path
       if(res) {
-        this.filesDestination = res + config.filePathDelimeter;
+        this.filesDestination = res + this.fs_service.getFileSystemDelimeter();
       }
     })
   }
