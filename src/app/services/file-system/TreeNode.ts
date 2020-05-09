@@ -4,9 +4,10 @@ export default class TreeNode {
     children: TreeNode[] = [];
     size: number;
 
-    constructor(options: { value: any, children?: TreeNode[] }) {
+    constructor(options: TreeNodeConstructor) {
         this.value = options.value;
         this.children = options.children || this.children;
+        this.size = options.size || 0;
 
         if (this.size !== 0) { this._propogateSizeChange(); }
     }
@@ -144,7 +145,8 @@ export default class TreeNode {
 
 export interface TreeNodeConstructor {
   value: any,
-  children?: TreeNode[]
+  children?: TreeNode[],
+  size?: number
 }
 
 export type TreeNodeType = "Directory" | "File"

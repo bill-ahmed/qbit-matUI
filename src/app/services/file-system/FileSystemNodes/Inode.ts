@@ -1,12 +1,13 @@
-import TreeNode from "../TreeNode";
+import TreeNode, { TreeNodeConstructor } from "../TreeNode";
 
+/** A class to represent object in a File System. */
 export default class Inode extends TreeNode {
 
   progress: number;
   children: Inode[];
   parent: Inode;
 
-  constructor(options: { value: any, children?: Inode[], size?: number, progress?: number }) {
+  constructor(options: InodeConstructor) {
     super(options);
 
     this.progress = options.progress || 1;              // Assume file is fully downloaded otherwise
@@ -60,4 +61,9 @@ export default class Inode extends TreeNode {
       curr = curr.getParent();
     }
   }
+}
+
+export interface InodeConstructor extends TreeNodeConstructor{
+  children: Inode[],
+  progress?: number
 }
