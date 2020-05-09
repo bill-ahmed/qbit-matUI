@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 import { NetworkConnectionInformationService } from '../services/network/network-connection-information.service';
 import { FileSystemService } from '../services/file-system/file-system.service';
-import TreeNode, { AdvancedNode } from '../services/file-system/TreeNode';
 
 @Component({
   selector: 'app-torrent-info-dialog',

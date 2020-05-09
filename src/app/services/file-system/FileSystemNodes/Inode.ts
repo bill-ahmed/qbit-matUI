@@ -64,6 +64,6 @@ export default class Inode extends TreeNode {
 }
 
 export interface InodeConstructor extends TreeNodeConstructor{
-  children: Inode[],
+  children?: Inode[],
   progress?: number
 }

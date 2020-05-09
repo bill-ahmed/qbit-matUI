@@ -4,6 +4,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { FileSystemService, SerializedNode } from '../services/file-system/file-system.service';
 import TreeNode, { AdvancedNode } from '../services/file-system/TreeNode';
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
+import DirectoryNode from '../services/file-system/FileSystemNodes/DirectoryNode';
 
 @Component({
   selector: 'app-file-system-tree-explorer',
@@ -20,7 +21,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   public treeControl = new NestedTreeControl<SerializedNode>(node => node.children);
   public dataSource = new MatTreeNestedDataSource<SerializedNode>();
 
-  private root: TreeNode;                           /** File System to keep track of the files in a torrent */
+  private root: DirectoryNode;                           /** File System to keep track of the files in a torrent */
   private serialized_root: SerializedNode[] = [];
   private expanded_nodes: Set<string> = new Set<string>();
 
@@ -45,7 +46,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
    *  expensive operation.
    */
   private async _updateData(): Promise<void> {
-    this.root = new TreeNode({value: ""});
+    this.root = new DirectoryNode({value: ""});
 
     this.fs.populateFileSystemWithAdvancedOptions(this.directories, this.root);
     this.fs.SerializeFileSystem(this.root).then(data => {

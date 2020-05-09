@@ -3,6 +3,7 @@ import { TorrentDataStoreService } from '../torrent-management/torrent-data-stor
 import { FileSystemService } from './file-system.service';
 import TreeNode from './TreeNode';
 import { MainData, Torrent } from 'src/utils/Interfaces';
+import DirectoryNode from './FileSystemNodes/DirectoryNode';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class FileDirectoryExplorerService {
     this.updateDirectories(data.torrents);
   }
 
-  public getFileSystem(): TreeNode {
+  public getFileSystem(): DirectoryNode {
     return this.fs.getFileSystem();
   }
 

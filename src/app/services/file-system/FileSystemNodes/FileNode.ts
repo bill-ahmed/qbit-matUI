@@ -13,5 +13,5 @@ export default class FileNode extends Inode{
 }
 
 export interface FileNodeConstructor extends InodeConstructor {
-  children: null  /** Cannot have children, by definition */
+  children?: null  /** Cannot have children, by definition */
 }

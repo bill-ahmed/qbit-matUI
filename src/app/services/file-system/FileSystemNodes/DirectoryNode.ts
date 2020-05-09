@@ -1,4 +1,5 @@
 import Inode, { InodeConstructor } from './Inode';
+import FileNode from './FileNode';
 
 /** A class to represent a folder/directory.  */
 export default class DirectoryNode extends Inode {
@@ -7,4 +8,6 @@ export default class DirectoryNode extends Inode {
   }
 }
 
-export interface DirectoryNodeConstructor extends InodeConstructor { }
+export interface DirectoryNodeConstructor extends InodeConstructor {
+  children?: DirectoryNode[] | FileNode[]
+ }
