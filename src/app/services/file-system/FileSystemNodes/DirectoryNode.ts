@@ -8,6 +8,20 @@ export default class DirectoryNode extends Inode {
   }
 
   /**
+   * @override Need this to method overrided in order to resolve typescript errors
+   */
+  public getChild(val: any): DirectoryNode {
+    return super.getChild(val) as DirectoryNode;
+  }
+
+  /**
+   * @override Need this to method overrided in order to resolve typescript errors
+   */
+  public getChildren(): Inode[] {
+    return this.children;
+  }
+
+  /**
    * @override
    */
   public addChild(childValue: any): void {
@@ -26,6 +40,4 @@ export default class DirectoryNode extends Inode {
   }
 }
 
-export interface DirectoryNodeConstructor extends InodeConstructor {
-  children?: DirectoryNode[] | FileNode[]
-}
+export interface DirectoryNodeConstructor extends InodeConstructor {  }

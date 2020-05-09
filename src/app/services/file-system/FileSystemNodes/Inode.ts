@@ -33,6 +33,20 @@ export default class Inode extends TreeNode {
   }
 
   /**
+   * @override Need this to method overrided in order to resolve typescript errors
+   */
+  public getChild(val: any): Inode {
+    return super.getChild(val) as Inode;
+  }
+
+  /**
+   * @override Need this to method overrided in order to resolve typescript errors
+   */
+  public getChildren(): Inode[] {
+    return this.children;
+  }
+
+  /**
    * @override
    */
   public addChild(childValue: any): void {
@@ -78,6 +92,10 @@ export default class Inode extends TreeNode {
       curr.setProgressAmount(curr.getProgressAmount() + (this.progress - old_progress));
       curr = curr.getParent();
     }
+  }
+
+  public static GetChildFromChildrenList(children: Inode[], child: Inode): Inode {
+    return super.GetChildFromChildrenList(children, child) as Inode;
   }
 }
 
