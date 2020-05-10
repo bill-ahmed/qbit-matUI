@@ -85,12 +85,12 @@ export class AddTorrentDialogComponent implements OnInit {
   /** Handle opening file explorer dialog & handling any callbacks */
   public openFileSystemExplorerDialog(event: any): void {
     this.fileSystemExplorerDialogREF = this.fileSystemDialog.open(FileSystemDialogComponent,
-      {minWidth: "50%", panelClass: "generic-dialog", autoFocus: false});
+      {minWidth: "50%", panelClass: "generic-dialog", autoFocus: false, data: { initialFilePath: this.filesDestination }});
 
     this.fileSystemExplorerDialogREF.afterClosed().subscribe((res: string) => {
       // If use confirmed choice of file path
       if(res) {
-        this.filesDestination = res + this.fs_service.getFileSystemDelimeter();
+        this.filesDestination = res
       }
     })
   }

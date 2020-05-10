@@ -3,6 +3,7 @@ import * as config from '../../../assets/config.json';
 import DirectoryNode from './FileSystemNodes/DirectoryNode';
 import Inode from './FileSystemNodes/Inode';
 import FileNode from './FileSystemNodes/FileNode';
+import { DirectoryNotFoundError } from './Exceptions/FileSystemExceptions';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class FileSystemService {
   private directoryDelimiter = config.filePathDelimeter  // How folders are split
 
   constructor() {
-    this.root = new DirectoryNode({value: ""});
+    this.root = new DirectoryNode({value: "", skipNameValidation: true});
   }
 
   public getFileSystem(): DirectoryNode {
@@ -161,6 +162,29 @@ export class FileSystemService {
     }
     console.log('using unix')
     return "/";
+  }
+
+  /** Given an absolute path (e.g. C:/Users/user_1/Desktop), get the
+   * directory node that represents it. If no such directory exists, null is returned.
+   *
+   * @param root The root of the file system
+   * @param path The path to the directory.
+   * @param delimiter The delimiter the file system uses
+   * @returns A directory that represents the given path.
+   * @throws DirectoryNotFoundError
+   */
+  public static GetDirectoryByAbsolutePath(root: DirectoryNode, path: string, delimiter: string): DirectoryNode {
+    let curr = root;
+    let dirs = path.split(delimiter).filter(elem => {return !!elem});
+
+    for(const dir of dirs) {
+      if(!(curr = curr.getDirectory(dir))) {
+        // If this child is not found
+        throw new DirectoryNotFoundError();
+      }
+    }
+
+    return curr;
   }
 
 }

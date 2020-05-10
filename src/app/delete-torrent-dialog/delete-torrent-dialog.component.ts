@@ -24,8 +24,8 @@ export class DeleteTorrentDialogComponent implements OnInit {
   private attemptedDelete = false;  // Keep track of whether any deletes were attempted
   public isDarkTheme: Observable<boolean>;
 
-  constructor(private dialogRef:MatDialogRef<DeleteTorrentDialogComponent>, private TorrentService: TorrentDataHTTPService, @Inject(MAT_DIALOG_DATA) data, 
-              private theme: ThemeService) { 
+  constructor(private dialogRef:MatDialogRef<DeleteTorrentDialogComponent>, private TorrentService: TorrentDataHTTPService, @Inject(MAT_DIALOG_DATA) data,
+              private theme: ThemeService) {
     this.torrentsToDelete = data.torrent;
    }
 
@@ -51,7 +51,7 @@ export class DeleteTorrentDialogComponent implements OnInit {
       console.log(res);
       this.finishCallback(res);
 
-    }, 
+    },
     (error: any) => {
       console.error(error);
       this.finishCallback(error);
