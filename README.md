@@ -1,4 +1,4 @@
-# Qbit Material WebUI
+# Qbit Material WebUI <br/>[![Build Status](https://travis-ci.org/bill-ahmed/qbit-material-WebUI.svg?branch=master)](https://travis-ci.org/bill-ahmed/qbit-material-WebUI)
 
 An alternative Web Interface to the original [qBittorrent Web UI](https://github.com/qbittorrent/qBittorrent). This interface is very slimmed down and contains the following features
 
