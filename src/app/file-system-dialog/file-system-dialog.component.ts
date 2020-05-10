@@ -6,7 +6,7 @@ import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import Inode from '../services/file-system/FileSystemNodes/Inode';
 import { FileSystemService } from '../services/file-system/file-system.service';
-import { DirectoryNotFoundError } from '../services/file-system/Exceptions/FileSystemExceptions';
+import { DirectoryNotFoundError, InvalidNameError } from '../services/file-system/Exceptions/FileSystemExceptions';
 import DirectoryNode from '../services/file-system/FileSystemNodes/DirectoryNode';
 import FileNode from '../services/file-system/FileSystemNodes/FileNode';
 
@@ -103,7 +103,20 @@ export class FileSystemDialogComponent implements OnInit {
       return;
     }
 
-    if (this.selectedDir != null) { this.selectedDir.addChild(name); }
+    // Attempt to add this new folder
+    if (this.selectedDir != null) {
+      try {
+        this.selectedDir.addChild(name);
+      } catch (error) {
+        if(error instanceof InvalidNameError) {
+          alert(error.message);
+          return;   // Let user try again without closing folder creation input
+        } else {
+          throw error;
+        }
+      }
+
+    }
     else { alert("Can't create a directory at the root!"); }
 
     this.cancelFolderCreation();

@@ -14,7 +14,7 @@ export class FileSystemService {
   private directoryDelimiter = config.filePathDelimeter  // How folders are split
 
   constructor() {
-    this.root = new DirectoryNode({value: ""});
+    this.root = new DirectoryNode({value: "", skipNameValidation: true});
   }
 
   public getFileSystem(): DirectoryNode {

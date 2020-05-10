@@ -33,3 +33,10 @@ export class FileNotFoundError extends FileSystemError {
   }
 }
 
+export class InvalidNameError extends FileSystemError {
+  constructor(name: string, message?: string) {
+    super(message || `The file name '${name}' contains an invalid character.`);
+    this.name = "InvalidNameError";
+  }
+}
+
