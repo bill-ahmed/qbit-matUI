@@ -17,7 +17,6 @@ import FileNode from '../services/file-system/FileSystemNodes/FileNode';
 })
 export class FileSystemDialogComponent implements OnInit {
 
-  public filePath: string[] = [];
   public root: DirectoryNode;
   public leftChildren: DirectoryNode[] = [];                 // Keep track of what folders to show in left nav
   public rightChildren: (DirectoryNode | FileNode)[] = [];
@@ -42,8 +41,8 @@ export class FileSystemDialogComponent implements OnInit {
   }
 
   public closeDialog(): void {
-    if(this.filePath.length > 0) {
-      let fp = this.filePath.join(this.fs_service.getFileSystemDelimeter());
+    let fp = this.getFilePath()
+    if(fp.length > 0) {
       this.dialogRef.close(fp);
     } else {
       this.dialogRef.close();
@@ -57,9 +56,6 @@ export class FileSystemDialogComponent implements OnInit {
 
     // Refresh children shown in right panel
     if(type === "parent") {
-      if(this.rightChildren) {
-        this.filePath.pop();
-      }
 
       let dirChosen = DirectoryNode.GetChildFromChildrenList(this.leftChildren, dir);
       this.rightChildren = dirChosen.getChildren();
@@ -75,12 +71,10 @@ export class FileSystemDialogComponent implements OnInit {
       this.rightChildren.sort(TreeNode.sort());
     }
 
-    this.filePath.push(dir.getValue());
     this.selectedDir = dir;
   }
 
   public navigateUp(): void {
-    this.filePath.pop();
 
     let parent = this.leftChildren[0].getParent();
 
@@ -139,7 +133,7 @@ export class FileSystemDialogComponent implements OnInit {
   }
 
   public getFilePath(): string {
-    return this.filePath.length === 0 ? "{ Unchanged }" : this.filePath.join(this.fs_service.getFileSystemDelimeter());
+    return this.selectedDir ? this.selectedDir.getAbsolutePath(this.fs_service.getFileSystemDelimeter()) : "";
   }
 
   public isDirectorySelected(dir: Inode) {

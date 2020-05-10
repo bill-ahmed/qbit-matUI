@@ -90,7 +90,7 @@ export class AddTorrentDialogComponent implements OnInit {
     this.fileSystemExplorerDialogREF.afterClosed().subscribe((res: string) => {
       // If use confirmed choice of file path
       if(res) {
-        this.filesDestination = res + this.fs_service.getFileSystemDelimeter();
+        this.filesDestination = res
       }
     })
   }
