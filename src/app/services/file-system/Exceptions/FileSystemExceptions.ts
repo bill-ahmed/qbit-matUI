@@ -19,3 +19,17 @@ export class FileNoChildrenError extends FileSystemError {
   }
 }
 
+export class DirectoryNotFoundError extends FileSystemError {
+  constructor(message?: string) {
+    super(message || "The directory with given path does not exist.");
+    this.name = "DirectoryNotFoundError";
+  }
+}
+
+export class FileNotFoundError extends FileSystemError {
+  constructor(message?: string) {
+    super(message || "The file with given path does not exist.");
+    this.name = "FileNotFoundError";
+  }
+}
+
