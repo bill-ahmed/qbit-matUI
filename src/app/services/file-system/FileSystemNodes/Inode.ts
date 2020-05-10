@@ -50,6 +50,21 @@ export default class Inode extends TreeNode implements SerializableNode {
     return this.children;
   }
 
+  /** Get path to this file/directory.
+   * Is calculated by combining value of all it's ancestors and itself, and
+   * joining by the file system delimiter.
+   *
+   * E.g. "C:/Users/user_1/Desktop", "D:/Images/Ubuntu_LTS_1.iso", etc.
+   * @param delimiter The file delimiter to use when joining the path
+   * @returns A path that uniquely defines this file/directory.
+   */
+  public getAbsolutePath(delimiter: string): string {
+    if(this.parent) {
+      return this.parent.getAbsolutePath(delimiter) + this.value + delimiter;
+    }
+    return this.value
+  }
+
   public hasChildren(): boolean {
     return this.children && this.children.length > 0;
   }
