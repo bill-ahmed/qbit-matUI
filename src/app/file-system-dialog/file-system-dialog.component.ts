@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FileDirectoryExplorerService } from '../services/file-system/file-directory-explorer.service';
 import TreeNode from '../services/file-system/TreeNode';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import Inode from '../services/file-system/FileSystemNodes/Inode';
 import { FileSystemService } from '../services/file-system/file-system.service';
+import { DirectoryNotFoundError } from '../services/file-system/Exceptions/FileSystemExceptions';
+import DirectoryNode from '../services/file-system/FileSystemNodes/DirectoryNode';
+import FileNode from '../services/file-system/FileSystemNodes/FileNode';
 
 @Component({
   selector: 'app-file-system-dialog',
@@ -15,22 +18,27 @@ import { FileSystemService } from '../services/file-system/file-system.service';
 export class FileSystemDialogComponent implements OnInit {
 
   public filePath: string[] = [];
-  public leftChildren: Inode[] = [];              // Keep track of what folders to show in left nav
-  public rightChildren: Inode[] = [];
-  public selectedDir: Inode = null;               // Keep track of what folder the user last selected (i.e. what folder they're currently in)
+  public root: DirectoryNode;
+  public leftChildren: DirectoryNode[] = [];                 // Keep track of what folders to show in left nav
+  public rightChildren: (DirectoryNode | FileNode)[] = [];
+  public selectedDir: DirectoryNode = null;                  // Keep track of what folder the user last selected (i.e. what folder they're currently in)
   public isDarkTheme: Observable<boolean>;
   public isCreatingNewFolder: boolean = false;       // Keep track of when user wants to create a new folder
 
   private newDirValue: string = ""                   // Name of new folder to create
+  private inputData: any;                            // Data passed in to this component
 
   constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService, private fs_service: FileSystemService,
-              private theme: ThemeService) { }
+              private theme: ThemeService, @Inject(MAT_DIALOG_DATA) inputData) { this.inputData = inputData; }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
-    let root = this.fs.getFileSystem();
-    this.leftChildren = root.getChildren();
+    this.root = this.fs.getFileSystem();
+    this.leftChildren = this.root.getChildren() as DirectoryNode[];
     this.leftChildren.sort(TreeNode.sort());
+
+    this._openToInitialFolder();
+    console.log("file path", this.inputData.initialFilePath);
   }
 
   public closeDialog(): void {
@@ -43,7 +51,7 @@ export class FileSystemDialogComponent implements OnInit {
   }
 
   /** Go to chosen child directory */
-  public navigateToDir(dir: Inode, type: string): void {
+  public navigateToDir(dir: DirectoryNode, type: string): void {
 
     this.cancelFolderCreation();
 
@@ -53,16 +61,16 @@ export class FileSystemDialogComponent implements OnInit {
         this.filePath.pop();
       }
 
-      let dirChosen = Inode.GetChildFromChildrenList(this.leftChildren, dir);
+      let dirChosen = DirectoryNode.GetChildFromChildrenList(this.leftChildren, dir);
       this.rightChildren = dirChosen.getChildren();
 
       this.rightChildren.sort(TreeNode.sort());
     }
     else if(type === "child") {
 
-      this.leftChildren = this.rightChildren;
+      this.leftChildren = this.rightChildren as DirectoryNode[];
 
-      let dirChosen = Inode.GetChildFromChildrenList(this.rightChildren, dir);
+      let dirChosen = DirectoryNode.GetChildFromChildrenList(this.rightChildren, dir);
       this.rightChildren = dirChosen.getChildren();
       this.rightChildren.sort(TreeNode.sort());
     }
@@ -79,7 +87,7 @@ export class FileSystemDialogComponent implements OnInit {
     // If parent is not root, continue
     if(parent.getParent()) {
       this.rightChildren = this.leftChildren;
-      this.leftChildren = parent.getParent().getChildren();
+      this.leftChildren = parent.getParent().getChildren() as DirectoryNode[];
 
       this.leftChildren.sort(TreeNode.sort());
       this.rightChildren.sort(TreeNode.sort());
@@ -149,6 +157,29 @@ export class FileSystemDialogComponent implements OnInit {
   public getNumChildrenString(dir: Inode): string {
     let len = dir.getChildren().length
     return len < 1 ? `Empty` : len === 1 ? `1 subfolder` : `${len} subfolders`
+  }
+
+  /** Open the file system explorer to the initial folder passed in.
+   * If no such folder exists, we will open the root instead.
+   */
+  private _openToInitialFolder(): void {
+    let path = this.inputData.initialFilePath;
+    if (!path) { return; }
+
+    // Try opening file system to folder represented by the given path
+    try {
+      let new_root = FileSystemService.GetDirectoryByAbsolutePath(this.root, path, this.fs_service.getFileSystemDelimeter());
+      this.leftChildren = new_root.getParent().getChildren() as DirectoryNode[];
+      this.rightChildren = new_root.getChildren();
+      this.selectedDir = new_root;
+
+    } catch (error) {
+      if(error instanceof DirectoryNotFoundError) {
+        console.log("Couldn't open to folder:", path);
+      } else{
+        throw error;    /** Let all others bubble up */
+      }
+    }
   }
 
 }
