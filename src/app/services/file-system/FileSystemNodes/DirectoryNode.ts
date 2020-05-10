@@ -6,6 +6,7 @@ import FileSystemType from '../Statics/FileSystemTypes';
 /** A class to represent a folder/directory.  */
 export default class DirectoryNode extends Inode implements SerializableNode {
   parent: DirectoryNode;
+  children: (DirectoryNode | FileNode)[];   // Children can be any combination of DirectoryNode and FileNode together
   type = FileSystemType.DirectoryNodeType;
 
   constructor(options: DirectoryNodeConstructor) {
@@ -27,10 +28,25 @@ export default class DirectoryNode extends Inode implements SerializableNode {
     return super.getChild(val) as DirectoryNode;
   }
 
+  /** Gets the subdirectory with given value. If not such directory exists,
+   * null is returned.
+   *
+   * @param val The value of the subdirectory to look for.
+   * @returns A directory representing the given value.
+   */
+  public getDirectory(val: any): DirectoryNode {
+    for(const child of this.children) {
+      if(child.value === val && child.type === FileSystemType.DirectoryNodeType) {
+        return child as DirectoryNode;
+      }
+    }
+    return null;
+  }
+
   /**
    * @override Need this to method overrided in order to resolve typescript errors
    */
-  public getChildren(): Inode[] {
+  public getChildren(): (DirectoryNode | FileNode)[] {
     return this.children;
   }
 
@@ -107,6 +123,10 @@ export default class DirectoryNode extends Inode implements SerializableNode {
     if(curr != null) {
       curr.setSize(curr.getSize() + (this.size - old_size));
     }
+  }
+
+  public static GetChildFromChildrenList(children: (DirectoryNode | FileNode)[], child: DirectoryNode): DirectoryNode {
+    return super.GetChildFromChildrenList(children, child) as DirectoryNode;
   }
 }
 
