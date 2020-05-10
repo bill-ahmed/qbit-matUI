@@ -1,0 +1,25 @@
+language: node_js
+
+node_js:
+  - "10"
+  - "11"
+  - "12"
+
+# For integration tests
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+dist: bionic # Ubuntu 18.04 LTS
+
+cache: npm
+
+install:
+  - npm ci
+
+script:
+  # Do nothing
+  - sleep 1
