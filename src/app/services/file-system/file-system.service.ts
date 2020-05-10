@@ -174,9 +174,8 @@ export class FileSystemService {
    * @throws DirectoryNotFoundError
    */
   public static GetDirectoryByAbsolutePath(root: DirectoryNode, path: string, delimiter: string): DirectoryNode {
-    debugger;
     let curr = root;
-    let dirs = path.split(delimiter);
+    let dirs = path.split(delimiter).filter(elem => {return !!elem});
 
     for(const dir of dirs) {
       if(!(curr = curr.getDirectory(dir))) {
