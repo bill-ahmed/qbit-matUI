@@ -4,7 +4,7 @@ import { RowSelectionService } from 'src/app/services/torrent-management/row-sel
 @Component({
   selector: 'app-bulk-update-torrents',
   templateUrl: './bulk-update-torrents.component.html',
-  styleUrls: ['./bulk-update-torrents.component.css']
+  styleUrls: ['./bulk-update-torrents.component.scss']
 })
 export class BulkUpdateTorrentsComponent implements OnInit {
 
@@ -58,7 +58,7 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     let numTorrentsSelected = this.torrentsSelected.length;
 
     return numTorrentsSelected === 0 ? `` : numTorrentsSelected === 1 ?
-        `1 torrent selected.` : `${numTorrentsSelected} torrents selected.`;
+        `1 torrent selected` : `${numTorrentsSelected} torrents selected`;
   }
 
   public handleBulkActions(action: string): void {

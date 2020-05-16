@@ -266,7 +266,7 @@ export class TorrentsTableComponent implements OnInit {
   public handleBulkEditChange(result?: string): void {
 
     const _clearAndClose = () => {
-      this.selection.clear();
+      //this.selection.clear();
       this._updateSelectionService();
     }
 

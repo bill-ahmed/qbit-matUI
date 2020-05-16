@@ -1,47 +1,55 @@
 <div id="bulk-update-card" class="mat-elevation-z1">
     <div class="mat-card-actions">
+      <button color="primary" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Move Torrents" matTooltipPosition="above" (click)="handleBulkActions('')">
+        <mat-icon>folder</mat-icon>
+      </button>
 
-        <button color="warn" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Delete Torrents" matTooltipPosition="above" (click)="handleBulkActions('delete')">
-            <mat-icon>delete</mat-icon>
-        </button>
+      <h3 id="vertical_divider">•</h3>
 
-        <button color="primary" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Force Start" matTooltipPosition="above" (click)="handleBulkActions('forceStart')">
-          <mat-icon>fast_forward</mat-icon>
-        </button>
+      <button color="warn" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Delete Torrents" matTooltipPosition="above" (click)="handleBulkActions('delete')">
+        <mat-icon>delete</mat-icon>
+      </button>
 
-        <button color="primary" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Resume Torrents" matTooltipPosition="above" (click)="handleBulkActions('play')">
-            <mat-icon>play_arrow</mat-icon>
-        </button>
+      <button color="primary" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Force Start" matTooltipPosition="above" (click)="handleBulkActions('forceStart')">
+        <mat-icon>fast_forward</mat-icon>
+      </button>
 
-        <button color="accent" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Pause Torrents" matTooltipPosition="above" (click)="handleBulkActions('pause')">
-            <mat-icon>pause</mat-icon>
-        </button>
+      <button color="primary" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Resume Torrents" matTooltipPosition="above" (click)="handleBulkActions('play')">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
 
-        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Increase Priority" matTooltipPosition="above" (click)="handleBulkActions('increasePrio')">
-            <mat-icon>arrow_upward</mat-icon>
-        </button>
+      <button color="accent" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Pause Torrents" matTooltipPosition="above" (click)="handleBulkActions('pause')">
+        <mat-icon>pause</mat-icon>
+      </button>
 
-        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Decrease Priority" matTooltipPosition="above" (click)="handleBulkActions('decreasePrio')">
-          <mat-icon>arrow_downward</mat-icon>
-        </button>
+      <h3 id="vertical_divider">•</h3>
 
-        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Max Priority" matTooltipPosition="above" (click)="handleBulkActions('maxPrio')">
-            <mat-icon>vertical_align_top</mat-icon>
-        </button>
+      <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Increase Priority" matTooltipPosition="above" (click)="handleBulkActions('increasePrio')">
+        <mat-icon>arrow_upward</mat-icon>
+      </button>
 
-        <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Min Priority" matTooltipPosition="above" (click)="handleBulkActions('minPrio')">
-            <mat-icon>vertical_align_bottom</mat-icon>
-        </button>
+      <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Decrease Priority" matTooltipPosition="above" (click)="handleBulkActions('decreasePrio')">
+        <mat-icon>arrow_downward</mat-icon>
+      </button>
+
+      <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Max Priority" matTooltipPosition="above" (click)="handleBulkActions('maxPrio')">
+        <mat-icon>vertical_align_top</mat-icon>
+      </button>
+
+      <button color="default" disabled="{{!canUserEdit}}" mat-icon-button matTooltip="Min Priority" matTooltipPosition="above" (click)="handleBulkActions('minPrio')">
+        <mat-icon>vertical_align_bottom</mat-icon>
+      </button>
+
+      <h3 id="vertical_divider">•</h3>
     </div>
 
     <div *ngIf="canUserEdit" class="mat-card-info">
       <h4>
-        &nbsp;&nbsp; |
         <i>
           &nbsp;&nbsp; {{getBulkEditMessage()}}
         </i>
       </h4>
-      <button mat-stroked-button color="accent" (click)="clearSelectedTorrents()">
+      <button mat-button color="accent" (click)="clearSelectedTorrents()">
           Clear
           <mat-icon>clear</mat-icon>
       </button>
