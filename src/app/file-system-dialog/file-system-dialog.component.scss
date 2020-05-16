@@ -1,3 +1,6 @@
+/** Declare Variables */
+$border-dark: #494949;
+
 .leftNavigation, .directoryContents {
     padding: 10px;
 }
@@ -15,9 +18,22 @@
 .file-explorer-actions {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  align-items: center;
 
   margin-bottom: 10px;
+
+  .left-actions {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+
+    flex-grow: 1;
+
+    #saveLocation {
+      margin: 0;
+      margin-left: 20px;
+    }
+  }
 }
 
 .leftNavigation {
@@ -29,6 +45,9 @@
     height: 450px;
 
     overflow-y: scroll;
+
+    border-right: solid 1px $border-dark;
+    border-bottom: solid 1px $border-dark;
 }
 
 .directoryContents {
@@ -37,18 +56,11 @@
     height: 450px;
 
     overflow-y: scroll;
+    border-bottom: solid 1px $border-dark;
 
     .create-new-folder-input {
       min-width: 60%;
     }
-
-    .new-folder-actions {
-
-    }
-}
-
-#saveLocation {
-    margin-left: 20px;
 }
 
 #isFolderSelected {

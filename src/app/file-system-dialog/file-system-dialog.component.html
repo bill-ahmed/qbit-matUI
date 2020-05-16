@@ -7,10 +7,13 @@
     <br/>
 
     <div class="file-explorer-actions">
-      <button color="primary" mat-button (click)="navigateUp()">
-        <mat-icon mat-list-icon>arrow_back</mat-icon>
-        Back
-      </button>
+      <div class="left-actions">
+        <button color="primary" mat-button (click)="navigateUp()">
+          <mat-icon mat-list-icon>arrow_back</mat-icon>
+          Back
+        </button>
+        <h4 id="saveLocation">Location: {{getFilePath() === "" ? "N/A" : getFilePath()}}</h4>
+      </div>
 
       <button color="accent" mat-flat-button (click)="handleCreateFolderAction()">
         <mat-icon mat-list-icon>add</mat-icon>
@@ -33,7 +36,7 @@
                     </mat-list-item>
                 </mat-nav-list>
             </div>
-            <mat-divider vertical></mat-divider>
+
             <div class="directoryContents">
                 <p *ngIf="rightPanelHasContent() && !isCreatingNewFolder">Create a folder with the "New Folder" button.</p>
 
@@ -64,15 +67,12 @@
                 </mat-nav-list>
             </div>
         </div>
-
         <br/>
-        <br/>
-        <h3 id="saveLocation"><b>Save Location: </b>{{getFilePath() === "" ? "{ Unchanged }" : getFilePath()}}</h3>
 
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-button [mat-dialog-close]="false"> Cancel </button>
         <button mat-raised-button (click)="closeDialog()" color="primary"> Confirm </button>
     </mat-dialog-actions>
-
+    <br/>
 </div>

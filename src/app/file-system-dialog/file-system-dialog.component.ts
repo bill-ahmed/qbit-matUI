@@ -170,7 +170,7 @@ export class FileSystemDialogComponent implements OnInit {
    * If no such folder exists, we will open the root instead.
    */
   private _openToInitialFolder(): void {
-    let path = this.inputData.initialFilePath;
+    let path = (this.inputData.initialFilePath as string).trim();
     if (!path) { return; }
 
     // Try opening file system to folder represented by the given path
@@ -179,6 +179,11 @@ export class FileSystemDialogComponent implements OnInit {
       this.leftChildren = new_root.getParent().getChildren() as DirectoryNode[];
       this.rightChildren = new_root.getChildren();
       this.selectedDir = new_root;
+
+      this.leftChildren.sort(TreeNode.sort());
+      this.rightChildren.sort(TreeNode.sort());
+
+      console.log("opened to initial path", path);
 
     } catch (error) {
       if(error instanceof DirectoryNotFoundError) {
