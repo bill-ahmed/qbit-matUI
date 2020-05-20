@@ -5,20 +5,30 @@
     <mat-tab-group mat-align-tabs="start" (selectedTabChange)="handleTabChange($event)">
       <mat-tab label="File Upload">
         <br/>
-        <h3>Choose File</h3>
-        <input multiple type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
+
+        <div class="upload_files">
+          <button color="accent" mat-raised-button (click)="torrentFileUpload.click()">
+            <mat-icon>attach_file</mat-icon>
+            &nbsp; Choose Files
+          </button>
+
+          <h4>{{getFilesToUploadString()}}</h4>
+
+          <input multiple #torrentFileUpload type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
+        </div>
       </mat-tab>
 
       <mat-tab label="Magnet URL">
         <br/>
         <mat-form-field id="magnet_url_input" appearance="outline">
           <mat-label>List of URLs...</mat-label>
-          <textarea rows="15" value="{{urlsToUpload}}" name="savepath" type="text" id="savepath" (change)="updateURLsToUpload($event)" matInput></textarea>
-          <mat-hint align="start"><strong>Separate each URL with a new line</strong> </mat-hint>
+          <textarea rows="14" value="{{urlsToUpload}}" name="savepath" type="text" id="savepath" (change)="updateURLsToUpload($event)" matInput></textarea>
+          <mat-hint align="start">Separate each URL with a new line</mat-hint>
         </mat-form-field>
       </mat-tab>
     </mat-tab-group>
 
+    <br/>
     <br/>
 
     <h3>Save Location</h3>
@@ -38,7 +48,6 @@
       <mat-icon matSuffix>folder_open</mat-icon>
     </mat-form-field>
 
-    <br/>
     <br/>
 
   </mat-dialog-content>

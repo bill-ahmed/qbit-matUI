@@ -114,7 +114,7 @@ export class AddTorrentDialogComponent implements OnInit {
   }
 
   /** Callback for when user modifies magnet urls */
-  updateURLsToUpload(event: any) {
+  public updateURLsToUpload(event: any) {
     this.urlsToUpload = event.target.value;
   }
 
@@ -124,6 +124,11 @@ export class AddTorrentDialogComponent implements OnInit {
   private uploadCompletionCallback(): void {
     this.isLoading = false;
     this.dialogRef.close();
+  }
+
+  public getFilesToUploadString(): string {
+    let len = this.filesToUpload ? this.filesToUpload.length : 0;
+    return len === 1 ? `${len} file` : `${len} files`;
   }
 
   /** Handle opening file explorer dialog & handling any callbacks */

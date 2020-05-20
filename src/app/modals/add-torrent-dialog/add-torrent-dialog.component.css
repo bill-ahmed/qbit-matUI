@@ -6,6 +6,25 @@ mat-form-field {
     width: 80%;
 }
 
+mat-hint {
+  font-size: small;
+}
+
 #magnet_url_input {
   min-width: 100%;
+  min-height: 280px;
+}
+
+#torrentFileUpload {
+  display: none;
+}
+
+.upload_files {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.upload_files h4 {
+  margin-left: 10px;
 }
