@@ -90,7 +90,7 @@
         </ng-container>
 
         <ng-container  matColumnDef="Progress">
-            <mat-header-cell *matHeaderCellDef>Progress</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Progress</mat-header-cell>
             <mat-cell *matCellDef="let torrent">
                 <progress-bar progress="{{torrent.progress * 100}}" [color]="'#03A9F4'">
                 </progress-bar>
@@ -107,12 +107,12 @@
         </ng-container>
 
         <ng-container  matColumnDef="Down_Speed">
-            <mat-header-cell *matHeaderCellDef>Down Speed</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Down Speed</mat-header-cell>
             <mat-cell *matCellDef="let torrent">{{getFileSizeString(torrent.dlspeed)}}/s</mat-cell>
         </ng-container>
 
         <ng-container  matColumnDef="Up_Speed">
-            <mat-header-cell *matHeaderCellDef>Up Speed</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Up Speed</mat-header-cell>
             <mat-cell *matCellDef="let torrent">{{getFileSizeString(torrent.upspeed)}}/s</mat-cell>
         </ng-container>
 
