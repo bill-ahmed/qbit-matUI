@@ -1,0 +1,33 @@
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background">
+
+  <h2 mat-dialog-title>Move Torrent(s)</h2>
+  <mat-divider></mat-divider>
+  <mat-dialog-content class="mat-typography">
+    <br/>
+
+    <h3>Save Location</h3>
+    <p>Pick a location to move the files to. If none is chosen, the default shown will be used instead.</p>
+
+    <button color="primary" mat-raised-button (click)="openFileSystemExplorerDialog($event)">
+      <mat-icon>folder</mat-icon>
+      &nbsp; Choose Save Location
+    </button>
+
+    <br/>
+    <br/>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Move To...</mat-label>
+      <input value="{{filesDestination}}" name="savepath" type="text" id="savepath" (change)="true" matInput >
+      <mat-icon matSuffix>folder_open</mat-icon>
+    </mat-form-field>
+
+    <br/>
+    <br/>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button disabled={{false}} mat-button [mat-dialog-close]="true">Cancel</button>
+    <button disabled={{false}} mat-raised-button (click)="true" color="primary" cdkFocusInitial>Move</button>
+  </mat-dialog-actions>
+</div>

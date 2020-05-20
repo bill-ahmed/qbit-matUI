@@ -1,14 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FileDirectoryExplorerService } from '../services/file-system/file-directory-explorer.service';
-import TreeNode from '../services/file-system/TreeNode';
-import { ThemeService } from '../services/theme.service';
+import { FileDirectoryExplorerService } from '../../services/file-system/file-directory-explorer.service';
+import TreeNode from '../../services/file-system/TreeNode';
+import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
-import Inode from '../services/file-system/FileSystemNodes/Inode';
-import { FileSystemService } from '../services/file-system/file-system.service';
-import { DirectoryNotFoundError, InvalidNameError } from '../services/file-system/Exceptions/FileSystemExceptions';
-import DirectoryNode from '../services/file-system/FileSystemNodes/DirectoryNode';
-import FileNode from '../services/file-system/FileSystemNodes/FileNode';
+import Inode from '../../services/file-system/FileSystemNodes/Inode';
+import { FileSystemService } from '../../services/file-system/file-system.service';
+import { DirectoryNotFoundError, InvalidNameError } from '../../services/file-system/Exceptions/FileSystemExceptions';
+import DirectoryNode from '../../services/file-system/FileSystemNodes/DirectoryNode';
+import FileNode from '../../services/file-system/FileSystemNodes/FileNode';
 
 @Component({
   selector: 'app-file-system-dialog',
