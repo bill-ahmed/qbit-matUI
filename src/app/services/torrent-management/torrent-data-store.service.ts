@@ -58,6 +58,10 @@ export class TorrentDataStoreService {
     return await this.torrent_http_service.UploadNewTorrents(files, destination)
   }
 
+  public MoveTorrents(torrents: Torrent[], destination: string): Observable<any> {
+    return this.torrent_http_service.MoveTorrents(torrents.map(elem => elem.hash), destination);
+  }
+
   public PauseTorrents(tor: Torrent[]): Observable<any> {
     return this.torrent_http_service.PauseTorrents(tor.map(elem => elem.hash));
   }

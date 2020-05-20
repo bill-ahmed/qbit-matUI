@@ -19,6 +19,7 @@ import { Torrent } from 'src/utils/Interfaces';
 export class MoveTorrentsDialogComponent implements OnInit {
 
   public torrents: Torrent[] = [];
+  public isLoading = false
   public filesDestination = "";
   public showListofTorrents = false;
   public isDarkTheme: Observable<boolean>;
@@ -26,7 +27,7 @@ export class MoveTorrentsDialogComponent implements OnInit {
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
   constructor(public fileSystemDialog: MatDialog, private data_store: TorrentDataStoreService,
-              private theme: ThemeService, private torrentsSelected: RowSelectionService) { }
+              private theme: ThemeService, private torrentsSelected: RowSelectionService, private dialogRef:MatDialogRef<MoveTorrentsDialogComponent>) { }
 
   ngOnInit(): void {
     let torrent_ids = this.torrentsSelected.getTorrentsSelectedValue();
@@ -34,6 +35,18 @@ export class MoveTorrentsDialogComponent implements OnInit {
     this.filesDestination = GetDefaultSaveLocation();
     this.torrents = this.data_store.GetTorrentsByIDs(torrent_ids);
     this.isDarkTheme = this.theme.getThemeSubscription();
+  }
+
+  moveTorrents() {
+    this.isLoading = true;
+    this.data_store.MoveTorrents(this.torrents, this.filesDestination)
+    .subscribe(
+    res => { }
+    ,
+    err => {
+      console.error("Error moving torrents", err);
+    },
+    () => { this.dialogRef.close(); })           // Completion callback
   }
 
   /** Get names of torrents to move */

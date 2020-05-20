@@ -35,7 +35,7 @@
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button disabled={{false}} mat-button [mat-dialog-close]="true">Cancel</button>
-    <button disabled={{false}} mat-raised-button (click)="true" color="primary" cdkFocusInitial>Move</button>
+    <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>
+    <button disabled={{isLoading}} mat-raised-button (click)="moveTorrents()" color="warn" cdkFocusInitial>Move</button>
   </mat-dialog-actions>
 </div>
