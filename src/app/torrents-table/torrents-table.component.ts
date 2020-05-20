@@ -266,7 +266,7 @@ export class TorrentsTableComponent implements OnInit {
 
   /** Open the modal for adding a new torrent */
   openMoveTorrentDialog(): void {
-    const addTorDialogRef = this.moveTorrentDialog.open(MoveTorrentsDialogComponent, {disableClose: true, panelClass: "generic-dialog"});
+    const addTorDialogRef = this.moveTorrentDialog.open(MoveTorrentsDialogComponent, {panelClass: "generic-dialog"});
 
     addTorDialogRef.afterClosed().subscribe((result: any) => {
       console.log("Closed move torrents modal", result)
@@ -324,6 +324,10 @@ export class TorrentsTableComponent implements OnInit {
           this.minimumPriorityBulk(this.selection.selected);
           _clearAndClose();
           break;
+
+        case "moveTorrent":
+          this.openMoveTorrentDialog();
+          _clearAndClose();
 
         default:
           break;

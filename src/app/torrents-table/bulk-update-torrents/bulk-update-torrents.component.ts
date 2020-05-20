@@ -22,7 +22,8 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     "increasePrio": () => void,
     "decreasePrio": () => void,
     "maxPrio": () => void,
-    "minPrio": () => void
+    "minPrio": () => void,
+    "moveTor": () => void,
   };
 
   constructor( private torrentsSelectedService: RowSelectionService ) {
@@ -37,7 +38,8 @@ export class BulkUpdateTorrentsComponent implements OnInit {
       "increasePrio": () => this.onChange.emit("increasePrio"),
       "decreasePrio": () => this.onChange.emit("decreasePrio"),
       "maxPrio": () => this.onChange.emit("maxPrio"),
-      "minPrio": () => this.onChange.emit("minPrio")
+      "minPrio": () => this.onChange.emit("minPrio"),
+      "moveTor": () => this.onChange.emit("moveTorrent")
     };
    }
 

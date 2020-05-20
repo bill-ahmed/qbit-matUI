@@ -35,6 +35,22 @@ export class TorrentDataStoreService {
     return this.TorrentMainData;
   }
 
+  public GetTorrentByID(id: string): Torrent {
+    return this.TorrentMainData.torrents.find((tor: Torrent) => {return tor.hash === id})
+  }
+
+  /** Get list of torrent whose IDs are supplied. If a torrent
+   * with an ID is not found, it is ignored.
+   */
+  public GetTorrentsByIDs(ids: string[]): Torrent[] {
+    let res = [];
+    for(const tor of this.TorrentMainData.torrents) {
+      if(ids.includes(tor.hash)) { res.push(tor) }
+    }
+
+    return res;
+  }
+
   /** Handle uploading torrent files
    * @param files The torrents to upload.
    */
