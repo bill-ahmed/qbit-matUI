@@ -1,13 +1,13 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Torrent, TorrentContents } from 'src/utils/Interfaces';
-import { UnitsHelperService } from '../services/units-helper.service';
-import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
-import { ThemeService } from '../services/theme.service';
+import { UnitsHelperService } from '../../services/units-helper.service';
+import { PrettyPrintTorrentDataService } from '../../services/pretty-print-torrent-data.service';
+import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
-import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
-import { NetworkConnectionInformationService } from '../services/network/network-connection-information.service';
-import { FileSystemService, SerializedNode } from '../services/file-system/file-system.service';
+import { TorrentDataStoreService } from '../../services/torrent-management/torrent-data-store.service';
+import { NetworkConnectionInformationService } from '../../services/network/network-connection-information.service';
+import { FileSystemService, SerializedNode } from '../../services/file-system/file-system.service';
 
 @Component({
   selector: 'app-torrent-info-dialog',

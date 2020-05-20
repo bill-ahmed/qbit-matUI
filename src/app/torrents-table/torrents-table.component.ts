@@ -13,18 +13,19 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 // Helpers
 import * as http_endpoints from '../../assets/http_config.json';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { DeleteTorrentDialogComponent } from '../delete-torrent-dialog/delete-torrent-dialog.component';
+import { DeleteTorrentDialogComponent } from '../modals/delete-torrent-dialog/delete-torrent-dialog.component';
 import { TorrentSearchServiceService } from '../services/torrent-search-service.service';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
 import { BulkUpdateTorrentsComponent } from './bulk-update-torrents/bulk-update-torrents.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RowSelectionService } from '../services/torrent-management/row-selection.service';
-import { TorrentInfoDialogComponent } from '../torrent-info-dialog/torrent-info-dialog.component';
+import { TorrentInfoDialogComponent } from '../modals/torrent-info-dialog/torrent-info-dialog.component';
 import { NetworkConnectionInformationService } from '../services/network/network-connection-information.service';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import { GetTorrentSearchName } from 'src/utils/Helpers';
+import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
 
 @Component({
   selector: 'app-torrents-table',
@@ -56,7 +57,7 @@ export class TorrentsTableComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService,
-              private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog,
+              private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
               private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService,
               private networkInfo: NetworkConnectionInformationService, private theme: ThemeService) { }
 
@@ -263,10 +264,19 @@ export class TorrentsTableComponent implements OnInit {
     })
   }
 
+  /** Open the modal for adding a new torrent */
+  openMoveTorrentDialog(): void {
+    const addTorDialogRef = this.moveTorrentDialog.open(MoveTorrentsDialogComponent, {disableClose: true, panelClass: "generic-dialog"});
+
+    addTorDialogRef.afterClosed().subscribe((result: any) => {
+      console.log("Closed move torrents modal", result)
+    });
+  }
+
   public handleBulkEditChange(result?: string): void {
 
     const _clearAndClose = () => {
-      this.selection.clear();
+      //this.selection.clear();
       this._updateSelectionService();
     }
 
@@ -314,6 +324,10 @@ export class TorrentsTableComponent implements OnInit {
           this.minimumPriorityBulk(this.selection.selected);
           _clearAndClose();
           break;
+
+        case "moveTorrent":
+          this.openMoveTorrentDialog();
+          _clearAndClose();
 
         default:
           break;

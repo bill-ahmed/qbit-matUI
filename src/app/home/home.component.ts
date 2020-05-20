@@ -9,7 +9,7 @@ import { MatButton } from '@angular/material/button'
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltip } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
-import { AddTorrentDialogComponent } from '../add-torrent-dialog/add-torrent-dialog.component';
+import { AddTorrentDialogComponent } from '../modals/add-torrent-dialog/add-torrent-dialog.component';
 
 // Utils
 import * as http_endpoints from '../../assets/http_config.json';

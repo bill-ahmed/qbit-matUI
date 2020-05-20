@@ -22,6 +22,13 @@ export class RowSelectionService {
     return this._torrentsSelectedValue;
   }
 
+  /** Get current value of list of torrents selected
+   * @returns List of IDs of torrents selected
+   */
+  public getTorrentsSelectedValue(): string[] {
+    return this._torrentsSelectedSource.value
+  }
+
   /** Clear list of selected torrents */
   public clearSelection(): void {
     this.updateTorrentsSelected([]);

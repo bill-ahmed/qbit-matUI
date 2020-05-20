@@ -1,0 +1,11 @@
+mat-form-field {
+  width: 80%;
+}
+
+#toggle_torrents {
+  cursor: pointer;
+}
+
+.torrent_names {
+  display: none;
+}

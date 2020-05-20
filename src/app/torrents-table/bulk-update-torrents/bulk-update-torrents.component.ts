@@ -4,7 +4,7 @@ import { RowSelectionService } from 'src/app/services/torrent-management/row-sel
 @Component({
   selector: 'app-bulk-update-torrents',
   templateUrl: './bulk-update-torrents.component.html',
-  styleUrls: ['./bulk-update-torrents.component.css']
+  styleUrls: ['./bulk-update-torrents.component.scss']
 })
 export class BulkUpdateTorrentsComponent implements OnInit {
 
@@ -22,7 +22,8 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     "increasePrio": () => void,
     "decreasePrio": () => void,
     "maxPrio": () => void,
-    "minPrio": () => void
+    "minPrio": () => void,
+    "moveTor": () => void,
   };
 
   constructor( private torrentsSelectedService: RowSelectionService ) {
@@ -37,7 +38,8 @@ export class BulkUpdateTorrentsComponent implements OnInit {
       "increasePrio": () => this.onChange.emit("increasePrio"),
       "decreasePrio": () => this.onChange.emit("decreasePrio"),
       "maxPrio": () => this.onChange.emit("maxPrio"),
-      "minPrio": () => this.onChange.emit("minPrio")
+      "minPrio": () => this.onChange.emit("minPrio"),
+      "moveTor": () => this.onChange.emit("moveTorrent")
     };
    }
 
@@ -58,7 +60,7 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     let numTorrentsSelected = this.torrentsSelected.length;
 
     return numTorrentsSelected === 0 ? `` : numTorrentsSelected === 1 ?
-        `1 torrent selected.` : `${numTorrentsSelected} torrents selected.`;
+        `1 torrent selected` : `${numTorrentsSelected} torrents selected`;
   }
 
   public handleBulkActions(action: string): void {

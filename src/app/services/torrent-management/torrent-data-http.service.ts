@@ -46,6 +46,18 @@ export class TorrentDataHTTPService {
     return result;
   }
 
+  MoveTorrents(hashes: string[], destination: string): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.moveTorrents;
+    let url = root + endpoint;
+
+    let body = new FormData();
+    body.append("hashes", hashes.join("|"));
+    body.append("location", destination);
+
+    return this.sendTorrentHashesPOST(url, hashes, null, body);
+  }
+
   /** Delete a torrent.
    * @param hashes The unique hash of the torrent.
    * @param deleteFromDisk If the files should be deleted as well (true),

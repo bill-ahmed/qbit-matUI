@@ -35,11 +35,31 @@ export class TorrentDataStoreService {
     return this.TorrentMainData;
   }
 
+  public GetTorrentByID(id: string): Torrent {
+    return this.TorrentMainData.torrents.find((tor: Torrent) => {return tor.hash === id})
+  }
+
+  /** Get list of torrent whose IDs are supplied. If a torrent
+   * with an ID is not found, it is ignored.
+   */
+  public GetTorrentsByIDs(ids: string[]): Torrent[] {
+    let res = [];
+    for(const tor of this.TorrentMainData.torrents) {
+      if(ids.includes(tor.hash)) { res.push(tor) }
+    }
+
+    return res;
+  }
+
   /** Handle uploading torrent files
    * @param files The torrents to upload.
    */
   public async UploadTorrents(files: FileList[], destination: string): Promise<any> {
     return await this.torrent_http_service.UploadNewTorrents(files, destination)
+  }
+
+  public MoveTorrents(torrents: Torrent[], destination: string): Observable<any> {
+    return this.torrent_http_service.MoveTorrents(torrents.map(elem => elem.hash), destination);
   }
 
   public PauseTorrents(tor: Torrent[]): Observable<any> {

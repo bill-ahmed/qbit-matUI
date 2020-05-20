@@ -22,10 +22,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ProgressBarModule } from "angular-progress-bar"
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AddTorrentDialogComponent } from './add-torrent-dialog/add-torrent-dialog.component';
+import { AddTorrentDialogComponent } from './modals/add-torrent-dialog/add-torrent-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
-import { DeleteTorrentDialogComponent } from './delete-torrent-dialog/delete-torrent-dialog.component'
+import { DeleteTorrentDialogComponent } from './modals/delete-torrent-dialog/delete-torrent-dialog.component'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchTorrentsComponent } from './home/search-torrents/search-torrents.component';
 import { MatCardModule } from '@angular/material/card';
@@ -45,9 +45,10 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatRippleModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
-import { TorrentInfoDialogComponent } from './torrent-info-dialog/torrent-info-dialog.component';
-import { FileSystemDialogComponent } from './file-system-dialog/file-system-dialog.component';
+import { TorrentInfoDialogComponent } from './modals/torrent-info-dialog/torrent-info-dialog.component';
+import { FileSystemDialogComponent } from './modals/file-system-dialog/file-system-dialog.component';
 import { FileSystemTreeExplorerComponent } from './file-system-tree-explorer/file-system-tree-explorer.component';
+import { MoveTorrentsDialogComponent } from './modals/move-torrents-dialog/move-torrents-dialog.component';
 
 var appRoutes: Routes;
 
@@ -76,7 +77,8 @@ if(!environment.production){
     BulkUpdateTorrentsComponent,
     TorrentInfoDialogComponent,
     FileSystemDialogComponent,
-    FileSystemTreeExplorerComponent
+    FileSystemTreeExplorerComponent,
+    MoveTorrentsDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -4,10 +4,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 
 // Helpers
-import { TorrentDataHTTPService } from '../services/torrent-management/torrent-data-http.service';
+import { TorrentDataHTTPService } from '../../services/torrent-management/torrent-data-http.service';
 import { Torrent } from 'src/utils/Interfaces';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ThemeService } from '../services/theme.service';
+import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
 
 @Component({

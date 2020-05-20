@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core';
 // Material UI Components
 import { MatFormField } from '@angular/material/form-field';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
-import { FileDirectoryExplorerService } from '../services/file-system/file-directory-explorer.service';
+import { TorrentDataStoreService } from '../../services/torrent-management/torrent-data-store.service';
+import { FileDirectoryExplorerService } from '../../services/file-system/file-directory-explorer.service';
 import { FileSystemDialogComponent } from '../file-system-dialog/file-system-dialog.component';
-import { ThemeService } from '../services/theme.service';
+import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
-import { FileSystemService } from '../services/file-system/file-system.service';
+import { FileSystemService } from '../../services/file-system/file-system.service';
+import { GetDefaultSaveLocation } from 'src/utils/Helpers';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -58,15 +59,7 @@ export class AddTorrentDialogComponent implements OnInit {
 
   /** Retrieve default save location for torrents and update state */
   public updateDefaultSaveLocationFromDisk(): void {
-
-    let save_location = "";
-    let pref = localStorage.getItem('preferences');
-
-    if(pref) {
-      save_location = JSON.parse(pref).save_path;
-    }
-
-    this.filesDestination = save_location || "";
+    this.filesDestination = GetDefaultSaveLocation();
   }
 
   /** Callback for when user changes save location */
