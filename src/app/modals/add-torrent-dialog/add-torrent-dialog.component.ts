@@ -10,6 +10,7 @@ import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
 import { FileSystemService } from '../../services/file-system/file-system.service';
 import { GetDefaultSaveLocation } from 'src/utils/Helpers';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -19,10 +20,13 @@ import { GetDefaultSaveLocation } from 'src/utils/Helpers';
 export class AddTorrentDialogComponent implements OnInit {
 
   public filesToUpload: FileList[] = null;
+  public urlsToUpload = "";
   public filesDestination = "";
   public isLoading = false;
   public isDarkTheme: Observable<boolean>;
 
+  /** Keep track of the mat-tab the user is currently in. */
+  private currentTab: MatTabChangeEvent;
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
   constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService,
@@ -31,6 +35,27 @@ export class AddTorrentDialogComponent implements OnInit {
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
     this.updateDefaultSaveLocationFromDisk();
+  }
+
+  handleTabChange(event: MatTabChangeEvent) {
+    this.currentTab = event;
+    console.log(event);
+  }
+
+  /** Callback for all upload events. */
+  handleUpload() {
+    switch (this.currentTab.index) {
+      case 0:
+        this.handleFileUpload();
+        break;
+
+      case 1:
+        this.handleMagnetURLUpload();
+        break;
+
+      default:
+        break;
+    }
   }
 
   /** Send request to server with all torrents uploaded. */
@@ -46,6 +71,11 @@ export class AddTorrentDialogComponent implements OnInit {
     });
   }
 
+  /** Upload the link to a magnet URL */
+  handleMagnetURLUpload(): void {
+
+  }
+
   /** Update which torrents the user wants to upload. */
   updateFiles(event: any): void {
     this.filesToUpload = event.target.files;
@@ -54,6 +84,11 @@ export class AddTorrentDialogComponent implements OnInit {
 
   /** Whether the Upload button should be disabled or not */
   isUploadDisabled(): boolean {
+    let destinationEmpty = this.filesDestination.trim() === "";
+    let urlToUploadEmpty = this.urlsToUpload.trim() === "";
+
+    // If user in magnet url tab, check if urls and file destination is empty
+    if(this.currentTab && this.currentTab.index === 1) { return destinationEmpty || urlToUploadEmpty; }
     return (this.isLoading || !this.filesToUpload || (this.filesToUpload.length === 0));
   }
 
@@ -65,6 +100,11 @@ export class AddTorrentDialogComponent implements OnInit {
   /** Callback for when user changes save location */
   public updateFileDestination(event: any): void {
     this.filesDestination = event.target.value;
+  }
+
+  /** Callback for when user modifies magnet urls */
+  updateURLsToUpload(event: any) {
+    this.urlsToUpload = event.target.value;
   }
 
   /** Handle cleanup for when adding torrents is completed

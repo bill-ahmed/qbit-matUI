@@ -5,3 +5,7 @@
 mat-form-field {
     width: 80%;
 }
+
+#magnet_url_input {
+  min-width: 100%;
+}
