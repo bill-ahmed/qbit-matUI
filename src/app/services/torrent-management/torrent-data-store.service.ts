@@ -58,6 +58,10 @@ export class TorrentDataStoreService {
     return await this.torrent_http_service.UploadNewTorrents(files, destination)
   }
 
+  public UploadTorrentsFromMagnetURLs(urls: string, destination: string): Observable<any> {
+    return this.torrent_http_service.UploadNewTorrentsFromMagnetURLs(urls, destination);
+  }
+
   public MoveTorrents(torrents: Torrent[], destination: string): Observable<any> {
     return this.torrent_http_service.MoveTorrents(torrents.map(elem => elem.hash), destination);
   }
