@@ -27,9 +27,11 @@
 
     <p>Torrents selected: {{torrents.length}} <a id="toggle_torrents" (click)="toggleTorrentsList($event)">(Show/Hide)</a></p>
 
-    <li *ngFor="let tor_name of torrentsToMove()">
-      <b>{{tor_name}}</b>
-    </li>
+    <div *ngIf="showListofTorrents">
+      <li *ngFor="let tor_name of torrentsToMove()">
+        <b>{{tor_name}}</b>
+      </li>
+    </div>
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">

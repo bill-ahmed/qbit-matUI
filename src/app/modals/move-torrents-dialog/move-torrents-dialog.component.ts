@@ -18,9 +18,10 @@ import { Torrent } from 'src/utils/Interfaces';
 })
 export class MoveTorrentsDialogComponent implements OnInit {
 
-  public filesDestination = "";
-  public isDarkTheme: Observable<boolean>;
   public torrents: Torrent[] = [];
+  public filesDestination = "";
+  public showListofTorrents = false;
+  public isDarkTheme: Observable<boolean>;
 
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
@@ -40,8 +41,9 @@ export class MoveTorrentsDialogComponent implements OnInit {
     return this.torrents.map(tor => tor.name);
   }
 
+  /** Toggle showing names of all torrents in a list */
   toggleTorrentsList(event: any) {
-
+    this.showListofTorrents = !this.showListofTorrents;
   }
 
   /** Callback for when user changes save location */

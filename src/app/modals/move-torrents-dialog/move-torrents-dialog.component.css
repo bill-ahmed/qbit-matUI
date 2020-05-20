@@ -5,3 +5,7 @@ mat-form-field {
 #toggle_torrents {
   cursor: pointer;
 }
+
+.torrent_names {
+  display: none;
+}
