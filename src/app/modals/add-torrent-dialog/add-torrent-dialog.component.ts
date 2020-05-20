@@ -43,36 +43,47 @@ export class AddTorrentDialogComponent implements OnInit {
   }
 
   /** Callback for all upload events. */
-  handleUpload() {
-    switch (this.currentTab.index) {
+  async handleUpload() {
+    let index = this.currentTab ? this.currentTab.index : 0;  // User always starts at first tab
+    switch (index) {
       case 0:
-        this.handleFileUpload();
+        await this.handleFileUpload();
         break;
 
       case 1:
-        this.handleMagnetURLUpload();
+        await this.handleMagnetURLUpload();
         break;
 
       default:
         break;
     }
+    this.uploadCompletionCallback();
   }
 
   /** Send request to server with all torrents uploaded. */
-  handleFileUpload(): void {
+  async handleFileUpload(): Promise<void> {
     this.isLoading = true;
-    this.data_store.UploadTorrents(this.filesToUpload, this.filesDestination)
-    .then((resp: any) => {
-      this.uploadFileCompletionCallback(resp);
 
-    },
-    (error: any) => {
-      this.uploadFileCompletionCallback(error);
-    });
+    try {
+      let resp = await this.data_store.UploadTorrents(this.filesToUpload, this.filesDestination);
+      console.log('uploaded files', resp);
+
+    } catch (error) {
+      console.error('unable to upload files', error);
+    }
   }
 
   /** Upload the link to a magnet URL */
-  handleMagnetURLUpload(): void {
+  async handleMagnetURLUpload(): Promise<void> {
+    let urls = this.urlsToUpload.trim();
+
+    try {
+      let res = await this.data_store.UploadTorrentsFromMagnetURLs(urls, this.filesDestination).toPromise();
+      console.log('uploaded magnet urls', res);
+
+    } catch (error) {
+      console.error('uploaded magnet URLs!', error);
+    }
 
   }
 
@@ -110,9 +121,9 @@ export class AddTorrentDialogComponent implements OnInit {
   /** Handle cleanup for when adding torrents is completed
    * @param data Anything you want to send back to parent of this modal
    */
-  private uploadFileCompletionCallback(data: any): void {
+  private uploadCompletionCallback(): void {
     this.isLoading = false;
-    this.dialogRef.close(data);
+    this.dialogRef.close();
   }
 
   /** Handle opening file explorer dialog & handling any callbacks */

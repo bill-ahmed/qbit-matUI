@@ -44,6 +44,6 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>
-    <button disabled={{isUploadDisabled()}} mat-raised-button (click)="handleFileUpload()" color="primary" cdkFocusInitial>Upload</button>
+    <button disabled={{isUploadDisabled()}} mat-raised-button (click)="handleUpload()" color="primary" cdkFocusInitial>Upload</button>
   </mat-dialog-actions>
 </div>
