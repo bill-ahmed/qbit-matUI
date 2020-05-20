@@ -9,6 +9,10 @@
   list-style-type: none;
 }
 
+#expand_folder_button {
+  pointer-events: none;
+}
+
 .node-info {
   display: flex;
   flex-direction: row;

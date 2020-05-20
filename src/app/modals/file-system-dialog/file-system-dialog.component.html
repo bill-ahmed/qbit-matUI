@@ -37,6 +37,8 @@
                 </mat-nav-list>
             </div>
 
+            <mat-divider [vertical]="true"></mat-divider>
+
             <div class="directoryContents">
                 <p *ngIf="rightPanelHasContent() && !isCreatingNewFolder">Create a folder with the "New Folder" button.</p>
 
@@ -67,6 +69,7 @@
                 </mat-nav-list>
             </div>
         </div>
+        <mat-divider></mat-divider>
         <br/>
 
     </mat-dialog-content>

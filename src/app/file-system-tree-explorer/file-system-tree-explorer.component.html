@@ -26,7 +26,7 @@
     <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
       <li>
         <div (click)="toggleNode(node)" matRipple matTreeNodeToggle class="mat-tree-node">
-          <button mat-icon-button matTreeNodeToggle
+          <button mat-icon-button matTreeNodeToggle id="expand_folder_button"
                   [attr.aria-label]="'toggle ' + node.name">
             <mat-icon class="mat-icon-rtl-mirror">
               {{isExpanded(node) ? 'expand_more' : 'chevron_right'}}
