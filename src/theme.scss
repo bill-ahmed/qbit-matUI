@@ -24,7 +24,7 @@ $my-app-theme: map_merge($my-app-theme, (background: $background));
     $dark-warn: mat-palette($mat-red);
 
     $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
-    
+
     @include angular-material-theme($dark-theme);
 }
 
