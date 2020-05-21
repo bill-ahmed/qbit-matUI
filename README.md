@@ -55,7 +55,7 @@ Once you've completed that:
 3. Navigate to wherever you placed the `public`/`private` folder from (*)
 4. Replace all the contents of the `private` folder with the contents of `dist/` from the project directoy
 
-Alternatively, you can skip Step 1. and take a production-ready build from the `builds` directory in this project. The latest Windows & Linux/Mac version are zipped.
+Alternatively, you can skip Step 1. and take a production-ready build from the releases page. The latest Windows & Linux/Mac versions are zipped.
 
 ## Screenshots
 The following are some snippets from the alternate UI. They may (or may not) be outdated. To get the best idea of where the app currently is, consider trying out the live demo above or running the app locally.
