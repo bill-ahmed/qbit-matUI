@@ -18,12 +18,21 @@
         <div id="toolbar_actions">
 
           <button mat-fab matTooltip="Add Torrent" id="addTorrentFAB" color="warn" (click)="openAddTorrentDialog()">
-            <mat-icon>add</mat-icon>
+            <mat-icon>cloud_upload</mat-icon>
+          </button>
+
+          <button mat-fab matTooltip="Logout" id="logoutFAB" color="warn" (click)="openAddTorrentDialog()">
+            <mat-icon>exit_to_app</mat-icon>
           </button>
 
           <button mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
             <mat-icon>cloud_upload</mat-icon>
             &nbsp; Upload
+          </button>
+
+          <button mat-raised-button id="logoutButton" color="default" (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            &nbsp; Logout
           </button>
 
           <mat-slide-toggle id="slideToggleTheme" (change)="handleSlideToggle($event)" [checked]="isDarkThemeEnabled()" color="primary">

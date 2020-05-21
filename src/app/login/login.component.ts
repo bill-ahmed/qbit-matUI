@@ -13,12 +13,10 @@ import { IsDevEnv } from '../../utils/Environment';
 export class LoginComponent implements OnInit {
 
   private http_endpoints: any;
-  private cookieValueSID: string
 
   constructor(private router: Router, private cookieService: CookieService, private http: HttpClient) { this.http_endpoints = http_endpoints }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   /**Handle any errors with login
    * @param response The response given by server.
@@ -60,8 +58,6 @@ export class LoginComponent implements OnInit {
     body.append('password', password);
 
     let url = root + endpoint;
-
-    let xhr = new XMLHttpRequest();
 
     console.log("Sent request to", url)
     try {

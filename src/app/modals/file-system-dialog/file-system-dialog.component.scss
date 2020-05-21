@@ -28,10 +28,13 @@ $border-dark: #494949;
     align-items: baseline;
 
     flex-grow: 1;
+    max-width: 90%;
 
     #saveLocation {
       margin: 0;
       margin-left: 20px;
+      max-width: 90%;
+      word-wrap: break-word;
     }
   }
 }
@@ -53,6 +56,8 @@ $border-dark: #494949;
     height: 450px;
 
     overflow-y: scroll;
+
+    max-width: 75%;
 
     .create-new-folder-input {
       min-width: 60%;

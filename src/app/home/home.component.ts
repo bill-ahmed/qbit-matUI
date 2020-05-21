@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { GetCookieInfo } from '../../utils/ClientInfo';
 import { Router } from '@angular/router';
 
 // UI Components
@@ -19,6 +17,7 @@ import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 import { ApplicationBuildInfo } from 'src/utils/Interfaces';
+import { AuthService } from '../services/auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -28,22 +27,16 @@ import { ApplicationBuildInfo } from 'src/utils/Interfaces';
 export class HomeComponent implements OnInit {
 
   private cookieSID: string;
-  private isPageLoading: boolean;
   private http_endpoints: any;
   public applicationBuildInfo: ApplicationBuildInfo;
   public isDarkTheme: Observable<boolean>;
 
-  constructor(private router: Router, private cs: CookieService, private http: HttpClient, public addTorrentDialog: MatDialog, private theme: ThemeService,
-              private data_store: TorrentDataStoreService) {
+  constructor(private router: Router, private http: HttpClient, public addTorrentDialog: MatDialog, private theme: ThemeService,
+              private data_store: TorrentDataStoreService, private auth: AuthService) {
     this.http_endpoints = http_endpoints
    }
 
   ngOnInit(): void {
-    this.isPageLoading = true;
-
-    // Grab cookie information
-    let key = GetCookieInfo().SIDKey;
-    this.cookieSID = this.cs.get(key);
 
     if(this.cookieSID === ""){
       this.logout();
@@ -120,12 +113,7 @@ export class HomeComponent implements OnInit {
   }
 
   logout(): void {
-    this.cs.deleteAll();
-    this.cs.delete("SID");
-
-    // Route differently in production because it's a SPA, while dev is still two pages.
-    if(IsDevEnv) { this.router.navigate(['/']); }
-    else { window.location.reload() }
+    this.auth.Logout();
   }
 
 }
