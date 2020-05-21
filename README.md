@@ -14,18 +14,31 @@ A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 
 ![Home Page](/builds/images/home_page.jpg)
 
-## Configuring the App
-This app relies on a couple files to work properly. This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
+## Replacing your existing qBittorrent Web UI
+In order to use this version, first follow the instructions outlined [here (*)](https://github.com/qbittorrent/qBittorrent/wiki/Alternate-WebUI-usage). This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
+
+Once you've completed that:
+
+1. Take a production-ready build from [here](https://github.com/bill-ahmed/qbit-material-WebUI/releases), or [build it yourself](#build)
+
+2. Navigate to wherever you placed the `public`/`private` folder from [(*)](#replacing-your-existing-qbittorrent-web-ui)
+
+
+3. Replace all the contents of the `private` folder with the contents of the downloaded `.zip` file (alternatively, if you chose to build the app, copy over contents of `dist/` from the project directoy)
+
+
+# Development
+This app relies on a couple files to work properly.
+
+### General Config
+Under `src/assets/` there are two files: `config.json` and `config.prod.json`. This will store general configuration, such as the delimeter used when parsing file paths (Unix vs. Windows).
 
 ### HTTP Config
 Under `src/assets/` there are two files: `http_config.json` and `http_config.prod.json`. During the production build, the former is replaced with the latter file. 
 
 If you wish to configure your endpoints and other data for dev/prod, do so here.
 
-### General Config
-Under `src/assets/` there are two files: `config.json` and `config.prod.json`. This will store general configuration, such as the delimeter used when parsing file paths (Unix vs. Windows).
-
-## Running the App -- Development
+## Running the App
 To install the dependencies, run `npm install` in both the root directory and the `mock_backend/` folder.
 
 ### Back-end
@@ -44,18 +57,3 @@ The app will automatically reload if you change any of the Angular source code.
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Replacing existing qBittorrent Web UI
-In order to use this version, first follow the instructions outlined [here (*)](https://github.com/qbittorrent/qBittorrent/wiki/Alternate-WebUI-usage).
-
-Once you've completed that:
-
-1. Build the production app (from build section)
-2. Navigate to the `dist/` directory, and copy all files to your clipboard
-3. Navigate to wherever you placed the `public`/`private` folder from (*)
-4. Replace all the contents of the `private` folder with the contents of `dist/` from the project directoy
-
-Alternatively, you can skip Step 1. and take a production-ready build from the releases page. The latest Windows & Linux/Mac versions are zipped.
-
-## Screenshots
-The following are some snippets from the alternate UI. They may (or may not) be outdated. To get the best idea of where the app currently is, consider trying out the live demo above or running the app locally.
