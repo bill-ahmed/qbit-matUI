@@ -15,7 +15,7 @@ A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 ![Home Page](/builds/images/home_page.jpg)
 
 ## Replacing your existing qBittorrent Web UI
-In order to use this version, first follow the instructions outlined [here (*)](https://github.com/qbittorrent/qBittorrent/wiki/Alternate-WebUI-usage). This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
+In order to use this version, first follow the instructions outlined [here (*)](https://github.com/qbittorrent/qBittorrent/wiki/Developing-alternate-WebUIs-(WIP)) and [here (**)](https://github.com/qbittorrent/qBittorrent/wiki/Alternate-WebUI-usage). This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
 
 Once you've completed that:
 
