@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { GetCookieInfo } from '../../utils/ClientInfo';
 import { MainData, Torrent, NetworkConnection } from '../../utils/Interfaces';
 
 
@@ -66,9 +65,6 @@ export class TorrentsTableComponent implements OnInit {
     this.torrentSearchService.getSearchValue().subscribe((res: string) => {
       this.updateTorrentSearchValue(res);
     })
-
-    let cookieInfo = GetCookieInfo()
-    this.cookieValueSID = this.cookieService.get(cookieInfo.SIDKey);
 
     this.dataSource.sort = this.sort;
 
