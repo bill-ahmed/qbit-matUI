@@ -9,6 +9,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class TorrentDataStoreService {
 
   private rawData: any;
+  private rid = 0;
   private _torrentMainDataSource = new BehaviorSubject<MainData>(null);
 
   private TorrentMainData: MainData;
@@ -19,8 +20,8 @@ export class TorrentDataStoreService {
   /** Get torrent all torrent data and information
    * @param rid The RID value to send to server, for changelog purposes.
    */
-  public async GetTorrentData(rid: number): Promise<MainData> {
-    let data = await this.torrent_http_service.GetAllTorrentData(rid).toPromise();
+  public async GetTorrentData(rid?: number): Promise<MainData> {
+    let data = await this.torrent_http_service.GetAllTorrentData(rid || this.rid).toPromise();
 
     // Only set raw data initially
     if(!this.rawData){
@@ -31,6 +32,8 @@ export class TorrentDataStoreService {
     // TODO: When a torrent gets removed, we need to refresh our data
     this.setFormattedResponse(data);
     this._updateDataSource(this.TorrentMainData);
+
+    this.rid = data.rid;
 
     return this.TorrentMainData;
   }
@@ -185,5 +188,6 @@ export class TorrentDataStoreService {
   public ResetAllData(): void {
     this.rawData = null;
     this.TorrentMainData = null;
+    this.rid = 0;
   }
 }

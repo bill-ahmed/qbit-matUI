@@ -48,7 +48,6 @@ export class TorrentsTableComponent implements OnInit {
   private DEFAULT_REFRESH_TIMEOUT: number;
   private REFRESH_INTERVAL: any = null;
   private isFetchingData: boolean = false;
-  private RID = 0;
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   private infoTorDialogRef: MatDialogRef<TorrentInfoDialogComponent, any>;
   private currentMatSort = {active: "Completed_On", direction: "desc"};
@@ -151,14 +150,13 @@ export class TorrentsTableComponent implements OnInit {
     }
 
     this.isFetchingData = true;
-    let data = await this.data_store.GetTorrentData(this.RID);
+    let data = await this.data_store.GetTorrentData();
 
     // Update state with fresh torrent data
     this.allTorrentInformation = data;
     this.allTorrentData = data.torrents;
     this.filteredTorrentData = data.torrents;
     this.isFetchingData = false;
-    this.RID += 1;
 
     // Re-sort data
     this.onMatSortChange(this.currentMatSort);
@@ -451,7 +449,6 @@ export class TorrentsTableComponent implements OnInit {
     this.allTorrentInformation = null;
     this.allTorrentData = null;
     this.filteredTorrentData = null;
-    this.RID = 0;
 
     this.data_store.ResetAllData();
     this.ClearTorrentRefreshInterval();
