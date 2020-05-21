@@ -20,5 +20,4 @@ install:
   - npm ci
 
 script:
-  # Do nothing
-  - sleep 1
+  - npm run build_prod
