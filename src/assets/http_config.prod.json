@@ -2,6 +2,7 @@
     "endpoints": {
         "root": "/api/v2",
         "login": "/auth/login",
+        "logout": "/auth/logout",
         "torrentList": "/sync/maindata",
         "uploadTorrents": "/torrents/add",
         "deleteTorrent": "/torrents/delete",
