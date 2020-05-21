@@ -46,6 +46,18 @@ export class TorrentDataHTTPService {
     return result;
   }
 
+  UploadNewTorrentsFromMagnetURLs(magnetURLs: string, destination: string): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.uploadTorrents;
+    let url = root + endpoint;
+
+    let body = new FormData();
+    body.append('savepath', destination);
+    body.append('urls', magnetURLs);
+
+    return this.sendTorrentHashesPOST(url, null, null, body);
+  }
+
   MoveTorrents(hashes: string[], destination: string): Observable<any> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.moveTorrents;

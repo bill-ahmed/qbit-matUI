@@ -1,15 +1,35 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background">
 
-  <h2 mat-dialog-title>Upload Torrent</h2>
-  <mat-divider></mat-divider>
+  <h2 mat-dialog-title>Upload Torrents</h2>
   <mat-dialog-content class="mat-typography">
-    <br/>
-    <h3>Choose File</h3>
-    <input multiple type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
-    <br/>
-    <br/>
-    <br/>
+    <mat-tab-group mat-align-tabs="start" (selectedTabChange)="handleTabChange($event)">
+      <mat-tab label="File Upload">
+        <br/>
 
+        <div class="upload_files">
+          <button color="accent" mat-raised-button (click)="torrentFileUpload.click()">
+            <mat-icon>attach_file</mat-icon>
+            &nbsp; Choose Files
+          </button>
+
+          <h4>{{getFilesToUploadString()}}</h4>
+
+          <input multiple #torrentFileUpload type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Magnet URL">
+        <br/>
+        <mat-form-field id="magnet_url_input" appearance="outline">
+          <mat-label>List of URLs...</mat-label>
+          <textarea rows="14" value="{{urlsToUpload}}" name="savepath" type="text" id="savepath" (change)="updateURLsToUpload($event)" matInput></textarea>
+          <mat-hint align="start">Separate each URL with a new line</mat-hint>
+        </mat-form-field>
+      </mat-tab>
+    </mat-tab-group>
+
+    <br/>
+    <br/>
 
     <h3>Save Location</h3>
     <p>Pick a location to save the files. If none is chosen, the default shown will be used instead.</p>
@@ -29,11 +49,10 @@
     </mat-form-field>
 
     <br/>
-    <br/>
 
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>
-    <button disabled={{isUploadDisabled()}} mat-raised-button (click)="handleFileUpload()" color="primary" cdkFocusInitial>Upload</button>
+    <button disabled={{isUploadDisabled()}} mat-raised-button (click)="handleUpload()" color="primary" cdkFocusInitial>Upload</button>
   </mat-dialog-actions>
 </div>

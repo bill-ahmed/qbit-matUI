@@ -10,6 +10,7 @@ import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
 import { FileSystemService } from '../../services/file-system/file-system.service';
 import { GetDefaultSaveLocation } from 'src/utils/Helpers';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -19,10 +20,13 @@ import { GetDefaultSaveLocation } from 'src/utils/Helpers';
 export class AddTorrentDialogComponent implements OnInit {
 
   public filesToUpload: FileList[] = null;
+  public urlsToUpload = "";
   public filesDestination = "";
   public isLoading = false;
   public isDarkTheme: Observable<boolean>;
 
+  /** Keep track of the mat-tab the user is currently in. */
+  private currentTab: MatTabChangeEvent;
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
   constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService,
@@ -33,17 +37,54 @@ export class AddTorrentDialogComponent implements OnInit {
     this.updateDefaultSaveLocationFromDisk();
   }
 
-  /** Send request to server with all torrents uploaded. */
-  handleFileUpload(): void {
-    this.isLoading = true;
-    this.data_store.UploadTorrents(this.filesToUpload, this.filesDestination)
-    .then((resp: any) => {
-      this.uploadFileCompletionCallback(resp);
+  handleTabChange(event: MatTabChangeEvent) {
+    this.currentTab = event;
+    console.log(event);
+  }
 
-    },
-    (error: any) => {
-      this.uploadFileCompletionCallback(error);
-    });
+  /** Callback for all upload events. */
+  async handleUpload() {
+    let index = this.currentTab ? this.currentTab.index : 0;  // User always starts at first tab
+    switch (index) {
+      case 0:
+        await this.handleFileUpload();
+        break;
+
+      case 1:
+        await this.handleMagnetURLUpload();
+        break;
+
+      default:
+        break;
+    }
+    this.uploadCompletionCallback();
+  }
+
+  /** Send request to server with all torrents uploaded. */
+  async handleFileUpload(): Promise<void> {
+    this.isLoading = true;
+
+    try {
+      let resp = await this.data_store.UploadTorrents(this.filesToUpload, this.filesDestination);
+      console.log('uploaded files', resp);
+
+    } catch (error) {
+      console.error('unable to upload files', error);
+    }
+  }
+
+  /** Upload the link to a magnet URL */
+  async handleMagnetURLUpload(): Promise<void> {
+    let urls = this.urlsToUpload.trim();
+
+    try {
+      let res = await this.data_store.UploadTorrentsFromMagnetURLs(urls, this.filesDestination).toPromise();
+      console.log('uploaded magnet urls', res);
+
+    } catch (error) {
+      console.error('uploaded magnet URLs!', error);
+    }
+
   }
 
   /** Update which torrents the user wants to upload. */
@@ -54,6 +95,11 @@ export class AddTorrentDialogComponent implements OnInit {
 
   /** Whether the Upload button should be disabled or not */
   isUploadDisabled(): boolean {
+    let destinationEmpty = this.filesDestination.trim() === "";
+    let urlToUploadEmpty = this.urlsToUpload.trim() === "";
+
+    // If user in magnet url tab, check if urls and file destination is empty
+    if(this.currentTab && this.currentTab.index === 1) { return destinationEmpty || urlToUploadEmpty; }
     return (this.isLoading || !this.filesToUpload || (this.filesToUpload.length === 0));
   }
 
@@ -67,12 +113,22 @@ export class AddTorrentDialogComponent implements OnInit {
     this.filesDestination = event.target.value;
   }
 
+  /** Callback for when user modifies magnet urls */
+  public updateURLsToUpload(event: any) {
+    this.urlsToUpload = event.target.value;
+  }
+
   /** Handle cleanup for when adding torrents is completed
    * @param data Anything you want to send back to parent of this modal
    */
-  private uploadFileCompletionCallback(data: any): void {
+  private uploadCompletionCallback(): void {
     this.isLoading = false;
-    this.dialogRef.close(data);
+    this.dialogRef.close();
+  }
+
+  public getFilesToUploadString(): string {
+    let len = this.filesToUpload ? this.filesToUpload.length : 0;
+    return len === 1 ? `${len} file` : `${len} files`;
   }
 
   /** Handle opening file explorer dialog & handling any callbacks */
