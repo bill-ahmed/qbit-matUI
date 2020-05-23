@@ -82,15 +82,11 @@ app-search-torrents {
 
 /** For phone screens */
 @media only screen and (max-width: 768px) {
-    #addTorrentButton, #logoutButton {
+    #addTorrentButton, #logoutButton, .hide_mobile {
         display: none;
     }
 
     #addTorrentFAB, #logoutFAB {
         display: unset;
-    }
-
-    #qbit_version_info {
-      display: none;
     }
 }

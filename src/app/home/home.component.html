@@ -7,7 +7,7 @@
         <h1>
           Manage Torrents
         </h1>
-        <p id="qbit_version_info" style="margin-bottom: 0; font-size: 11pt;">
+        <p class="hide_mobile" id="qbit_version_info" style="margin-bottom: 0; font-size: 11pt;">
           Qbittorrent {{getAppVersion()}}, API v{{getAPIVersion()}}
         </p>
       </div>
@@ -25,19 +25,28 @@
             <mat-icon>exit_to_app</mat-icon>
           </button>
 
-          <button mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
+          <button class="hide_mobile" mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
             <mat-icon>cloud_upload</mat-icon>
             &nbsp; Upload
           </button>
 
-          <button mat-raised-button id="logoutButton" color="default" (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
-            &nbsp; Logout
+          <button class="hide_mobile" mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
           </button>
 
-          <mat-slide-toggle id="slideToggleTheme" (change)="handleSlideToggle($event)" [checked]="isDarkThemeEnabled()" color="primary">
-            <mat-icon>nights_stay</mat-icon>
-          </mat-slide-toggle>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="$event.stopPropagation();handleSlideToggle()">
+              <mat-icon>nights_stay</mat-icon>
+              Dark Theme &nbsp;
+              <mat-slide-toggle id="slideToggleTheme" [checked]="isDarkThemeEnabled()" color="primary">
+              </mat-slide-toggle>
+            </button>
+
+            <button mat-menu-item id="logoutButton" color="default" (click)="logout()">
+              <mat-icon>exit_to_app</mat-icon>
+              Logout
+            </button>
+          </mat-menu>
 
         </div>
       </span>
