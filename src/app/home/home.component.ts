@@ -65,7 +65,6 @@ export class HomeComponent implements OnInit {
     const settingsDialogRef = this.dialog.open(
       SettingsComponent,
       {
-        disableClose: true,
         panelClass: "generic-dialog",
         minWidth: "50%",
         minHeight: "50%",
