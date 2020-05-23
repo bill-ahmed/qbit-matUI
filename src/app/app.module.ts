@@ -49,6 +49,7 @@ import { TorrentInfoDialogComponent } from './modals/torrent-info-dialog/torrent
 import { FileSystemDialogComponent } from './modals/file-system-dialog/file-system-dialog.component';
 import { FileSystemTreeExplorerComponent } from './file-system-tree-explorer/file-system-tree-explorer.component';
 import { MoveTorrentsDialogComponent } from './modals/move-torrents-dialog/move-torrents-dialog.component';
+import { SettingsComponent } from './modals/settings/settings.component';
 
 var appRoutes: Routes;
 
@@ -78,7 +79,8 @@ if(!environment.production){
     TorrentInfoDialogComponent,
     FileSystemDialogComponent,
     FileSystemTreeExplorerComponent,
-    MoveTorrentsDialogComponent
+    MoveTorrentsDialogComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

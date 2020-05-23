@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 import { ApplicationBuildInfo } from 'src/utils/Interfaces';
 import { AuthService } from '../services/auth/auth.service';
+import { SettingsComponent } from '../modals/settings/settings.component';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,7 @@ export class HomeComponent implements OnInit {
   public applicationBuildInfo: ApplicationBuildInfo;
   public isDarkTheme: Observable<boolean>;
 
-  constructor(private router: Router, private http: HttpClient, public addTorrentDialog: MatDialog, private theme: ThemeService,
+  constructor(private router: Router, private http: HttpClient, public dialog: MatDialog, private theme: ThemeService,
               private data_store: TorrentDataStoreService, private auth: AuthService) {
     this.http_endpoints = http_endpoints
    }
@@ -53,11 +54,28 @@ export class HomeComponent implements OnInit {
 
   /** Open the modal for adding a new torrent */
   openAddTorrentDialog(): void {
-    const addTorDialogRef = this.addTorrentDialog.open(AddTorrentDialogComponent, {disableClose: true, panelClass: "generic-dialog"});
+    const addTorDialogRef = this.dialog.open(AddTorrentDialogComponent, {disableClose: true, panelClass: "generic-dialog"});
 
     addTorDialogRef.afterClosed().subscribe((result: any) => {
       this.handleAddTorrentDialogClosed(result);
     });
+  }
+
+  openSettingsDialog():void {
+    const settingsDialogRef = this.dialog.open(
+      SettingsComponent,
+      {
+        disableClose: true,
+        panelClass: "generic-dialog",
+        minWidth: "50%",
+        minHeight: "50%",
+        autoFocus: false
+      }
+    );
+
+    settingsDialogRef.afterClosed().subscribe(res => {
+      console.log("Closed settings modal:", res);
+    })
   }
 
   /** Callback for when user is finished uploading a torrent */
@@ -70,7 +88,7 @@ export class HomeComponent implements OnInit {
     localStorage.setItem("dark-mode-enabled", `${this.theme.getCurrentValue()}`)
   }
 
-  handleSlideToggle(event: any): void {
+  handleSlideToggle(): void {
     this.toggleTheme();
   }
 

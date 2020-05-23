@@ -30,15 +30,20 @@
             &nbsp; Upload
           </button>
 
-          <button class="hide_mobile" mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
+          <button disableRipple class="hide_mobile mat-elevation-z0" color="default" mat-fab [matMenuTriggerFor]="menu">
+            <mat-icon>person</mat-icon>
           </button>
 
           <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openSettingsDialog()">
+              <mat-icon>settings</mat-icon>
+              Settings
+            </button>
+
             <button mat-menu-item (click)="$event.stopPropagation();handleSlideToggle()">
-              <mat-icon>nights_stay</mat-icon>
+              <mat-icon>brightness_6</mat-icon>
               Dark Theme &nbsp;
-              <mat-slide-toggle id="slideToggleTheme" [checked]="isDarkThemeEnabled()" color="primary">
+              <mat-slide-toggle id="slideToggleTheme" (click)="false" (change)="false" [checked]="isDarkThemeEnabled()" color="primary">
               </mat-slide-toggle>
             </button>
 
