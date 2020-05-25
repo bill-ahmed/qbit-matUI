@@ -15,10 +15,10 @@ import { HttpClient } from '@angular/common/http';
 import { IsDevEnv } from '../../utils/Environment';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
-import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
-import { ApplicationBuildInfo } from 'src/utils/Interfaces';
+import { QbittorrentBuildInfo } from 'src/utils/Interfaces';
 import { AuthService } from '../services/auth/auth.service';
 import { SettingsComponent } from '../modals/settings/settings.component';
+import { ApplicationConfigService } from '../services/app/application-config.service';
 
 @Component({
   selector: 'app-home',
@@ -29,11 +29,11 @@ export class HomeComponent implements OnInit {
 
   private cookieSID: string;
   private http_endpoints: any;
-  public applicationBuildInfo: ApplicationBuildInfo;
+  public applicationBuildInfo: QbittorrentBuildInfo;
   public isDarkTheme: Observable<boolean>;
 
-  constructor(private router: Router, private http: HttpClient, public dialog: MatDialog, private theme: ThemeService,
-              private data_store: TorrentDataStoreService, private auth: AuthService) {
+  constructor(private router: Router, private http: HttpClient, public dialog: MatDialog, private theme: ThemeService, private auth: AuthService,
+              private appConfig: ApplicationConfigService) {
     this.http_endpoints = http_endpoints
    }
 
@@ -46,10 +46,7 @@ export class HomeComponent implements OnInit {
     // Get user preferences
     this.getUserPreferences();
     this.isDarkTheme = this.theme.getThemeSubscription();
-
-    this.data_store.GetApplicationBuildInfo()
-    .then(res => { this.applicationBuildInfo = res; })
-    .catch(err => { console.log(err); this.applicationBuildInfo = { appVersion: "N/A", apiVersion: "N/A" } });
+    this.getQbitBuildInfo();
   }
 
   /** Open the modal for adding a new torrent */
@@ -101,6 +98,10 @@ export class HomeComponent implements OnInit {
 
   getAPIVersion(): string {
     return this.applicationBuildInfo ? this.applicationBuildInfo.apiVersion : "N/A";
+  }
+
+  private async getQbitBuildInfo() {
+    this.applicationBuildInfo = await this.appConfig.getQbittorrentBuildInfo();
   }
 
   private async getUserPreferences(): Promise<void> {

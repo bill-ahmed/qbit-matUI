@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MainData, ApplicationBuildInfo, TorrentContents } from 'src/utils/Interfaces';
+import { MainData, QbittorrentBuildInfo, TorrentContents } from 'src/utils/Interfaces';
 import { Observable } from 'rxjs';
 
 // Utils
@@ -173,7 +173,7 @@ export class TorrentDataHTTPService {
     return this.sendTorrentHashesPOST(url, hashes);
   }
 
-  async GetApplicationBuildInfo(): Promise<ApplicationBuildInfo> {
+  async GetApplicationBuildInfo(): Promise<QbittorrentBuildInfo> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.applicationVersion;
     let endpoint_2 = this.http_endpoints.apiVersion;

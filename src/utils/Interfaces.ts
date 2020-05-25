@@ -119,7 +119,7 @@ export interface NetworkConnection {
     saveData: boolean
 }
 
-export interface ApplicationBuildInfo {
+export interface QbittorrentBuildInfo {
   appVersion: string,
   apiVersion: string
 }
