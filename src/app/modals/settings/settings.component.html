@@ -34,7 +34,10 @@
       </div>
 
       <div class="rightNavigation">
-
+        <app-web-ui-settings    *ngIf="tab_selected === 'web_ui'"></app-web-ui-settings>
+        <app-download-settings  *ngIf="tab_selected === 'downloads'"></app-download-settings>
+        <app-speed-settings     *ngIf="tab_selected === 'speed'"></app-speed-settings>
+        <app-about-settings     *ngIf="tab_selected === 'about'"></app-about-settings>
       </div>
     </div>
 

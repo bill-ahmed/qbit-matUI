@@ -50,6 +50,10 @@ import { FileSystemDialogComponent } from './modals/file-system-dialog/file-syst
 import { FileSystemTreeExplorerComponent } from './file-system-tree-explorer/file-system-tree-explorer.component';
 import { MoveTorrentsDialogComponent } from './modals/move-torrents-dialog/move-torrents-dialog.component';
 import { SettingsComponent } from './modals/settings/settings.component';
+import { WebUiSettingsComponent } from './modals/settings/web-ui-settings/web-ui-settings.component';
+import { DownloadSettingsComponent } from './modals/settings/download-settings/download-settings.component';
+import { SpeedSettingsComponent } from './modals/settings/speed-settings/speed-settings.component';
+import { AboutSettingsComponent } from './modals/settings/about-settings/about-settings.component';
 
 var appRoutes: Routes;
 
@@ -80,7 +84,11 @@ if(!environment.production){
     FileSystemDialogComponent,
     FileSystemTreeExplorerComponent,
     MoveTorrentsDialogComponent,
-    SettingsComponent
+    SettingsComponent,
+    WebUiSettingsComponent,
+    DownloadSettingsComponent,
+    SpeedSettingsComponent,
+    AboutSettingsComponent
   ],
   imports: [
     BrowserModule,
