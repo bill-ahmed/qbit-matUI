@@ -25,6 +25,12 @@ export class ApplicationConfigService {
     .catch(err => { console.log("Error getting build info", err); this.qBitBuildInfo = { appVersion: 'N/A', apiVersion: 'N/A' } })
   }
 
+  /** If dark theme is enabled, then disable it in preferences. */
+  setDarkThemeEnabled(val: boolean) {
+    this.user_preferences['dark-mode-enabled'] = val;
+    localStorage.setItem('dark-mode-enabled', JSON.stringify(val)); /** Info on dark theme is not stored in qBittorrent */
+  }
+
   async getQbittorrentBuildInfo(): Promise<QbittorrentBuildInfo> {
     if(!this.qBitBuildInfo) { this.qBitBuildInfo = await this.data_store.GetApplicationBuildInfo(); }
 
@@ -43,7 +49,14 @@ export class ApplicationConfigService {
 
   /** A string in the format 'v1.2.3' */
   getApplicationVersionString(): string {
-    return `v${this.getApplicationVersion()}`
+    return `v${this.getApplicationVersion()}`;
+  }
+
+  getDarkThemePref(): boolean {
+    if(!this.user_preferences) {
+      this.getUserPreferences();
+    }
+    return JSON.parse(localStorage.getItem('dark-mode-enabled'));
   }
 
   private async updateUserPreferences() {
