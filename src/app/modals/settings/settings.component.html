@@ -7,8 +7,8 @@
     <br/>
 
     <div class="content_container">
-      <div class="leftNavigation" mode="side" opened>
-        <mat-nav-list role="list">
+      <div class="settings_categories" mode="side" opened>
+        <mat-nav-list [disableRipple]="true" role="list">
 
           <mat-list-item class="{{getClassForTab('web_ui')}}" (click)="onTabSelect('web_ui')">
             <mat-icon color="{{tab_selected === 'web_ui' ? 'primary' : ''}}" mat-list-icon>public</mat-icon>

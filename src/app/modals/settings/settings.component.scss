@@ -8,11 +8,11 @@
   flex-direction: row;
 }
 
-.leftNavigation, .rightNavigation {
+.settings_categories, .rightNavigation {
   padding: 10px;
 }
 
-.leftNavigation {
+.settings_categories {
   padding-left: 0;
   padding-right: 0;
 
@@ -32,10 +32,10 @@
       flex-grow: 1;
     }
   }
-}
 
-.mat-list-item-content {
-  height: 100% !important;
+  .mat-list-item-content {
+    height: 100% !important;
+  }
 }
 
 .rightNavigation {
