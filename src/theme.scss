@@ -1,10 +1,8 @@
 @import '~@angular/material/theming';
+@import 'variables.scss';
 @include mat-core();
 
 /** Set primary, secondary and warn colour */
-$my-app-primary:    mat-palette($mat-blue);
-$my-app-accent:     mat-palette($mat-deep-orange);
-$my-app-warn:       mat-palette($mat-red, 500, 900, A400);
 $background-color:  white;
 
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
@@ -19,10 +17,6 @@ $my-app-theme: map_merge($my-app-theme, (background: $background));
 /** Dark theme */
 .dark-theme {
     color: $light-primary-text;
-    $dark-primary: mat-palette($mat-blue-gray, 300, 100, 500);
-    $dark-accent: mat-palette($mat-green, 300, 100, 500);
-    $dark-warn: mat-palette($mat-red);
-
     $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
     @include angular-material-theme($dark-theme);
