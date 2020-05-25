@@ -8,13 +8,19 @@ import { ApplicationConfigService } from 'src/app/services/app/application-confi
 })
 export class AboutSettingsComponent implements OnInit {
 
+  public qbit_mat_Ver: string;
   public appVer: string;
+  public apiVer: string;
 
   constructor(private appConfig: ApplicationConfigService) {
-    this.appVer = this.appConfig.getApplicationVersionString();
+    this.qbit_mat_Ver = this.appConfig.getApplicationVersionString();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    let buildInfo = await this.appConfig.getQbittorrentBuildInfo();
+
+    this.appVer = buildInfo.appVersion;
+    this.apiVer = buildInfo.apiVersion;
   }
 
 }
