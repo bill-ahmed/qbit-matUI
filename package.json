@@ -1,6 +1,5 @@
 {
   "name": "qbit-material-webui",
-  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
