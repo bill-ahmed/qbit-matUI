@@ -105,29 +105,11 @@ export class HomeComponent implements OnInit {
   }
 
   private async getUserPreferences(): Promise<void> {
+    let pref = await this.appConfig.getUserPreferences();
 
-    let root = this.http_endpoints.default.endpoints.root;
-    let endpoint = this.http_endpoints.default.endpoints.userPreferences;
-    let url = root + endpoint;
-
-    // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
-
-    this.http.get(url, options)
-    .subscribe((data: any) =>
-    {
-      this.persistUserPreferences(data);
-    });
-
-    let shouldDarkModeBeEnabled = localStorage.getItem("dark-mode-enabled") === "true";
-    if(shouldDarkModeBeEnabled) {
+    if(pref['dark-mode-enabled']) {
       this.theme.setDarkTheme(true);
     }
-  }
-
-  /** Store user preferences in local storage */
-  private persistUserPreferences(data: any): void {
-    localStorage.setItem("preferences", JSON.stringify(data));
   }
 
   logout(): void {
