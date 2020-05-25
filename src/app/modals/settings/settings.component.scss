@@ -1,0 +1,54 @@
+@import "~@angular/material/theming";
+@import '../../../variables.scss';
+
+.content_container {
+  min-width: 65vw;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.leftNavigation, .rightNavigation {
+  padding: 10px;
+}
+
+.leftNavigation {
+  padding-left: 0;
+  padding-right: 0;
+
+  max-width: 300px;
+  height: 450px;
+
+  overflow-y: scroll;
+
+  mat-nav-list {
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    mat-list-item {
+      flex-grow: 1;
+    }
+  }
+}
+
+.mat-list-item-content {
+  height: 100% !important;
+}
+
+.rightNavigation {
+  flex-grow: 1;
+  height: 450px;
+  overflow-y: scroll;
+  max-width: 75%;
+}
+
+.active_light {
+  border-right: 3px solid mat-color($my-app-primary);
+}
+
+.active_dark {
+  border-right: 3px solid mat-color($dark-primary);
+}

@@ -10,24 +10,24 @@
       <div class="leftNavigation" mode="side" opened>
         <mat-nav-list role="list">
 
-          <mat-list-item (click)="onTabSelect('web_ui')">
-            <mat-icon color="{{tab_selected === 'web_ui' ? 'primary' : 'accent'}}" mat-list-icon>public</mat-icon>
+          <mat-list-item class="{{getClassForTab('web_ui')}}" (click)="onTabSelect('web_ui')">
+            <mat-icon color="{{tab_selected === 'web_ui' ? 'primary' : ''}}" mat-list-icon>public</mat-icon>
             <div mat-line>Web UI</div>
             <div mat-line>Options for this alternate UI</div>
           </mat-list-item>
 
-          <mat-list-item (click)="onTabSelect('downloads')">
-            <mat-icon color="{{tab_selected === 'downloads' ? 'primary' : 'accent'}}" mat-list-icon>get_app</mat-icon>
+          <mat-list-item class="{{getClassForTab('downloads')}}" (click)="onTabSelect('downloads')">
+            <mat-icon color="{{tab_selected === 'downloads' ? 'primary' : ''}}" mat-list-icon>get_app</mat-icon>
             <div mat-line>Downloads</div>
           </mat-list-item>
 
-          <mat-list-item (click)="onTabSelect('speed')">
-            <mat-icon color="{{tab_selected === 'speed' ? 'primary' : 'accent'}}" mat-list-icon>speed</mat-icon>
+          <mat-list-item class="{{getClassForTab('speed')}}" (click)="onTabSelect('speed')">
+            <mat-icon color="{{tab_selected === 'speed' ? 'primary' : ''}}" mat-list-icon>speed</mat-icon>
             <div mat-line>Speed</div>
           </mat-list-item>
 
-          <mat-list-item (click)="onTabSelect('about')">
-            <mat-icon color="{{tab_selected === 'about' ? 'primary' : 'accent'}}" mat-list-icon>info</mat-icon>
+          <mat-list-item class="{{getClassForTab('about')}}" (click)="onTabSelect('about')">
+            <mat-icon color="{{tab_selected === 'about' ? 'primary' : ''}}" mat-list-icon>info</mat-icon>
             <div mat-line>About</div>
           </mat-list-item>
         </mat-nav-list>
