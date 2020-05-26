@@ -55,6 +55,7 @@ import { WebUiSettingsComponent } from './modals/settings/web-ui-settings/web-ui
 import { DownloadSettingsComponent } from './modals/settings/download-settings/download-settings.component';
 import { SpeedSettingsComponent } from './modals/settings/speed-settings/speed-settings.component';
 import { AboutSettingsComponent } from './modals/settings/about-settings/about-settings.component';
+import { RssSettingsComponent } from './modals/settings/rss-settings/rss-settings.component';
 
 var appRoutes: Routes;
 
@@ -89,7 +90,8 @@ if(!environment.production){
     WebUiSettingsComponent,
     DownloadSettingsComponent,
     SpeedSettingsComponent,
-    AboutSettingsComponent
+    AboutSettingsComponent,
+    RssSettingsComponent
   ],
   imports: [
     BrowserModule,

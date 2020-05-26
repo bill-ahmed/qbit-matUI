@@ -26,6 +26,11 @@
             <div mat-line>Speed</div>
           </mat-list-item>
 
+          <mat-list-item class="{{getClassForTab('rss')}}" (click)="onTabSelect('rss')">
+            <mat-icon color="{{tab_selected === 'rss' ? 'primary' : ''}}" mat-list-icon>rss_feed</mat-icon>
+            <div mat-line>RSS</div>
+          </mat-list-item>
+
           <mat-list-item class="{{getClassForTab('about')}}" (click)="onTabSelect('about')">
             <mat-icon color="{{tab_selected === 'about' ? 'primary' : ''}}" mat-list-icon>info</mat-icon>
             <div mat-line>About</div>
@@ -37,6 +42,7 @@
         <app-web-ui-settings    *ngIf="tab_selected === 'web_ui'"></app-web-ui-settings>
         <app-download-settings  *ngIf="tab_selected === 'downloads'"></app-download-settings>
         <app-speed-settings     *ngIf="tab_selected === 'speed'"></app-speed-settings>
+        <app-rss-settings       *ngIf="tab_selected === 'rss'"></app-rss-settings>
         <app-about-settings     *ngIf="tab_selected === 'about'"></app-about-settings>
       </div>
     </div>

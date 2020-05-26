@@ -12,7 +12,7 @@
 }
 
 .pagination_options {
-  margin-top: 5px;
+  margin-top: 10px;
   margin-left: 30px;
 
   padding-left: 10px;
@@ -21,7 +21,7 @@
   flex-direction: column;
   justify-content: space-evenly;
 
-  border-left: solid 1px grey;
+  border-left: solid 1px #CECECE;
 
   .field {
     display: flex;
@@ -50,5 +50,5 @@
 
 .pagination_options.disabled {
   pointer-events: none;
-  color: grey;
+  color: #CECECE;
 }

@@ -20,9 +20,9 @@
 
     <div class="pagination_options {{torrent_table_settings.paginate ? '' : 'disabled'}}">
       <div class="field">
-        <p>Default rows per page:</p>
+        <p>Default number of rows per page:</p>
         <mat-form-field class="small_numeric_field">
-          <input matInput type="number" [(ngModel)]="torrent_table_settings.items_per_page" value="{{torrent_table_settings.items_per_page}}">
+          <input matInput type="number" [(ngModel)]="torrent_table_settings.default_items_per_page" value="{{torrent_table_settings.default_items_per_page}}">
         </mat-form-field>
       </div>
     </div>
