@@ -145,9 +145,10 @@ export interface UserPreferences {
 }
 
 export interface WebUISettings {
-  dark_mode_enabled: boolean,
-  torrent_table: {
+  dark_mode_enabled?: boolean,
+  torrent_table?: {
     paginate: boolean,
+    default_items_per_page: number,
   }
 }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as _appConfig from '../../app.config.json';
-import { QbittorrentBuildInfo, UserPreferences } from 'src/utils/Interfaces';
+import { QbittorrentBuildInfo, UserPreferences, WebUISettings } from 'src/utils/Interfaces';
 import { TorrentDataStoreService } from '../torrent-management/torrent-data-store.service';
 
 // Utils
@@ -13,6 +13,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApplicationConfigService {
 
+  static THEME_OPTIONS = ['Light', 'Dark'];
+
   private application_version: string;
   private user_preferences: UserPreferences;
   private qBitBuildInfo: QbittorrentBuildInfo;
@@ -24,6 +26,8 @@ export class ApplicationConfigService {
     .then(res => { this.qBitBuildInfo = res })
     .catch(err => { console.log("Error getting build info", err); this.qBitBuildInfo = { appVersion: 'N/A', apiVersion: 'N/A' } });
 
+    this.user_preferences = { } as UserPreferences;
+    this.user_preferences.web_ui_options = JSON.parse(localStorage.getItem('web_ui_options')) || { } as WebUISettings;
     this.getUserPreferences();
   }
 
@@ -54,6 +58,10 @@ export class ApplicationConfigService {
     return `v${this.getApplicationVersion()}`;
   }
 
+  getWebUISettings(): WebUISettings {
+    return this.user_preferences.web_ui_options;
+  }
+
   async getDarkThemePref(): Promise<boolean> {
     if(!this.user_preferences) {
       await this.getUserPreferences();
@@ -69,8 +77,9 @@ export class ApplicationConfigService {
 
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { } : { withCredentials: true }
+    let web_ui_options = this.user_preferences?.web_ui_options;
 
     this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
-    this.user_preferences.web_ui_options = JSON.parse(localStorage.getItem("web_ui_options")) || { };
+    this.user_preferences.web_ui_options = web_ui_options || { } as WebUISettings;
   }
 }
