@@ -141,7 +141,14 @@ export interface UserPreferences {
   scan_dirs: string[],
   /** Path for incomplete torrents */
   temp_path: string,
-  'dark-mode-enabled': boolean
+  web_ui_options: WebUISettings
+}
+
+export interface WebUISettings {
+  dark_mode_enabled: boolean,
+  torrent_table: {
+    paginate: boolean,
+  }
 }
 
 export interface QbittorrentBuildInfo {

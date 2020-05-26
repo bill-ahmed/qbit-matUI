@@ -22,13 +22,15 @@ export class ApplicationConfigService {
     this.application_version = _appConfig.version;
     this.data_store.GetApplicationBuildInfo()
     .then(res => { this.qBitBuildInfo = res })
-    .catch(err => { console.log("Error getting build info", err); this.qBitBuildInfo = { appVersion: 'N/A', apiVersion: 'N/A' } })
+    .catch(err => { console.log("Error getting build info", err); this.qBitBuildInfo = { appVersion: 'N/A', apiVersion: 'N/A' } });
+
+    this.getUserPreferences();
   }
 
   /** If dark theme is enabled, then disable it in preferences. */
   setDarkThemeEnabled(val: boolean) {
-    this.user_preferences['dark-mode-enabled'] = val;
-    localStorage.setItem('dark-mode-enabled', JSON.stringify(val)); /** Info on dark theme is not stored in qBittorrent */
+    this.user_preferences.web_ui_options.dark_mode_enabled = val;
+    localStorage.setItem('web_ui_options', JSON.stringify(this.user_preferences.web_ui_options)); /** Info on dark theme is not stored in qBittorrent */
   }
 
   async getQbittorrentBuildInfo(): Promise<QbittorrentBuildInfo> {
@@ -38,7 +40,7 @@ export class ApplicationConfigService {
   }
 
   async getUserPreferences(): Promise<UserPreferences> {
-    if(!this.user_preferences) { this.updateUserPreferences(); }
+    if(!this.user_preferences) { await this.updateUserPreferences(); }
 
     return this.user_preferences;
   }
@@ -52,11 +54,12 @@ export class ApplicationConfigService {
     return `v${this.getApplicationVersion()}`;
   }
 
-  getDarkThemePref(): boolean {
+  async getDarkThemePref(): Promise<boolean> {
     if(!this.user_preferences) {
-      this.getUserPreferences();
+      await this.getUserPreferences();
     }
-    return JSON.parse(localStorage.getItem('dark-mode-enabled'));
+    console.log('got user pref', this.user_preferences)
+    return this.user_preferences.web_ui_options.dark_mode_enabled;
   }
 
   private async updateUserPreferences() {
@@ -68,6 +71,6 @@ export class ApplicationConfigService {
     let options = IsDevEnv() ? { } : { withCredentials: true }
 
     this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
-    this.user_preferences['dark-mode-enabled'] = localStorage.getItem("dark-mode-enabled") === "true";
+    this.user_preferences.web_ui_options = JSON.parse(localStorage.getItem("web_ui_options")) || { };
   }
 }

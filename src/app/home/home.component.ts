@@ -81,7 +81,6 @@ export class HomeComponent implements OnInit {
 
   public toggleTheme(): void {
     this.theme.setDarkTheme(!this.theme.getCurrentValue());
-    localStorage.setItem("dark-mode-enabled", `${this.theme.getCurrentValue()}`)
   }
 
   handleSlideToggle(): void {
@@ -107,7 +106,7 @@ export class HomeComponent implements OnInit {
   private async getUserPreferences(): Promise<void> {
     let pref = await this.appConfig.getUserPreferences();
 
-    if(pref['dark-mode-enabled']) {
+    if(pref.web_ui_options.dark_mode_enabled) {
       this.theme.setDarkTheme(true);
     }
   }
