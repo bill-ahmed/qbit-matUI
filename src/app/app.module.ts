@@ -43,6 +43,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatRippleModule } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './modals/torrent-info-dialog/torrent-info-dialog.component';
@@ -122,6 +123,7 @@ if(!environment.production){
     MatBadgeModule,
     MatTreeModule,
     MatRippleModule,
+    MatRadioModule,
     FormsModule,
     ReactiveFormsModule
   ],
