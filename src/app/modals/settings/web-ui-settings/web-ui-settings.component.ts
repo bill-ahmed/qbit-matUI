@@ -30,6 +30,26 @@ export class WebUiSettingsComponent implements OnInit {
       paginate: this.web_ui_options.torrent_table?.paginate || false,
       default_items_per_page: this.web_ui_options.torrent_table?.default_items_per_page || 10,
     }
+
+    this.file_system_settings = {
+      use_alt_delimiter: !!this.web_ui_options.file_system.delimiter,
+      delimiter: this.web_ui_options.file_system.delimiter ? this.web_ui_options.file_system.delimiter : '/'
+    }
+  }
+
+  /** Inspect this component via ViewChild to get
+   * the user's preferences.
+   */
+  getSettings(): WebUISettings {
+    return {
+      dark_mode_enabled: this.theme_settings.theme === "Dark",
+      torrent_table: {
+        ...this.torrent_table_settings
+      },
+      file_system: {
+        delimiter: this.file_system_settings.use_alt_delimiter ? this.file_system_settings.delimiter : null
+      }
+    }
   }
 
 }

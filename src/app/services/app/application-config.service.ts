@@ -86,13 +86,13 @@ export class ApplicationConfigService {
 
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { } : { withCredentials: true }
-    let web_ui_options = this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web-ui-options'));
+    let web_ui_options = this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web_ui_options'));
 
     this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
     this.user_preferences.web_ui_options = web_ui_options || { } as WebUISettings;
   }
 
   private async _persistWebUIOptions() {
-    localStorage.setItem('web-ui-options', JSON.stringify(this.user_preferences.web_ui_options));
+    localStorage.setItem('web_ui_options', JSON.stringify(this.user_preferences.web_ui_options));
   }
 }
