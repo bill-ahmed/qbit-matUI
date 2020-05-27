@@ -13,7 +13,7 @@ export class WebUiSettingsComponent implements OnInit {
 
   /** Default settings */
   theme_settings = { theme: "" };
-  torrent_table_settings = { paginate: false, default_items_per_page: 10 }
+  torrent_table_settings = { paginate: false, default_items_per_page: 10, showFirstAndLastOptions: false }
   file_system_settings = { use_alt_delimiter: false, delimiter: '/' };
 
   private web_ui_options: WebUISettings;
@@ -29,6 +29,7 @@ export class WebUiSettingsComponent implements OnInit {
     this.torrent_table_settings = {
       paginate: this.web_ui_options.torrent_table?.paginate || false,
       default_items_per_page: this.web_ui_options.torrent_table?.default_items_per_page || 10,
+      showFirstAndLastOptions: this.web_ui_options.torrent_table?.showFirstAndLastOptions || false
     }
 
     this.file_system_settings = {
