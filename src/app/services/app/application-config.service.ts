@@ -18,6 +18,7 @@ export class ApplicationConfigService {
   private application_version: string;
   private user_preferences: UserPreferences;
   private qBitBuildInfo: QbittorrentBuildInfo;
+  private loaded_preferences = false;
 
   constructor(private data_store: TorrentDataStoreService, private http: HttpClient) {
 
@@ -44,7 +45,7 @@ export class ApplicationConfigService {
   }
 
   async getUserPreferences(): Promise<UserPreferences> {
-    if(!this.user_preferences) { await this.updateUserPreferences(); }
+    if(!this.user_preferences || !this.loaded_preferences) { this.loaded_preferences = true; await this.updateUserPreferences(); }
 
     return this.user_preferences;
   }
@@ -75,7 +76,7 @@ export class ApplicationConfigService {
     if(!this.user_preferences) {
       await this.getUserPreferences();
     }
-    console.log('got user pref', this.user_preferences)
+
     return this.user_preferences.web_ui_options.dark_mode_enabled;
   }
 
@@ -90,9 +91,17 @@ export class ApplicationConfigService {
 
     this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
     this.user_preferences.web_ui_options = web_ui_options || { } as WebUISettings;
+
+    this._persistQbitorrentPreferences();
+    this._persistWebUIOptions();
+    console.log('updated user pref', this.user_preferences)
   }
 
   private async _persistWebUIOptions() {
     localStorage.setItem('web_ui_options', JSON.stringify(this.user_preferences.web_ui_options));
+  }
+
+  private async _persistQbitorrentPreferences() {
+    localStorage.setItem('preferences', JSON.stringify({...this.user_preferences, web_ui_options: null}));
   }
 }
