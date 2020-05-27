@@ -73,7 +73,7 @@ export class TorrentsTableComponent implements OnInit {
     this.userPref = await this.appConfig.getUserPreferences();
 
     this.dataSource.sort = this.sort;
-    if(this.userPref.web_ui_options.torrent_table.paginate) {
+    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
       this.dataSource.paginator = this.paginator;
       this.pageSizeOptions.push(this.userPref.web_ui_options.torrent_table.default_items_per_page);
       this.pageSizeOptions.sort();

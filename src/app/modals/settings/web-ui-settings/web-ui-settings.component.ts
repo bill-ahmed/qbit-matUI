@@ -33,8 +33,8 @@ export class WebUiSettingsComponent implements OnInit {
     }
 
     this.file_system_settings = {
-      use_alt_delimiter: !!this.web_ui_options.file_system.delimiter,
-      delimiter: this.web_ui_options.file_system.delimiter ? this.web_ui_options.file_system.delimiter : '/'
+      use_alt_delimiter: !!this.web_ui_options.file_system?.delimiter,
+      delimiter: this.web_ui_options.file_system?.delimiter ? this.web_ui_options.file_system.delimiter : '/'
     }
   }
 
