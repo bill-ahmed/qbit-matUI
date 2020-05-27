@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { MainData, Torrent, NetworkConnection } from '../../utils/Interfaces';
+import { MainData, Torrent, NetworkConnection, UserPreferences } from '../../utils/Interfaces';
 
 
 // UI Components
@@ -25,6 +24,8 @@ import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import { GetTorrentSearchName } from 'src/utils/Helpers';
 import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { ApplicationConfigService } from '../services/app/application-config.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -37,6 +38,8 @@ export class TorrentsTableComponent implements OnInit {
   public filteredTorrentData: Torrent[];
   public cookieValueSID: string;
   public isDarkTheme: Observable<boolean>;
+  public userPref: UserPreferences;
+  public pageSizeOptions = [10, 25, 50, 100, 500];
   selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
@@ -53,20 +56,28 @@ export class TorrentsTableComponent implements OnInit {
   private torrentSearchValue = "";
   private torrentsSelected: Torrent[] = [];     // Keep track of which torrents are currently selected
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private cookieService: CookieService, private data_store: TorrentDataStoreService,
+  constructor(private appConfig: ApplicationConfigService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
               private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService,
               private networkInfo: NetworkConnectionInformationService, private theme: ThemeService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
 
     // Subscribe to torrent searching service
     this.torrentSearchService.getSearchValue().subscribe((res: string) => {
       this.updateTorrentSearchValue(res);
-    })
+    });
+
+    this.userPref = await this.appConfig.getUserPreferences();
 
     this.dataSource.sort = this.sort;
+    if(this.userPref.web_ui_options.torrent_table.paginate) {
+      this.dataSource.paginator = this.paginator;
+      this.pageSizeOptions.push(this.userPref.web_ui_options.torrent_table.default_items_per_page);
+      this.pageSizeOptions.sort();
+    }
 
     // Retrieve updated torrent data on interval
     this.allTorrentData = null;
