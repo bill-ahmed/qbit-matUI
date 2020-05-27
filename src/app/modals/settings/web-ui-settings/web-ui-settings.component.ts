@@ -14,6 +14,7 @@ export class WebUiSettingsComponent implements OnInit {
   /** Default settings */
   theme_settings = { theme: "" };
   torrent_table_settings = { paginate: false, default_items_per_page: 10 }
+  file_system_settings = { use_alt_delimiter: false, delimiter: '/' };
 
   private web_ui_options: WebUISettings;
 

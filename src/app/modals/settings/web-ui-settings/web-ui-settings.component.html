@@ -27,5 +27,22 @@
       </div>
     </div>
   </section>
+  <br/>
+
+  <section>
+  <h2> File System </h2>
+  <mat-card-subtitle>Modifying these will require a page reload.</mat-card-subtitle>
+
+  <mat-checkbox [(ngModel)]="file_system_settings.use_alt_delimiter">Use Alternate File Path Delimiter</mat-checkbox>
+
+  <div class="pagination_options {{file_system_settings.use_alt_delimiter ? '' : 'disabled'}}">
+    <div class="field">
+      <p>Delimiter to use:</p>
+      <mat-form-field class="small_numeric_field">
+        <input matInput type="text" [(ngModel)]="file_system_settings.delimiter" value="{{file_system_settings.delimiter}}">
+      </mat-form-field>
+    </div>
+  </div>
+  </section>
 
 </div>
