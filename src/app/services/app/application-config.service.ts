@@ -62,6 +62,15 @@ export class ApplicationConfigService {
     return this.user_preferences.web_ui_options;
   }
 
+  getFileSystemDelimiter(): string | null {
+    return this.user_preferences.web_ui_options?.file_system?.delimiter;
+  }
+
+  setWebUIOptions(opt: WebUISettings) {
+    this.user_preferences.web_ui_options = opt;
+    this._persistWebUIOptions();
+  }
+
   async getDarkThemePref(): Promise<boolean> {
     if(!this.user_preferences) {
       await this.getUserPreferences();
@@ -77,9 +86,13 @@ export class ApplicationConfigService {
 
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { } : { withCredentials: true }
-    let web_ui_options = this.user_preferences?.web_ui_options;
+    let web_ui_options = this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web-ui-options'));
 
     this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
     this.user_preferences.web_ui_options = web_ui_options || { } as WebUISettings;
+  }
+
+  private async _persistWebUIOptions() {
+    localStorage.setItem('web-ui-options', JSON.stringify(this.user_preferences.web_ui_options));
   }
 }

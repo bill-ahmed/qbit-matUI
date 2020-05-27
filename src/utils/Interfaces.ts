@@ -149,6 +149,9 @@ export interface WebUISettings {
   torrent_table?: {
     paginate: boolean,
     default_items_per_page: number,
+  },
+  file_system?: {
+    delimiter: string
   }
 }
 
