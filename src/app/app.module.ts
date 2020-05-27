@@ -18,7 +18,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ProgressBarModule } from "angular-progress-bar"
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -43,12 +42,20 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatRippleModule } from '@angular/material/core';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './modals/torrent-info-dialog/torrent-info-dialog.component';
 import { FileSystemDialogComponent } from './modals/file-system-dialog/file-system-dialog.component';
 import { FileSystemTreeExplorerComponent } from './file-system-tree-explorer/file-system-tree-explorer.component';
 import { MoveTorrentsDialogComponent } from './modals/move-torrents-dialog/move-torrents-dialog.component';
+import { SettingsComponent } from './modals/settings/settings.component';
+import { WebUiSettingsComponent } from './modals/settings/web-ui-settings/web-ui-settings.component';
+import { DownloadSettingsComponent } from './modals/settings/download-settings/download-settings.component';
+import { SpeedSettingsComponent } from './modals/settings/speed-settings/speed-settings.component';
+import { AboutSettingsComponent } from './modals/settings/about-settings/about-settings.component';
+import { RssSettingsComponent } from './modals/settings/rss-settings/rss-settings.component';
 
 var appRoutes: Routes;
 
@@ -78,7 +85,13 @@ if(!environment.production){
     TorrentInfoDialogComponent,
     FileSystemDialogComponent,
     FileSystemTreeExplorerComponent,
-    MoveTorrentsDialogComponent
+    MoveTorrentsDialogComponent,
+    SettingsComponent,
+    WebUiSettingsComponent,
+    DownloadSettingsComponent,
+    SpeedSettingsComponent,
+    AboutSettingsComponent,
+    RssSettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -112,6 +125,8 @@ if(!environment.production){
     MatBadgeModule,
     MatTreeModule,
     MatRippleModule,
+    MatRadioModule,
+    MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule
   ],

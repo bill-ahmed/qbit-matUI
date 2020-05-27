@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ApplicationConfigService } from './app/application-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,10 +10,11 @@ export class ThemeService {
   private is_dark_theme_source = new BehaviorSubject<boolean>(false);
   private is_dark_theme = this.is_dark_theme_source.asObservable();
 
-  constructor() { }
+  constructor(private appConfig: ApplicationConfigService) { this.appConfig.getDarkThemePref().then(res => this.is_dark_theme_source.next(res)) }
 
   public setDarkTheme(val: boolean): void {
     this.is_dark_theme_source.next(val);
+    this.appConfig.setDarkThemeEnabled(val);
   }
 
   public getThemeSubscription(): Observable<boolean> {

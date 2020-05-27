@@ -1,0 +1,107 @@
+import { Injectable } from '@angular/core';
+import * as _appConfig from '../../app.config.json';
+import { QbittorrentBuildInfo, UserPreferences, WebUISettings } from 'src/utils/Interfaces';
+import { TorrentDataStoreService } from '../torrent-management/torrent-data-store.service';
+
+// Utils
+import * as http_endpoints from '../../../assets/http_config.json';
+import { IsDevEnv } from 'src/utils/Environment';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApplicationConfigService {
+
+  static THEME_OPTIONS = ['Light', 'Dark'];
+
+  private application_version: string;
+  private user_preferences: UserPreferences;
+  private qBitBuildInfo: QbittorrentBuildInfo;
+  private loaded_preferences = false;
+
+  constructor(private data_store: TorrentDataStoreService, private http: HttpClient) {
+
+    this.application_version = _appConfig.version;
+    this.data_store.GetApplicationBuildInfo()
+    .then(res => { this.qBitBuildInfo = res })
+    .catch(err => { console.log("Error getting build info", err); this.qBitBuildInfo = { appVersion: 'N/A', apiVersion: 'N/A' } });
+
+    this.user_preferences = { } as UserPreferences;
+    this.user_preferences.web_ui_options = JSON.parse(localStorage.getItem('web_ui_options')) || { } as WebUISettings;
+    this.getUserPreferences();
+  }
+
+  /** If dark theme is enabled, then disable it in preferences. */
+  setDarkThemeEnabled(val: boolean) {
+    this.user_preferences.web_ui_options.dark_mode_enabled = val;
+    localStorage.setItem('web_ui_options', JSON.stringify(this.user_preferences.web_ui_options)); /** Info on dark theme is not stored in qBittorrent */
+  }
+
+  async getQbittorrentBuildInfo(): Promise<QbittorrentBuildInfo> {
+    if(!this.qBitBuildInfo) { this.qBitBuildInfo = await this.data_store.GetApplicationBuildInfo(); }
+
+    return this.qBitBuildInfo;
+  }
+
+  async getUserPreferences(): Promise<UserPreferences> {
+    if(!this.user_preferences || !this.loaded_preferences) { this.loaded_preferences = true; await this.updateUserPreferences(); }
+
+    return this.user_preferences;
+  }
+
+  getApplicationVersion(): string {
+    return this.application_version;
+  }
+
+  /** A string in the format 'v1.2.3' */
+  getApplicationVersionString(): string {
+    return `v${this.getApplicationVersion()}`;
+  }
+
+  getWebUISettings(): WebUISettings {
+    return this.user_preferences.web_ui_options;
+  }
+
+  getFileSystemDelimiter(): string | null {
+    return this.user_preferences.web_ui_options?.file_system?.delimiter;
+  }
+
+  setWebUIOptions(opt: WebUISettings) {
+    this.user_preferences.web_ui_options = opt;
+    this._persistWebUIOptions();
+  }
+
+  async getDarkThemePref(): Promise<boolean> {
+    if(!this.user_preferences) {
+      await this.getUserPreferences();
+    }
+
+    return this.user_preferences.web_ui_options.dark_mode_enabled;
+  }
+
+  private async updateUserPreferences() {
+    let root = http_endpoints.endpoints.root;
+    let endpoint = http_endpoints.endpoints.userPreferences;
+    let url = root + endpoint;
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { } : { withCredentials: true }
+    let web_ui_options = this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web_ui_options'));
+
+    this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
+    this.user_preferences.web_ui_options = web_ui_options || { } as WebUISettings;
+
+    this._persistQbitorrentPreferences();
+    this._persistWebUIOptions();
+    console.log('updated user pref', this.user_preferences)
+  }
+
+  private async _persistWebUIOptions() {
+    localStorage.setItem('web_ui_options', JSON.stringify(this.user_preferences.web_ui_options));
+  }
+
+  private async _persistQbitorrentPreferences() {
+    localStorage.setItem('preferences', JSON.stringify({...this.user_preferences, web_ui_options: null}));
+  }
+}

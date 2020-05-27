@@ -1,0 +1,54 @@
+.choose_theme {
+  display: flex;
+  flex-direction: row;
+
+  .theme_options {
+    margin-left: 10px;
+
+    .individual_theme_option {
+      margin: 0 7px;
+    }
+  }
+}
+
+.pagination_options {
+  margin-top: 10px;
+  margin-left: 30px;
+
+  padding-left: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  border-left: solid 1px rgb(177, 177, 177);
+
+  .field {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+
+    .small_numeric_field {
+      margin-left: 10px;
+      width: 35px;
+
+      /** Hide the annoying increase/decrease buttons on numeric input */
+      /* Chrome, Safari, Edge, Opera */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+    }
+  }
+}
+
+.pagination_options.disabled {
+  pointer-events: none;
+  color: #CECECE;
+}

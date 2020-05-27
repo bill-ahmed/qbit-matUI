@@ -1,0 +1,57 @@
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background">
+
+  <h2 mat-dialog-title>Settings</h2>
+  <mat-card-subtitle>Manage local and qBittorrent preferences. Clicking save will reload the page.</mat-card-subtitle>
+  <mat-divider></mat-divider>
+  <mat-dialog-content class="mat-typography">
+    <br/>
+
+    <div class="content_container">
+      <div class="settings_categories" mode="side" opened>
+        <mat-nav-list [disableRipple]="true" role="list">
+
+          <mat-list-item class="{{getClassForTab('web_ui')}}" (click)="onTabSelect('web_ui')">
+            <mat-icon color="{{tab_selected === 'web_ui' ? 'primary' : ''}}" mat-list-icon>public</mat-icon>
+            <div mat-line>Web UI</div>
+            <div mat-line>Options for this alternate UI</div>
+          </mat-list-item>
+
+          <mat-list-item class="{{getClassForTab('downloads')}}" (click)="onTabSelect('downloads')">
+            <mat-icon color="{{tab_selected === 'downloads' ? 'primary' : ''}}" mat-list-icon>get_app</mat-icon>
+            <div mat-line>Downloads</div>
+          </mat-list-item>
+
+          <mat-list-item class="{{getClassForTab('speed')}}" (click)="onTabSelect('speed')">
+            <mat-icon color="{{tab_selected === 'speed' ? 'primary' : ''}}" mat-list-icon>speed</mat-icon>
+            <div mat-line>Speed</div>
+          </mat-list-item>
+
+          <mat-list-item class="{{getClassForTab('rss')}}" (click)="onTabSelect('rss')">
+            <mat-icon color="{{tab_selected === 'rss' ? 'primary' : ''}}" mat-list-icon>rss_feed</mat-icon>
+            <div mat-line>RSS</div>
+          </mat-list-item>
+
+          <mat-list-item class="{{getClassForTab('about')}}" (click)="onTabSelect('about')">
+            <mat-icon color="{{tab_selected === 'about' ? 'primary' : ''}}" mat-list-icon>info</mat-icon>
+            <div mat-line>About</div>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+
+      <div class="rightNavigation">
+        <app-web-ui-settings    *ngIf="tab_selected === 'web_ui'"></app-web-ui-settings>
+        <app-download-settings  *ngIf="tab_selected === 'downloads'"></app-download-settings>
+        <app-speed-settings     *ngIf="tab_selected === 'speed'"></app-speed-settings>
+        <app-rss-settings       *ngIf="tab_selected === 'rss'"></app-rss-settings>
+        <app-about-settings     *ngIf="tab_selected === 'about'"></app-about-settings>
+      </div>
+    </div>
+
+  </mat-dialog-content>
+  <br/>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="true">Cancel</button>
+    <button mat-raised-button color="primary" (click)="onSave()" cdkFocusInitial>Save</button>
+  </mat-dialog-actions>
+
+</div>

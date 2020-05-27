@@ -4,6 +4,7 @@ import DirectoryNode from './FileSystemNodes/DirectoryNode';
 import Inode from './FileSystemNodes/Inode';
 import FileNode from './FileSystemNodes/FileNode';
 import { DirectoryNotFoundError } from './Exceptions/FileSystemExceptions';
+import { ApplicationConfigService } from '../app/application-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class FileSystemService {
   private root: DirectoryNode;
   private directoryDelimiter = config.filePathDelimeter  // How folders are split
 
-  constructor() {
+  constructor(private appConfig: ApplicationConfigService) {
     this.root = new DirectoryNode({value: "", skipNameValidation: true});
   }
 
@@ -22,7 +23,7 @@ export class FileSystemService {
   }
 
   public getFileSystemDelimeter(): string {
-    return this.directoryDelimiter;
+    return this.appConfig.getFileSystemDelimiter() || this.directoryDelimiter;
   }
 
   public setFileSystemDelimeter(val: string): void {
