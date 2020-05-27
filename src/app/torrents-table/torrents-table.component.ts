@@ -38,7 +38,7 @@ export class TorrentsTableComponent implements OnInit {
   public filteredTorrentData: Torrent[];
   public cookieValueSID: string;
   public isDarkTheme: Observable<boolean>;
-  public userPref: UserPreferences;
+  public userPref: UserPreferences = { } as UserPreferences;
   public pageSizeOptions = [10, 25, 50, 100, 500];
   selection = new SelectionModel<Torrent>(true, []);
 

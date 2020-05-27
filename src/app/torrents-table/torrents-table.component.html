@@ -132,10 +132,10 @@
         <mat-header-row *matHeaderRowDef="tableColumns; sticky: true"></mat-header-row>
         <mat-row (click)="handleTorrentSelected(row)" *matRowDef="let row; columns: tableColumns"></mat-row>
     </mat-table>
-    <mat-paginator class="{{!isLoading() && userPref.web_ui_options.torrent_table.paginate ? '' : 'hidden'}}"
-                  [pageSize]="userPref.web_ui_options.torrent_table.default_items_per_page"
+    <mat-paginator class="{{!isLoading() && userPref.web_ui_options?.torrent_table?.paginate ? '' : 'hidden'}}"
+                  [pageSize]="userPref.web_ui_options?.torrent_table?.default_items_per_page"
                   [pageSizeOptions]="pageSizeOptions"
-                  showFirstLastButtons={{userPref.web_ui_options.torrent_table.showFirstAndLastOptions}}>
+                  showFirstLastButtons={{userPref.web_ui_options?.torrent_table?.showFirstAndLastOptions}}>
     </mat-paginator>
 
     <app-global-transfer-info *ngIf="!isLoading()"></app-global-transfer-info>
