@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MainData, QbittorrentBuildInfo, TorrentContents } from 'src/utils/Interfaces';
+import { MainData, QbittorrentBuildInfo, TorrentContents, UserPreferences } from 'src/utils/Interfaces';
 import { Observable } from 'rxjs';
 
 // Utils
@@ -171,6 +171,17 @@ export class TorrentDataHTTPService {
     let url = root + endpoint;
 
     return this.sendTorrentHashesPOST(url, hashes);
+  }
+
+  SetPreferences(pref: UserPreferences): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.setPreferences;
+    let url = root + endpoint;
+
+    let body = new FormData();
+    body.append('json', JSON.stringify(pref));
+
+    return this.sendTorrentHashesPOST(url, null, null, body);
   }
 
   async GetApplicationBuildInfo(): Promise<QbittorrentBuildInfo> {

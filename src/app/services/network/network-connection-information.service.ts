@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NetworkType, NetworkConnection } from 'src/utils/Interfaces';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ApplicationConfigService } from '../app/application-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,23 @@ export class NetworkConnectionInformationService {
   private network_info = new BehaviorSubject<NetworkConnection>(null);
   private network_info_sub = this.network_info.asObservable();
   private torrent_refresh_interval: number = 1000                         // Assume fastest connection
+  private auto_mode = true;                                              // Whether the interval should be calculated automatically or not
 
-  constructor() {
+  constructor(private appConfig: ApplicationConfigService) {
     // @ts-ignore -- Ignoring because most browsers do support it; if they don't, we won't use it.
     let con = window.navigator.connection || window.navigator.mozConnection || window.navigator.webkitConnection;
     if(con) {
       con.onchange = (event: any) => this.handle_network_change(event);
     }
+
+    this.appConfig.getUserPreferences()
+    .then(pref => {
+      let network = pref.web_ui_options?.network;
+      if(network?.auto_refresh) {
+        this.disableAutoMode();
+        this.setRefreshInterval(network.refresh_interval);
+      }
+    })
   }
 
   public get_recommended_torrent_refresh_interval(): number {
@@ -36,11 +47,19 @@ export class NetworkConnectionInformationService {
     return this.network_info_sub;
   }
 
-  private handle_network_change(event: any) {
-    let network_change: NetworkConnection = event.target;
+  /** Override the existing refresh interval. If auto-mode is enabled, then
+   * this interval may be overrided again in the future!
+   */
+  public setRefreshInterval(interval: number) {
+    this.torrent_refresh_interval = interval;
+    this.network_info.next(this.network_info.value);
+  }
 
-    this.torrent_refresh_interval = this.get_refresh_interval_from_network_type(network_change.effectiveType);
-    this.network_info.next(network_change);
+  /** Will stop getting new network information. Use this
+   * before overriding the refresh interval.
+   */
+  public disableAutoMode() {
+    this.auto_mode = false;
   }
 
   /** Calculates an appropriate refresh interval based on user's
@@ -75,5 +94,14 @@ export class NetworkConnectionInformationService {
     }
 
     return result;
+  }
+
+  private handle_network_change(event: any) {
+    let network_change: NetworkConnection = event.target;
+
+    this.torrent_refresh_interval = this.get_refresh_interval_from_network_type(network_change.effectiveType);
+
+    // Only refresh if user wants auto mode
+    if(this.auto_mode) { this.network_info.next(network_change); }
   }
 }

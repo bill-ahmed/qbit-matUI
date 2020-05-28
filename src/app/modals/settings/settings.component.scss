@@ -1,15 +1,29 @@
 @import "~@angular/material/theming";
 @import '../../../variables.scss';
 
-.content_container {
-  min-width: 65vw;
+.settings_container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
+.content_container {
   display: flex;
   flex-direction: row;
+  height: 95%;
+}
+
+.dialog_content {
+  flex-grow: 1;
+}
+
+.hidden {
+  display: none;
 }
 
 .settings_categories, .rightNavigation {
   padding: 10px;
+  height: 90%;
 }
 
 .settings_categories {
@@ -17,7 +31,7 @@
   padding-right: 0;
 
   max-width: 300px;
-  height: 450px;
+  min-height: 450px;
 
   overflow-y: scroll;
 
@@ -40,9 +54,9 @@
 
 .rightNavigation {
   flex-grow: 1;
-  height: 450px;
+  min-height: 450px;
   overflow-y: scroll;
-  max-width: 75%;
+  max-width: 80%;
 }
 
 .active_light {

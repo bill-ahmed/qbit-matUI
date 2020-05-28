@@ -3,6 +3,7 @@ import { ThemeService } from 'src/app/services/theme.service';
 import { Observable } from 'rxjs';
 import { WebUiSettingsComponent } from './web-ui-settings/web-ui-settings.component';
 import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
+import { DownloadSettingsComponent } from './download-settings/download-settings.component';
 
 @Component({
   selector: 'app-settings',
@@ -12,9 +13,11 @@ import { ApplicationConfigService } from 'src/app/services/app/application-confi
 })
 export class SettingsComponent implements OnInit {
   @ViewChild(WebUiSettingsComponent) webUISettings: WebUiSettingsComponent;
+  @ViewChild(DownloadSettingsComponent) downloadSettings: DownloadSettingsComponent;
 
   public tab_selected = "web_ui"                  // Keep track of what section the user is in
   public isDarkTheme: Observable<boolean>;
+  public loading = false;
 
   constructor(private theme: ThemeService, private appConfig: ApplicationConfigService) { this.isDarkTheme = this.theme.getThemeSubscription(); }
 
@@ -34,11 +37,22 @@ export class SettingsComponent implements OnInit {
     this.tab_selected = tab;
   }
 
-  onSave() {
+  async onSave() {
+    this.loading = true;
+
     let web_ui_settings = this.webUISettings.getSettings();
-    this.appConfig.setWebUIOptions(web_ui_settings);
+    let download_settings = this.downloadSettings.getSettings();
 
-    window.location.reload();
+    try {
+      this.appConfig.setWebUIOptions(web_ui_settings);
+      await this.appConfig.setDownloadOptions(download_settings);
+
+    } catch (error) {
+      console.log("Unable to update settings.", error);
+    } finally {
+
+      this.loading = false;
+      window.location.reload();
+    }
   }
-
 }

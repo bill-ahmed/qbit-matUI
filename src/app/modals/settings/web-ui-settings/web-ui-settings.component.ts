@@ -14,6 +14,7 @@ export class WebUiSettingsComponent implements OnInit {
   /** Default settings */
   theme_settings = { theme: "" };
   torrent_table_settings = { paginate: false, default_items_per_page: 10, showFirstAndLastOptions: false }
+  torrent_data_options = { refresh_interval: -1 }
   file_system_settings = { use_alt_delimiter: false, delimiter: '/' };
 
   private web_ui_options: WebUISettings;
@@ -36,6 +37,10 @@ export class WebUiSettingsComponent implements OnInit {
       use_alt_delimiter: !!this.web_ui_options.file_system?.delimiter,
       delimiter: this.web_ui_options.file_system?.delimiter ? this.web_ui_options.file_system.delimiter : '/'
     }
+
+    this.torrent_data_options = {
+      refresh_interval: this.web_ui_options.network?.auto_refresh ? this.web_ui_options.network.refresh_interval : -1
+    }
   }
 
   /** Inspect this component via ViewChild to get
@@ -49,6 +54,10 @@ export class WebUiSettingsComponent implements OnInit {
       },
       file_system: {
         delimiter: this.file_system_settings.use_alt_delimiter ? this.file_system_settings.delimiter : null
+      },
+      network: {
+        auto_refresh: this.torrent_data_options.refresh_interval > -1,
+        refresh_interval: this.torrent_data_options.refresh_interval
       }
     }
   }

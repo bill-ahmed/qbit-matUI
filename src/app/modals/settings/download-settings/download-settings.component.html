@@ -1,1 +1,49 @@
-<p>Coming soon!</p>
+<div class="downloads_settings">
+  <section>
+    <h2> File Paths </h2>
+
+    <div class="choose_paths indent_container">
+      <div class="field">
+        <p>Default save path:</p>
+        <mat-form-field appearance="outline" class="regular_field wide_field">
+          <input matInput type="text" [(ngModel)]="downloadSettings.save_path" value="{{downloadSettings.save_path}}">
+        </mat-form-field>
+      </div>
+
+      <div class="field">
+        <p>Keep incomplete torrents in:</p>
+        <mat-form-field appearance="outline" class="regular_field wide_field">
+          <input matInput type="text" [(ngModel)]="downloadSettings.temp_path" value="{{downloadSettings.temp_path}}">
+        </mat-form-field>
+      </div>
+    </div>
+  </section>
+  <br/>
+
+  <section>
+    <h2> Torrent Downloads </h2>
+
+    <div class="torrent_downloads indent_container">
+      <div class="field">
+        <p>Max Active Downloads:</p>
+        <mat-form-field class="small_numeric_field">
+          <input matInput type="number" [(ngModel)]="downloadSettings.max_active_downloads" value="{{downloadSettings.max_active_downloads}}">
+        </mat-form-field>
+      </div>
+
+      <div class="field">
+        <p>Max Active Uploads:</p>
+        <mat-form-field class="small_numeric_field">
+          <input matInput type="number" [(ngModel)]="downloadSettings.max_active_uploads" value="{{downloadSettings.max_active_uploads}}">
+        </mat-form-field>
+      </div>
+
+      <div class="field">
+        <p>Max Active Torrents:</p>
+        <mat-form-field class="small_numeric_field">
+          <input matInput type="number" [(ngModel)]="downloadSettings.max_active_torrents" value="{{downloadSettings.max_active_torrents}}">
+        </mat-form-field>
+      </div>
+    </div>
+  </section>
+</div>
