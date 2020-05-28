@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MainData, Torrent, GlobalTransferInfo, QbittorrentBuildInfo, TorrentContents } from 'src/utils/Interfaces';
+import { MainData, Torrent, GlobalTransferInfo, QbittorrentBuildInfo, TorrentContents, UserPreferences } from 'src/utils/Interfaces';
 import { TorrentDataHTTPService } from './torrent-data-http.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -95,6 +95,10 @@ export class TorrentDataStoreService {
 
   public AssignLowestPriority(tor: Torrent[]): Observable<any> {
     return this.torrent_http_service.SetMinimumPriority(tor.map(elem => elem.hash));
+  }
+
+  public SetUserPreferences(pref: UserPreferences): Observable<any> {
+    return this.torrent_http_service.SetPreferences(pref);
   }
 
   /** Subscribe to torrent data
