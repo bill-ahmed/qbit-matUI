@@ -16,7 +16,7 @@
         "moveTorrents": "/torrents/setLocation",
         "torrentContents": "/torrents/files",
         "userPreferences": "/app/preferences",
-        "setPreferences": "/setPreferences",
+        "setPreferences": "/app/setPreferences",
         "applicationVersion": "/app/version",
         "apiVersion": "/app/webapiVersion"
     }
