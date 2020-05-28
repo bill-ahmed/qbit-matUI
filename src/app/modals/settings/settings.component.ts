@@ -43,10 +43,16 @@ export class SettingsComponent implements OnInit {
     let web_ui_settings = this.webUISettings.getSettings();
     let download_settings = this.downloadSettings.getSettings();
 
-    this.appConfig.setWebUIOptions(web_ui_settings);
-    await this.appConfig.setDownloadOptions(download_settings);
-    this.loading = false;
+    try {
+      this.appConfig.setWebUIOptions(web_ui_settings);
+      await this.appConfig.setDownloadOptions(download_settings);
 
-    window.location.reload();
+    } catch (error) {
+      console.log("Unable to update settings.", error);
+    } finally {
+
+      this.loading = false;
+      window.location.reload();
+    }
   }
 }
