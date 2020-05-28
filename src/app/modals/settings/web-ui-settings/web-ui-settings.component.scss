@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  width: max-content;
 
   border-left: solid 1px rgb(177, 177, 177);
 
@@ -27,6 +28,7 @@
     display: flex;
     flex-direction: row;
     align-items: baseline;
+    justify-content: space-between;
 
     .small_numeric_field {
       margin-left: 10px;
