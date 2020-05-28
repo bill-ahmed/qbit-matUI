@@ -19,11 +19,13 @@
           <mat-list-item class="{{getClassForTab('downloads')}}" (click)="onTabSelect('downloads')">
             <mat-icon color="{{tab_selected === 'downloads' ? 'primary' : ''}}" mat-list-icon>get_app</mat-icon>
             <div mat-line>Downloads</div>
+            <div mat-line>Save paths, torrent downloads</div>
           </mat-list-item>
 
           <mat-list-item class="{{getClassForTab('speed')}}" (click)="onTabSelect('speed')">
             <mat-icon color="{{tab_selected === 'speed' ? 'primary' : ''}}" mat-list-icon>speed</mat-icon>
             <div mat-line>Speed</div>
+            <div mat-line>Global speed options</div>
           </mat-list-item>
 
           <mat-list-item class="{{getClassForTab('rss')}}" (click)="onTabSelect('rss')">
@@ -39,19 +41,19 @@
       </div>
 
       <div class="rightNavigation">
-        <app-web-ui-settings    *ngIf="tab_selected === 'web_ui'"></app-web-ui-settings>
-        <app-download-settings  *ngIf="tab_selected === 'downloads'"></app-download-settings>
-        <app-speed-settings     *ngIf="tab_selected === 'speed'"></app-speed-settings>
-        <app-rss-settings       *ngIf="tab_selected === 'rss'"></app-rss-settings>
-        <app-about-settings     *ngIf="tab_selected === 'about'"></app-about-settings>
+        <app-web-ui-settings    class="{{tab_selected !== 'web_ui' ? 'hidden': ''}}"></app-web-ui-settings>
+        <app-download-settings  class="{{tab_selected !== 'downloads' ? 'hidden': ''}}"></app-download-settings>
+        <app-speed-settings     class="{{tab_selected !== 'speed' ? 'hidden': ''}}"></app-speed-settings>
+        <app-rss-settings       class="{{tab_selected !== 'rss' ? 'hidden': ''}}"></app-rss-settings>
+        <app-about-settings     class="{{tab_selected !== 'about' ? 'hidden': ''}}"></app-about-settings>
       </div>
     </div>
 
   </mat-dialog-content>
   <br/>
   <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="true">Cancel</button>
-    <button mat-raised-button color="primary" (click)="onSave()" cdkFocusInitial>Save</button>
+    <button mat-button [disabled]="loading" [mat-dialog-close]="true">Cancel</button>
+    <button mat-raised-button [disabled]="loading" color="primary" (click)="onSave()" cdkFocusInitial>Save</button>
   </mat-dialog-actions>
 
 </div>

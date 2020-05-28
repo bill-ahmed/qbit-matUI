@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as _appConfig from '../../app.config.json';
-import { QbittorrentBuildInfo, UserPreferences, WebUISettings } from 'src/utils/Interfaces';
+import { QbittorrentBuildInfo, UserPreferences, WebUISettings, DownloadSettings } from 'src/utils/Interfaces';
 import { TorrentDataStoreService } from '../torrent-management/torrent-data-store.service';
 
 // Utils
@@ -70,6 +70,13 @@ export class ApplicationConfigService {
   setWebUIOptions(opt: WebUISettings) {
     this.user_preferences.web_ui_options = opt;
     this._persistWebUIOptions();
+  }
+
+  /** Persist download options.
+   * Makes a network request.
+   */
+  async setDownloadOptions(opt: DownloadSettings): Promise<void> {
+    await this.data_store.SetUserPreferences(opt as UserPreferences).toPromise();
   }
 
   async getDarkThemePref(): Promise<boolean> {

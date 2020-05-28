@@ -9,8 +9,7 @@ import { DownloadSettings } from 'src/utils/Interfaces';
 })
 export class DownloadSettingsComponent implements OnInit {
 
-  downloadSettings: DownloadSettings;
-  downloadOptions: { };
+  downloadSettings: DownloadSettings = { max_active_downloads: 0, max_active_torrents: 0, max_active_uploads: 0, save_path: "", scan_dirs: [], temp_path: "" };
 
   constructor(private appConfig: ApplicationConfigService) {
     this.appConfig.getUserPreferences()
@@ -27,6 +26,13 @@ export class DownloadSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void { }
+
+  /** Use ViewChild on this component
+   * in order to grab this data.
+   */
+  getSettings(): DownloadSettings {
+    return this.downloadSettings;
+  }
 
 
 }
