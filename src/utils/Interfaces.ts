@@ -119,31 +119,21 @@ export interface NetworkConnection {
     saveData: boolean
 }
 
-export interface UserPreferences {
+/** Subset of application preferences for qBittorrent. */
+export interface UserPreferences extends DownloadSettings {
   autorun_enabled: boolean,
   autorun_program: string,
-  /** Global download limit in KiB/s (-1 implies no limit) */
-  dl_limit: number,
-  /** Global upload limit in KiB/s (-1 implies no limit) */
-  up_limit: number,
   listen_port: number,
   /** Currently selected language */
   locale: string,
-  max_active_downloads: number,
-  max_active_torrents: number,
-  max_active_uploads: number,
   max_connec: number,
   max_connec_per_torrent: number,
   max_uploads_per_torrent: number,
   queueing_enabled: boolean,
-  /** Default save path for torrents */
-  save_path: string,
-  scan_dirs: string[],
-  /** Path for incomplete torrents */
-  temp_path: string,
-  web_ui_options: WebUISettings
+  web_ui_options: WebUISettings,
 }
 
+/** All Web-UI related settings. */
 export interface WebUISettings {
   dark_mode_enabled?: boolean,
   torrent_table?: {
@@ -154,6 +144,28 @@ export interface WebUISettings {
   file_system?: {
     delimiter: string
   }
+}
+
+/** Various download-related preferences
+ * a user can have with qBittorrent
+ */
+export interface DownloadSettings {
+  max_active_downloads: number,
+  max_active_torrents: number,
+  max_active_uploads: number,
+  /** Default save path for torrents */
+  save_path: string,
+  scan_dirs: string[],
+  /** Path for incomplete torrents */
+  temp_path: string,
+}
+
+/** Various speed-related settings. */
+export interface SpeedSettings {
+  /** Global download limit in KiB/s (-1 implies no limit) */
+  dl_limit: number,
+  /** Global upload limit in KiB/s (-1 implies no limit) */
+  up_limit: number,
 }
 
 export interface QbittorrentBuildInfo {
