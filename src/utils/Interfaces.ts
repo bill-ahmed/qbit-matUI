@@ -143,6 +143,10 @@ export interface WebUISettings {
   },
   file_system?: {
     delimiter: string
+  },
+  network: {
+    auto_refresh: boolean,
+    refresh_interval: number
   }
 }
 

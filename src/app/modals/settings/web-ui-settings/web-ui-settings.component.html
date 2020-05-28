@@ -4,8 +4,8 @@
 
     <div class="choose_theme">
       <p> Choose a theme:  </p>
-      <mat-radio-group class="theme_options" [(ngModel)]="theme_settings.theme">
-        <mat-radio-button class="individual_theme_option" color="accent" *ngFor="let option of theme_options" [value]="option">
+      <mat-radio-group class="radio_group_options" [(ngModel)]="theme_settings.theme">
+        <mat-radio-button class="radio_options" color="accent" *ngFor="let option of theme_options" [value]="option">
           {{option}}
         </mat-radio-button>
       </mat-radio-group>
@@ -18,7 +18,7 @@
 
     <mat-checkbox [(ngModel)]="torrent_table_settings.paginate">Paginate torrents</mat-checkbox>
 
-    <div class="pagination_options {{torrent_table_settings.paginate ? '' : 'disabled'}}">
+    <div class="indented_field {{torrent_table_settings.paginate ? '' : 'disabled'}}">
       <div class="field">
         <mat-checkbox disabled={{!torrent_table_settings.paginate}} [(ngModel)]="torrent_table_settings.showFirstAndLastOptions">Show first and last page options</mat-checkbox>
       </div>
@@ -34,11 +34,45 @@
   <br/>
 
   <section>
+    <h2> Torrent Data </h2>
+
+    <div class="indented_field">
+      <div class="field">
+        <p>How often to refresh torrent data:</p>
+      </div>
+      <div class="field">
+        <mat-radio-group class="radio_group_options" [(ngModel)]="torrent_data_options.refresh_interval">
+          <mat-radio-button class="radio_options" color="accent" [value]="-1">
+            Auto (recommended)
+          </mat-radio-button>
+
+          <mat-radio-button class="radio_options" matTooltip="Every 1 second" color="accent" [value]="1000">
+            Fastest
+          </mat-radio-button>
+
+          <mat-radio-button class="radio_options" matTooltip="Every 2 seconds" color="accent" [value]="2000">
+            Fast
+          </mat-radio-button>
+
+          <mat-radio-button class="radio_options" matTooltip="Every 5 seconds" color="accent" [value]="5000">
+            Medium
+          </mat-radio-button>
+
+          <mat-radio-button class="radio_options" matTooltip="Every 8 seconds" matTooltipPosition="right" color="accent" [value]="8000">
+            Slow
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </section>
+  <br/>
+
+  <section>
   <h2> File System </h2>
 
   <mat-checkbox [(ngModel)]="file_system_settings.use_alt_delimiter">Use Alternate File Path Delimiter</mat-checkbox>
 
-  <div class="pagination_options {{file_system_settings.use_alt_delimiter ? '' : 'disabled'}}">
+  <div class="indented_field {{file_system_settings.use_alt_delimiter ? '' : 'disabled'}}">
     <div class="field">
       <p>Delimiter to use:</p>
       <mat-form-field class="small_numeric_field">
