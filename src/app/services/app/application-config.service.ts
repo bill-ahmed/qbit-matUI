@@ -101,7 +101,6 @@ export class ApplicationConfigService {
 
     this._persistQbitorrentPreferences();
     this._persistWebUIOptions();
-    console.log('updated user pref', this.user_preferences)
   }
 
   private async _persistWebUIOptions() {
