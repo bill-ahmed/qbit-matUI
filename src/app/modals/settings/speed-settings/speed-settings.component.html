@@ -1,1 +1,24 @@
-<p>Coming soon!</p>
+<div class="speed_settings">
+  <section>
+    <h2> Global Speed Limits </h2>
+
+    <div class="indented_field">
+      <div class="field">
+        <p>Upload limit:</p>
+        <mat-form-field class="small_numeric_field">
+          <input matInput type="number" [(ngModel)]="speed_settings.up_limit" value="{{speed_settings.up_limit}}">
+        </mat-form-field>
+        <p>KiB/s</p>
+      </div>
+
+      <div class="field">
+        <p>Download limit:</p>
+        <mat-form-field class="small_numeric_field">
+          <input matInput type="number" [(ngModel)]="speed_settings.dl_limit" value="{{speed_settings.dl_limit}}">
+        </mat-form-field>
+        <p>KiB/s</p>
+      </div>
+    </div>
+  </section>
+  <br/>
+</div>

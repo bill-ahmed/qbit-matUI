@@ -17,6 +17,58 @@ body {
   padding: 24px;
 }
 
+.indented_field {
+  margin-top: 10px;
+  margin-left: 30px;
+
+  padding-left: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: max-content;
+
+  border-left: solid 1px rgb(177, 177, 177);
+}
+
+.indented_field.disabled {
+  pointer-events: none;
+  color: #CECECE;
+}
+
+.field {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+
+  .small_numeric_field {
+    margin-left: 10px;
+    width: 35px;
+
+    /** Hide the annoying increase/decrease buttons on numeric input */
+    /* Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  .regular_field {
+    margin-left: 10px;
+  }
+
+  .wide_field {
+    min-width: 300px;
+  }
+}
+
 /*** CUSTOM SCROLLBAR ***/
 ::-webkit-scrollbar {
   width: 5px;   /** Target vertical scroll-bars */
