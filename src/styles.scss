@@ -44,7 +44,7 @@ body {
 
   .small_numeric_field {
     margin-left: 10px;
-    width: 35px;
+    max-width: 35px;
 
     /** Hide the annoying increase/decrease buttons on numeric input */
     /* Chrome, Safari, Edge, Opera */
