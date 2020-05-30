@@ -23,7 +23,9 @@
   <section>
     <h2> Torrent Downloads </h2>
 
-    <div class="indented_field">
+    <mat-checkbox [(ngModel)]="downloadSettings.queueing_enabled">Enable queueing</mat-checkbox>
+
+    <div class="indented_field {{downloadSettings.queueing_enabled ? '' : 'disabled'}}">
       <div class="field">
         <p>Max Active Downloads:</p>
         <mat-form-field class="small_numeric_field">

@@ -154,6 +154,8 @@ export interface WebUISettings {
  * a user can have with qBittorrent
  */
 export interface DownloadSettings {
+  /** Whether or not to respect max active downloads/torrents/uploads/etc. */
+  queueing_enabled: boolean,
   max_active_downloads: number,
   max_active_torrents: number,
   max_active_uploads: number,
