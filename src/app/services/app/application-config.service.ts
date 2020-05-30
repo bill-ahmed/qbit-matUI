@@ -75,8 +75,8 @@ export class ApplicationConfigService {
   /** Persist download options.
    * Makes a network request.
    */
-  async setDownloadOptions(opt: DownloadSettings): Promise<void> {
-    await this.data_store.SetUserPreferences(opt as UserPreferences).toPromise();
+  async setUserPreferences(opt: UserPreferences): Promise<void> {
+    await this.data_store.SetUserPreferences(opt).toPromise();
   }
 
   async getDarkThemePref(): Promise<boolean> {

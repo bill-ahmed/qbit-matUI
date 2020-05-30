@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { WebUiSettingsComponent } from './web-ui-settings/web-ui-settings.component';
 import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
 import { DownloadSettingsComponent } from './download-settings/download-settings.component';
+import { SpeedSettingsComponent } from './speed-settings/speed-settings.component';
+import { UserPreferences } from 'src/utils/Interfaces';
 
 @Component({
   selector: 'app-settings',
@@ -14,6 +16,7 @@ import { DownloadSettingsComponent } from './download-settings/download-settings
 export class SettingsComponent implements OnInit {
   @ViewChild(WebUiSettingsComponent) webUISettings: WebUiSettingsComponent;
   @ViewChild(DownloadSettingsComponent) downloadSettings: DownloadSettingsComponent;
+  @ViewChild(SpeedSettingsComponent) speedSettings: SpeedSettingsComponent;
 
   public tab_selected = "web_ui"                  // Keep track of what section the user is in
   public isDarkTheme: Observable<boolean>;
@@ -42,10 +45,11 @@ export class SettingsComponent implements OnInit {
 
     let web_ui_settings = this.webUISettings.getSettings();
     let download_settings = this.downloadSettings.getSettings();
+    let speed_settings = this.speedSettings.getSettings();
 
     try {
       this.appConfig.setWebUIOptions(web_ui_settings);
-      await this.appConfig.setDownloadOptions(download_settings);
+      await this.appConfig.setUserPreferences({...download_settings, ...speed_settings} as UserPreferences);
 
     } catch (error) {
       console.log("Unable to update settings.", error);
