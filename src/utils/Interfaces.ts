@@ -120,7 +120,7 @@ export interface NetworkConnection {
 }
 
 /** Subset of application preferences for qBittorrent. */
-export interface UserPreferences extends DownloadSettings {
+export interface UserPreferences extends DownloadSettings, SpeedSettings {
   autorun_enabled: boolean,
   autorun_program: string,
   listen_port: number,
