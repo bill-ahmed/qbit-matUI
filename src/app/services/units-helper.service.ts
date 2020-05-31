@@ -100,13 +100,18 @@ export class UnitsHelperService {
   /** Get the date representation of a timestamp
    * @param timestamp Number of seconds since epoch.
    */
-  GetDateString(timestamp: number): string {
+  public GetDateString(timestamp: number): string {
     let date = new Date(timestamp * 1000);
     let result =
     `${this.getDay(date)}/${this.getMonth(date)}/${date.getFullYear()},
     ${this.getHours(date)}:${this.getMinutes(date)}:${this.getSeconds(date)}`;
 
     return result;
+  }
+
+  /** Given a number of kibibits, return the number of bits it represents. */
+  public Kibibits_to_bits(kb: number): number {
+    return kb * 1024;
   }
 
   private getDay(date: Date): string {

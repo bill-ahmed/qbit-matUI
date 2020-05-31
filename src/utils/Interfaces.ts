@@ -168,9 +168,9 @@ export interface DownloadSettings {
 
 /** Various speed-related settings. */
 export interface SpeedSettings {
-  /** Global download limit in KiB/s (-1 implies no limit) */
+  /** Global download limit in KiB/s (0 or -1 implies no limit) */
   dl_limit: number,
-  /** Global upload limit in KiB/s (-1 implies no limit) */
+  /** Global upload limit in KiB/s (0 or -1 implies no limit) */
   up_limit: number,
 }
 

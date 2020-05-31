@@ -317,7 +317,7 @@ function GetUserPreferences() {
         "listen_port":31498,
         "upnp":false,
         "dl_limit":3072,
-        "up_limit":3072,
+        "up_limit":0,
         "max_connec":500,
         "max_connec_per_torrent":100,
         "max_uploads_per_torrent":15}

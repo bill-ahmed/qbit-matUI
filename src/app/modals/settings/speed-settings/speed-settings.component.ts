@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { SpeedSettings } from 'src/utils/Interfaces';
 import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
+import { UnitsHelperService } from 'src/app/services/units-helper.service';
 
 @Component({
   selector: 'app-speed-settings',
@@ -18,7 +19,7 @@ export class SpeedSettingsComponent implements OnInit {
     dl_limit: new FormControl(this.speed_settings.dl_limit, [...this.common_validators])
   }
 
-  constructor(private appConfig: ApplicationConfigService) {
+  constructor(private appConfig: ApplicationConfigService, private units: UnitsHelperService) {
     this.appConfig.getUserPreferences()
     .then(pref => {
       this.speed_settings = {
@@ -39,7 +40,11 @@ export class SpeedSettingsComponent implements OnInit {
    * in order to grab this data.
    */
   getSettings(): SpeedSettings {
-    return this.speed_settings;
+    return {
+      ...this.speed_settings,
+      up_limit: this.units.Kibibits_to_bits(this.speed_settings.up_limit),
+      dl_limit: this.units.Kibibits_to_bits(this.speed_settings.dl_limit)
+    };
   }
 
 }
