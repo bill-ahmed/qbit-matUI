@@ -164,7 +164,6 @@ export class TorrentDataStoreService {
   /**Fix any issues with a torrent */
   private fixTorrent(tor: Torrent) {
     if(new Date(tor.completion_on * 1000) < TorrentDataStoreService.CREATED_AT_THRESHOLD) {
-      debugger;
       tor.completion_on = TorrentDataStoreService.FUTURE_MOST_DATE.valueOf() / 1000
     }
   }

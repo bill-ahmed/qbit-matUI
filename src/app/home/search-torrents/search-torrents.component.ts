@@ -41,7 +41,15 @@ export class SearchTorrentsComponent implements OnInit {
 
   /** Callback for when user changes search query */
   public onSearchValueChange(event: any): void {
-    this.searchValue = event.target.value;
+    if(typeof event === 'string') { this.searchValue = event }
+    else { this.searchValue = event.target.value; }
+
+    this.searchService.updateSearch(this.searchValue);
+  }
+
+  /** When a new value is being searched for, update it */
+  public onSearchValueChangedString(val: string): void {
+    this.searchValue = val;
     this.searchService.updateSearch(this.searchValue);
   }
 
