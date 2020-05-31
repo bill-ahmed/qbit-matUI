@@ -79,9 +79,10 @@ export class TorrentsTableComponent implements OnInit {
       this.pageSizeOptions.sort();
     }
 
-    // Retrieve updated torrent data on interval
+    // Retrieve all torrent data first, then  updated torrent data on interval
     this.allTorrentData = null;
     this.filteredTorrentData = null;
+    this.getTorrentData();
 
     // How frequently to fetch data
     this.DEFAULT_REFRESH_TIMEOUT = this.networkInfo.get_recommended_torrent_refresh_interval();
