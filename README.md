@@ -6,6 +6,7 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 * Bulk edit (pause, resume, delete, prioritize, and more)
 * Sorting by different metrics (name, size, date completed, etc.)
 * File System Navigation (choose where to save a torrent, create sub-folders, etc.)
+* Manage local & qBittorrent preferences
 * A fully material-themed UI (Light & Dark themes)
 * ... and more!
 
@@ -19,7 +20,7 @@ In order to use this version, first follow the instructions outlined [here (*)](
 
 Once you've completed that:
 
-1. Take a production-ready build from [here](https://github.com/bill-ahmed/qbit-material-WebUI/releases), or [build it yourself](#build)
+1. Take a production-ready build from [releases](https://github.com/bill-ahmed/qbit-material-WebUI/releases), or [build it yourself](#build)
 
 2. Navigate to wherever you placed the `public`/`private` folder from [(*)](#replacing-your-existing-qbittorrent-web-ui)
 

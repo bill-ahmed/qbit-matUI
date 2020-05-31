@@ -8,6 +8,14 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class TorrentDataStoreService {
 
+  /** A future date that a torrent must be completed by.
+   * NOTE: The multiplies '1000' is needed for when we create a new Date() object
+   */
+  public static FUTURE_MOST_DATE = new Date(32513156400 * 1000);
+
+  /** Milliseconds since epoch the denotes that earliest a torrent can be completed */
+  public static CREATED_AT_THRESHOLD = new Date((18000 * 1000) + 1);
+
   private rawData: any;
   private rid = 0;
   private _torrentMainDataSource = new BehaviorSubject<MainData>(null);
@@ -139,6 +147,10 @@ export class TorrentDataStoreService {
       this.rawData.torrents[key].hash = key;
 
       if(cleanTorrentData){
+        let tor = this.rawData.torrents[key];
+
+        // If there's anything wrong with this torrent, fix it
+        this.fixTorrent(tor);
         cleanTorrentData.push(this.rawData.torrents[key]);
       } else {
         cleanTorrentData = [this.rawData.torrents[key]];
@@ -147,6 +159,14 @@ export class TorrentDataStoreService {
     }
 
     this.TorrentMainData.torrents = cleanTorrentData;
+  }
+
+  /**Fix any issues with a torrent */
+  private fixTorrent(tor: Torrent) {
+    if(new Date(tor.completion_on * 1000) < TorrentDataStoreService.CREATED_AT_THRESHOLD) {
+      debugger;
+      tor.completion_on = TorrentDataStoreService.FUTURE_MOST_DATE.valueOf() / 1000
+    }
   }
 
   /** Update server status in changelog */
