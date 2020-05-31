@@ -1,23 +1,25 @@
 <div class="speed_settings">
   <section>
-    <h2> Global Speed Limits </h2>
+    <h2> Global Rate Limits </h2>
 
     <div class="indented_field">
       <div class="field">
         <p>Upload limit:</p>
         <mat-form-field class="small_numeric_field">
-          <input matInput type="number" [(ngModel)]="speed_settings.up_limit" value="{{speed_settings.up_limit}}">
+          <input matInput type="number" [(ngModel)]="speed_settings.up_limit" value="{{speed_settings.up_limit}}" [formControl]="validators.up_limit">
         </mat-form-field>
-        <p>KiB/s</p>
+        <p>KiB/s (0 or -1 implies &infin;)</p>
       </div>
+      <mat-error *ngIf="validators.up_limit.invalid">{{invalidLimitMessage()}}</mat-error>
 
       <div class="field">
         <p>Download limit:</p>
         <mat-form-field class="small_numeric_field">
-          <input matInput type="number" [(ngModel)]="speed_settings.dl_limit" value="{{speed_settings.dl_limit}}">
+          <input matInput type="number" [(ngModel)]="speed_settings.dl_limit" value="{{speed_settings.dl_limit}}" [formControl]="validators.dl_limit">
         </mat-form-field>
-        <p>KiB/s</p>
+        <p>KiB/s (0 or -1 implies &infin;)</p>
       </div>
+      <mat-error *ngIf="validators.dl_limit.invalid">{{invalidLimitMessage()}}</mat-error>
     </div>
   </section>
   <br/>

@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
 import { UnitsHelperService } from './units-helper.service';
 import { Torrent } from 'src/utils/Interfaces';
+import { TorrentDataStoreService } from './torrent-management/torrent-data-store.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrettyPrintTorrentDataService {
-
-  /** A future date that a torrent must be completed by.
-   * NOTE: The multiplies '1000' is needed for when we create a new Date() object
-   */
-  private FUTURE_MOST_DATE = 32513156400 * 1000;
 
   /** Number of seconds after which we consider a torrent to take infinite time.
    * 8640000 seconds = 100 days
@@ -58,7 +54,8 @@ export class PrettyPrintTorrentDataService {
 
   pretty_print_completed_on(timestamp: number): string {
     let dateCompleted = "";
-    let completedYear = new Date(timestamp * 1000).getUTCFullYear();
+    let date = new Date(timestamp * 1000)
+    let completedYear = date.getUTCFullYear();
 
     /** If timestamp is from before or at 1970, or fat in the future, then torrent is still downloading.
      *
@@ -67,7 +64,7 @@ export class PrettyPrintTorrentDataService {
      *
      * TODO: Near the end of the year 2099, update this :P
      * */
-    if(completedYear <= 1970 || completedYear >= 2100) {
+    if(date < TorrentDataStoreService.CREATED_AT_THRESHOLD || completedYear >= 2100) {
       return "TBD"
     }
 

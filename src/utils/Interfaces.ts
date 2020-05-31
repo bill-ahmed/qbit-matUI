@@ -154,6 +154,8 @@ export interface WebUISettings {
  * a user can have with qBittorrent
  */
 export interface DownloadSettings {
+  /** Whether or not to respect max active downloads/torrents/uploads/etc. */
+  queueing_enabled: boolean,
   max_active_downloads: number,
   max_active_torrents: number,
   max_active_uploads: number,
@@ -166,9 +168,9 @@ export interface DownloadSettings {
 
 /** Various speed-related settings. */
 export interface SpeedSettings {
-  /** Global download limit in KiB/s (-1 implies no limit) */
+  /** Global download limit in KiB/s (0 or -1 implies no limit) */
   dl_limit: number,
-  /** Global upload limit in KiB/s (-1 implies no limit) */
+  /** Global upload limit in KiB/s (0 or -1 implies no limit) */
   up_limit: number,
 }
 

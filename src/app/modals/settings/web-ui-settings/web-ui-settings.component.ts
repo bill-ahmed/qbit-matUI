@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
 import { WebUISettings } from 'src/utils/Interfaces';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-web-ui-settings',
@@ -16,6 +17,12 @@ export class WebUiSettingsComponent implements OnInit {
   torrent_table_settings = { paginate: false, default_items_per_page: 10, showFirstAndLastOptions: false }
   torrent_data_options = { refresh_interval: -1 }
   file_system_settings = { use_alt_delimiter: false, delimiter: '/' };
+
+  /** Validations */
+  common_validators = [Validators.min(0)];
+  form_controls = {
+    default_items_per_page: new FormControl(this.torrent_table_settings.default_items_per_page, [...this.common_validators])
+  }
 
   private web_ui_options: WebUISettings;
 
