@@ -173,7 +173,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private updateTorrentSearchValue(val: string): void {
-    val = val || "";  // In case null is given
+    val = val ?? "";  // In case null is given
     this.torrentSearchValue = GetTorrentSearchName(val);
 
     // User is searching for something
