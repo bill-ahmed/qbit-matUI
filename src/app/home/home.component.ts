@@ -65,7 +65,8 @@ export class HomeComponent implements OnInit {
         panelClass: "generic-dialog",
         minWidth: "80%",
         height: "85vh",
-        autoFocus: false
+        autoFocus: false,
+        disableClose: true
       }
     );
 
