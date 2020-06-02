@@ -27,8 +27,9 @@ A clear and concise description of what actually happened.
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
- - Browser: [e.g. chrome, safari]
- - Version: [e.g. 'qbit-matUI_Windows_1.0.0', 'qbit-matUI_Other_OS_1.0.0']
+ - Browser: [e.g. Google Chrome, Safari]
+ - Build:   [Which OS is the web UI being served from? e.g. "Windows", "Ubuntu 18.04"]
+ - Version: [Which build of this UI? e.g. '1.2.0', '1.4.1']
 
 **Additional info**
 Any other info you'd like to share.
