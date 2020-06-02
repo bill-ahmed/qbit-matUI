@@ -7,6 +7,7 @@ import { TorrentDataStoreService } from '../torrent-management/torrent-data-stor
 import * as http_endpoints from '../../../assets/http_config.json';
 import { IsDevEnv } from 'src/utils/Environment';
 import { HttpClient } from '@angular/common/http';
+import { NetworkConnectionInformationService } from '../network/network-connection-information.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ApplicationConfigService {
   private qBitBuildInfo: QbittorrentBuildInfo;
   private loaded_preferences = false;
 
-  constructor(private data_store: TorrentDataStoreService, private http: HttpClient) {
+  constructor(private data_store: TorrentDataStoreService, private networkInfo: NetworkConnectionInformationService, private http: HttpClient) {
 
     this.application_version = _appConfig.version;
     this.data_store.GetApplicationBuildInfo()
@@ -101,6 +102,12 @@ export class ApplicationConfigService {
 
     this._persistQbitorrentPreferences();
     this._persistWebUIOptions();
+
+    // Network-related settings
+    if(this.user_preferences.web_ui_options.network?.auto_refresh) {
+      this.networkInfo.disableAutoMode();
+      this.networkInfo.setRefreshInterval(this.user_preferences.web_ui_options.network.refresh_interval);
+    }
   }
 
   private async _persistWebUIOptions() {

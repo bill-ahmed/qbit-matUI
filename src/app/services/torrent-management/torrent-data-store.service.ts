@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MainData, Torrent, GlobalTransferInfo, QbittorrentBuildInfo, TorrentContents, UserPreferences } from 'src/utils/Interfaces';
 import { TorrentDataHTTPService } from './torrent-data-http.service';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { NetworkConnectionInformationService } from '../network/network-connection-information.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,12 +24,29 @@ export class TorrentDataStoreService {
   private TorrentMainData: MainData;
   private _torrentMainDataValue = this._torrentMainDataSource.asObservable();
 
-  constructor(private torrent_http_service: TorrentDataHTTPService) { }
+  private refresh_interval: any;
+  private DEFAULT_REFRESH_TIMEOUT: number;
+
+  constructor(private torrent_http_service: TorrentDataHTTPService, private networkInfo: NetworkConnectionInformationService) {
+    this.UpdateTorrentData();
+
+    this.DEFAULT_REFRESH_TIMEOUT = this.networkInfo.get_recommended_torrent_refresh_interval();
+
+    this.networkInfo.get_network_change_subscription().subscribe((res) => {
+
+      this.DEFAULT_REFRESH_TIMEOUT = this.networkInfo.get_recommended_torrent_refresh_interval();
+      this.updateRefreshInterval(() => this.UpdateTorrentData(), this.DEFAULT_REFRESH_TIMEOUT);
+
+      console.log("updated recommended refresh interval", this.DEFAULT_REFRESH_TIMEOUT);
+    });
+
+    this.updateRefreshInterval(() => this.UpdateTorrentData(), this.DEFAULT_REFRESH_TIMEOUT);
+  }
 
   /** Get torrent all torrent data and information
    * @param rid The RID value to send to server, for changelog purposes.
    */
-  public async GetTorrentData(rid?: number): Promise<MainData> {
+  public async UpdateTorrentData(rid?: number): Promise<MainData> {
     let data = await this.torrent_http_service.GetAllTorrentData(rid || this.rid).toPromise();
 
     // Only set raw data initially
@@ -44,6 +62,10 @@ export class TorrentDataStoreService {
     this.rid = data.rid;
 
     return this.TorrentMainData;
+  }
+
+  public GetTorrentData(): MainData {
+    return this._torrentMainDataSource.value;
   }
 
   public GetTorrentByID(id: string): Torrent {
@@ -137,7 +159,7 @@ export class TorrentDataStoreService {
     // (1) If we already have some data, update it
     if(this.TorrentMainData) {
       this.updateServerStatus(data.server_state);
-      this.updateTorrentChanges(data.torrents);
+      this.updateTorrentChanges(data);
     } else {
       this.TorrentMainData = data;
     }
@@ -183,8 +205,10 @@ export class TorrentDataStoreService {
    * For example, if only the download speed & ETA change, this will
    * update only the ones affected.
    */
-  private updateTorrentChanges(data: any) {
-    if(!data) {
+  private updateTorrentChanges(allData: any) {
+    let data = allData.torrents;
+
+    if(!allData || !data) {
       return;
     }
 
@@ -202,6 +226,22 @@ export class TorrentDataStoreService {
         }
       }
     }
+
+    //Remove all torrents that were deleted in this changelog
+    if(allData.torrents_removed) {
+      (allData.torrents_removed as string[]).forEach(id => {
+        delete this.rawData.torrents[id];
+      });
+    }
+  }
+
+  /** Set new refresh interval. If none is given, then DEFAULT_REFRESH_TIMEOUT
+   * will be used instead
+   */
+  private updateRefreshInterval(callback: (...args: any[]) => void, interval?: number) {
+    let int = interval || this.DEFAULT_REFRESH_TIMEOUT
+    if(this.refresh_interval) { clearInterval(this.refresh_interval) }
+    this.refresh_interval = setInterval(callback, int)
   }
 
   /** Delete all data in store

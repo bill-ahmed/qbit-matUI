@@ -37,7 +37,6 @@ export class FileSystemDialogComponent implements OnInit {
     this.leftChildren.sort(TreeNode.sort());
 
     this._openToInitialFolder();
-    console.log("file path", this.inputData.initialFilePath);
   }
 
   public closeDialog(): void {

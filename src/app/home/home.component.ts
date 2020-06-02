@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 // UI Components
 import { MatToolbar } from '@angular/material/toolbar';
@@ -10,15 +9,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddTorrentDialogComponent } from '../modals/add-torrent-dialog/add-torrent-dialog.component';
 
 // Utils
-import * as http_endpoints from '../../assets/http_config.json';
-import { HttpClient } from '@angular/common/http';
-import { IsDevEnv } from '../../utils/Environment';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import { QbittorrentBuildInfo } from 'src/utils/Interfaces';
 import { AuthService } from '../services/auth/auth.service';
 import { SettingsComponent } from '../modals/settings/settings.component';
 import { ApplicationConfigService } from '../services/app/application-config.service';
+import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
 
 @Component({
   selector: 'app-home',
@@ -28,13 +25,11 @@ import { ApplicationConfigService } from '../services/app/application-config.ser
 export class HomeComponent implements OnInit {
 
   private cookieSID: string;
-  private http_endpoints: any;
   public applicationBuildInfo: QbittorrentBuildInfo;
   public isDarkTheme: Observable<boolean>;
 
-  constructor(private router: Router, private http: HttpClient, public dialog: MatDialog, private theme: ThemeService, private auth: AuthService,
+  constructor(private data_store: TorrentDataStoreService, public dialog: MatDialog, private theme: ThemeService, private auth: AuthService,
               private appConfig: ApplicationConfigService) {
-    this.http_endpoints = http_endpoints
    }
 
   ngOnInit(): void {
@@ -71,13 +66,11 @@ export class HomeComponent implements OnInit {
     );
 
     settingsDialogRef.afterClosed().subscribe(res => {
-      console.log("Closed settings modal:", res);
     })
   }
 
   /** Callback for when user is finished uploading a torrent */
   handleAddTorrentDialogClosed(data: any): void {
-    console.log('Dialog closed:', data);
   }
 
   public toggleTheme(): void {

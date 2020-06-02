@@ -17,7 +17,7 @@ export class FileDirectoryExplorerService {
   }
 
   private async getData(): Promise<void> {
-    let data = await this.data_store.GetTorrentData(0);   // Need all torrents, so we use RID=0
+    let data = await this.data_store.GetTorrentData();   // Need all torrents, so we use RID=0
     this.updateDirectories(data.torrents);
   }
 

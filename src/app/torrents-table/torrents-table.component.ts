@@ -47,9 +47,6 @@ export class TorrentsTableComponent implements OnInit {
   public dataSource = new MatTableDataSource(this.filteredTorrentData ? this.filteredTorrentData : []);
 
   // Other
-  private DEFAULT_REFRESH_TIMEOUT: number;
-  private REFRESH_INTERVAL: any = null;
-  private isFetchingData: boolean = false;
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   private infoTorDialogRef: MatDialogRef<TorrentInfoDialogComponent, any>;
   private currentMatSort = {active: "Completed_On", direction: "desc"};
@@ -82,18 +79,7 @@ export class TorrentsTableComponent implements OnInit {
     // Retrieve all torrent data first, then  updated torrent data on interval
     this.allTorrentData = null;
     this.filteredTorrentData = null;
-    this.getTorrentData();
-
-    // How frequently to fetch data
-    this.DEFAULT_REFRESH_TIMEOUT = this.networkInfo.get_recommended_torrent_refresh_interval();
-    this.SetTorrentRefreshInterval();
-
-    // When the user's network status changes, update it in state
-    this.networkInfo.get_network_change_subscription().subscribe((update: NetworkConnection) => {
-      this.DEFAULT_REFRESH_TIMEOUT = this.networkInfo.get_recommended_torrent_refresh_interval()
-      this.SetTorrentRefreshInterval();
-      console.log("updated interval", this.DEFAULT_REFRESH_TIMEOUT);
-    });
+    this.data_store.GetTorrentDataSubscription().subscribe(data => { if(data) { this.updateTorrentData(data) }})
 
     // Which torrents are selected
     this.torrentsSelectedService.getTorrentsSelected().subscribe(res => {
@@ -108,9 +94,7 @@ export class TorrentsTableComponent implements OnInit {
     this.isDarkTheme = this.theme.getThemeSubscription();
   }
 
-  ngOnDestroy(): void {
-    this.ClearTorrentRefreshInterval();
-  }
+  ngOnDestroy(): void { }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -150,21 +134,12 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   /** Get all torrent data and update the table */
-  private async getTorrentData(): Promise<void>{
-
-    // Don't request if we're already in the middle of one
-    if(this.isFetchingData){
-      return;
-    }
-
-    this.isFetchingData = true;
-    let data = await this.data_store.GetTorrentData();
+  private async updateTorrentData(data): Promise<void>{
 
     // Update state with fresh torrent data
     this.allTorrentInformation = data;
     this.allTorrentData = data.torrents;
     this.filteredTorrentData = data.torrents;
-    this.isFetchingData = false;
 
     // Re-sort data
     this.onMatSortChange(this.currentMatSort);
@@ -254,7 +229,6 @@ export class TorrentsTableComponent implements OnInit {
     this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}, panelClass: "generic-dialog"});
 
     this.deleteTorDialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
       if (result.attemptedDelete) { this.torrentDeleteFinishCallback() }
     });
   }
@@ -266,7 +240,6 @@ export class TorrentsTableComponent implements OnInit {
     this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}, autoFocus: false, panelClass: "generic-dialog"})
 
     this.infoTorDialogRef.afterClosed().subscribe((result: any) => {
-      console.log("Closed info modal", result);
     })
   }
 
@@ -275,7 +248,6 @@ export class TorrentsTableComponent implements OnInit {
     const addTorDialogRef = this.moveTorrentDialog.open(MoveTorrentsDialogComponent, {disableClose: true, panelClass: "generic-dialog"});
 
     addTorDialogRef.afterClosed().subscribe((result: any) => {
-      console.log("Closed move torrents modal", result)
     });
   }
 
@@ -297,7 +269,6 @@ export class TorrentsTableComponent implements OnInit {
           break;
 
         case "pause":
-          console.log("pause torrents")
           this.pauseTorrentsBulk(this.selection.selected);
           _clearAndClose();
           break;
@@ -343,23 +314,7 @@ export class TorrentsTableComponent implements OnInit {
 
   torrentDeleteFinishCallback(): void {
     this.deleteTorDialogRef.close();
-    this.ResetAllTableData();   // TODO: Once merging deleted torrent changes are included, this can be removed.
-  }
-
-  /**Set interval for getting torrents
-   * @param interval (optional) The interval to set.
-   * If none is given, REFRESH_INTERVAL will be used.
-   */
-  private SetTorrentRefreshInterval(interval?: number): void {
-    this.ClearTorrentRefreshInterval();
-
-    let newInterval = interval || this.DEFAULT_REFRESH_TIMEOUT;
-    this.REFRESH_INTERVAL = setInterval(() => this.getTorrentData(), newInterval);
-  }
-
-  /** Clear interval for getting new torrent data */
-  private ClearTorrentRefreshInterval(): void {
-    if (this.REFRESH_INTERVAL) { clearInterval(this.REFRESH_INTERVAL); }
+    //this.ResetAllTableData();   // TODO: Once merging deleted torrent changes are included, this can be removed.
   }
 
   onMatSortChange(event: any): void {
@@ -448,6 +403,8 @@ export class TorrentsTableComponent implements OnInit {
    * torrent list again (rid = 0) via http request, and re-build the table.
    *
    * NOTE: THIS MAY CAUSE PERFORMANCE ISSUES -- USE ONLY WHEN NEEDED.
+   *
+   * @deprecated This method is no longer guaranteed to nuke the torrent table
    */
   private ResetAllTableData(): void {
     this.handleBulkEditChange();
@@ -459,8 +416,6 @@ export class TorrentsTableComponent implements OnInit {
     this.filteredTorrentData = null;
 
     this.data_store.ResetAllData();
-    this.ClearTorrentRefreshInterval();
-    this.SetTorrentRefreshInterval();
   }
 
   /** Determine if table is loading data or not */
