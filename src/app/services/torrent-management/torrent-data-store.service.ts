@@ -159,7 +159,7 @@ export class TorrentDataStoreService {
     // (1) If we already have some data, update it
     if(this.TorrentMainData) {
       this.updateServerStatus(data.server_state);
-      this.updateTorrentChanges(data.torrents);
+      this.updateTorrentChanges(data);
     } else {
       this.TorrentMainData = data;
     }
@@ -205,8 +205,10 @@ export class TorrentDataStoreService {
    * For example, if only the download speed & ETA change, this will
    * update only the ones affected.
    */
-  private updateTorrentChanges(data: any) {
-    if(!data) {
+  private updateTorrentChanges(allData: any) {
+    let data = allData.torrents;
+
+    if(!allData || !data) {
       return;
     }
 
@@ -223,11 +225,13 @@ export class TorrentDataStoreService {
           this.rawData.torrents[torID][torKey] = data[torID][torKey];
         }
       }
+    }
 
-      // If this torrent has been removed, delete it
-      if(this.rawData.torrents_removed && (this.rawData.torrents_removed as string[]).includes(torID)) {
-        delete this.rawData.torrents[torID];
-      }
+    //Remove all torrents that were deleted in this changelog
+    if(allData.torrents_removed) {
+      (allData.torrents_removed as string[]).forEach(id => {
+        delete this.rawData.torrents[id];
+      });
     }
   }
 
