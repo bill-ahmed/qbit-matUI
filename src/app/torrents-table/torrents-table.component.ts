@@ -79,7 +79,7 @@ export class TorrentsTableComponent implements OnInit {
     // Retrieve all torrent data first, then  updated torrent data on interval
     this.allTorrentData = null;
     this.filteredTorrentData = null;
-    this.data_store.GetTorrentDataSubscription().subscribe(data => this.updateTorrentData(data))
+    this.data_store.GetTorrentDataSubscription().subscribe(data => { if(data) { this.updateTorrentData(data) }})
 
     // Which torrents are selected
     this.torrentsSelectedService.getTorrentsSelected().subscribe(res => {
