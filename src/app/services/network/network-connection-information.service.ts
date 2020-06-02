@@ -14,21 +14,12 @@ export class NetworkConnectionInformationService {
   private torrent_refresh_interval: number = 1000                         // Assume fastest connection
   private auto_mode = true;                                              // Whether the interval should be calculated automatically or not
 
-  constructor(private appConfig: ApplicationConfigService) {
+  constructor() {
     // @ts-ignore -- Ignoring because most browsers do support it; if they don't, we won't use it.
     let con = window.navigator.connection || window.navigator.mozConnection || window.navigator.webkitConnection;
     if(con) {
       con.onchange = (event: any) => this.handle_network_change(event);
     }
-
-    this.appConfig.getUserPreferences()
-    .then(pref => {
-      let network = pref.web_ui_options?.network;
-      if(network?.auto_refresh) {
-        this.disableAutoMode();
-        this.setRefreshInterval(network.refresh_interval);
-      }
-    })
   }
 
   public get_recommended_torrent_refresh_interval(): number {
