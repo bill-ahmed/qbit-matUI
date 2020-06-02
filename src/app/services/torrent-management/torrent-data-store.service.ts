@@ -201,6 +201,11 @@ export class TorrentDataStoreService {
           this.rawData.torrents[torID][torKey] = data[torID][torKey];
         }
       }
+
+      // If this torrent has been removed, delete it
+      if(this.rawData.torrents_removed && (this.rawData.torrents_removed as string[]).includes(torID)) {
+        delete this.rawData.torrents[torID];
+      }
     }
   }
 

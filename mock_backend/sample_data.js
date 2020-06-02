@@ -59,6 +59,7 @@ function GetMainData(){
                 "use_alt_speed_limits": false,
                 "write_cache_overload": "0"
             },
+            "torrents_removed": ["0daea5cece5"],
             "torrents": {
                 "03b82ec41283e57ffb5a284e9a7773199dddc72a": {
                     "added_on": 1561931538,

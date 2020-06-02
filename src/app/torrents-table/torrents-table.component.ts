@@ -343,7 +343,7 @@ export class TorrentsTableComponent implements OnInit {
 
   torrentDeleteFinishCallback(): void {
     this.deleteTorDialogRef.close();
-    this.ResetAllTableData();   // TODO: Once merging deleted torrent changes are included, this can be removed.
+    //this.ResetAllTableData();   // TODO: Once merging deleted torrent changes are included, this can be removed.
   }
 
   /**Set interval for getting torrents
