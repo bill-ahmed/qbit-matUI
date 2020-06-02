@@ -66,13 +66,11 @@ export class HomeComponent implements OnInit {
     );
 
     settingsDialogRef.afterClosed().subscribe(res => {
-      console.log("Closed settings modal:", res);
     })
   }
 
   /** Callback for when user is finished uploading a torrent */
   handleAddTorrentDialogClosed(data: any): void {
-    console.log('Dialog closed:', data);
   }
 
   public toggleTheme(): void {

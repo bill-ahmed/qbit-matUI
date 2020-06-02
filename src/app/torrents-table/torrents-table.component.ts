@@ -229,7 +229,6 @@ export class TorrentsTableComponent implements OnInit {
     this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}, panelClass: "generic-dialog"});
 
     this.deleteTorDialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
       if (result.attemptedDelete) { this.torrentDeleteFinishCallback() }
     });
   }
@@ -241,7 +240,6 @@ export class TorrentsTableComponent implements OnInit {
     this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}, autoFocus: false, panelClass: "generic-dialog"})
 
     this.infoTorDialogRef.afterClosed().subscribe((result: any) => {
-      console.log("Closed info modal", result);
     })
   }
 
@@ -250,7 +248,6 @@ export class TorrentsTableComponent implements OnInit {
     const addTorDialogRef = this.moveTorrentDialog.open(MoveTorrentsDialogComponent, {disableClose: true, panelClass: "generic-dialog"});
 
     addTorDialogRef.afterClosed().subscribe((result: any) => {
-      console.log("Closed move torrents modal", result)
     });
   }
 
@@ -272,7 +269,6 @@ export class TorrentsTableComponent implements OnInit {
           break;
 
         case "pause":
-          console.log("pause torrents")
           this.pauseTorrentsBulk(this.selection.selected);
           _clearAndClose();
           break;

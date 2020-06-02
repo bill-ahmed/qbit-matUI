@@ -39,7 +39,6 @@ export class AddTorrentDialogComponent implements OnInit {
 
   handleTabChange(event: MatTabChangeEvent) {
     this.currentTab = event;
-    console.log(event);
   }
 
   /** Callback for all upload events. */
@@ -66,7 +65,6 @@ export class AddTorrentDialogComponent implements OnInit {
 
     try {
       let resp = await this.data_store.UploadTorrents(this.filesToUpload, this.filesDestination);
-      console.log('uploaded files', resp);
 
     } catch (error) {
       console.error('unable to upload files', error);
@@ -79,7 +77,6 @@ export class AddTorrentDialogComponent implements OnInit {
 
     try {
       let res = await this.data_store.UploadTorrentsFromMagnetURLs(urls, this.filesDestination).toPromise();
-      console.log('uploaded magnet urls', res);
 
     } catch (error) {
       console.error('uploaded magnet URLs!', error);
@@ -90,7 +87,6 @@ export class AddTorrentDialogComponent implements OnInit {
   /** Update which torrents the user wants to upload. */
   updateFiles(event: any): void {
     this.filesToUpload = event.target.files;
-    console.log(event.target.files);
   }
 
   /** Whether the Upload button should be disabled or not */

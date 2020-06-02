@@ -48,7 +48,6 @@ export class DeleteTorrentDialogComponent implements OnInit {
     this.TorrentService.DeleteTorrent(this.torrentsToDelete.map((elem) => elem.hash), this.deleteFilesOnDisk)
     .subscribe(
     (res: any) => {
-      console.log(res);
       this.finishCallback(res);
 
     },
@@ -60,7 +59,6 @@ export class DeleteTorrentDialogComponent implements OnInit {
   }
 
   finishCallback(resp: any): void {
-    console.log(resp);
     this.dialogRef.close({attemptedDelete: this.attemptedDelete});
   }
 }
