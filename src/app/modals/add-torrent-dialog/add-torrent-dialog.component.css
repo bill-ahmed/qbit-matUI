@@ -25,6 +25,11 @@ mat-hint {
   align-items: baseline;
 }
 
+.files_in_torrents {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
 .upload_files h4 {
   margin-left: 10px;
 }

@@ -20,7 +20,7 @@ import { TorrentParserService } from 'src/app/services/torrent-management/torren
 })
 export class AddTorrentDialogComponent implements OnInit {
 
-  public filesToUpload: File[] = null;
+  public filesToUpload: FileList[] = null;
   public urlsToUpload = "";
   public filesDestination = "";
   public isLoading = false;
@@ -86,7 +86,9 @@ export class AddTorrentDialogComponent implements OnInit {
   }
 
   async parse_uploaded_files() {
-    await this.torrentParser.parseFile(this.filesToUpload[0]);
+    let parsed_files = await this.torrentParser.ParseMultipleFiles(this.filesToUpload);
+    let serialized_nodes = await this.torrentParser.GetSerializedTorrentFromMultipleParsedFiles(parsed_files);
+    console.log(serialized_nodes);
   }
 
   /** Update which torrents the user wants to upload. */

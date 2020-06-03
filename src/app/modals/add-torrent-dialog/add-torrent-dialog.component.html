@@ -16,7 +16,13 @@
 
           <input multiple #torrentFileUpload type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
         </div>
-        <button mat-button (click)="parse_uploaded_files()">parse</button>
+        <br/>
+
+        <div class="files_in_torrents">
+          <h3> Torrents Found </h3>
+          <p>This is a list of all the files in each torrent.</p>
+          <button mat-button (click)="parse_uploaded_files()">parse</button>
+        </div>
       </mat-tab>
 
       <mat-tab label="Magnet URL">
