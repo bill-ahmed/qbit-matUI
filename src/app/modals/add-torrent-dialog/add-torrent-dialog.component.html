@@ -20,8 +20,11 @@
 
         <div class="files_in_torrents">
           <h3> Torrents Found </h3>
-          <p>This is a list of all the files in each torrent.</p>
-          <button mat-button (click)="parse_uploaded_files()">parse</button>
+          <p> {{serialized_nodes ? "Found " + serialized_nodes.length + " files." : "Try choosing some files above."}} </p>
+          <app-file-system-tree-explorer
+              *ngIf="isTreeExplorerReady"
+              [showProgress]="false"
+              [directories]="serialized_nodes"> </app-file-system-tree-explorer>
         </div>
       </mat-tab>
 
@@ -36,6 +39,7 @@
     </mat-tab-group>
 
     <br/>
+    <mat-divider></mat-divider>
     <br/>
 
     <h3>Save Location</h3>

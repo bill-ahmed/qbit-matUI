@@ -26,7 +26,7 @@ mat-hint {
 }
 
 .files_in_torrents {
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: scroll;
 }
 
