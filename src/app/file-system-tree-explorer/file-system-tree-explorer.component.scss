@@ -32,8 +32,12 @@
 }
 
 .grow {
-  flex-grow: 1;
+  width: max-content;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+
+  #progress, #fileSize {
+    margin: 0 8px;
+  }
 }

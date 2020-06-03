@@ -20,7 +20,7 @@
 
         <div class="files_in_torrents">
           <h3> Torrents Found </h3>
-          <p> {{serialized_nodes ? "Found " + serialized_nodes.length + " files." : "Try choosing some files above."}} </p>
+          <p *ngIf="!isTreeExplorerReady"> Try choosing some files above. </p>
           <app-file-system-tree-explorer
               *ngIf="isTreeExplorerReady"
               [showProgress]="false"
