@@ -194,7 +194,7 @@ export interface SerializedNode {
   name: string,
   path: string,
   size: number,
-  progress: number,
-  type: string,
+  progress?: number,
+  type?: string,
   children?: SerializedNode[]
 }
