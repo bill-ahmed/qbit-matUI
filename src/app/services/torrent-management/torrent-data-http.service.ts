@@ -34,7 +34,7 @@ export class TorrentDataHTTPService {
   /** Send batch of 1 or more torrents to server for enqueue.
    * @param files The files to upload.
    */
-  async UploadNewTorrents(files: FileList[], destination: string): Promise<any> {
+  async UploadNewTorrents(files: File[], destination: string): Promise<any> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.uploadTorrents;
     let url = root + endpoint;

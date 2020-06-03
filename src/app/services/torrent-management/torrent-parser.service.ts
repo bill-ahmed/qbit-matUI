@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Buffer } from 'buffer';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,13 @@ export class TorrentParserService {
   }
 
   /** Given a torrent file, parse its contents. */
-  public parseFile(torrent: File): any {
+  public async parseFile(torrent: File): Promise<void> {
+    console.log("parsing...");
 
+    //@ts-ignore
+    let array_buff = await torrent.arrayBuffer()
+    let buff = Buffer.from(array_buff);      // Need to convert to a proper Buffer
+
+    console.log(this.torrent_parser(buff))
   }
 }
