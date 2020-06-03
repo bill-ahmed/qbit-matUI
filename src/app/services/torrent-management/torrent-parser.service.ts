@@ -41,13 +41,14 @@ export class TorrentParserService {
   }
 
   public async GetSerializedTorrentsFromParsedFile(file: ParsedTorrent): Promise<SerializedNode[]> {
-    let res = []
+    let res: SerializedNode[] = []
     if(file.files) {
       file.files.forEach(elem => {
         res.push({
           name: elem.name,
           path: elem.path,
-          size: elem.length
+          size: elem.length,
+          type: 'File'
         });
       })
     }
@@ -55,7 +56,7 @@ export class TorrentParserService {
   }
 
   public async GetSerializedTorrentFromMultipleParsedFiles(files: ParsedTorrent[]): Promise<SerializedNode[]> {
-    let res = []
+    let res: SerializedNode[] = []
 
     await files.forEach(async file => {
       let nodes = await this.GetSerializedTorrentsFromParsedFile(file);

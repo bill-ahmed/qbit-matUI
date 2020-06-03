@@ -195,6 +195,6 @@ export interface SerializedNode {
   path: string,
   size: number,
   progress?: number,
-  type?: string,
+  type?: 'File' | 'Directory',
   children?: SerializedNode[]
 }
