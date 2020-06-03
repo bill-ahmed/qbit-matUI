@@ -94,7 +94,6 @@ export class AddTorrentDialogComponent implements OnInit {
 
     let parsed_files = await this.torrentParser.ParseMultipleFiles(this.filesToUpload);
     this.serialized_nodes = await this.torrentParser.GetSerializedTorrentFromMultipleParsedFiles(parsed_files);
-    console.log(this.serialized_nodes);
     this.isTreeExplorerReady = true;
   }
 

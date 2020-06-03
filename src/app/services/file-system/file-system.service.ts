@@ -49,10 +49,10 @@ export class FileSystemService {
    * @param dirs The directories to create, with data such as type and size
    * @param root The root of the file system. If none is specified, existing one will be used.
    */
-  public populateFileSystemWithAdvancedOptions(dirs: SerializedNode[], root?: DirectoryNode, delimiter?: string) {
+  public async populateFileSystemWithAdvancedOptions(dirs: SerializedNode[], root?: DirectoryNode, delimiter?: string) {
     // For each directory, we need to extract all the folders in it
     if(dirs.length > 0) {
-      dirs.forEach( (dir) => this.createDirectoryPathWithAdvancedData(dir, root || this.root, delimiter || this.directoryDelimiter) );
+      dirs.forEach( async (dir) => await this.createDirectoryPathWithAdvancedData(dir, root || this.root, delimiter || this.directoryDelimiter) );
     }
   }
 
