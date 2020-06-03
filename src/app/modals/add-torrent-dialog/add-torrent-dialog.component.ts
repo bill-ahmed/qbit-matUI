@@ -8,7 +8,7 @@ import { FileDirectoryExplorerService } from '../../services/file-system/file-di
 import { FileSystemDialogComponent } from '../file-system-dialog/file-system-dialog.component';
 import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
-import { FileSystemService } from '../../services/file-system/file-system.service';
+import { FileSystemService, SerializedNode } from '../../services/file-system/file-system.service';
 import { GetDefaultSaveLocation } from 'src/utils/Helpers';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { TorrentParserService } from 'src/app/services/torrent-management/torrent-parser.service';
@@ -23,8 +23,12 @@ export class AddTorrentDialogComponent implements OnInit {
   public filesToUpload: FileList[] = null;
   public urlsToUpload = "";
   public filesDestination = "";
+
   public isLoading = false;
+  public isTreeExplorerReady = false;
   public isDarkTheme: Observable<boolean>;
+
+  public serialized_nodes: SerializedNode[];
 
   /** Keep track of the mat-tab the user is currently in. */
   private currentTab: MatTabChangeEvent;
@@ -86,14 +90,18 @@ export class AddTorrentDialogComponent implements OnInit {
   }
 
   async parse_uploaded_files() {
+    this.isTreeExplorerReady = false;
+
     let parsed_files = await this.torrentParser.ParseMultipleFiles(this.filesToUpload);
-    let serialized_nodes = await this.torrentParser.GetSerializedTorrentFromMultipleParsedFiles(parsed_files);
-    console.log(serialized_nodes);
+    this.serialized_nodes = await this.torrentParser.GetSerializedTorrentFromMultipleParsedFiles(parsed_files);
+    console.log(this.serialized_nodes);
+    this.isTreeExplorerReady = true;
   }
 
   /** Update which torrents the user wants to upload. */
   updateFiles(event: any): void {
     this.filesToUpload = event.target.files;
+    this.parse_uploaded_files();
   }
 
   /** Whether the Upload button should be disabled or not */
