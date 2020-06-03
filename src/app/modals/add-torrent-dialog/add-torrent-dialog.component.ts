@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import { FileSystemService } from '../../services/file-system/file-system.service';
 import { GetDefaultSaveLocation } from 'src/utils/Helpers';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { TorrentParserService } from 'src/app/services/torrent-management/torrent-parser.service';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -19,7 +20,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 })
 export class AddTorrentDialogComponent implements OnInit {
 
-  public filesToUpload: FileList[] = null;
+  public filesToUpload: File[] = null;
   public urlsToUpload = "";
   public filesDestination = "";
   public isLoading = false;
@@ -29,7 +30,7 @@ export class AddTorrentDialogComponent implements OnInit {
   private currentTab: MatTabChangeEvent;
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
-  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService,
+  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService, private torrentParser: TorrentParserService,
               private fs: FileDirectoryExplorerService, public fileSystemDialog: MatDialog, private fs_service: FileSystemService, private theme: ThemeService) { }
 
   ngOnInit(): void {
@@ -82,6 +83,10 @@ export class AddTorrentDialogComponent implements OnInit {
       console.error('uploaded magnet URLs!', error);
     }
 
+  }
+
+  async parse_uploaded_files() {
+    await this.torrentParser.parseFile(this.filesToUpload[0]);
   }
 
   /** Update which torrents the user wants to upload. */
