@@ -103,6 +103,37 @@ export interface TorrentContents {
   availability: number,
 }
 
+/** Represent a parsed torrent. This is the type of data we get
+ * by parsing a torrent file, magnet URL, etc.
+ */
+export interface ParsedTorrent {
+  /** Only guaranteed property to exist */
+  infoHash: string,
+  announce?: string[]
+  name?: string
+
+  /** Date this torrent was created */
+  created?: Date
+
+  /** Size of entire torrent, in bytes */
+  length?: number
+
+  files?: ParsedTorrentFile[]
+  pieces?: string[]
+  private?: boolean
+}
+
+/** Represent a file that can exist in a parsed torrent */
+export interface ParsedTorrentFile {
+  name: string
+
+  /** Size of this file, in bytes */
+  length: number
+
+  /** File path, un Unix-style delimiter */
+  path: string
+}
+
 /** Type of network connections a user can have */
 export type NetworkType = 'slow-2g' | '2g' | '3g' | '4g';
 

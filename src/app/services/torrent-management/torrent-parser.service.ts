@@ -22,7 +22,7 @@ export class TorrentParserService {
   public async parseFile(torrent: File): Promise<void> {
     console.log("parsing...");
 
-    //@ts-ignore
+    //@ts-ignore -- ArrayBuffer very much does exist on Files...
     let array_buff = await torrent.arrayBuffer()
     let buff = Buffer.from(array_buff);      // Need to convert to a proper Buffer
 
