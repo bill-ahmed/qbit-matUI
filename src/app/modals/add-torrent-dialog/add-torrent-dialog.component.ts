@@ -28,7 +28,7 @@ export class AddTorrentDialogComponent implements OnInit {
   public isTreeExplorerReady = false;
   public isDarkTheme: Observable<boolean>;
 
-  public serialized_nodes: SerializedNode[];
+  public serialized_nodes: SerializedNode[] = [];
 
   /** Keep track of the mat-tab the user is currently in. */
   private currentTab: MatTabChangeEvent;

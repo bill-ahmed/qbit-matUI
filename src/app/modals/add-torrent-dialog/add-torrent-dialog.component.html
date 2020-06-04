@@ -22,7 +22,6 @@
           <h3> Torrents Found </h3>
           <p *ngIf="!isTreeExplorerReady"> Try choosing some files above. </p>
           <app-file-system-tree-explorer
-              *ngIf="isTreeExplorerReady"
               [showProgress]="false"
               [directories]="serialized_nodes"> </app-file-system-tree-explorer>
         </div>

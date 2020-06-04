@@ -52,6 +52,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
     await this.fs.populateFileSystemWithAdvancedOptions(this.directories, this.root, delimiter);
     this.fs.SerializeFileSystem(this.root).then(data => {
+      this.dataSource = new MatTreeNestedDataSource<SerializedNode>();
       this.dataSource.data = data;
     });
 

@@ -109,7 +109,7 @@ export class FileSystemService {
    */
   public async SerializeFileSystem(root?: DirectoryNode): Promise<SerializedNode[]> {
     root = root || this.root;
-    return this._convertToJSON(root);
+    return await this._convertToJSON(root);
   }
 
   /** Print entire contents of file system to console log
@@ -130,7 +130,7 @@ export class FileSystemService {
     }
   }
 
-  private _convertToJSON(node: Inode): SerializedNode[] {
+  private async _convertToJSON(node: Inode): Promise<SerializedNode[]> {
     let result = [];
 
     if(node.hasChildren()) {
@@ -138,7 +138,7 @@ export class FileSystemService {
         result.push({
           name: child.getValue(),
           path: "",
-          children: this._convertToJSON(child),
+          children: await this._convertToJSON(child),
           size: child.getSize(),
           progress: child.getProgressAmount(),
           type: child.type
@@ -161,7 +161,6 @@ export class FileSystemService {
       console.log("using windows")
       return "\\";
     }
-    console.log('using unix')
     return "/";
   }
 
