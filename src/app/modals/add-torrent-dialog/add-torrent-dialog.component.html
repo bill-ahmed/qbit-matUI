@@ -18,8 +18,8 @@
         </div>
         <br/>
 
-        <div>
-          <h3> Torrents Found </h3>
+        <div *ngIf="show_torrent_contents">
+          <h3> Torrent Contents </h3>
           <mat-card-subtitle> Note: Choosing too many files may cause slow-downs. </mat-card-subtitle>
           <div class="files_in_torrents">
             <app-file-system-tree-explorer

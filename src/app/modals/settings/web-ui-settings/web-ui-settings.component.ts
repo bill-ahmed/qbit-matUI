@@ -52,7 +52,7 @@ export class WebUiSettingsComponent implements OnInit {
     }
 
     this.torrent_upload_settings = {
-      show_parsed_torrents_from_file: this.web_ui_options.upload_torrents?.show_parsed_torrents_from_file || true,
+      show_parsed_torrents_from_file: this.web_ui_options.upload_torrents?.show_parsed_torrents_from_file ?? true,
       show_parsed_torrents_from_magnet: true
     }
   }
