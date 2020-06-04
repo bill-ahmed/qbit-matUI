@@ -71,6 +71,7 @@ export default class DirectoryNode extends Inode implements SerializableNode {
       this.children.push(child);
       this._propogateProgressChange();
       this._propogateSizeChange();
+      this.children.sort(Inode.sort());
     }
   }
 

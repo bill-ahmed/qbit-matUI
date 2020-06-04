@@ -20,7 +20,7 @@
 
         <div class="files_in_torrents">
           <h3> Torrents Found </h3>
-          <p *ngIf="!isTreeExplorerReady"> Try choosing some files above. </p>
+          <mat-card-subtitle> Note: Choosing too many files may cause slow-downs. </mat-card-subtitle>
           <app-file-system-tree-explorer
               [showProgress]="false"
               [directories]="serialized_nodes"> </app-file-system-tree-explorer>
