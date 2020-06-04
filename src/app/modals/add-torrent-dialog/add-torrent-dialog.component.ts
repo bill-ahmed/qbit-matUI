@@ -4,37 +4,45 @@ import { Component, OnInit } from '@angular/core';
 import { MatFormField } from '@angular/material/form-field';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { TorrentDataStoreService } from '../../services/torrent-management/torrent-data-store.service';
-import { FileDirectoryExplorerService } from '../../services/file-system/file-directory-explorer.service';
 import { FileSystemDialogComponent } from '../file-system-dialog/file-system-dialog.component';
 import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
-import { FileSystemService } from '../../services/file-system/file-system.service';
+import { SerializedNode } from '../../services/file-system/file-system.service';
 import { GetDefaultSaveLocation } from 'src/utils/Helpers';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { TorrentParserService } from 'src/app/services/torrent-management/torrent-parser.service';
+import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
+import { WebUIUploadingSettings } from 'src/utils/Interfaces';
 
 @Component({
   selector: 'app-add-torrent-dialog',
   templateUrl: './add-torrent-dialog.component.html',
-  styleUrls: ['./add-torrent-dialog.component.css']
+  styleUrls: ['./add-torrent-dialog.component.scss']
 })
 export class AddTorrentDialogComponent implements OnInit {
+  public show_torrent_contents: boolean;
 
   public filesToUpload: FileList[] = null;
   public urlsToUpload = "";
   public filesDestination = "";
+
   public isLoading = false;
+  public isTreeExplorerReady = false;
   public isDarkTheme: Observable<boolean>;
+
+  public serialized_nodes: SerializedNode[] = [];
 
   /** Keep track of the mat-tab the user is currently in. */
   private currentTab: MatTabChangeEvent;
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
-  constructor(private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService,
-              private fs: FileDirectoryExplorerService, public fileSystemDialog: MatDialog, private fs_service: FileSystemService, private theme: ThemeService) { }
+  constructor(private appConfig: ApplicationConfigService, private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService,
+              private torrentParser: TorrentParserService, public fileSystemDialog: MatDialog, private theme: ThemeService) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
     this.updateDefaultSaveLocationFromDisk();
+    this.appConfig.getUserPreferences().then(pref => { this.show_torrent_contents = pref.web_ui_options.upload_torrents?.show_parsed_torrents_from_file ?? true });
   }
 
   handleTabChange(event: MatTabChangeEvent) {
@@ -84,9 +92,18 @@ export class AddTorrentDialogComponent implements OnInit {
 
   }
 
+  async parse_uploaded_files() {
+    this.isTreeExplorerReady = false;
+
+    let parsed_files = await this.torrentParser.ParseMultipleFiles(this.filesToUpload);
+    this.serialized_nodes = await this.torrentParser.GetSerializedTorrentFromMultipleParsedFiles(parsed_files);
+    this.isTreeExplorerReady = true;
+  }
+
   /** Update which torrents the user wants to upload. */
   updateFiles(event: any): void {
     this.filesToUpload = event.target.files;
+    this.parse_uploaded_files();
   }
 
   /** Whether the Upload button should be disabled or not */

@@ -1,7 +1,7 @@
-<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background">
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background upload_container">
 
   <h2 mat-dialog-title>Upload Torrents</h2>
-  <mat-dialog-content class="mat-typography">
+  <mat-dialog-content class="mat-typography dialog_content">
     <mat-tab-group mat-align-tabs="start" (selectedTabChange)="handleTabChange($event)">
       <mat-tab label="File Upload">
         <br/>
@@ -16,19 +16,31 @@
 
           <input multiple #torrentFileUpload type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
         </div>
+        <br/>
+
+        <div *ngIf="show_torrent_contents">
+          <h3> Torrent Contents </h3>
+          <mat-card-subtitle> Note: Choosing too many files may cause slow-downs. </mat-card-subtitle>
+          <div class="files_in_torrents">
+            <app-file-system-tree-explorer
+            [showProgress]="false"
+            [directories]="serialized_nodes"> </app-file-system-tree-explorer>
+          </div>
+        </div>
       </mat-tab>
 
       <mat-tab label="Magnet URL">
         <br/>
         <mat-form-field id="magnet_url_input" appearance="outline">
           <mat-label>List of URLs...</mat-label>
-          <textarea rows="14" value="{{urlsToUpload}}" name="savepath" type="text" id="savepath" (change)="updateURLsToUpload($event)" matInput></textarea>
+          <textarea rows="17" value="{{urlsToUpload}}" name="savepath" type="text" id="savepath" (change)="updateURLsToUpload($event)" matInput></textarea>
           <mat-hint align="start">Separate each URL with a new line</mat-hint>
         </mat-form-field>
       </mat-tab>
     </mat-tab-group>
 
     <br/>
+    <mat-divider></mat-divider>
     <br/>
 
     <h3>Save Location</h3>

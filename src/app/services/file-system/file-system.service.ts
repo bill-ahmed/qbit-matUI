@@ -49,10 +49,10 @@ export class FileSystemService {
    * @param dirs The directories to create, with data such as type and size
    * @param root The root of the file system. If none is specified, existing one will be used.
    */
-  public populateFileSystemWithAdvancedOptions(dirs: SerializedNode[], root?: DirectoryNode, delimiter?: string) {
+  public async populateFileSystemWithAdvancedOptions(dirs: SerializedNode[], root?: DirectoryNode, delimiter?: string) {
     // For each directory, we need to extract all the folders in it
     if(dirs.length > 0) {
-      dirs.forEach( (dir) => this.createDirectoryPathWithAdvancedData(dir, root || this.root, delimiter || this.directoryDelimiter) );
+      dirs.forEach( async (dir) => await this.createDirectoryPathWithAdvancedData(dir, root || this.root, delimiter || this.directoryDelimiter) );
     }
   }
 
@@ -109,7 +109,7 @@ export class FileSystemService {
    */
   public async SerializeFileSystem(root?: DirectoryNode): Promise<SerializedNode[]> {
     root = root || this.root;
-    return this._convertToJSON(root);
+    return await this._convertToJSON(root);
   }
 
   /** Print entire contents of file system to console log
@@ -130,7 +130,7 @@ export class FileSystemService {
     }
   }
 
-  private _convertToJSON(node: Inode): SerializedNode[] {
+  private async _convertToJSON(node: Inode): Promise<SerializedNode[]> {
     let result = [];
 
     if(node.hasChildren()) {
@@ -138,7 +138,7 @@ export class FileSystemService {
         result.push({
           name: child.getValue(),
           path: "",
-          children: this._convertToJSON(child),
+          children: await this._convertToJSON(child),
           size: child.getSize(),
           progress: child.getProgressAmount(),
           type: child.type
@@ -161,7 +161,6 @@ export class FileSystemService {
       console.log("using windows")
       return "\\";
     }
-    console.log('using unix')
     return "/";
   }
 
@@ -194,7 +193,7 @@ export interface SerializedNode {
   name: string,
   path: string,
   size: number,
-  progress: number,
-  type: string,
+  progress?: number,
+  type?: 'File' | 'Directory',
   children?: SerializedNode[]
 }

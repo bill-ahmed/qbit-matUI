@@ -90,6 +90,7 @@ export default class Inode extends TreeNode implements SerializableNode {
     if(!this.hasChild(child.value)) {
       child.setParent(this);
       this.children.push(child);
+      this.children.sort(Inode.sort());
     }
   }
 
@@ -110,6 +111,34 @@ export default class Inode extends TreeNode implements SerializableNode {
 
   public static GetChildFromChildrenList(children: Inode[], child: Inode): Inode {
     return super.GetChildFromChildrenList(children, child) as Inode;
+  }
+
+  /** Sort inodes.
+   * @override -- Replaces TreeNode sort
+   * @returns A function to sort two inodes.
+   */
+  public static sort(): (a: Inode, b: Inode) => 0 | 1 | -1 {
+
+    return function(a: Inode, b: Inode) {
+      let a_is_dir = a.type === FileSystemType.DirectoryNodeType;
+      let b_is_dir = b.type === FileSystemType.DirectoryNodeType;
+
+      let a_is_file = a.type === FileSystemType.FileNodeType;
+      let b_is_file = b.type === FileSystemType.FileNodeType;
+
+      // If both are folders or files, compare normally
+      if((a_is_dir && b_is_dir) || (a_is_file && b_is_file)) {
+        return TreeNode.sort()(a ,b);
+
+      } else if(a_is_file && b_is_dir){
+        // Otherwise one of the Inode's is a file, then it will be superceded by the folder
+        return 1;
+
+      } else {
+        // Finally, b is the only file
+        return -1;
+      }
+    }
   }
 }
 

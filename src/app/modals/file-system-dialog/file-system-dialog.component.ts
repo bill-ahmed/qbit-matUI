@@ -34,7 +34,7 @@ export class FileSystemDialogComponent implements OnInit {
     this.isDarkTheme = this.theme.getThemeSubscription();
     this.root = this.fs.getFileSystem();
     this.leftChildren = this.root.getChildren() as DirectoryNode[];
-    this.leftChildren.sort(TreeNode.sort());
+    this.leftChildren.sort(Inode.sort());
 
     this._openToInitialFolder();
   }
@@ -59,7 +59,7 @@ export class FileSystemDialogComponent implements OnInit {
       let dirChosen = DirectoryNode.GetChildFromChildrenList(this.leftChildren, dir);
       this.rightChildren = dirChosen.getChildren();
 
-      this.rightChildren.sort(TreeNode.sort());
+      this.rightChildren.sort(Inode.sort());
     }
     else if(type === "child") {
 
@@ -67,7 +67,7 @@ export class FileSystemDialogComponent implements OnInit {
 
       let dirChosen = DirectoryNode.GetChildFromChildrenList(this.rightChildren, dir);
       this.rightChildren = dirChosen.getChildren();
-      this.rightChildren.sort(TreeNode.sort());
+      this.rightChildren.sort(Inode.sort());
     }
 
     this.selectedDir = dir;
@@ -82,8 +82,8 @@ export class FileSystemDialogComponent implements OnInit {
       this.rightChildren = this.leftChildren;
       this.leftChildren = parent.getParent().getChildren() as DirectoryNode[];
 
-      this.leftChildren.sort(TreeNode.sort());
-      this.rightChildren.sort(TreeNode.sort());
+      this.leftChildren.sort(Inode.sort());
+      this.rightChildren.sort(Inode.sort());
 
       this.selectedDir = parent;
     } else {
@@ -119,7 +119,7 @@ export class FileSystemDialogComponent implements OnInit {
     else { alert("Can't create a directory at the root!"); }
 
     this.cancelFolderCreation();
-    this.rightChildren.sort(TreeNode.sort());
+    this.rightChildren.sort(Inode.sort());
   }
 
   /** Callback for when user decides to create a new folder */
@@ -179,8 +179,8 @@ export class FileSystemDialogComponent implements OnInit {
       this.rightChildren = new_root.getChildren();
       this.selectedDir = new_root;
 
-      this.leftChildren.sort(TreeNode.sort());
-      this.rightChildren.sort(TreeNode.sort());
+      this.leftChildren.sort(Inode.sort());
+      this.rightChildren.sort(Inode.sort());
 
       console.log("opened to initial path", path);
 
