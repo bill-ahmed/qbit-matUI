@@ -128,7 +128,6 @@ export default class Inode extends TreeNode implements SerializableNode {
 
       // If both are folders or files, compare normally
       if((a_is_dir && b_is_dir) || (a_is_file && b_is_file)) {
-        console.log("both are directories or folders")
         return TreeNode.sort()(a ,b);
 
       } else if(a_is_file && b_is_dir){

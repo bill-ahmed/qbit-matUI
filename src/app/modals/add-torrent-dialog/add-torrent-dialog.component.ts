@@ -16,7 +16,7 @@ import { TorrentParserService } from 'src/app/services/torrent-management/torren
 @Component({
   selector: 'app-add-torrent-dialog',
   templateUrl: './add-torrent-dialog.component.html',
-  styleUrls: ['./add-torrent-dialog.component.css']
+  styleUrls: ['./add-torrent-dialog.component.scss']
 })
 export class AddTorrentDialogComponent implements OnInit {
 

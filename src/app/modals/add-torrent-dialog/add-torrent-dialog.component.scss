@@ -1,3 +1,19 @@
+.upload_container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  mat-dialog-content.dialog_content {
+    flex-grow: 1;
+    max-height: unset;
+
+    .files_in_torrents {
+      max-height: 180px;
+      overflow-y: scroll;
+    }
+  }
+}
+
 .mat-raised-button {
     background: #1976D2;
 }
@@ -23,11 +39,6 @@ mat-hint {
   display: flex;
   flex-direction: row;
   align-items: baseline;
-}
-
-.files_in_torrents {
-  max-height: 250px;
-  overflow-y: scroll;
 }
 
 .upload_files h4 {

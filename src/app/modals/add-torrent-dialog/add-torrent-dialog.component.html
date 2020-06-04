@@ -1,7 +1,7 @@
-<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background">
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background upload_container">
 
   <h2 mat-dialog-title>Upload Torrents</h2>
-  <mat-dialog-content class="mat-typography">
+  <mat-dialog-content class="mat-typography dialog_content">
     <mat-tab-group mat-align-tabs="start" (selectedTabChange)="handleTabChange($event)">
       <mat-tab label="File Upload">
         <br/>
@@ -18,12 +18,14 @@
         </div>
         <br/>
 
-        <div class="files_in_torrents">
+        <div>
           <h3> Torrents Found </h3>
           <mat-card-subtitle> Note: Choosing too many files may cause slow-downs. </mat-card-subtitle>
-          <app-file-system-tree-explorer
-              [showProgress]="false"
-              [directories]="serialized_nodes"> </app-file-system-tree-explorer>
+          <div class="files_in_torrents">
+            <app-file-system-tree-explorer
+            [showProgress]="false"
+            [directories]="serialized_nodes"> </app-file-system-tree-explorer>
+          </div>
         </div>
       </mat-tab>
 
