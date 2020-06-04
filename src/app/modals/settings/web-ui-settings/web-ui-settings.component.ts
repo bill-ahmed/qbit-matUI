@@ -14,10 +14,10 @@ export class WebUiSettingsComponent implements OnInit {
 
   /** Default settings */
   theme_settings = { theme: "" };
-  torrent_table_settings: WebUITorrentTableSettings
-  torrent_data_options : WebUINetworkSettings
-  torrent_upload_settings :WebUIUploadingSettings
-  file_system_settings = { use_alt_delimiter: false, delimiter: '/' };
+  torrent_table_settings:   WebUITorrentTableSettings   = { paginate: false, default_items_per_page: 10, showFirstAndLastOptions: false }
+  torrent_data_options:     WebUINetworkSettings        = { refresh_interval: -1, auto_refresh: false }
+  torrent_upload_settings:  WebUIUploadingSettings      = { show_parsed_torrents_from_file: true, show_parsed_torrents_from_magnet: true }
+  file_system_settings                                  = { use_alt_delimiter: false, delimiter: '/' };
 
   /** Validations */
   common_validators = [Validators.min(0)];
