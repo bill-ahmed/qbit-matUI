@@ -164,23 +164,6 @@ export interface UserPreferences extends DownloadSettings, SpeedSettings {
   web_ui_options: WebUISettings,
 }
 
-/** All Web-UI related settings. */
-export interface WebUISettings {
-  dark_mode_enabled?: boolean,
-  torrent_table?: {
-    paginate: boolean,
-    default_items_per_page: number,
-    showFirstAndLastOptions: boolean
-  },
-  file_system?: {
-    delimiter: string
-  },
-  network: {
-    auto_refresh: boolean,
-    refresh_interval: number
-  }
-}
-
 /** Various download-related preferences
  * a user can have with qBittorrent
  */
@@ -208,4 +191,35 @@ export interface SpeedSettings {
 export interface QbittorrentBuildInfo {
   appVersion: string,
   apiVersion: string
+}
+
+/** All Web-UI related settings. */
+export interface WebUISettings {
+  dark_mode_enabled?: boolean,
+  torrent_table?: WebUITorrentTableSettings
+  file_system?: WebUIFileSystemSettings
+  network?: WebUINetworkSettings
+  upload_torrents?: WebUIUploadingSettings
+}
+
+export interface WebUIUploadingSettings {
+  /** Whether to show the files inside a torrent when uploading a .torrent file */
+  show_parsed_torrents_from_file: boolean,
+  /** Whether to show the files inside a torrent when adding magnet URLs */
+  show_parsed_torrents_from_magnet: boolean
+}
+
+export interface WebUINetworkSettings {
+  auto_refresh: boolean,
+  refresh_interval: number
+}
+
+export interface WebUIFileSystemSettings {
+  delimiter: string
+}
+
+export interface WebUITorrentTableSettings {
+  paginate: boolean,
+  default_items_per_page: number,
+  showFirstAndLastOptions: boolean
 }

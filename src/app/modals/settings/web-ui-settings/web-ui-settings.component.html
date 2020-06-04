@@ -14,6 +14,19 @@
   <br/>
 
   <section>
+    <h2> Uploading Torrents </h2>
+
+    <div class="field">
+      <mat-checkbox [(ngModel)]="torrent_upload_settings.show_parsed_torrents_from_file">Show torrent contents in file upload</mat-checkbox>
+    </div>
+
+    <!-- <div class="field">
+      <mat-checkbox [(ngModel)]="torrent_upload_settings.show_parsed_torrents_from_magnet">Show torrent contents in magnet URL upload</mat-checkbox>
+    </div> -->
+  </section>
+  <br/>
+
+  <section>
     <h2> Torrent Table </h2>
 
     <mat-checkbox [(ngModel)]="torrent_table_settings.paginate">Paginate torrents</mat-checkbox>

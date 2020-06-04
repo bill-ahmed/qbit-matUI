@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
-import { WebUISettings } from 'src/utils/Interfaces';
+import { WebUISettings, WebUITorrentTableSettings, WebUINetworkSettings, WebUIUploadingSettings } from 'src/utils/Interfaces';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -14,8 +14,9 @@ export class WebUiSettingsComponent implements OnInit {
 
   /** Default settings */
   theme_settings = { theme: "" };
-  torrent_table_settings = { paginate: false, default_items_per_page: 10, showFirstAndLastOptions: false }
-  torrent_data_options = { refresh_interval: -1 }
+  torrent_table_settings: WebUITorrentTableSettings
+  torrent_data_options : WebUINetworkSettings
+  torrent_upload_settings :WebUIUploadingSettings
   file_system_settings = { use_alt_delimiter: false, delimiter: '/' };
 
   /** Validations */
@@ -46,7 +47,13 @@ export class WebUiSettingsComponent implements OnInit {
     }
 
     this.torrent_data_options = {
-      refresh_interval: this.web_ui_options.network?.auto_refresh ? this.web_ui_options.network.refresh_interval : -1
+      refresh_interval: this.web_ui_options.network?.auto_refresh ? this.web_ui_options.network.refresh_interval : -1,
+      auto_refresh: false
+    }
+
+    this.torrent_upload_settings = {
+      show_parsed_torrents_from_file: this.web_ui_options.upload_torrents?.show_parsed_torrents_from_file || true,
+      show_parsed_torrents_from_magnet: true
     }
   }
 
@@ -65,7 +72,8 @@ export class WebUiSettingsComponent implements OnInit {
       network: {
         auto_refresh: this.torrent_data_options.refresh_interval > -1,
         refresh_interval: this.torrent_data_options.refresh_interval
-      }
+      },
+      upload_torrents: { ...this.torrent_upload_settings }
     }
   }
 
