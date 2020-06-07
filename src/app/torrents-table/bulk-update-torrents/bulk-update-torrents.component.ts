@@ -59,8 +59,7 @@ export class BulkUpdateTorrentsComponent implements OnInit {
   public getBulkEditMessage(): string {
     let numTorrentsSelected = this.torrentsSelected.length;
 
-    return numTorrentsSelected === 0 ? `` : numTorrentsSelected === 1 ?
-        `1 torrent selected` : `${numTorrentsSelected} torrents selected`;
+    return numTorrentsSelected === 0 ? `` : `${numTorrentsSelected} selected`;
   }
 
   public handleBulkActions(action: string): void {

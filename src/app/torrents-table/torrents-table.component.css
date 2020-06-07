@@ -25,6 +25,10 @@ progress-bar {
     width: 100%;
 }
 
+mat-header-row {
+  width: max-content;
+}
+
 .mat-row {
     transition: background-color 0.15s ease;
     background-color: unset;
