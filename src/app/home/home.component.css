@@ -1,92 +1,95 @@
 .mat-toolbar {
-    background: #1976D2;
-    color: white;
+  background: #1976D2;
+  color: white;
 
-    padding: 25px;
-    margin-bottom: 30px;
+  padding: 25px;
+  margin-bottom: 30px;
 
-    height: 80px;
+  height: 80px;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .dark-theme .mat-toolbar {
-    background: #212121;
+  background: #212121;
 }
 
 .mat-toolbar h1 {
-    font-size: 22pt;
+  font-size: 22pt;
 }
 
 
 .mat-toolbar #toolbar_actions{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
 }
 
 .mat-toolbar #toolbar_actions button{
-    margin-left: 25px;
+  margin-left: 25px;
 }
 
 .mat-toolbar #toolbar_actions #slideToggleTheme {
-    padding-left: 30px;
+  padding-left: 30px;
 }
 
 #addTorrentFAB, #logoutFAB {
-    /* background: #ff1744; */
-
-    position: relative;
-    top: 38px;
-    right: 10px;
-
-    display: none;
+  /* background: #ff1744; */
+  display: none;
 }
 
 #addTorrentButton, #logoutButton {
-    margin-right: 5px;
-    font-size: 12pt;
+  margin-right: 5px;
+  font-size: 12pt;
 }
 
 app-search-torrents {
-    flex-grow: 0.8;
-    margin-left: 20px;
-    margin-right: 20px;
+  flex-grow: 0.8;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  position: relative;
+  bottom: -38px;
 }
 
 .spacer {
-    flex: 1;
+  flex: 1;
 }
 
 .homeContainer{
-    flex: 1;
-    min-height: 100%;
-    width: 100%;
+  flex: 1;
+  min-height: 100%;
+  width: 100%;
 }
 
 .content {
-    display: flex;
-    min-height: 100%;
-    width: 100%;
+  display: flex;
+  min-height: 100%;
+  width: 100%;
 
-    flex-grow: 1;
-    flex-direction: column;
+  flex-grow: 1;
+  flex-direction: column;
 
-    padding-left: 8%;
-    padding-right: 8%;
+  padding-left: 8%;
+  padding-right: 8%;
 }
 
 /** For phone screens */
 @media only screen and (max-width: 768px) {
-    #addTorrentButton, #logoutButton, .hide_mobile {
-        display: none;
-    }
+  #addTorrentButton, .hide_mobile {
+      display: none;
+  }
 
-    #addTorrentFAB, #logoutFAB {
-        display: unset;
-    }
+  #addTorrentFAB, #logoutFAB {
+      display: unset;
+  }
+
+  app-search-torrents {
+    bottom: unset;
+  }
 }

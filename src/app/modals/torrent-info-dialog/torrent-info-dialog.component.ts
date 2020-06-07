@@ -34,11 +34,13 @@ export class TorrentInfoDialogComponent implements OnInit {
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
 
+    // Get data the first time immediately
+    this.data_store.GetTorrentContents(this.torrent).toPromise().then(res => {this.updateTorrentContents(res)});
+
     /** Refresh torrent contents data on the recommended interval */
     this.REFRESH_INTERVAL = setInterval(() => {
       this.data_store.GetTorrentContents(this.torrent).subscribe(content => {
         this.updateTorrentContents(content);
-        console.log("updating...", this.network_info.get_refresh_interval_from_network_type("medium"))
       });
     },
       this.network_info.get_refresh_interval_from_network_type("medium")
