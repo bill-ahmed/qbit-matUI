@@ -11,7 +11,7 @@ export class NetworkConnectionInformationService {
   /** Recommended refresh interval for fetching new torrent data */
   private network_info = new BehaviorSubject<NetworkConnection>(null);
   private network_info_sub = this.network_info.asObservable();
-  private torrent_refresh_interval: number = 1000                         // Assume fastest connection
+  private torrent_refresh_interval: number = 1500                         // Assume fastest connection
   private auto_mode = true;                                              // Whether the interval should be calculated automatically or not
 
   constructor() {
@@ -58,7 +58,7 @@ export class NetworkConnectionInformationService {
    */
   public get_refresh_interval_from_network_type(net_type: NetworkType | "slowest" | "slow" | "medium" | "fastest"): number {
 
-    let result = 1000;
+    let result = 1500;
 
     switch (net_type) {
       case "slowest":

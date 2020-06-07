@@ -21,8 +21,34 @@ mat-table {
     overflow-y: scroll;
 }
 
-progress-bar {
+/** Progress bar components */
+.custom_progress_bar {
     width: 100%;
+
+    .ui-progressbar.ui-progressbar-determinate {
+      .ui-progressbar-label {
+        .white_label {
+          color: white
+        }
+        font-weight: 600;
+      }
+
+      .ui-progressbar-value {
+        background: #03A9F4;
+      }
+    }
+}
+
+.custom_progress_bar.white_label {
+  .ui-progressbar.ui-progressbar-determinate {
+    .ui-progressbar-label {
+      color: white
+    }
+  }
+}
+
+mat-header-row {
+  min-width: max-content;
 }
 
 .mat-row {
