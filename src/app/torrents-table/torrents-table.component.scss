@@ -26,9 +26,10 @@ mat-table {
     width: 100%;
 
     .ui-progressbar.ui-progressbar-determinate {
-      // background: #cfcfcf;
       .ui-progressbar-label {
-        color: black;
+        .white_label {
+          color: white
+        }
         font-weight: 600;
       }
 
@@ -36,6 +37,14 @@ mat-table {
         background: #03A9F4;
       }
     }
+}
+
+.custom_progress_bar.white_label {
+  .ui-progressbar.ui-progressbar-determinate {
+    .ui-progressbar-label {
+      color: white
+    }
+  }
 }
 
 mat-header-row {
