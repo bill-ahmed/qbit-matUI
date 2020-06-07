@@ -92,8 +92,8 @@
         <ng-container  matColumnDef="Progress">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Progress</mat-header-cell>
             <mat-cell *matCellDef="let torrent">
-                <progress-bar progress="{{torrent.progress * 100}}" [color]="'#03A9F4'">
-                </progress-bar>
+                <p-progressBar class="custom_progress_bar" [value]="(torrent.progress * 100).toFixed(2)">
+                </p-progressBar>
             </mat-cell>
         </ng-container>
 

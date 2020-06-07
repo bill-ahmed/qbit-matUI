@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MainData, Torrent, NetworkConnection, UserPreferences } from '../../utils/Interfaces';
 
 
@@ -30,7 +30,8 @@ import { ApplicationConfigService } from '../services/app/application-config.ser
 @Component({
   selector: 'app-torrents-table',
   templateUrl: './torrents-table.component.html',
-  styleUrls: ['./torrents-table.component.css']
+  styleUrls: ['./torrents-table.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class TorrentsTableComponent implements OnInit {
   public allTorrentInformation: MainData;
