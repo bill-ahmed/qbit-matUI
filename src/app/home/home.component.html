@@ -21,23 +21,19 @@
             <mat-icon>cloud_upload</mat-icon>
           </button>
 
-          <button mat-fab matTooltip="Logout" id="logoutFAB" color="warn" (click)="openAddTorrentDialog()">
-            <mat-icon>exit_to_app</mat-icon>
-          </button>
-
           <button class="hide_mobile" mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
             <mat-icon>cloud_upload</mat-icon>
             &nbsp; Upload
           </button>
 
-          <button disableRipple class="hide_mobile mat-elevation-z1" color="default" mat-fab [matMenuTriggerFor]="menu">
+          <button disableRipple class="mat-elevation-z1" color="default" mat-fab [matMenuTriggerFor]="menu">
             <mat-icon>person</mat-icon>
           </button>
 
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="openSettingsDialog()">
               <mat-icon>settings</mat-icon>
-              Settings
+              <span>Settings</span>
             </button>
 
             <button mat-menu-item (click)="$event.stopPropagation();handleSlideToggle()">
@@ -49,7 +45,7 @@
 
             <button mat-menu-item id="logoutButton" color="default" (click)="logout()">
               <mat-icon>exit_to_app</mat-icon>
-              Logout
+              <span>Logout</span>
             </button>
           </mat-menu>
 
