@@ -9,10 +9,10 @@
 
   mat-card {
     min-height: 400px;
-    min-width: 300px;
-    max-width: 400px;
+    min-width: 340px;
+    max-width: 450px;
 
-    width: 50%;
+    width: 60%;
 
     mat-card-content {
       height: 100%;
@@ -33,6 +33,15 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        mat-form-field {
+          width: 90%;
+          max-width: 280px;
+        }
+      }
+
+      #login_button {
+        margin-top: 10px;
       }
     }
   }

@@ -1,0 +1,25 @@
+@import '~@angular/material/theming';
+@import 'variables.scss';
+@include mat-core();
+
+/** Set primary, secondary and warn colour */
+$background-color:  white;
+
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+
+// Insert custom background color
+$background: map-get($my-app-theme, background);
+$background: map_merge($background, (background: $background-color));
+$my-app-theme: map_merge($my-app-theme, (background: $background));
+
+@include angular-material-theme($my-app-theme);
+
+/** Dark theme */
+.dark-theme {
+    color: $light-primary-text;
+    $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+    @include angular-material-theme($dark-theme);
+}
+
+/** Themes for specific material components */

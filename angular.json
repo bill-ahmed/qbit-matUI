@@ -159,7 +159,8 @@
               "projects/login/src/assets"
             ],
             "styles": [
-              "projects/login/src/styles.scss"
+              "projects/login/src/styles.scss",
+              "projects/login/src/theme.scss"
             ],
             "scripts": []
           },

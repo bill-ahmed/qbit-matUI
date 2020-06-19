@@ -1,22 +1,24 @@
 <div class="container">
-  <mat-card>
+  <mat-card class="mat-elevation-z3">
     <mat-card-content>
       <div class="card-header">
-        <h1>Login</h1>
+        <h1 style="color: #555560;">qBittorrent Web UI</h1>
         <mat-card-subtitle>Sign in below to continue.</mat-card-subtitle>
       </div>
 
       <div class="login-details">
-        <mat-form-field appearance="outline" id="username">
+        <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
-          <input matInput value="{{username}}" type="text">
+          <input matInput [(ngModel)]="username" value="{{username}}" type="text" id="username" name="username">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" id="password">
+        <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-          <input matInput type="password">
+          <input matInput [(ngModel)]="password" value="{{password}}" type="password" id="password" name="password">
         </mat-form-field>
       </div>
+
+      <button mat-flat-button style="font-size: medium;" id="login_button" color="primary">Login</button>
     </mat-card-content>
   </mat-card>
 </div>
