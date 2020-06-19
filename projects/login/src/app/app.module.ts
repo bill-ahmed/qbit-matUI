@@ -7,6 +7,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
 import { Routes, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 // Material Components
 import { MatButtonModule } from '@angular/material/button';
@@ -30,6 +31,7 @@ appRoutes = [
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     AppRoutingModule,
+    HttpClientModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,

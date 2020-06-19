@@ -6,7 +6,7 @@
         <mat-card-subtitle>Sign in below to continue.</mat-card-subtitle>
       </div>
 
-      <div class="login-details">
+      <div class="login-details" (keyup.enter)="login()">
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
           <input matInput [(ngModel)]="username" value="{{username}}" type="text" id="username" name="username">
@@ -18,7 +18,7 @@
         </mat-form-field>
       </div>
 
-      <button mat-flat-button style="font-size: medium;" id="login_button" color="primary">Login</button>
+      <button mat-flat-button style="font-size: medium;" id="login_button" color="primary" disabled="{{loading}}" (click)="login()">Login</button>
     </mat-card-content>
   </mat-card>
 </div>
