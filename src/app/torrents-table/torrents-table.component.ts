@@ -61,15 +61,19 @@ export class TorrentsTableComponent implements OnInit {
               private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService,
               private networkInfo: NetworkConnectionInformationService, private theme: ThemeService) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
+    // Themeing
+    this.isDarkTheme = this.theme.getThemeSubscription();
 
     // Subscribe to torrent searching service
     this.torrentSearchService.getSearchValue().subscribe((res: string) => {
       this.updateTorrentSearchValue(res);
     });
 
-    this.userPref = await this.appConfig.getUserPreferences();
+    // Get user preferences
+    this.appConfig.getUserPreferences().then(res => { this.userPref = res });
 
+    // Setup sorting and pagination
     this.dataSource.sort = this.sort;
     if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
       this.dataSource.paginator = this.paginator;
@@ -77,7 +81,7 @@ export class TorrentsTableComponent implements OnInit {
       this.pageSizeOptions.sort();
     }
 
-    // Retrieve all torrent data first, then  updated torrent data on interval
+    // Retrieve all torrent data first, then update torrent data on interval
     this.allTorrentData = null;
     this.filteredTorrentData = null;
     this.data_store.GetTorrentDataSubscription().subscribe(data => { if(data) { this.updateTorrentData(data) }})
@@ -90,9 +94,6 @@ export class TorrentsTableComponent implements OnInit {
         this.selection.clear();
       }
     });
-
-    // Themeing
-    this.isDarkTheme = this.theme.getThemeSubscription();
   }
 
   ngOnDestroy(): void { }
