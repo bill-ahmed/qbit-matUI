@@ -1,0 +1,6 @@
+{
+    "endpoints": {
+        "root": "/api/v2",
+        "login": "/auth/login"
+    }
+}
