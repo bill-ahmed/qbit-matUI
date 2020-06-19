@@ -15,7 +15,9 @@ export class LoginPageComponent implements OnInit {
   password: string = "";
 
   loginForm: FormGroup;
+  incorrect_creds = false;
   loading = false;
+
   http_endpoints: any;
 
   common_validations = [Validators.required];
@@ -36,6 +38,7 @@ export class LoginPageComponent implements OnInit {
 
   async login(): Promise<void> {
     this.loading = true;
+    this.incorrect_creds = false;
 
     console.log({username: this.username, password: this.password});
     let root = this.http_endpoints.root;
@@ -53,18 +56,14 @@ export class LoginPageComponent implements OnInit {
       //@ts-ignore
       let result = await this.http.post(url, body, options).toPromise() as String;
 
-      if(result === 'Fails.') {
-        alert('Incorect username/password')
-      } else {
-        window.location.reload();   // Successful
-      }
-    } catch (error) {
+      if(result === 'Fails.') { this.incorrect_creds = true; this.loading = false; }
+      else                    { window.location.reload(); }
+    }
+    catch (error) {
       // If 403, then too many login attmepts
       console.log("got error", error);
       alert("Too many login attempts!");
       window.location.reload();
-    } finally {
-      this.loading = false;
     }
   }
 

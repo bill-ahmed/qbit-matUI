@@ -21,6 +21,8 @@
       </div>
 
       <button mat-flat-button style="font-size: medium;" id="login_button" color="primary" disabled="{{loading || loginForm.invalid}}" (click)="login()">Login</button>
+
+      <mat-error style="margin-top: 30px;" *ngIf="incorrect_creds">Invalid Username or Password</mat-error>
     </mat-card-content>
   </mat-card>
 </div>
