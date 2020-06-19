@@ -14,12 +14,8 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 ## Demo!
 A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 
-<table>
-  <tr>
-    <img src="builds/images/login_page.jpg" width="50%"/>
-    <img src="builds/images/home_page.jpg" width="50%"/>
-  </tr>
-</table>
+<img src="builds/images/home_page.jpg" alt="Home Page"/>
+
 
 ## Installation -- Replacing your existing qBittorrent Web UI
 In order to use this version, first follow the instructions outlined [here (*)](https://github.com/qbittorrent/qBittorrent/wiki/Developing-alternate-WebUIs-(WIP)) and [here (**)](https://github.com/qbittorrent/qBittorrent/wiki/Alternate-WebUI-usage). This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
