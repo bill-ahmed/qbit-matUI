@@ -1,0 +1,39 @@
+.container {
+  width: 100%;
+  height: 90%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  mat-card {
+    min-height: 400px;
+    min-width: 300px;
+    max-width: 400px;
+
+    width: 50%;
+
+    mat-card-content {
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .card-header {
+        text-align: center;
+      }
+
+      .login-details {
+        margin-top: 30px;
+
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  }
+}
