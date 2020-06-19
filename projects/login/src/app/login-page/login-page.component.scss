@@ -3,7 +3,7 @@
 
 .container {
   width: 100%;
-  height: 90%;
+  height: 70%;
 
   display: flex;
   flex-direction: column;
@@ -16,8 +16,6 @@
     max-width: 450px;
 
     width: 60%;
-
-    border-left: 7px solid mat-color($my-app-primary);
 
     /*Animations short-hand: {duration} {timing-function} {dekay} {itetarion-count} {nameOfAnimation}*/
     animation: 0.4s ease-out 0s 1 slideInAndFadeFromBottom;
@@ -65,5 +63,24 @@
   100% {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+/** For phone screens */
+@media only screen and (max-width: 768px) {
+  .container {
+    height: 90%;
+  }
+
+  mat-card {
+    border-top: 7px solid mat-color($my-app-primary);
+    border-left: hidden;
+  }
+}
+
+/** For regular screens */
+@media only screen and (min-width: 769px) {
+  mat-card {
+    border-left: 7px solid mat-color($my-app-primary);
   }
 }

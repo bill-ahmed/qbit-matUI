@@ -40,7 +40,6 @@ export class LoginPageComponent implements OnInit {
     this.loading = true;
     this.incorrect_creds = false;
 
-    console.log({username: this.username, password: this.password});
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.login;
     let url = root + endpoint;
