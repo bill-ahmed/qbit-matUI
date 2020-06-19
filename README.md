@@ -6,6 +6,7 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 * Bulk edit (pause, resume, delete, prioritize, and more)
 * Sorting by different metrics (name, size, date completed, etc.)
 * File System Navigation (choose where to save a torrent, create sub-folders, etc.)
+* See torrent contents _before_ downloading
 * Manage local & qBittorrent preferences
 * A fully material-themed UI (Light & Dark themes)
 * ... and more!
@@ -13,7 +14,12 @@ An alternative Web Interface to the original [qBittorrent Web UI](https://github
 ## Demo!
 A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 
-![Home Page](/builds/images/home_page.jpg)
+<table>
+  <tr>
+    <img src="builds/images/login_page.jpg" width="50%"/>
+    <img src="builds/images/home_page.jpg" width="50%"/>
+  </tr>
+</table>
 
 ## Installation -- Replacing your existing qBittorrent Web UI
 In order to use this version, first follow the instructions outlined [here (*)](https://github.com/qbittorrent/qBittorrent/wiki/Developing-alternate-WebUIs-(WIP)) and [here (**)](https://github.com/qbittorrent/qBittorrent/wiki/Alternate-WebUI-usage). This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
@@ -24,8 +30,9 @@ Once you've completed that:
 
 2. Navigate to wherever you placed the `public`/`private` folder from [(*)](#replacing-your-existing-qbittorrent-web-ui)
 
+3. If you wish to replace the login page, replace all contents of `public` folder with the folder `public` in the downloaded `.zip` file.
 
-3. Replace all the contents of the `private` folder with the contents of the downloaded `.zip` file (alternatively, if you chose to build the app, copy over contents of `dist/` from the project directoy)
+4. Replace all the contents of the `private` folder with the folder `private` in the downloaded `.zip` file (alternatively, if you chose to build the app, copy over contents of `dist/` from the project directoy)
 
 
 # Development
@@ -51,10 +58,14 @@ To install the dependencies, run `npm install` in both the root directory and th
 2. Navigate to `http://localhost:4200/`
 3. Username: `admin`; Password: `password`; This can be changed under `mock_backend/config.json`
 
+To run the login page standalone, do: `ng serve login` and navigate to `http://localhost:4200/`.
+
 **Note**: Sometimes clicking the "Login" button will just refresh the page. If this happens, simply clear your cookies and try again.
 
 The app will automatically reload if you change any of the Angular source code.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build. 
+
+To get a build for the long page standalone, run `ng build --project="login"`, and provide the `--prod` flag for a production build.
