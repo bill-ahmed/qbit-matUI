@@ -6,19 +6,21 @@
         <mat-card-subtitle>Sign in below to continue.</mat-card-subtitle>
       </div>
 
-      <div class="login-details" (keyup.enter)="login()">
+      <div class="login-details" (keyup.enter)="login()" [formGroup]="loginForm">
         <mat-form-field appearance="outline">
           <mat-label>Username</mat-label>
-          <input matInput [(ngModel)]="username" value="{{username}}" type="text" id="username" name="username">
+          <input matInput required [(ngModel)]="username" value="{{username}}" formControlName="username" type="text" id="username" name="username">
+          <mat-error *ngIf="form_controls.password.invalid">Required</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Password</mat-label>
-          <input matInput [(ngModel)]="password" value="{{password}}" type="password" id="password" name="password">
+          <input matInput required [(ngModel)]="password" value="{{password}}" formControlName="password" type="password" id="password" name="password">
+          <mat-error *ngIf="form_controls.password.invalid">Required</mat-error>
         </mat-form-field>
       </div>
 
-      <button mat-flat-button style="font-size: medium;" id="login_button" color="primary" disabled="{{loading}}" (click)="login()">Login</button>
+      <button mat-flat-button style="font-size: medium;" id="login_button" color="primary" disabled="{{loading || loginForm.invalid}}" (click)="login()">Login</button>
     </mat-card-content>
   </mat-card>
 </div>

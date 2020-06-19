@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import * as http_config from '../../assets/http_config.json';
 import { IsDevEnv } from '../../utils/Environment';
@@ -14,17 +14,24 @@ export class LoginPageComponent implements OnInit {
   username: string = "";
   password: string = "";
 
+  loginForm: FormGroup;
   loading = false;
   http_endpoints: any;
 
+  common_validations = [Validators.required];
+
   form_controls = {
-    username: new FormControl(this.username),
-    password: new FormControl(this.password)
+    username: new FormControl(this.username, [...this.common_validations]),
+    password: new FormControl(this.password, [...this.common_validations])
   }
 
-  constructor(private http: HttpClient) { this.http_endpoints = http_config.endpoints; }
+  constructor(private http: HttpClient, private fb: FormBuilder) { this.http_endpoints = http_config.endpoints; }
 
   ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      username: [...this.common_validations],
+      password: [...this.common_validations]
+    });
   }
 
   async login(): Promise<void> {
@@ -40,13 +47,22 @@ export class LoginPageComponent implements OnInit {
     body.append('password', this.password);
 
     // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
+    let options = { responseType: 'text', withCredentials: true }
 
     try {
-      let result = await this.http.post<any>(url, body, options).toPromise();
-      console.log(result)
+      //@ts-ignore
+      let result = await this.http.post(url, body, options).toPromise() as String;
+
+      if(result === 'Fails.') {
+        alert('Incorect username/password')
+      } else {
+        window.location.reload();   // Successful
+      }
     } catch (error) {
       // If 403, then too many login attmepts
+      console.log("got error", error);
+      alert("Too many login attempts!");
+      window.location.reload();
     } finally {
       this.loading = false;
     }

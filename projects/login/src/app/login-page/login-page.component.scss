@@ -46,3 +46,28 @@
     }
   }
 }
+
+/*Rise up tranistion*/
+@keyframes slideInFromBottom{
+  0% {
+    transform: translateY(100%) rotate(20deg);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUpFromBottom{
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
