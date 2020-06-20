@@ -12,7 +12,7 @@ import { InfoSnackbarComponent } from './snackbar/info-snackbar/info-snackbar.co
 export class SnackbarService {
 
   /** Default duration to show snackbar, in milliseconds */
-  DEFUALT_DURATION = 3000;
+  DEFUALT_DURATION = 5000;
 
   DEFAULT_VERTICAL_POS = 'bottom' as MatSnackBarVerticalPosition
   DEFUALT_HORIZONTAL_POS = 'right' as MatSnackBarHorizontalPosition
