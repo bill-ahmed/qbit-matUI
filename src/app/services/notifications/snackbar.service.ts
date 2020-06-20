@@ -12,7 +12,7 @@ import { InfoSnackbarComponent } from './snackbar/info-snackbar/info-snackbar.co
 export class SnackbarService {
 
   /** Default duration to show snackbar, in milliseconds */
-  DEFUALT_DURATION = 3000;
+  DEFUALT_DURATION = 3000000;
 
   DEFAULT_VERTICAL_POS = 'bottom' as MatSnackBarVerticalPosition
   DEFUALT_HORIZONTAL_POS = 'right' as MatSnackBarHorizontalPosition
@@ -25,6 +25,13 @@ export class SnackbarService {
     'warn': WarnSnackbarComponent,
     'error': ErrorSnackbarComponent,
     'info': InfoSnackbarComponent
+  }
+
+  private _class_mapping = {
+    'success': 'snackbar-success',
+    'warn': 'snackbar-warn',
+    'error': 'snackbar-error',
+    'info': 'snackbar-info'
   }
 
 
@@ -45,7 +52,8 @@ export class SnackbarService {
         data: { message: message },
         duration: options?.duration || this.DEFUALT_DURATION,
         verticalPosition: options?.vertical_pos || this.DEFAULT_VERTICAL_POS,
-        horizontalPosition: options?.horizontal_pos || this.DEFUALT_HORIZONTAL_POS
+        horizontalPosition: options?.horizontal_pos || this.DEFUALT_HORIZONTAL_POS,
+        panelClass: [this._class_mapping[type]]
       }
     );
 

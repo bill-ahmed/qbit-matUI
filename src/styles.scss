@@ -73,6 +73,21 @@ body {
   }
 }
 
+/** Styles for SnackBar **/
+.snackbar-container {
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.snackbar-success { background: #4CAF50; }
+.snackbar-warn { background: #FF9800; }
+.snackbar-error { background: #F44336; }
+.snackbar-info { background: #2196F3; }
+
 /*** CUSTOM SCROLLBAR ***/
 ::-webkit-scrollbar {
   width: 5px;   /** Target vertical scroll-bars */
