@@ -1,100 +1,105 @@
 <div class="web_ui_settings_container">
-  <section>
-    <h2> Themeing </h2>
+  <mat-tab-group mat-align-tabs="start">
+    <mat-tab label="General">
+      <section>
+        <h2> Themeing </h2>
 
-    <div class="choose_theme">
-      <p> Choose a theme:  </p>
-      <mat-radio-group class="radio_group_options" [(ngModel)]="theme_settings.theme">
-        <mat-radio-button class="radio_options" color="accent" *ngFor="let option of theme_options" [value]="option">
-          {{option}}
-        </mat-radio-button>
-      </mat-radio-group>
-    </div>
-  </section >
-  <br/>
+        <div class="choose_theme">
+          <p> Choose a theme:  </p>
+          <mat-radio-group class="radio_group_options" [(ngModel)]="theme_settings.theme">
+            <mat-radio-button class="radio_options" color="accent" *ngFor="let option of theme_options" [value]="option">
+              {{option}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </section >
+      <br/>
+    </mat-tab>
 
-  <section>
-    <h2> Uploading Torrents </h2>
+    <mat-tab label="Torrents">
+      <section>
+        <h2> Uploading Torrents </h2>
 
-    <div class="field">
-      <mat-checkbox [(ngModel)]="torrent_upload_settings.show_parsed_torrents_from_file">Show torrent contents in file upload</mat-checkbox>
-    </div>
+        <div class="field">
+          <mat-checkbox [(ngModel)]="torrent_upload_settings.show_parsed_torrents_from_file">Show torrent contents in file upload</mat-checkbox>
+        </div>
 
-    <!-- <div class="field">
-      <mat-checkbox [(ngModel)]="torrent_upload_settings.show_parsed_torrents_from_magnet">Show torrent contents in magnet URL upload</mat-checkbox>
-    </div> -->
-  </section>
-  <br/>
+        <!-- <div class="field">
+          <mat-checkbox [(ngModel)]="torrent_upload_settings.show_parsed_torrents_from_magnet">Show torrent contents in magnet URL upload</mat-checkbox>
+        </div> -->
+      </section>
 
-  <section>
-    <h2> Torrent Table </h2>
+      <section>
+        <h2> Torrent Table </h2>
 
-    <mat-checkbox [(ngModel)]="torrent_table_settings.paginate">Paginate torrents</mat-checkbox>
+        <mat-checkbox [(ngModel)]="torrent_table_settings.paginate">Paginate torrents</mat-checkbox>
 
-    <div class="indented_field {{torrent_table_settings.paginate ? '' : 'disabled'}}">
-      <div class="field">
-        <mat-checkbox disabled={{!torrent_table_settings.paginate}} [(ngModel)]="torrent_table_settings.showFirstAndLastOptions">Show first and last page options</mat-checkbox>
-      </div>
+        <div class="indented_field {{torrent_table_settings.paginate ? '' : 'disabled'}}">
+          <div class="field">
+            <mat-checkbox disabled={{!torrent_table_settings.paginate}} [(ngModel)]="torrent_table_settings.showFirstAndLastOptions">Show first and last page options</mat-checkbox>
+          </div>
 
-      <div class="field">
-        <p>Default number of rows per page:</p>
-        <mat-form-field class="small_numeric_field">
-          <input matInput type="number" [(ngModel)]="torrent_table_settings.default_items_per_page" value="{{torrent_table_settings.default_items_per_page}}"
-                [formControl]="form_controls.default_items_per_page">
-        </mat-form-field>
-      </div>
-    </div>
-  </section>
-  <br/>
+          <div class="field">
+            <p>Default number of rows per page:</p>
+            <mat-form-field class="small_numeric_field">
+              <input matInput type="number" [(ngModel)]="torrent_table_settings.default_items_per_page" value="{{torrent_table_settings.default_items_per_page}}"
+                    [formControl]="form_controls.default_items_per_page">
+            </mat-form-field>
+          </div>
+        </div>
+      </section>
 
-  <section>
-    <h2> Torrent Data </h2>
+      <section>
+        <h2> Torrent Data </h2>
 
-    <div class="indented_field">
-      <div class="field">
-        <p>How often to refresh torrent data:</p>
-      </div>
-      <div class="field">
-        <mat-radio-group class="radio_group_options" [(ngModel)]="torrent_data_options.refresh_interval">
-          <mat-radio-button class="radio_options" color="accent" [value]="-1">
-            Auto (recommended)
-          </mat-radio-button>
+        <div class="indented_field">
+          <div class="field">
+            <p>How often to refresh torrent data:</p>
+          </div>
+          <div class="field">
+            <mat-radio-group class="radio_group_options" [(ngModel)]="torrent_data_options.refresh_interval">
+              <mat-radio-button class="radio_options" color="accent" [value]="-1">
+                Auto (recommended)
+              </mat-radio-button>
 
-          <mat-radio-button class="radio_options" matTooltip="Every 1 second" color="accent" [value]="1000">
-            Fastest
-          </mat-radio-button>
+              <mat-radio-button class="radio_options" matTooltip="Every 1 second" color="accent" [value]="1000">
+                Fastest
+              </mat-radio-button>
 
-          <mat-radio-button class="radio_options" matTooltip="Every 2 seconds" color="accent" [value]="2000">
-            Fast
-          </mat-radio-button>
+              <mat-radio-button class="radio_options" matTooltip="Every 2 seconds" color="accent" [value]="2000">
+                Fast
+              </mat-radio-button>
 
-          <mat-radio-button class="radio_options" matTooltip="Every 5 seconds" color="accent" [value]="5000">
-            Medium
-          </mat-radio-button>
+              <mat-radio-button class="radio_options" matTooltip="Every 5 seconds" color="accent" [value]="5000">
+                Medium
+              </mat-radio-button>
 
-          <mat-radio-button class="radio_options" matTooltip="Every 8 seconds" matTooltipPosition="right" color="accent" [value]="8000">
-            Slow
-          </mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-  </section>
-  <br/>
-  <br/>
+              <mat-radio-button class="radio_options" matTooltip="Every 8 seconds" matTooltipPosition="right" color="accent" [value]="8000">
+                Slow
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+      </section>
+      <br/>
+    </mat-tab>
 
-  <section>
-  <h2> File System </h2>
+    <mat-tab label="Other">
+      <section>
+        <h2> File System </h2>
 
-  <mat-checkbox [(ngModel)]="file_system_settings.use_alt_delimiter">Use Alternate File Path Delimiter</mat-checkbox>
+        <mat-checkbox [(ngModel)]="file_system_settings.use_alt_delimiter">Use Alternate File Path Delimiter</mat-checkbox>
 
-  <div class="indented_field {{file_system_settings.use_alt_delimiter ? '' : 'disabled'}}">
-    <div class="field">
-      <p>Delimiter to use:</p>
-      <mat-form-field class="small_numeric_field">
-        <input matInput type="text" [(ngModel)]="file_system_settings.delimiter" value="{{file_system_settings.delimiter}}">
-      </mat-form-field>
-    </div>
-  </div>
-  </section>
+        <div class="indented_field {{file_system_settings.use_alt_delimiter ? '' : 'disabled'}}">
+          <div class="field">
+            <p>Delimiter to use:</p>
+            <mat-form-field class="small_numeric_field">
+              <input matInput type="text" [(ngModel)]="file_system_settings.delimiter" value="{{file_system_settings.delimiter}}">
+            </mat-form-field>
+          </div>
+        </div>
+        </section>
+    </mat-tab>
+  </mat-tab-group>
 
 </div>
