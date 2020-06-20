@@ -80,7 +80,18 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
+
+  .message {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    p {
+      margin: 0;
+      margin-left: 5px;
+    }
+  }
 }
 
 .snackbar-success { background: #4CAF50; }
