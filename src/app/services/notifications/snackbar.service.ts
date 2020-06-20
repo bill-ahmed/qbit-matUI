@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition, MatSnackBarRef } from '@angular/material/snack-bar';
 
 import { SuccessSnackbarComponent } from './snackbar/success-snackbar/success-snackbar.component';
 import { WarnSnackbarComponent } from './snackbar/warn-snackbar/warn-snackbar.component';
@@ -12,7 +12,7 @@ import { InfoSnackbarComponent } from './snackbar/info-snackbar/info-snackbar.co
 export class SnackbarService {
 
   /** Default duration to show snackbar, in milliseconds */
-  DEFUALT_DURATION = 3000000;
+  DEFUALT_DURATION = 3000;
 
   DEFAULT_VERTICAL_POS = 'bottom' as MatSnackBarVerticalPosition
   DEFUALT_HORIZONTAL_POS = 'right' as MatSnackBarHorizontalPosition
@@ -34,6 +34,11 @@ export class SnackbarService {
     'info': 'snackbar-info'
   }
 
+  /** Keep track of which snackbars are rendering */
+  private _snackbar_open: MatSnackBarRef<unknown>;
+
+  /** Snackbars to render next */
+  private _snackbar_queue = [];
 
   constructor(private _snackBar: MatSnackBar) { }
 
@@ -47,7 +52,7 @@ export class SnackbarService {
     // If invalid snackbar type given, assume info
     let type = this._snackbar_mapping[options?.type] ? options?.type : this.DEFAULT_SNACKBAR_TYPE;
 
-    this._snackBar.openFromComponent(this._snackbar_mapping[type],
+    this._handleEnqueue(this._snackbar_mapping[type],
       {
         data: { message: message },
         duration: options?.duration || this.DEFUALT_DURATION,
@@ -56,7 +61,33 @@ export class SnackbarService {
         panelClass: [this._class_mapping[type]]
       }
     );
+  }
 
+  /** Given a snackbar ref, only enqueue  */
+  private _handleEnqueue(component: any, options: any) {
+    // If not snackbar currently open, then open one
+    if(!this._snackbar_open) {
+      this._snackbar_open = this._snackBar.openFromComponent(component, options);
+      this._snackbar_open.afterDismissed().subscribe(() => this._handleSnackBarClose());
+    }
+    else { // Otherwise one is already open, then add it to the queue
+      this._snackbar_queue.push([component, options]);
+    }
+  }
+
+  /** When snackbar closes, open the next in queue */
+  private _handleSnackBarClose() {
+    // If there are more snackbars to open
+    if(this._snackbar_queue.length > 0) {
+      let args = this._snackbar_queue.shift();
+      let component = args[0]
+      let options = args[1];
+
+      this._snackbar_open = this._snackBar.openFromComponent(component, options);
+      this._snackbar_open.afterDismissed().subscribe(() => this._handleSnackBarClose());
+    } else {
+      this._snackbar_open = null;
+    }
   }
 }
 
