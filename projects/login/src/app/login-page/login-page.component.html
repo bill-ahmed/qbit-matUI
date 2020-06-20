@@ -1,0 +1,28 @@
+<div class="container">
+  <mat-card class="mat-elevation-z3">
+    <mat-card-content>
+      <div class="card-header">
+        <h1 style="color: #555560;">qBittorrent Web UI</h1>
+        <mat-card-subtitle>Sign in below to continue.</mat-card-subtitle>
+      </div>
+
+      <div class="login-details" (keyup.enter)="login()" [formGroup]="loginForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput required [(ngModel)]="username" value="{{username}}" formControlName="username" type="text" id="username" name="username">
+          <mat-error *ngIf="form_controls.password.invalid">Required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput required [(ngModel)]="password" value="{{password}}" formControlName="password" type="password" id="password" name="password">
+          <mat-error *ngIf="form_controls.password.invalid">Required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <button mat-flat-button style="font-size: medium;" id="login_button" color="primary" disabled="{{loading || loginForm.invalid}}" (click)="login()">Login</button>
+
+      <mat-error style="margin-top: 30px;" *ngIf="incorrect_creds">Invalid Username or Password</mat-error>
+    </mat-card-content>
+  </mat-card>
+</div>

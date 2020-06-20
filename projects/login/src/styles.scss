@@ -1,0 +1,32 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body {
+  margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+/*** CUSTOM SCROLLBAR ***/
+::-webkit-scrollbar {
+  width: 5px;   /** Target vertical scroll-bars */
+  height: 5px;  /** Target horizontal scroll-bars */
+}
+
+/* Corner of the track (will sometimes show a small white square) */
+::-webkit-scrollbar-corner  {
+  background-color: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(131, 131, 131);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

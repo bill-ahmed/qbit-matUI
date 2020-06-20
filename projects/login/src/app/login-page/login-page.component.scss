@@ -1,0 +1,86 @@
+@import "~@angular/material/theming";
+@import '../../variables.scss';
+
+.container {
+  width: 100%;
+  height: 70%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  mat-card {
+    min-height: 400px;
+    min-width: 340px;
+    max-width: 450px;
+
+    width: 60%;
+
+    /*Animations short-hand: {duration} {timing-function} {dekay} {itetarion-count} {nameOfAnimation}*/
+    animation: 0.4s ease-out 0s 1 slideInAndFadeFromBottom;
+
+    mat-card-content {
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .card-header {
+        text-align: center;
+      }
+
+      .login-details {
+        margin-top: 30px;
+
+        width: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        mat-form-field {
+          width: 90%;
+          max-width: 280px;
+        }
+      }
+
+      #login_button {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+/*Rise up tranistion*/
+@keyframes slideInAndFadeFromBottom{
+  0% {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/** For phone screens */
+@media only screen and (max-width: 768px) {
+  .container {
+    height: 90%;
+  }
+
+  mat-card {
+    border-top: 7px solid mat-color($my-app-primary);
+    border-left: hidden;
+  }
+}
+
+/** For regular screens */
+@media only screen and (min-width: 769px) {
+  mat-card {
+    border-left: 7px solid mat-color($my-app-primary);
+  }
+}
