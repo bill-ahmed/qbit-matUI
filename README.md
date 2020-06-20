@@ -56,12 +56,10 @@ To install the dependencies, run `npm install` in both the root directory and th
 
 To run the login page standalone, do: `ng serve login` and navigate to `http://localhost:4200/`.
 
-**Note**: Sometimes clicking the "Login" button will just refresh the page. If this happens, simply clear your cookies and try again.
-
-The app will automatically reload if you change any of the Angular source code.
+The app will automatically reload if you make changes to any of the Angular source code.
 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build. 
 
-To get a build for the long page standalone, run `ng build --project="login"`, and provide the `--prod` flag for a production build.
+To get a build for the login page, run `ng build --project="login"`, and provide the `--prod` flag for a production build.
