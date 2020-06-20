@@ -32,12 +32,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatRippleModule } from '@angular/material/core';
@@ -116,12 +114,10 @@ if(!environment.production){
     MatDividerModule,
     MatTabsModule,
     MatChipsModule,
-    MatSidenavModule,
     MatListModule,
     MatSlideToggleModule,
     MatMenuModule,
     MatAutocompleteModule,
-    MatExpansionModule,
     MatBadgeModule,
     MatTreeModule,
     MatRippleModule,
