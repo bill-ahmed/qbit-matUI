@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_SNACK_BAR_DATA, MatSnackBarRef } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-success-snackbar',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SuccessSnackbarComponent implements OnInit {
 
-  constructor() { }
+  public message: string;
 
-  ngOnInit(): void {
+  constructor(@Inject(MAT_SNACK_BAR_DATA) private data: any, public snackBarRef: MatSnackBarRef<SuccessSnackbarComponent>) { this.message = this.data.message; }
+
+  ngOnInit(): void { }
+
+  dismiss() {
+    this.snackBarRef.dismiss();
   }
-
 }

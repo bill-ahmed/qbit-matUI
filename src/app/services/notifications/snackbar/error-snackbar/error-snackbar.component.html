@@ -1,1 +1,13 @@
-<p>error-snackbar works!</p>
+<div class="snackbar-container">
+  <div class="message">
+    <p>
+      {{message}}
+    </p>
+  </div>
+
+  <div class="actions">
+    <button mat-button (click)="dismiss()">
+      Okay
+    </button>
+  </div>
+</div>
