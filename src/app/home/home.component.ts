@@ -16,6 +16,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { SettingsComponent } from '../modals/settings/settings.component';
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
+import { SnackbarService } from '../services/notifications/snackbar.service';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,7 @@ export class HomeComponent implements OnInit {
   public isDarkTheme: Observable<boolean>;
 
   constructor(private data_store: TorrentDataStoreService, public dialog: MatDialog, private theme: ThemeService, private auth: AuthService,
-              private appConfig: ApplicationConfigService) {
+              private appConfig: ApplicationConfigService, public snackBar: SnackbarService) {
    }
 
   ngOnInit(): void {
