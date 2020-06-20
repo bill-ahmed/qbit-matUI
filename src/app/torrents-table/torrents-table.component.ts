@@ -73,7 +73,6 @@ export class TorrentsTableComponent implements OnInit {
     // Setup sorting and pagination
     this.dataSource.sort = this.sort;
     if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
-      this.dataSource.paginator = this.paginator;
       this.pageSizeOptions.push(this.userPref.web_ui_options.torrent_table.default_items_per_page);
       this.pageSizeOptions.sort();
     }
@@ -145,6 +144,10 @@ export class TorrentsTableComponent implements OnInit {
 
     // Filter by any search criteria
     this.updateTorrentsBasedOnSearchValue();
+
+    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   private updateTorrentSearchValue(val: string): void {
