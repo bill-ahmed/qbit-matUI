@@ -9,6 +9,7 @@ import { Torrent } from 'src/utils/Interfaces';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
+import { SnackbarService } from 'src/app/services/notifications/snackbar.service';
 
 @Component({
   selector: 'app-delete-torrent-dialog',
@@ -25,7 +26,7 @@ export class DeleteTorrentDialogComponent implements OnInit {
   public isDarkTheme: Observable<boolean>;
 
   constructor(private dialogRef:MatDialogRef<DeleteTorrentDialogComponent>, private TorrentService: TorrentDataHTTPService, @Inject(MAT_DIALOG_DATA) data,
-              private theme: ThemeService) {
+              private snackbar: SnackbarService, private theme: ThemeService) {
     this.torrentsToDelete = data.torrent;
    }
 
@@ -48,11 +49,13 @@ export class DeleteTorrentDialogComponent implements OnInit {
     this.TorrentService.DeleteTorrent(this.torrentsToDelete.map((elem) => elem.hash), this.deleteFilesOnDisk)
     .subscribe(
     (res: any) => {
+      this.snackbar.enqueueSnackBar("Successfully deleted torrent(s)", { type: 'warn' });
       this.finishCallback(res);
 
     },
     (error: any) => {
       console.error(error);
+      this.snackbar.enqueueSnackBar("Error deleting torrent(s), check the console log.", { type: 'error' })
       this.finishCallback(error);
 
     });
