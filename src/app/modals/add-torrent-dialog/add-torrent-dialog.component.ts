@@ -13,6 +13,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { TorrentParserService } from 'src/app/services/torrent-management/torrent-parser.service';
 import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
 import { WebUIUploadingSettings } from 'src/utils/Interfaces';
+import { SnackbarService } from 'src/app/services/notifications/snackbar.service';
 
 @Component({
   selector: 'app-add-torrent-dialog',
@@ -37,7 +38,7 @@ export class AddTorrentDialogComponent implements OnInit {
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
   constructor(private appConfig: ApplicationConfigService, private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService,
-              private torrentParser: TorrentParserService, public fileSystemDialog: MatDialog, private theme: ThemeService) { }
+              private torrentParser: TorrentParserService, public fileSystemDialog: MatDialog, public snackbar: SnackbarService, private theme: ThemeService) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
@@ -73,9 +74,11 @@ export class AddTorrentDialogComponent implements OnInit {
 
     try {
       let resp = await this.data_store.UploadTorrents(this.filesToUpload, this.filesDestination);
+      this.snackbar.enqueueSnackBar("Uploaded torrent(s).", { type: 'success' });
 
     } catch (error) {
       console.error('unable to upload files', error);
+      this.snackbar.enqueueSnackBar("Error uploding torrents, check console log for details.", { type: 'error' });
     }
   }
 
@@ -85,9 +88,11 @@ export class AddTorrentDialogComponent implements OnInit {
 
     try {
       let res = await this.data_store.UploadTorrentsFromMagnetURLs(urls, this.filesDestination).toPromise();
+      this.snackbar.enqueueSnackBar("Uploaded magnet URL(s).", { type: 'success' });
 
     } catch (error) {
       console.error('uploaded magnet URLs!', error);
+      this.snackbar.enqueueSnackBar("Error uploding torrents, check console log for details.", { type: 'error' });
     }
 
   }

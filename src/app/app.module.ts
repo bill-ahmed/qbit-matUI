@@ -32,12 +32,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatRippleModule } from '@angular/material/core';
@@ -56,6 +54,10 @@ import { DownloadSettingsComponent } from './modals/settings/download-settings/d
 import { SpeedSettingsComponent } from './modals/settings/speed-settings/speed-settings.component';
 import { AboutSettingsComponent } from './modals/settings/about-settings/about-settings.component';
 import { RssSettingsComponent } from './modals/settings/rss-settings/rss-settings.component';
+import { SuccessSnackbarComponent } from './services/notifications/snackbar/success-snackbar/success-snackbar.component';
+import { WarnSnackbarComponent } from './services/notifications/snackbar/warn-snackbar/warn-snackbar.component';
+import { ErrorSnackbarComponent } from './services/notifications/snackbar/error-snackbar/error-snackbar.component';
+import { InfoSnackbarComponent } from './services/notifications/snackbar/info-snackbar/info-snackbar.component';
 
 var appRoutes: Routes;
 
@@ -91,7 +93,11 @@ if(!environment.production){
     DownloadSettingsComponent,
     SpeedSettingsComponent,
     AboutSettingsComponent,
-    RssSettingsComponent
+    RssSettingsComponent,
+    SuccessSnackbarComponent,
+    WarnSnackbarComponent,
+    ErrorSnackbarComponent,
+    InfoSnackbarComponent
   ],
   imports: [
     BrowserModule,
@@ -116,12 +122,10 @@ if(!environment.production){
     MatDividerModule,
     MatTabsModule,
     MatChipsModule,
-    MatSidenavModule,
     MatListModule,
     MatSlideToggleModule,
     MatMenuModule,
     MatAutocompleteModule,
-    MatExpansionModule,
     MatBadgeModule,
     MatTreeModule,
     MatRippleModule,

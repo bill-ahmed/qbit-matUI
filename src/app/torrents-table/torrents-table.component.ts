@@ -6,10 +6,8 @@ import { MainData, Torrent, NetworkConnection, UserPreferences } from '../../uti
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatSpinner } from '@angular/material/progress-spinner';
-import { ProgressBarMode } from '@angular/material/progress-bar';
 
 // Helpers
-import * as http_endpoints from '../../assets/http_config.json';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DeleteTorrentDialogComponent } from '../modals/delete-torrent-dialog/delete-torrent-dialog.component';
 import { TorrentSearchServiceService } from '../services/torrent-search-service.service';
@@ -19,7 +17,6 @@ import { BulkUpdateTorrentsComponent } from './bulk-update-torrents/bulk-update-
 import { SelectionModel } from '@angular/cdk/collections';
 import { RowSelectionService } from '../services/torrent-management/row-selection.service';
 import { TorrentInfoDialogComponent } from '../modals/torrent-info-dialog/torrent-info-dialog.component';
-import { NetworkConnectionInformationService } from '../services/network/network-connection-information.service';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import { GetTorrentSearchName } from 'src/utils/Helpers';
@@ -59,7 +56,7 @@ export class TorrentsTableComponent implements OnInit {
   constructor(private appConfig: ApplicationConfigService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
               private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService,
-              private networkInfo: NetworkConnectionInformationService, private theme: ThemeService) { }
+              private theme: ThemeService) { }
 
   ngOnInit(): void {
     // Themeing
@@ -76,7 +73,6 @@ export class TorrentsTableComponent implements OnInit {
     // Setup sorting and pagination
     this.dataSource.sort = this.sort;
     if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
-      this.dataSource.paginator = this.paginator;
       this.pageSizeOptions.push(this.userPref.web_ui_options.torrent_table.default_items_per_page);
       this.pageSizeOptions.sort();
     }
@@ -148,6 +144,10 @@ export class TorrentsTableComponent implements OnInit {
 
     // Filter by any search criteria
     this.updateTorrentsBasedOnSearchValue();
+
+    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
+      this.dataSource.paginator = this.paginator;
+    }
   }
 
   private updateTorrentSearchValue(val: string): void {
