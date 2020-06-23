@@ -88,6 +88,12 @@ export class ApplicationConfigService {
     return this.user_preferences.web_ui_options.dark_mode_enabled;
   }
 
+  /** Various helper methods **/
+
+  canViewSnackbarNotification(): boolean {
+    return !!this.user_preferences.web_ui_options.notifications?.show_snack_notifications;
+  }
+
   private async updateUserPreferences() {
     let root = http_endpoints.endpoints.root;
     let endpoint = http_endpoints.endpoints.userPreferences;
