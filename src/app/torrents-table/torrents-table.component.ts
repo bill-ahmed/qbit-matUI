@@ -255,16 +255,20 @@ export class TorrentsTableComponent implements OnInit {
 
   public handleBulkEditChange(result?: string): void {
 
-    const _clearAndClose = () => {
-      //this.selection.clear();
+    const _close = () => {
       this._updateSelectionService();
+    }
+
+    const _clearAndClose = () => {
+      this.selection.clear();
+      _close();
     }
 
     // Depending on the result, we need to do different actions
     if(result) {
       switch (result) {
         case "cancel":
-          _clearAndClose();
+          _close();
           break;
         case "delete":
           this.openDeleteTorrentDialog(null, this.selection.selected);
@@ -272,41 +276,41 @@ export class TorrentsTableComponent implements OnInit {
 
         case "pause":
           this.pauseTorrentsBulk(this.selection.selected);
-          _clearAndClose();
+          _close();
           break;
 
         case "play":
           this.resumeTorrentsBulk(this.selection.selected);
-          _clearAndClose();
+          _close();
           break;
 
         case "forceStart":
           this.forceStartTorrentsBulk(this.selection.selected);
-          _clearAndClose();
+          _close();
 
         case "increasePrio":
           this.increasePriorityBulk(this.selection.selected);
-          _clearAndClose();
+          _close();
           break;
 
         case "decreasePrio":
           this.decreasePriorityBulk(this.selection.selected);
-          _clearAndClose();
+          _close();
           break;
 
         case "maxPrio":
           this.maximumPriorityBulk(this.selection.selected);
-          _clearAndClose();
+          _close();
           break;
 
         case "minPrio":
           this.minimumPriorityBulk(this.selection.selected);
-          _clearAndClose();
+          _close();
           break;
 
         case "moveTorrent":
           this.openMoveTorrentDialog();
-          _clearAndClose();
+          _close();
 
         default:
           break;
@@ -316,7 +320,8 @@ export class TorrentsTableComponent implements OnInit {
 
   torrentDeleteFinishCallback(): void {
     this.deleteTorDialogRef.close();
-    //this.ResetAllTableData();   // TODO: Once merging deleted torrent changes are included, this can be removed.
+    this.selection.clear();
+    this._updateSelectionService();
   }
 
   onMatSortChange(event: any): void {
