@@ -12,6 +12,15 @@
             </mat-radio-button>
           </mat-radio-group>
         </div>
+      </section>
+      <br/>
+
+      <section>
+        <h2> Notifications </h2>
+
+        <div class="field">
+          <mat-checkbox [(ngModel)]="notification_settings.show_snack_notifications">Show snackbar notifications</mat-checkbox>
+        </div>
       </section >
       <br/>
     </mat-tab>
