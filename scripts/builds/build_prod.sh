@@ -15,7 +15,7 @@ default_build_dir="dist/qbit-WebUI"
 
 # Names of each build
 win_build="qbit-matUI_Windows_$app_ver"
-unix_build="qbit-matUI_Other_OS_$app_ver"
+unix_build="qbit-matUI_Unix_$app_ver"
 login_build="login"
 
 # Step (0) -- Delete all existing builds
@@ -54,8 +54,8 @@ cp -r "$default_build_path/$login_build" "$default_build_path/$unix_build/public
 # Step (6) -- Compress both builds into .zip
 echo "Compressing builds..."
 pushd "$default_build_path" > /dev/null
-tar.exe -a -c -f "$win_build.zip" "$win_build"
-tar.exe -a -c -f "$unix_build.zip" "$unix_build"
+tar -a -c -f "$win_build.zip" "$win_build"
+tar -a -c -f "$unix_build.zip" "$unix_build"
 popd > /dev/null
 
 echo
