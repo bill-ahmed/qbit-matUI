@@ -5,6 +5,7 @@ import { SuccessSnackbarComponent } from './snackbar/success-snackbar/success-sn
 import { WarnSnackbarComponent } from './snackbar/warn-snackbar/warn-snackbar.component';
 import { ErrorSnackbarComponent } from './snackbar/error-snackbar/error-snackbar.component';
 import { InfoSnackbarComponent } from './snackbar/info-snackbar/info-snackbar.component';
+import { ApplicationConfigService } from '../app/application-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +41,7 @@ export class SnackbarService {
   /** Snackbars to render next */
   private _snackbar_queue = [];
 
-  constructor(private _snackBar: MatSnackBar) { }
+  constructor(private _snackBar: MatSnackBar, private appConfig: ApplicationConfigService) { }
 
   /** Display a snackbar with given message. By default an
    * info snackbar is shown.
@@ -48,6 +49,9 @@ export class SnackbarService {
    * @param options Addditional options to consider.
    */
   public enqueueSnackBar(message: string, options?: SnackBarOptions): void {
+
+    // If user chose not to view snackbar notifications, then don't enqueue them
+    if(!this.appConfig.canViewSnackbarNotification()) { return; }
 
     // If invalid snackbar type given, assume info
     let type = this._snackbar_mapping[options?.type] ? options?.type : this.DEFAULT_SNACKBAR_TYPE;

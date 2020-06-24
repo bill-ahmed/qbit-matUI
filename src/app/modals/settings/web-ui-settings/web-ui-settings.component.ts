@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
-import { WebUISettings, WebUITorrentTableSettings, WebUINetworkSettings, WebUIUploadingSettings } from 'src/utils/Interfaces';
+import { WebUISettings, WebUITorrentTableSettings, WebUINetworkSettings, WebUIUploadingSettings, WebUINotificationSettings } from 'src/utils/Interfaces';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -18,6 +18,7 @@ export class WebUiSettingsComponent implements OnInit {
   torrent_data_options:     WebUINetworkSettings        = { refresh_interval: -1, auto_refresh: false }
   torrent_upload_settings:  WebUIUploadingSettings      = { show_parsed_torrents_from_file: true, show_parsed_torrents_from_magnet: true }
   file_system_settings                                  = { use_alt_delimiter: false, delimiter: '/' };
+  notification_settings:    WebUINotificationSettings   = { show_snack_notifications: false }
 
   /** Validations */
   common_validators = [Validators.min(0)];
@@ -55,6 +56,8 @@ export class WebUiSettingsComponent implements OnInit {
       show_parsed_torrents_from_file: this.web_ui_options.upload_torrents?.show_parsed_torrents_from_file ?? true,
       show_parsed_torrents_from_magnet: true
     }
+
+    this.notification_settings = this.web_ui_options.notifications || this.notification_settings;
   }
 
   /** Inspect this component via ViewChild to get
@@ -73,7 +76,8 @@ export class WebUiSettingsComponent implements OnInit {
         auto_refresh: this.torrent_data_options.refresh_interval > -1,
         refresh_interval: this.torrent_data_options.refresh_interval
       },
-      upload_torrents: { ...this.torrent_upload_settings }
+      upload_torrents: { ...this.torrent_upload_settings },
+      notifications: this.notification_settings,
     }
   }
 

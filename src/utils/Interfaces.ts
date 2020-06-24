@@ -200,6 +200,7 @@ export interface WebUISettings {
   file_system?: WebUIFileSystemSettings
   network?: WebUINetworkSettings
   upload_torrents?: WebUIUploadingSettings
+  notifications?: WebUINotificationSettings;
 }
 
 export interface WebUIUploadingSettings {
@@ -222,4 +223,8 @@ export interface WebUITorrentTableSettings {
   paginate: boolean,
   default_items_per_page: number,
   showFirstAndLastOptions: boolean
+}
+
+export interface WebUINotificationSettings {
+  show_snack_notifications: boolean
 }
