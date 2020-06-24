@@ -319,7 +319,6 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   torrentDeleteFinishCallback(): void {
-    this.deleteTorDialogRef.close();
     this.selection.clear();
     this._updateSelectionService();
   }

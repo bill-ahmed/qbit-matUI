@@ -16,11 +16,13 @@ export class AboutSettingsComponent implements OnInit {
     this.qbit_mat_Ver = this.appConfig.getApplicationVersionString();
   }
 
-  async ngOnInit(): Promise<void> {
-    let buildInfo = await this.appConfig.getQbittorrentBuildInfo();
+  ngOnInit(): void {
+    this.appConfig.getQbittorrentBuildInfo()
+    .then(buildInfo => {
 
-    this.appVer = buildInfo.appVersion;
-    this.apiVer = buildInfo.apiVersion;
+      this.appVer = buildInfo.appVersion;
+      this.apiVer = buildInfo.apiVersion;
+
+    });
   }
-
 }
