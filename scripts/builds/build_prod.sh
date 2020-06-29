@@ -7,21 +7,25 @@
 # ***
 
 # Current application version -- SHOULD BE SAME AS IN app.config.json
-app_ver="1.6.1"
+app_ver="1.7.1"
 
 # Where the build is stored
 default_build_path="dist"
 default_build_dir="dist/qbit-WebUI"
 
+# Names of old builds
+win_build_base="qbit-matUI_Windows_"
+unix_build_base="qbit-matUI_Unix_"
+
 # Names of each build
-win_build="qbit-matUI_Windows_$app_ver"
-unix_build="qbit-matUI_Unix_$app_ver"
+win_build="$win_build_base$app_ver"
+unix_build="$unix_build_base$app_ver"
 login_build="login"
 
 # Step (0) -- Delete all existing builds
 echo "Deleting existing builds..."
-rm -rf "$default_build_path/$win_build" "$default_build_path/$win_build.zip"
-rm -rf "$default_build_path/$unix_build" "$default_build_path/$unix_build.zip"
+rm -rf "$default_build_path/$win_build_base"* "$default_build_path/$win_build_base"*.zip
+rm -rf "$default_build_path/$unix_build_base"* "$default_build_path/$unix_build_base"*.zip
 rm -rf "$default_build_path/$login_build"
 
 # Step (1) -- Build for Windows
