@@ -18,20 +18,16 @@ A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 
 
 ## Installation -- Replacing your existing qBittorrent Web UI
-In order to use this version, first follow the instructions outlined [here (*)](https://github.com/qbittorrent/qBittorrent/wiki/Developing-alternate-WebUIs-(WIP)) and [here (**)](https://github.com/qbittorrent/qBittorrent/wiki/Alternate-WebUI-usage). This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
-
-Once you've completed that:
+This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
 
 1. Take a production-ready build from [releases](https://github.com/bill-ahmed/qbit-material-WebUI/releases), or [build it yourself](#build)
+2. Extract the files into any folder
+3. In qBittorrent, under Tools > Options > Web UI > Use alternative Web UI, set the file location as the folder you created in Step 2.
+4. Done!
 
-2. Navigate to wherever you placed the `public`/`private` folder from [(*)](#replacing-your-existing-qbittorrent-web-ui)
+-----
 
-3. If you wish to replace the login page, replace all contents of `public` folder with the folder `public` in the downloaded `.zip` file.
-
-4. Replace all the contents of the `private` folder with the folder `private` in the downloaded `.zip` file (alternatively, if you chose to build the app, copy over contents of `dist/` from the project directoy)
-
-
-# Development
+## Development
 This app relies on a couple files to work properly.
 
 ### General Config
@@ -57,6 +53,8 @@ To install the dependencies, run `npm install` in both the root directory and th
 To run the login page standalone, do: `ng serve login` and navigate to `http://localhost:4200/`.
 
 The app will automatically reload if you make changes to any of the Angular source code.
+
+-----
 
 ## Build
 
