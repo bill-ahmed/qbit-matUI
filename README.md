@@ -1,6 +1,6 @@
 # Qbit Material WebUI <br/>[![Build Status](https://travis-ci.org/bill-ahmed/qbit-material-WebUI.svg?branch=master)](https://travis-ci.org/bill-ahmed/qbit-material-WebUI)
 
-An alternative Web Interface to the original [qBittorrent Web UI](https://github.com/qbittorrent/qBittorrent). This interface is very slimmed down and contains the following features
+An material-themed interface to the original [qBittorrent Web UI](https://github.com/qbittorrent/qBittorrent). This interface is more slimmed down, although still contains several features such as:
 
 * Adding/Deleting torrents
 * Bulk edit (pause, resume, delete, prioritize, and more)
@@ -18,7 +18,7 @@ A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 
 
 ## Installation -- Replacing your existing qBittorrent Web UI
-This app is tested with **API v2.2** and higher. Any lower version are not guaranteed to work.
+This app is tested with **v4.1.5** and higher of qBittorrent, any lower version are not guaranteed to work.
 
 1. Take a production-ready build from [releases](https://github.com/bill-ahmed/qbit-material-WebUI/releases), or [build it yourself](#build)
 2. Extract the files into any folder
