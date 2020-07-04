@@ -23,6 +23,25 @@
         </div>
       </section >
       <br/>
+
+      <mat-divider></mat-divider>
+      <br/>
+
+      <section style="display: flex;flex-direction: row;align-items: center;">
+        <h1 class="mat-error" style="margin: 0; font-weight: 600;"> Danger Zone </h1>
+        &nbsp; &nbsp;
+        <mat-icon color="error">warning</mat-icon>
+      </section>
+
+      <section>
+        <h2> Disable Material Web UI </h2>
+        <p> Note: To re-enable this Web UI, you can go to Tools > Options > Web UI > Use alternative Web UI</p>
+
+        <div class="field">
+          <button mat-raised-button (click)="_disableAlternateWebUI()" color="warn"> Disable Web UI </button>
+        </div>
+      </section >
+      <br/>
     </mat-tab>
 
     <mat-tab label="Torrents">

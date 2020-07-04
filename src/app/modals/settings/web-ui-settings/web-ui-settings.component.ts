@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
 import { WebUISettings, WebUITorrentTableSettings, WebUINetworkSettings, WebUIUploadingSettings, WebUINotificationSettings } from 'src/utils/Interfaces';
 import { FormControl, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-web-ui-settings',
@@ -28,7 +29,7 @@ export class WebUiSettingsComponent implements OnInit {
 
   private web_ui_options: WebUISettings;
 
-  constructor(private appConfig: ApplicationConfigService) { this.theme_options = ApplicationConfigService.THEME_OPTIONS }
+  constructor(private appConfig: ApplicationConfigService, private auth_service: AuthService) { this.theme_options = ApplicationConfigService.THEME_OPTIONS }
 
   ngOnInit(): void {
     this.web_ui_options = this.appConfig.getWebUISettings();
@@ -79,6 +80,10 @@ export class WebUiSettingsComponent implements OnInit {
       upload_torrents: { ...this.torrent_upload_settings },
       notifications: this.notification_settings,
     }
+  }
+
+  _disableAlternateWebUI() {
+    if(confirm('Are you sure you wish to disable this Web UI?')) { this.auth_service.DisabledAlternateWebUI(); }
   }
 
 }
