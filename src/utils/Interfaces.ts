@@ -216,15 +216,20 @@ export interface WebUINetworkSettings {
 }
 
 export interface WebUIFileSystemSettings {
-  delimiter: string
+  delimiter: string,
+  use_alt_delimiter: boolean
 }
 
 export interface WebUITorrentTableSettings {
   paginate: boolean,
   default_items_per_page: number,
+  default_sort_order: {
+    column_name: string,
+    order: 'asc' | 'desc'
+  },
   showFirstAndLastOptions: boolean
 }
 
 export interface WebUINotificationSettings {
-  show_snack_notifications: boolean
+  show_snack_notifications: boolean,
 }

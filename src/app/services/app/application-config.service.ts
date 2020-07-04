@@ -65,7 +65,8 @@ export class ApplicationConfigService {
   }
 
   getFileSystemDelimiter(): string | null {
-    return this.user_preferences.web_ui_options?.file_system?.delimiter;
+    let fs_opts = this.user_preferences.web_ui_options?.file_system
+    return fs_opts?.use_alt_delimiter ? fs_opts.delimiter : null;
   }
 
   setWebUIOptions(opt: WebUISettings) {
