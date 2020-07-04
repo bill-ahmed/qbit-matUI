@@ -135,6 +135,7 @@
     <mat-paginator class="{{!isLoading() && userPref.web_ui_options?.torrent_table?.paginate ? '' : 'hidden'}}"
                   [pageSize]="userPref.web_ui_options?.torrent_table?.default_items_per_page"
                   [pageSizeOptions]="pageSizeOptions"
+                  (page)="onPaignationPageChanged()"
                   showFirstLastButtons={{userPref.web_ui_options?.torrent_table?.showFirstAndLastOptions}}>
     </mat-paginator>
 

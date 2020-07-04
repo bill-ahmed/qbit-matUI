@@ -37,7 +37,9 @@ export class TorrentsTableComponent implements OnInit {
   public cookieValueSID: string;
   public isDarkTheme: Observable<boolean>;
   public userPref: UserPreferences = { } as UserPreferences;
-  public pageSizeOptions = [10, 25, 50, 100, 500];
+
+  public DEFUALT_PAGE_SIZE_OPTIONS = [10, 25, 50, 100, 500]
+  public pageSizeOptions = this.DEFUALT_PAGE_SIZE_OPTIONS;
   selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
@@ -129,6 +131,12 @@ export class TorrentsTableComponent implements OnInit {
 
   getCompletedOnString(timestamp: number): string {
     return this.pp.pretty_print_completed_on(timestamp);
+  }
+
+  onPaignationPageChanged() {
+    let items_per_page = this.userPref.web_ui_options.torrent_table.default_items_per_page;
+    this.pageSizeOptions = [...this.DEFUALT_PAGE_SIZE_OPTIONS, items_per_page]
+    this.pageSizeOptions.sort();
   }
 
   /** Get all torrent data and update the table */
