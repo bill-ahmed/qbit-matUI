@@ -7,12 +7,13 @@ import { ApplicationConfigService } from '../app/application-config.service';
   providedIn: 'root'
 })
 export class NetworkConnectionInformationService {
+  static DEFAULT_REFRESH_INTERVAL = 1500;
 
   /** Recommended refresh interval for fetching new torrent data */
   private network_info = new BehaviorSubject<NetworkConnection>(null);
   private network_info_sub = this.network_info.asObservable();
-  private torrent_refresh_interval: number = 1500                         // Assume fastest connection
-  private auto_mode = true;                                              // Whether the interval should be calculated automatically or not
+  private torrent_refresh_interval = NetworkConnectionInformationService.DEFAULT_REFRESH_INTERVAL;    // Assume fastest connection
+  private auto_mode = true;                                                                                   // Whether the interval should be calculated automatically or not
 
   constructor() {
     // @ts-ignore -- Ignoring because most browsers do support it; if they don't, we won't use it.
@@ -42,6 +43,7 @@ export class NetworkConnectionInformationService {
    * this interval may be overrided again in the future!
    */
   public setRefreshInterval(interval: number) {
+    console.log('set refresh interval of', interval)
     this.torrent_refresh_interval = interval;
     this.network_info.next(this.network_info.value);
   }

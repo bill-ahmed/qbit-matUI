@@ -110,10 +110,12 @@ export class ApplicationConfigService {
     this._persistQbitorrentPreferences();
     this._persistWebUIOptions();
 
+    console.log('network info', this.user_preferences.web_ui_options.network)
+
     // Network-related settings
     if(this.user_preferences.web_ui_options.network?.auto_refresh) {
       this.networkInfo.disableAutoMode();
-      this.networkInfo.setRefreshInterval(this.user_preferences.web_ui_options.network.refresh_interval);
+      this.networkInfo.setRefreshInterval(this.user_preferences.web_ui_options?.network?.refresh_interval || NetworkConnectionInformationService.DEFAULT_REFRESH_INTERVAL);
     }
   }
 
