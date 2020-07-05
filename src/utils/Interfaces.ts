@@ -1,3 +1,5 @@
+import { TORRENT_TABLE_COLUMNS } from 'src/app/services/app/application-config.service';
+
 export interface HttpConfigType{
     endpoints: {
         root: string,
@@ -224,7 +226,7 @@ export interface WebUITorrentTableSettings {
   paginate: boolean,
   default_items_per_page: number,
   default_sort_order: {
-    column_name: string,
+    column_name: TORRENT_TABLE_COLUMNS,
     order: 'asc' | 'desc'
   },
   showFirstAndLastOptions: boolean

@@ -12,7 +12,11 @@ import { NetworkConnectionInformationService } from 'src/app/services/network/ne
 })
 export class WebUiSettingsComponent implements OnInit {
   theme_options: string[];
+
   default_refresh_interval = NetworkConnectionInformationService.DEFAULT_REFRESH_INTERVAL;
+
+  // Column names have underscores as spaces
+  default_sort_options = ApplicationConfigService.TORRENT_TABLE_COLUMNS.map(column => column.replace(/_/g, ' ')).sort();
 
   /** Default settings */
   theme_settings = { theme: "" };
@@ -40,6 +44,7 @@ export class WebUiSettingsComponent implements OnInit {
   constructor(private appConfig: ApplicationConfigService, private auth_service: AuthService) { this.theme_options = ApplicationConfigService.THEME_OPTIONS }
 
   ngOnInit(): void {
+    console.log("can sort by", this.default_sort_options)
     this.web_ui_options = this.appConfig.getWebUISettings();
     this.theme_settings = {
       theme: this.web_ui_options.dark_mode_enabled ? 'Dark' : 'Light',
@@ -47,11 +52,11 @@ export class WebUiSettingsComponent implements OnInit {
 
     // Assign new values, if they exist
     // Using multiple splat operators lets us override default with what the user has already set
-    this.torrent_table_settings   =  { ...this.torrent_table_settings, ...this.web_ui_options?.torrent_table};
-    this.file_system_settings     =  { ...this.file_system_settings, ...this.web_ui_options?.file_system};
-    this.torrent_data_options     =  { ...this.torrent_data_options, ...this.web_ui_options?.network};
-    this.torrent_upload_settings  =  { ... this.torrent_upload_settings, ...this.web_ui_options?.upload_torrents};
-    this.notification_settings    =  { ...this.notification_settings, ...this.web_ui_options?.notifications};
+    this.torrent_table_settings   =  { ...this.torrent_table_settings,    ...this.web_ui_options?.torrent_table};
+    this.file_system_settings     =  { ...this.file_system_settings,      ...this.web_ui_options?.file_system};
+    this.torrent_data_options     =  { ...this.torrent_data_options,      ...this.web_ui_options?.network};
+    this.torrent_upload_settings  =  { ... this.torrent_upload_settings,  ...this.web_ui_options?.upload_torrents};
+    this.notification_settings    =  { ...this.notification_settings,     ...this.web_ui_options?.notifications};
   }
 
   /** Inspect this component via ViewChild to get

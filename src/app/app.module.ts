@@ -40,6 +40,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatRippleModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -130,6 +131,7 @@ if(!environment.production){
     MatTreeModule,
     MatRippleModule,
     MatRadioModule,
+    MatSelectModule,
     MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule

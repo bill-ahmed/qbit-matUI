@@ -43,7 +43,7 @@ export class TorrentsTableComponent implements OnInit {
   selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
-  public tableColumns: string[] = ["select", "Actions", "Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
+  public tableColumns: string[] = ["select", ...ApplicationConfigService.TORRENT_TABLE_COLUMNS];
   public dataSource = new MatTableDataSource(this.filteredTorrentData ? this.filteredTorrentData : []);
 
   // Other
