@@ -70,7 +70,7 @@ export class TorrentsTableComponent implements OnInit {
     });
 
     // Get user preferences
-    this.appConfig.getUserPreferences().then(res => { this.userPref = res });
+    this.appConfig.getUserPreferences().then(res => { this.setUserPreferences(res) });
 
     // Setup sorting and pagination
     this.dataSource.sort = this.sort;
@@ -332,6 +332,9 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   onMatSortChange(event: any): void {
+    // If data not yet loaded, exit
+    if(!this.filteredTorrentData) { return; }
+
     this.currentMatSort = event;
     switch (event.active) {
       case "Name":
@@ -363,6 +366,20 @@ export class TorrentsTableComponent implements OnInit {
         return;
     }
     this.refreshDataSource();
+  }
+
+  private setUserPreferences(pref: UserPreferences) {
+    this.userPref = pref;
+
+    let torren_table_pref = pref.web_ui_options?.torrent_table
+    let table_sort_opt = torren_table_pref.default_sort_order;
+    this.currentMatSort = {
+      active: table_sort_opt?.column_name.replace(/\s/, '_'),
+      direction: table_sort_opt?.order
+    } || this.currentMatSort
+
+    // Re-sort data
+    this.onMatSortChange(this.currentMatSort);
   }
 
   private sortTorrentsByName(direction: string): void {

@@ -23,25 +23,6 @@
         </div>
       </section >
       <br/>
-
-      <mat-divider></mat-divider>
-      <br/>
-
-      <section style="display: flex;flex-direction: row;align-items: center;">
-        <h1 class="mat-error" style="margin: 0; font-weight: 500;"> Danger Zone </h1>
-        &nbsp; &nbsp;
-        <mat-icon color="error">warning</mat-icon>
-      </section>
-
-      <section>
-        <h2> Disable Material Web UI </h2>
-        <p> Note: To re-enable this Web UI, you can go to Tools > Options > Web UI > Use alternative Web UI</p>
-
-        <div class="field">
-          <button mat-raised-button (click)="_disableAlternateWebUI()" color="warn"> Disable Web UI </button>
-        </div>
-      </section >
-      <br/>
     </mat-tab>
 
     <mat-tab label="Torrents">
@@ -113,7 +94,7 @@
         </div>
         <div class="field" style="justify-content: flex-start;">
           <mat-form-field>
-            <mat-label>Choose a column</mat-label>
+            <mat-label>Choose Column</mat-label>
             <mat-select [(value)]="torrent_table_settings.default_sort_order.column_name">
               <mat-option *ngFor="let column of default_sort_options" [value]="column">
                 {{ column }}
@@ -122,10 +103,10 @@
           </mat-form-field>
 
           <mat-form-field style="margin-left: 30px;">
-            <mat-label>Choose order</mat-label>
+            <mat-label>Choose Order</mat-label>
             <mat-select [(value)]="torrent_table_settings.default_sort_order.order">
-              <mat-option *ngFor="let order of ['asc', 'desc']" [value]="order">
-                {{ order }}
+              <mat-option *ngFor="let order of [['asc', 'Ascending'], ['desc', 'Descending']]" [value]="order[0]">
+                {{ order[1] }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -148,7 +129,27 @@
             </mat-form-field>
           </div>
         </div>
-        </section>
+      </section>
+      <br/>
+
+      <mat-divider></mat-divider>
+      <br/>
+
+      <section style="display: flex;flex-direction: row;align-items: center;">
+        <h1 class="mat-error" style="margin: 0; font-weight: 500;"> Danger Zone </h1>
+        &nbsp; &nbsp;
+        <mat-icon color="error">warning</mat-icon>
+      </section>
+
+      <section>
+        <h2> Disable Material Web UI </h2>
+        <p> Note: To re-enable this Web UI, you can go to Tools > Options > Web UI > Use alternative Web UI</p>
+
+        <div class="field">
+          <button mat-raised-button (click)="_disableAlternateWebUI()" color="warn"> Disable Web UI </button>
+        </div>
+      </section >
+      <br/>
     </mat-tab>
   </mat-tab-group>
 
