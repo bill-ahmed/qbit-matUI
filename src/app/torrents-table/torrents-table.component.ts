@@ -37,11 +37,13 @@ export class TorrentsTableComponent implements OnInit {
   public cookieValueSID: string;
   public isDarkTheme: Observable<boolean>;
   public userPref: UserPreferences = { } as UserPreferences;
-  public pageSizeOptions = [10, 25, 50, 100, 500];
+
+  public DEFUALT_PAGE_SIZE_OPTIONS = [10, 25, 50, 100, 500]
+  public pageSizeOptions = this.DEFUALT_PAGE_SIZE_OPTIONS;
   selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
-  public tableColumns: string[] = ["select", "Actions", "Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
+  public tableColumns: string[] = ["select", ...ApplicationConfigService.TORRENT_TABLE_COLUMNS];
   public dataSource = new MatTableDataSource(this.filteredTorrentData ? this.filteredTorrentData : []);
 
   // Other
@@ -68,7 +70,7 @@ export class TorrentsTableComponent implements OnInit {
     });
 
     // Get user preferences
-    this.appConfig.getUserPreferences().then(res => { this.userPref = res });
+    this.appConfig.getUserPreferences().then(res => { this.setUserPreferences(res) });
 
     // Setup sorting and pagination
     this.dataSource.sort = this.sort;
@@ -129,6 +131,12 @@ export class TorrentsTableComponent implements OnInit {
 
   getCompletedOnString(timestamp: number): string {
     return this.pp.pretty_print_completed_on(timestamp);
+  }
+
+  onPaignationPageChanged() {
+    let items_per_page = this.userPref.web_ui_options.torrent_table.default_items_per_page;
+    this.pageSizeOptions = [...this.DEFUALT_PAGE_SIZE_OPTIONS, items_per_page]
+    this.pageSizeOptions.sort();
   }
 
   /** Get all torrent data and update the table */
@@ -324,6 +332,9 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   onMatSortChange(event: any): void {
+    // If data not yet loaded, exit
+    if(!this.filteredTorrentData) { return; }
+
     this.currentMatSort = event;
     switch (event.active) {
       case "Name":
@@ -355,6 +366,20 @@ export class TorrentsTableComponent implements OnInit {
         return;
     }
     this.refreshDataSource();
+  }
+
+  private setUserPreferences(pref: UserPreferences) {
+    this.userPref = pref;
+
+    let torren_table_pref = pref.web_ui_options?.torrent_table
+    let table_sort_opt = torren_table_pref?.default_sort_order;
+    this.currentMatSort = table_sort_opt ? {
+      active: table_sort_opt.column_name.replace(/\s/, '_'),
+      direction: table_sort_opt.order
+    } : this.currentMatSort
+
+    // Re-sort data
+    this.onMatSortChange(this.currentMatSort);
   }
 
   private sortTorrentsByName(direction: string): void {

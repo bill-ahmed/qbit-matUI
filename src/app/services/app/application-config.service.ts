@@ -15,6 +15,7 @@ import { NetworkConnectionInformationService } from '../network/network-connecti
 export class ApplicationConfigService {
 
   static THEME_OPTIONS = ['Light', 'Dark'];
+  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS_RAW[] = ["Actions", "Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
 
   private application_version: string;
   private user_preferences: UserPreferences;
@@ -65,7 +66,8 @@ export class ApplicationConfigService {
   }
 
   getFileSystemDelimiter(): string | null {
-    return this.user_preferences.web_ui_options?.file_system?.delimiter;
+    let fs_opts = this.user_preferences.web_ui_options?.file_system
+    return fs_opts?.use_alt_delimiter ? fs_opts.delimiter : null;
   }
 
   setWebUIOptions(opt: WebUISettings) {
@@ -112,7 +114,7 @@ export class ApplicationConfigService {
     // Network-related settings
     if(this.user_preferences.web_ui_options.network?.auto_refresh) {
       this.networkInfo.disableAutoMode();
-      this.networkInfo.setRefreshInterval(this.user_preferences.web_ui_options.network.refresh_interval);
+      this.networkInfo.setRefreshInterval(this.user_preferences.web_ui_options?.network?.refresh_interval || NetworkConnectionInformationService.DEFAULT_REFRESH_INTERVAL);
     }
   }
 
@@ -124,3 +126,6 @@ export class ApplicationConfigService {
     localStorage.setItem('preferences', JSON.stringify({...this.user_preferences, web_ui_options: null}));
   }
 }
+
+export type TORRENT_TABLE_COLUMNS = 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down Speed' | 'Up Speed' | 'ETA' | 'Completed On';
+export type TORRENT_TABLE_COLUMNS_RAW = 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down_Speed' | 'Up_Speed' | 'ETA' | 'Completed_On';

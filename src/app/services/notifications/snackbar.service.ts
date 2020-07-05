@@ -50,8 +50,11 @@ export class SnackbarService {
    */
   public enqueueSnackBar(message: string, options?: SnackBarOptions): void {
 
-    // If user chose not to view snackbar notifications, then don't enqueue them
-    if(!this.appConfig.canViewSnackbarNotification()) { return; }
+    // If user chose not to view snackbar notifications, then don't enqueue them and instead log to console
+    if(!this.appConfig.canViewSnackbarNotification()) {
+      options?.type === 'error' ? console.error(message) : console.log(message);
+      return;
+    }
 
     // If invalid snackbar type given, assume info
     let type = this._snackbar_mapping[options?.type] ? options?.type : this.DEFAULT_SNACKBAR_TYPE;
