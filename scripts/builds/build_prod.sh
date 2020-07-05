@@ -7,7 +7,8 @@
 # ***
 
 # Current application version -- SHOULD BE SAME AS IN app.config.json
-app_ver="1.7.1"
+app_ver=$1
+echo "APP VERSION: $app_ver"
 
 # Where the build is stored
 default_build_path="dist"

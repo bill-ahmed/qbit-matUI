@@ -372,11 +372,11 @@ export class TorrentsTableComponent implements OnInit {
     this.userPref = pref;
 
     let torren_table_pref = pref.web_ui_options?.torrent_table
-    let table_sort_opt = torren_table_pref.default_sort_order;
-    this.currentMatSort = {
-      active: table_sort_opt?.column_name.replace(/\s/, '_'),
-      direction: table_sort_opt?.order
-    } || this.currentMatSort
+    let table_sort_opt = torren_table_pref?.default_sort_order;
+    this.currentMatSort = table_sort_opt ? {
+      active: table_sort_opt.column_name.replace(/\s/, '_'),
+      direction: table_sort_opt.order
+    } : this.currentMatSort
 
     // Re-sort data
     this.onMatSortChange(this.currentMatSort);
