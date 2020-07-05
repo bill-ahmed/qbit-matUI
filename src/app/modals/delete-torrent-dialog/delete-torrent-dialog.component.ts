@@ -32,7 +32,6 @@ export class DeleteTorrentDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
-    console.log(this.torrentsToDelete);
   }
 
   updateDeleteFilesFromDisk(event: MatCheckboxChange): void {

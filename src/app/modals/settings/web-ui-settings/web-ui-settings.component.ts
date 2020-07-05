@@ -44,7 +44,6 @@ export class WebUiSettingsComponent implements OnInit {
   constructor(private appConfig: ApplicationConfigService, private auth_service: AuthService) { this.theme_options = ApplicationConfigService.THEME_OPTIONS }
 
   ngOnInit(): void {
-    console.log("can sort by", this.default_sort_options)
     this.web_ui_options = this.appConfig.getWebUISettings();
     this.theme_settings = {
       theme: this.web_ui_options.dark_mode_enabled ? 'Dark' : 'Light',
