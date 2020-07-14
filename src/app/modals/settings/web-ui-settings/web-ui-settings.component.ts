@@ -4,6 +4,7 @@ import { WebUISettings, WebUITorrentTableSettings, WebUINetworkSettings, WebUIUp
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { NetworkConnectionInformationService } from 'src/app/services/network/network-connection-information.service';
+import { ApplicationDefaults } from 'src/app/services/app/defaults';
 
 @Component({
   selector: 'app-web-ui-settings',
@@ -20,18 +21,11 @@ export class WebUiSettingsComponent implements OnInit {
 
   /** Default settings */
   theme_settings = { theme: "" };
-  torrent_table_settings:   WebUITorrentTableSettings   = {
-    paginate: false, default_items_per_page: 10,
-    showFirstAndLastOptions: false,
-    default_sort_order: {
-      column_name: 'Completed On',
-      order: 'desc'
-    }
-  }
   torrent_data_options:     WebUINetworkSettings        = { refresh_interval: this.default_refresh_interval, auto_refresh: true }
-  torrent_upload_settings:  WebUIUploadingSettings      = { show_parsed_torrents_from_file: true, show_parsed_torrents_from_magnet: true }
-  file_system_settings:     WebUIFileSystemSettings     = { use_alt_delimiter: false, delimiter: '/' };
-  notification_settings:    WebUINotificationSettings   = { show_snack_notifications: false }
+  torrent_upload_settings:  WebUIUploadingSettings      = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS.upload_torrents;
+  file_system_settings:     WebUIFileSystemSettings     = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS.file_system;
+  torrent_table_settings:   WebUITorrentTableSettings   = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS.torrent_table;
+  notification_settings:    WebUINotificationSettings   = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS.notifications;
 
   /** Validations */
   common_validators = [Validators.min(0)];
@@ -69,6 +63,14 @@ export class WebUiSettingsComponent implements OnInit {
       network: {...this.torrent_data_options, auto_refresh: this.torrent_data_options.refresh_interval === this.default_refresh_interval},
       upload_torrents: this.torrent_upload_settings,
       notifications: this.notification_settings,
+    }
+  }
+
+  _resetAllSettings() {
+    if(confirm('Are you sure you want to RESET ALL WEB UI settings?')) {
+      // Reset & refresh for changes to take affect
+      this.appConfig.resetAllWebUISettings();
+      window.location.reload();
     }
   }
 

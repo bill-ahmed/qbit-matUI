@@ -7,6 +7,7 @@ import { TorrentDataStoreService } from '../torrent-management/torrent-data-stor
 import * as http_endpoints from '../../../assets/http_config.json';
 import { IsDevEnv } from 'src/utils/Environment';
 import { HttpClient } from '@angular/common/http';
+import { ApplicationDefaults } from './defaults';
 import { NetworkConnectionInformationService } from '../network/network-connection-information.service';
 
 @Injectable({
@@ -90,6 +91,15 @@ export class ApplicationConfigService {
     return this.user_preferences.web_ui_options.dark_mode_enabled;
   }
 
+  /** Erase all user settings for Web UI options,
+   * and replace with application defaults.
+   *
+   * NOTE: YOU CANNOT UNDO THIS ACTION
+   */
+  resetAllWebUISettings() {
+    this.setWebUIOptions(ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS);
+  }
+
   /** Various helper methods **/
 
   canViewSnackbarNotification(): boolean {
@@ -112,7 +122,7 @@ export class ApplicationConfigService {
     this._persistWebUIOptions();
 
     // Network-related settings
-    if(this.user_preferences.web_ui_options.network?.auto_refresh) {
+    if(!this.user_preferences.web_ui_options.network?.auto_refresh) {
       this.networkInfo.disableAutoMode();
       this.networkInfo.setRefreshInterval(this.user_preferences.web_ui_options?.network?.refresh_interval || NetworkConnectionInformationService.DEFAULT_REFRESH_INTERVAL);
     }

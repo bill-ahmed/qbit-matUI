@@ -142,13 +142,23 @@
       </section>
 
       <section>
+        <h2> Reset All Web UI Settings </h2>
+        <p> You cannot undo this action! </p>
+
+        <div class="field">
+          <button mat-raised-button (click)="_resetAllSettings()" color="warn"> Reset Web UI Settings </button>
+        </div>
+      </section>
+      <br/>
+
+      <section>
         <h2> Disable Material Web UI </h2>
         <p> Note: To re-enable this Web UI, you can go to Tools > Options > Web UI > Use alternative Web UI</p>
 
         <div class="field">
           <button mat-raised-button (click)="_disableAlternateWebUI()" color="warn"> Disable Web UI </button>
         </div>
-      </section >
+      </section>
       <br/>
     </mat-tab>
   </mat-tab-group>
