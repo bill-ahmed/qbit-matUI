@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-global-transfer-info',
   templateUrl: './global-transfer-info.component.html',
-  styleUrls: ['./global-transfer-info.component.css']
+  styleUrls: ['./global-transfer-info.component.scss']
 })
 export class GlobalTransferInfoComponent implements OnInit {
 

@@ -13,13 +13,13 @@
           <mat-list-item class="{{getClassForTab('web_ui')}}" (click)="onTabSelect('web_ui')">
             <mat-icon color="{{tab_selected === 'web_ui' ? 'primary' : ''}}" mat-list-icon>public</mat-icon>
             <div mat-line>Web UI</div>
-            <div mat-line>Options for this alternate UI</div>
+            <div mat-line>Options for this UI</div>
           </mat-list-item>
 
           <mat-list-item class="{{getClassForTab('downloads')}}" (click)="onTabSelect('downloads')">
             <mat-icon color="{{tab_selected === 'downloads' ? 'primary' : ''}}" mat-list-icon>get_app</mat-icon>
             <div mat-line>Downloads</div>
-            <div mat-line>Save paths, torrent queueing</div>
+            <div mat-line>Save path, queueing</div>
           </mat-list-item>
 
           <mat-list-item class="{{getClassForTab('speed')}}" (click)="onTabSelect('speed')">

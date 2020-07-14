@@ -1,39 +1,40 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="global-transfer-info-container mat-app-background">
-    <mat-card class="mat-elevation-z1 disks-transfer-information">
+    <mat-card class="mat-elevation-z1 data-container">
+      <section id="disk_summary">
         <h3>
-            <b>Disk Summary</b>
+          <b>Disk Summary</b>
         </h3>
-        
+
         <div>
             <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
-    
+
             <div *ngIf="!isLoading()" id="summaryContent">
                 <mat-icon color="primary">storage</mat-icon>
                 <h4>Free Space: {{getFreeSpaceOnDisk()}}</h4>
             </div>
         </div>
+      </section>
 
-    </mat-card>
-
-    <mat-card class="mat-elevation-z2 torrent-transfer-info-container">
+      <section id="global_transfer">
         <h3>
-            <b>Global Transfer</b>
+          <b>Global Transfer</b>
         </h3>
-    
+
         <div>
             <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
-    
+
             <div *ngIf="!isLoading()" id="summaryContent">
 
                 <mat-icon color="primary">arrow_downward</mat-icon>
                 <h4>{{getDownloadSpeedString()}} ({{getDownloadedString()}})</h4>
-    
+
                 <mat-divider id="summaryContentDivider" [vertical]="true"></mat-divider>
-    
+
                 <mat-icon color="accent">arrow_upward</mat-icon>
                 <h4>{{getUploadSpeedString()}} ({{getUploadedString()}})</h4>
-    
+
             </div>
         </div>
+      </section>
     </mat-card>
 </div>
