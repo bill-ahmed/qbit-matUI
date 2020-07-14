@@ -75,8 +75,7 @@ export class TorrentsTableComponent implements OnInit {
     // Setup sorting and pagination
     this.dataSource.sort = this.sort;
     if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
-      this.pageSizeOptions.push(this.userPref.web_ui_options.torrent_table.default_items_per_page);
-      this.pageSizeOptions.sort();
+      this.onPaignationPageChanged();
     }
 
     // Retrieve all torrent data first, then update torrent data on interval
@@ -136,6 +135,9 @@ export class TorrentsTableComponent implements OnInit {
   onPaignationPageChanged() {
     let items_per_page = this.userPref.web_ui_options.torrent_table.default_items_per_page;
     this.pageSizeOptions = [...this.DEFUALT_PAGE_SIZE_OPTIONS, items_per_page]
+
+    // Remove duplicates & sort
+    this.pageSizeOptions = [...new Set(this.pageSizeOptions)];
     this.pageSizeOptions.sort();
   }
 
