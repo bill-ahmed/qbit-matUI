@@ -101,7 +101,9 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
             <mat-cell *matCellDef="let torrent">
               <mat-chip-list>
-                <mat-chip color="{{torrent.state === 'downloading' ? 'primary' : isTorrentError(torrent) ? 'accent':'default'}}" disableRipple selected>{{getStatusString(torrent.state)}}</mat-chip>
+                <mat-chip color="{{torrent.state === 'downloading' ? 'primary' : isTorrentError(torrent) ? 'accent':'default'}}" disableRipple selected>
+                  {{torrent.force_start ? '[F]' : ''}} {{getStatusString(torrent.state)}}
+                </mat-chip>
               </mat-chip-list>
             </mat-cell>
         </ng-container>

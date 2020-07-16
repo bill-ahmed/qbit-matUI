@@ -64,7 +64,7 @@ export class UnitsHelperService {
 
     const S = {seconds: 1, type: "s", exclude_plural: true, exclude_space: true};
     const M = {seconds: 60, type: "min", exclude_plural: true};
-    const H = {seconds: 3600, type: "h", exclude_plural: true};
+    const H = {seconds: 3600, type: "h", exclude_plural: true, exclude_space: true};
     const D = {seconds: 86400, type: "day"};
     const W = {seconds: 604800, type: "week"};
 
