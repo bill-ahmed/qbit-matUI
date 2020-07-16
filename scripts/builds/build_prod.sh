@@ -59,8 +59,8 @@ cp -r "$default_build_path/$login_build" "$default_build_path/$unix_build/public
 # Step (6) -- Compress both builds into .zip
 echo "Compressing builds..."
 pushd "$default_build_path" > /dev/null
-tar -a -c -f "$win_build.zip" "$win_build"
-tar -a -c -f "$unix_build.zip" "$unix_build"
+tar -zcvf "$win_build.zip" "$win_build"
+tar -zcvf "$unix_build.zip" "$unix_build"
 popd > /dev/null
 
 echo
