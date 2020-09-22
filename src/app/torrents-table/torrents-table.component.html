@@ -4,11 +4,10 @@
     <mat-spinner diameter=50 *ngIf="isLoading()"></mat-spinner>
     <p id="loading_p" *ngIf="isLoading()">Loading...</p>
 
-    <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading()"></app-bulk-update-torrents>
+    <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading() && !isTorrentsEmpty()"></app-bulk-update-torrents>
 
     <!-- Table of torrent data -->
-    <mat-table *ngIf="!isLoading()" mat-table [dataSource]="dataSource" matSort (matSortChange)="onMatSortChange($event)" class="mat-elevation-z1">
-
+    <mat-table *ngIf="!isLoading() && !isTorrentsEmpty()" mat-table [dataSource]="dataSource" matSort (matSortChange)="onMatSortChange($event)" class="mat-elevation-z1">
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
             <mat-header-cell *matHeaderCellDef>
@@ -134,12 +133,16 @@
         <mat-header-row *matHeaderRowDef="tableColumns; sticky: true"></mat-header-row>
         <mat-row (click)="handleTorrentSelected(row)" *matRowDef="let row; columns: tableColumns"></mat-row>
     </mat-table>
-    <mat-paginator class="{{!isLoading() && userPref.web_ui_options?.torrent_table?.paginate ? '' : 'hidden'}}"
+    <mat-paginator class="{{!isLoading() && !isTorrentsEmpty() && userPref.web_ui_options?.torrent_table?.paginate ? '' : 'hidden'}}"
                   [pageSize]="userPref.web_ui_options?.torrent_table?.default_items_per_page"
                   [pageSizeOptions]="pageSizeOptions"
                   (page)="onPaignationPageChanged()"
                   showFirstLastButtons={{userPref.web_ui_options?.torrent_table?.showFirstAndLastOptions}}>
     </mat-paginator>
+
+    <div *ngIf="isTorrentsEmpty()">
+      <p> No torrents found. Try adding one by clicking Upload at the top-right. </p>
+    </div>
 
     <app-global-transfer-info *ngIf="!isLoading()"></app-global-transfer-info>
 </div>
