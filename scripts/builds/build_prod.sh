@@ -2,6 +2,10 @@
 # The only difference between them is the file path delimeter used, where
 # '\' is for Windows while '/' is for Unix-based systems.
 #
+# USAGE: build_prod <version_number>
+#
+#     Example: bash ./build_prod 1.5.3
+#
 # ***
 # NOTE: IT IS ASSUMED THIS SCRIPT IS RUN FROM THE PROJECT ROOT
 # ***
