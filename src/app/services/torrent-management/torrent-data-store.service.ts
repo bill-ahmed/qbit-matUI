@@ -154,7 +154,7 @@ export class TorrentDataStoreService {
   /** Clean the response given from server */
   private setFormattedResponse(data: MainData) {
 
-    let cleanTorrentData: [Torrent];
+    let cleanTorrentData: Torrent[] = [];
 
     // (1) If we already have some data, update it
     if(this.TorrentMainData) {

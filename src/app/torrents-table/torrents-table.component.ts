@@ -427,6 +427,10 @@ export class TorrentsTableComponent implements OnInit {
     return errors.includes(tor.state);
   }
 
+  public isTorrentsEmpty() {
+    return this.filteredTorrentData?.length === 0;
+  }
+
   private refreshDataSource(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.data = (this.filteredTorrentData ? this.filteredTorrentData : []);

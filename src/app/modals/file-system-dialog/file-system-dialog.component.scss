@@ -37,6 +37,36 @@ $border-dark: #494949;
       word-wrap: break-word;
     }
   }
+
+  .spacer {
+    flex-grow: 1;
+  }
+
+  .searchDirectoriesContainer {
+    width: 60%;
+    min-width: 100px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    #directorySearchInput {
+      font-size: 12pt;
+      letter-spacing: 0.06em;
+
+      border: 0px solid;
+      outline: none;
+
+      padding-bottom: 7px;
+      margin: 5px 5px 0 10px;
+
+      flex-grow: 1;
+
+      background: inherit;
+      color: inherit;
+  }
+  }
 }
 
 .leftNavigation {
@@ -60,7 +90,11 @@ $border-dark: #494949;
     max-width: 75%;
 
     .create-new-folder-input {
-      min-width: 60%;
+      min-width: 80%;
+      height: 50px;
+
+      padding: 10px;
+      padding-left: 20px;
     }
 }
 
