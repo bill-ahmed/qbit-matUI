@@ -43,7 +43,7 @@
                 <p *ngIf="rightPanelHasContent() && !isCreatingNewFolder">Create a folder with the "New Folder" button.</p>
 
                 <mat-list-item disableRipple *ngIf="isCreatingNewFolder">
-                  <mat-form-field class="create-new-folder-input">
+                  <mat-form-field id="create_new_folder_entry" class="create-new-folder-input">
                     <span matPrefix>
                       <mat-icon color="accent">create_new_folder</mat-icon>
                       &nbsp;
@@ -61,7 +61,7 @@
                 </mat-list-item>
 
                 <mat-nav-list role="list">
-                    <mat-list-item *ngFor="let dir of rightChildren" (click)="navigateToDir(dir, 'child')">
+                    <mat-list-item *ngFor="let dir of rightChildren" id={{dir.value}} (click)="navigateToDir(dir, 'child')">
                         <mat-icon color="accent" mat-list-icon>folder</mat-icon>
                         <div mat-line>{{dir.value}}</div>
                         <div mat-line>{{getNumChildrenString(dir)}}</div>

@@ -106,6 +106,10 @@ export class FileSystemDialogComponent implements OnInit {
     if (this.selectedDir != null) {
       try {
         this.selectedDir.addChild(name);
+
+        // Scroll to view new folder
+        setTimeout(() => { document.getElementById(name).scrollIntoView() }, 0);
+
       } catch (error) {
         if(error instanceof InvalidNameError) {
           alert(error.message);
@@ -125,6 +129,7 @@ export class FileSystemDialogComponent implements OnInit {
   /** Callback for when user decides to create a new folder */
   public handleCreateFolderAction(): void {
     this.isCreatingNewFolder = true;
+    setTimeout(() => { document.getElementById('create_new_folder_entry').scrollIntoView(); }, 0)
   }
 
   public handleFolderNameChange(event: any): void {
