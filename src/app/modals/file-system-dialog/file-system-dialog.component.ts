@@ -24,8 +24,11 @@ export class FileSystemDialogComponent implements OnInit {
   public isDarkTheme: Observable<boolean>;
   public isCreatingNewFolder: boolean = false;       // Keep track of when user wants to create a new folder
 
-  private newDirValue: string = ""                   // Name of new folder to create
-  private inputData: any;                            // Data passed in to this component
+  public searchQuery: string = "";
+
+  private _rightChildrenRaw: (DirectoryNode | FileNode)[] = [];
+  private newDirValue: string = ""          // Name of new folder to create
+  private inputData: any;                   // Data passed in to this component
 
   constructor(private dialogRef:MatDialogRef<FileSystemDialogComponent>, private fs: FileDirectoryExplorerService, private fs_service: FileSystemService,
               private theme: ThemeService, @Inject(MAT_DIALOG_DATA) inputData) { this.inputData = inputData; }
@@ -57,20 +60,21 @@ export class FileSystemDialogComponent implements OnInit {
     if(type === "parent") {
 
       let dirChosen = DirectoryNode.GetChildFromChildrenList(this.leftChildren, dir);
-      this.rightChildren = dirChosen.getChildren();
+      this._rightChildrenRaw = dirChosen.getChildren();
 
-      this.rightChildren.sort(Inode.sort());
+      this._rightChildrenRaw.sort(Inode.sort());
     }
     else if(type === "child") {
 
-      this.leftChildren = this.rightChildren as DirectoryNode[];
+      this.leftChildren = this._rightChildrenRaw as DirectoryNode[];
 
-      let dirChosen = DirectoryNode.GetChildFromChildrenList(this.rightChildren, dir);
-      this.rightChildren = dirChosen.getChildren();
-      this.rightChildren.sort(Inode.sort());
+      let dirChosen = DirectoryNode.GetChildFromChildrenList(this._rightChildrenRaw, dir);
+      this._rightChildrenRaw = dirChosen.getChildren();
+      this._rightChildrenRaw.sort(Inode.sort());
     }
 
     this.selectedDir = dir;
+    this.updateRightChildren();
   }
 
   public navigateUp(): void {
@@ -79,18 +83,20 @@ export class FileSystemDialogComponent implements OnInit {
 
     // If parent is not root, continue
     if(parent.getParent()) {
-      this.rightChildren = this.leftChildren;
+      this._rightChildrenRaw = this.leftChildren;
       this.leftChildren = parent.getParent().getChildren() as DirectoryNode[];
 
       this.leftChildren.sort(Inode.sort());
-      this.rightChildren.sort(Inode.sort());
+      this._rightChildrenRaw.sort(Inode.sort());
 
       this.selectedDir = parent;
     } else {
       // We're trying to go up to far, so reset the file explorer to how it looked initially
       this.selectedDir = null;
-      this.rightChildren = [];
+      this._rightChildrenRaw = [];
     }
+
+    this.updateRightChildren();
   }
 
   /** Create a new folder with given name in current directory */
@@ -123,7 +129,8 @@ export class FileSystemDialogComponent implements OnInit {
     else { alert("Can't create a directory at the root!"); }
 
     this.cancelFolderCreation();
-    this.rightChildren.sort(Inode.sort());
+    this._rightChildrenRaw.sort(Inode.sort());
+    this.updateRightChildren();
   }
 
   /** Callback for when user decides to create a new folder */
@@ -170,6 +177,37 @@ export class FileSystemDialogComponent implements OnInit {
     return len < 1 ? `Empty` : len === 1 ? `1 subfolder` : `${len} subfolders`
   }
 
+  /** Callback for when user changes search query */
+  public onSearchValueChange(event: any): void {
+    if(typeof event === 'string') { this.searchQuery = event }
+    else { this.searchQuery = event.target.value; }
+
+    this.updateRightChildren();
+  }
+
+  /** Update which right children to keep */
+  private updateRightChildren(): void {
+    this._filterRightChildren();
+    this.rightChildren.sort(Inode.sort());
+  }
+
+
+  /** Sort all the right children based on search query */
+  private _filterRightChildren(): void {
+    if(this.searchQuery.length > 0) {
+      this.rightChildren = this._rightChildrenRaw.filter(dir => { return dir.value.toLowerCase().includes(this.searchQuery.toLowerCase()) });
+    }
+    else {
+      this.rightChildren = this._rightChildrenRaw;
+    }
+  }
+
+  /** Clear any searched user is doing */
+  private clearSearchQuery() {
+    this.searchQuery = "";
+    this.updateRightChildren();
+  }
+
   /** Open the file system explorer to the initial folder passed in.
    * If no such folder exists, we will open the root instead.
    */
@@ -181,11 +219,11 @@ export class FileSystemDialogComponent implements OnInit {
     try {
       let new_root = FileSystemService.GetDirectoryByAbsolutePath(this.root, path, this.fs_service.getFileSystemDelimeter());
       this.leftChildren = new_root.getParent().getChildren() as DirectoryNode[];
-      this.rightChildren = new_root.getChildren();
+      this._rightChildrenRaw = new_root.getChildren();
       this.selectedDir = new_root;
 
       this.leftChildren.sort(Inode.sort());
-      this.rightChildren.sort(Inode.sort());
+      this._rightChildrenRaw.sort(Inode.sort());
 
       console.log("opened to initial path", path);
 
