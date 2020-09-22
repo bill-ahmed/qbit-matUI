@@ -55,6 +55,7 @@ export class FileSystemDialogComponent implements OnInit {
   public navigateToDir(dir: DirectoryNode, type: string): void {
 
     this.cancelFolderCreation();
+    this.clearSearchQuery();
 
     // Refresh children shown in right panel
     if(type === "parent") {
@@ -78,6 +79,7 @@ export class FileSystemDialogComponent implements OnInit {
   }
 
   public navigateUp(): void {
+    this.clearSearchQuery();
 
     let parent = this.leftChildren[0].getParent();
 
@@ -195,7 +197,13 @@ export class FileSystemDialogComponent implements OnInit {
   /** Sort all the right children based on search query */
   private _filterRightChildren(): void {
     if(this.searchQuery.length > 0) {
-      this.rightChildren = this._rightChildrenRaw.filter(dir => { return dir.value.toLowerCase().includes(this.searchQuery.toLowerCase()) });
+      const searchTerm = this.searchQuery.toLowerCase().trim();
+
+      this.rightChildren = this._rightChildrenRaw.filter(dir => {
+        let value = dir.value.toLowerCase().trim();
+
+        return value.includes(searchTerm)
+      });
     }
     else {
       this.rightChildren = this._rightChildrenRaw;
@@ -205,6 +213,7 @@ export class FileSystemDialogComponent implements OnInit {
   /** Clear any searched user is doing */
   private clearSearchQuery() {
     this.searchQuery = "";
+    (document.getElementById('directorySearchInput') as any).value = '';
     this.updateRightChildren();
   }
 
