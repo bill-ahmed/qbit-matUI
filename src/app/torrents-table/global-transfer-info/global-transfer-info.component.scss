@@ -16,16 +16,19 @@
         align-items: center;
         justify-content: space-between;
 
+        width: 50%;
         max-width: 680px;
-        min-width: 400px;
+        min-width: 410px;
       }
 
       #disk_summary {
         flex-grow: 0.5;
+        margin-right: 10px;
       }
 
       #global_transfer {
         flex-grow: 0.2;
+        margin-left: 10px;
       }
     }
 }
@@ -66,6 +69,8 @@ h3 {
 
         max-width: unset;
         width: 100%;
+
+        margin: 0;
       }
 
     }

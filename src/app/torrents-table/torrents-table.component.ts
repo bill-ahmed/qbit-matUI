@@ -428,7 +428,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   public isTorrentsEmpty() {
-    return this.filteredTorrentData.length === 0;
+    return this.filteredTorrentData?.length === 0;
   }
 
   private refreshDataSource(): void {
