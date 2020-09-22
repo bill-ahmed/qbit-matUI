@@ -60,7 +60,11 @@ $border-dark: #494949;
     max-width: 75%;
 
     .create-new-folder-input {
-      min-width: 60%;
+      min-width: 80%;
+      height: 50px;
+
+      padding: 10px;
+      padding-left: 20px;
     }
 }
 
