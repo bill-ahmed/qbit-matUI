@@ -234,6 +234,7 @@ export class FileSystemDialogComponent implements OnInit {
       this.leftChildren.sort(Inode.sort());
       this._rightChildrenRaw.sort(Inode.sort());
 
+      this._filterRightChildren();
       console.log("opened to initial path", path);
 
     } catch (error) {
