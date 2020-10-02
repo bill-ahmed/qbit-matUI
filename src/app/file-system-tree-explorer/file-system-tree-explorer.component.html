@@ -12,7 +12,7 @@
 
           <div class="grow">
             <div id="progress" *ngIf="showProgress">
-              Progress: {{getNodeProgress(node)}}%
+              Done: {{getNodeProgress(node)}}%
             </div>
 
             <div id="fileSize">
@@ -24,7 +24,7 @@
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
     <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-      <li>
+      <li class="file-node">
         <div (click)="toggleNode(node)" matRipple matTreeNodeToggle class="mat-tree-node">
           <button mat-icon-button matTreeNodeToggle id="expand_folder_button"
                   [attr.aria-label]="'toggle ' + node.name">
@@ -39,7 +39,7 @@
 
             <div class="grow">
               <div id="progress" *ngIf="showProgress">
-                Progress: {{getNodeProgress(node)}}%
+                Done: {{getNodeProgress(node)}}%
               </div>
 
               <div id="fileSize">

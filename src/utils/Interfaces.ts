@@ -147,7 +147,7 @@ export interface NetworkConnection {
     /** The estimated round-trip time of current connection; rounded to nearest 25 milliseconds */
     rtt: number,
     /** Estimated download bandwith, in megabits per second. */
-    downling: number,
+    downlink: number,
     /** Whether the user has enabled a reduced data option */
     saveData: boolean
 }

@@ -23,6 +23,10 @@ export class NetworkConnectionInformationService {
     }
   }
 
+  public getRefreshInterval(): number {
+    return this.torrent_refresh_interval;
+  }
+
   public get_recommended_torrent_refresh_interval(): number {
     return this.torrent_refresh_interval;
   }

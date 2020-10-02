@@ -1,12 +1,16 @@
 $border-dark: #6F6F6F;
 
 #bulk-update-card {
-  padding: 0 30px 0 30px;
+  padding: 0 20px 0 30px;
   margin-top: 30px;
 
   display: flex;
   flex-direction: row;
   align-items: baseline;
+}
+
+.spacer {
+  flex-grow: 1;
 }
 
 .mat-card-actions {
@@ -31,4 +35,11 @@ $border-dark: #6F6F6F;
 
 .mat-card-info button {
   margin-left: 20px;
+}
+
+.refresh-interval {
+  mat-chip {
+    letter-spacing: 0.05em;
+    border-radius: 0;
+  }
 }
