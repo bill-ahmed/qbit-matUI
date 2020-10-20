@@ -113,7 +113,9 @@ export class ApplicationConfigService {
 
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { } : { withCredentials: true }
-    let web_ui_options = this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web_ui_options'));
+
+    // Deep merge the properties using lodash
+    let web_ui_options =  { ...ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS, ...(this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web_ui_options'))) };
 
     this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
     this.user_preferences.web_ui_options = web_ui_options || { } as WebUISettings;

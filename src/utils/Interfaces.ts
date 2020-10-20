@@ -230,6 +230,7 @@ export interface WebUITorrentTableSettings {
     order: 'asc' | 'desc'
   },
   showFirstAndLastOptions: boolean
+  columns_to_show: string[]
 }
 
 export interface WebUINotificationSettings {

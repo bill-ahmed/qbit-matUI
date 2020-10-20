@@ -47,7 +47,7 @@ export class TorrentsTableComponent implements OnInit {
   public dataSource = new MatTableDataSource(this.filteredTorrentData ? this.filteredTorrentData : []);
 
   // For drag & drop of columns
-  public displayedColumns: string[] = ApplicationConfigService.TORRENT_TABLE_COLUMNS;
+  public displayedColumns: any[];
   public previousIndex: number;
 
   // Other
@@ -236,7 +236,7 @@ export class TorrentsTableComponent implements OnInit {
   public handleColumnDragStopped(event: CdkDropList, index: number) {
     if(event) {
       moveItemInArray(this.displayedColumns, this.previousIndex, index);
-      // this.setDisplayedColumns();
+      this.setDisplayedColumns();
     }
   }
 
@@ -352,7 +352,6 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   onMatSortChange(event: any): void {
-    console.log('sorting torrents', event);
     // If data not yet loaded, exit
     if(!this.filteredTorrentData) { return; }
 
@@ -404,12 +403,15 @@ export class TorrentsTableComponent implements OnInit {
       direction: table_sort_opt.order
     } : this.currentMatSort
 
+    // Column order
+    this.displayedColumns = pref.web_ui_options.torrent_table.columns_to_show;
+
     // Re-sort data
     this.onMatSortChange(this.currentMatSort);
   }
 
   /** Keep track of what columns we should display */
-  private setDisplayedColumns(colsChosen: string[]) {
+  private setDisplayedColumns() {
 
   }
 
