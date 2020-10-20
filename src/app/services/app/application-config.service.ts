@@ -18,6 +18,9 @@ export class ApplicationConfigService {
   static THEME_OPTIONS = ['Light', 'Dark'];
   static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS[] = ['select', 'Actions', 'Name', 'Size', 'Progress', 'Status', 'Down Speed', 'Up Speed', 'ETA', 'Completed On'];
 
+  /** All available columns for the torrent table */
+  static ALL_COLUMNS = ['select', 'Actions', 'Name', 'Size', 'Progress', 'Status', 'Down Speed', 'Up Speed', 'ETA', 'Completed On', 'Added On'];
+
   private application_version: string;
   private user_preferences: UserPreferences;
   private qBitBuildInfo: QbittorrentBuildInfo;

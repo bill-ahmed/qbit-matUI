@@ -17,7 +17,8 @@ export class WebUiSettingsComponent implements OnInit {
   default_refresh_interval = NetworkConnectionInformationService.DEFAULT_REFRESH_INTERVAL;
 
   // Column names have underscores as spaces
-  default_sort_options = ApplicationConfigService.TORRENT_TABLE_COLUMNS.map(column => column.replace(/_/g, ' ')).sort();
+  default_sort_options = ApplicationConfigService.TORRENT_TABLE_COLUMNS.sort();
+  all_torrent_table_columns = ApplicationConfigService.ALL_COLUMNS;
 
   /** Default settings */
   theme_settings = { theme: "" };

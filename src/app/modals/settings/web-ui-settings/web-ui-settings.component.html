@@ -111,6 +111,19 @@
             </mat-select>
           </mat-form-field>
         </div>
+        <br/>
+
+        <div class="field">
+          <p> Columns to Display </p>
+        </div>
+        <div class="field">
+          <mat-form-field>
+            <mat-label>Choose Columns</mat-label>
+            <mat-select [(value)]="torrent_table_settings.columns_to_show" multiple>
+              <mat-option *ngFor="let column of all_torrent_table_columns" [value]="column"> {{ column }} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </section>
       <br/>
     </mat-tab>
