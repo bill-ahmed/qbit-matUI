@@ -354,6 +354,13 @@ export class TorrentsTableComponent implements OnInit {
     if(!this.filteredTorrentData) { return; }
 
     this.currentMatSort = event;
+
+    /** NOTE: All cases that have a space character
+     * must ALSO account for the case where the spaces
+     * are replaced with underscored.
+     *
+     * EXAMPLE: "Last Updated At" --> "Last_Updated_At"
+     */
     switch (event.active) {
       case "Name":
         this.sortTorrentsByName(event.direction);
@@ -375,9 +382,11 @@ export class TorrentsTableComponent implements OnInit {
         this._sortByNumber("progress", event.direction);
         break;
       case "Down Speed":
+      case "Down_Speed":
         this._sortByNumber("dlspeed", event.direction);
         break;
       case "Up Speed":
+      case "Up_Speed":
         this._sortByNumber("upspeed", event.direction);
         break;
 
