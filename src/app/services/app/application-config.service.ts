@@ -16,7 +16,7 @@ import { NetworkConnectionInformationService } from '../network/network-connecti
 export class ApplicationConfigService {
 
   static THEME_OPTIONS = ['Light', 'Dark'];
-  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS_RAW[] = ["Actions", "Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
+  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS[] = ['select', 'Actions', 'Name', 'Size', 'Progress', 'Status', 'Down Speed', 'Up Speed', 'ETA', 'Completed On'];
 
   private application_version: string;
   private user_preferences: UserPreferences;
@@ -137,5 +137,5 @@ export class ApplicationConfigService {
   }
 }
 
-export type TORRENT_TABLE_COLUMNS = 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down Speed' | 'Up Speed' | 'ETA' | 'Completed On';
-export type TORRENT_TABLE_COLUMNS_RAW = 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down_Speed' | 'Up_Speed' | 'ETA' | 'Completed_On';
+export type TORRENT_TABLE_COLUMNS = 'select' | 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down Speed' | 'Up Speed' | 'ETA' | 'Completed On';
+export type TORRENT_TABLE_COLUMNS_RAW = 'select' | 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down_Speed' | 'Up_Speed' | 'ETA' | 'Completed_On';

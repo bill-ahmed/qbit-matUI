@@ -82,7 +82,7 @@
           </div>
 
           <div *ngIf="column === 'Up Speed'">
-            {{getTorrentETAString(torrent)}}
+            {{getFileSizeString(torrent.upspeed)}}/s
           </div>
 
           <div *ngIf="column === 'Completed On'">

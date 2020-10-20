@@ -21,7 +21,6 @@ import { TorrentInfoDialogComponent } from '../modals/torrent-info-dialog/torren
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import { GetTorrentSearchName } from 'src/utils/Helpers';
-import { TorrentColumnNameToFieldMapping } from 'src/utils/mappings';
 import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
@@ -48,13 +47,13 @@ export class TorrentsTableComponent implements OnInit {
   public dataSource = new MatTableDataSource(this.filteredTorrentData ? this.filteredTorrentData : []);
 
   // For drag & drop of columns
-  public displayedColumns: string[] = ['select', 'Actions', 'Name', 'Size', 'Progress', 'Status', 'Down Speed', 'Up Speed', 'ETA', 'Completed On'];
+  public displayedColumns: string[] = ApplicationConfigService.TORRENT_TABLE_COLUMNS;
   public previousIndex: number;
 
   // Other
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   private infoTorDialogRef: MatDialogRef<TorrentInfoDialogComponent, any>;
-  private currentMatSort = {active: "Completed_On", direction: "desc"};
+  private currentMatSort = {active: "Completed On", direction: "desc"};
   private torrentSearchValue = "";
   private torrentsSelected: Torrent[] = [];     // Keep track of which torrents are currently selected
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -119,14 +118,6 @@ export class TorrentsTableComponent implements OnInit {
 
   isTorrentPaused(tor: Torrent): boolean {
     return tor.state === "pausedDL" || tor.state === "pausedUP";
-  }
-
-  /** Get name of a field in a Torrent from a
-   * column name, e.g. Name -> 'name',
-   * Download Speed -> 'dlspeed', etc.
-   */
-  getFieldName(field: string) {
-    return TorrentColumnNameToFieldMapping[field];
   }
 
   getFileSizeString(size: number): string {
@@ -361,6 +352,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   onMatSortChange(event: any): void {
+    console.log('sorting torrents', event);
     // If data not yet loaded, exit
     if(!this.filteredTorrentData) { return; }
 
@@ -369,6 +361,7 @@ export class TorrentsTableComponent implements OnInit {
       case "Name":
         this.sortTorrentsByName(event.direction);
         break;
+      case "Completed On":
       case "Completed_On":
         this.sortTorrentsByCompletedOn(event.direction);
         break;
@@ -384,10 +377,10 @@ export class TorrentsTableComponent implements OnInit {
       case "Progress":
         this._sortByNumber("progress", event.direction);
         break;
-      case "Down_Speed":
+      case "Down Speed":
         this._sortByNumber("dlspeed", event.direction);
         break;
-      case "Up_Speed":
+      case "Up Speed":
         this._sortByNumber("upspeed", event.direction);
         break;
 
