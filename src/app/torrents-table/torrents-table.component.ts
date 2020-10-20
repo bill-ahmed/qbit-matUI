@@ -48,7 +48,6 @@ export class TorrentsTableComponent implements OnInit {
 
   // For drag & drop of columns
   public displayedColumns: any[];
-  public previousIndex: number;
 
   // Other
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
@@ -228,15 +227,13 @@ export class TorrentsTableComponent implements OnInit {
 
   /** Callback for when user begins to drag a column name */
   public handleColumnDragStarted(event: CdkDragStart, index: number) {
-    this.previousIndex = index;
     console.log('started draggin', index, event)
   }
 
   /** Callback for when user finished dragging & dropping a column */
-  public handleColumnDragStopped(event: CdkDropList, index: number) {
+  public handleColumnDragStopped(event: any) {
     if(event) {
-      moveItemInArray(this.displayedColumns, this.previousIndex, index);
-      this.setDisplayedColumns();
+      moveItemInArray(this.displayedColumns, event.previousIndex, event.currentIndex);
     }
   }
 
