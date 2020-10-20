@@ -4,8 +4,6 @@
   <mat-card-subtitle>Manage local and qBittorrent preferences. Clicking save will reload the page.</mat-card-subtitle>
 
   <mat-dialog-content class="mat-typography dialog_content">
-    <br/>
-
     <div class="content_container">
       <div class="settings_categories" mode="side" opened>
         <mat-nav-list [disableRipple]="true" role="list">
@@ -41,11 +39,11 @@
       </div>
 
       <div class="rightNavigation">
-        <app-web-ui-settings    class="{{tab_selected !== 'web_ui' ? 'hidden': ''}}"></app-web-ui-settings>
+        <app-web-ui-settings    class="{{tab_selected !== 'web_ui'    ? 'hidden': ''}}"></app-web-ui-settings>
         <app-download-settings  class="{{tab_selected !== 'downloads' ? 'hidden': ''}}"></app-download-settings>
-        <app-speed-settings     class="{{tab_selected !== 'speed' ? 'hidden': ''}}"></app-speed-settings>
-        <app-rss-settings       class="{{tab_selected !== 'rss' ? 'hidden': ''}}"></app-rss-settings>
-        <app-about-settings     class="{{tab_selected !== 'about' ? 'hidden': ''}}"></app-about-settings>
+        <app-speed-settings     class="{{tab_selected !== 'speed'     ? 'hidden': ''}}"></app-speed-settings>
+        <app-rss-settings       class="{{tab_selected !== 'rss'       ? 'hidden': ''}}"></app-rss-settings>
+        <app-about-settings     class="{{tab_selected !== 'about'     ? 'hidden': ''}}"></app-about-settings>
       </div>
     </div>
     <mat-divider></mat-divider>
