@@ -225,15 +225,11 @@ export class TorrentsTableComponent implements OnInit {
     this.data_store.AssignLowestPriority(tor).subscribe(res => { });
   }
 
-  /** Callback for when user begins to drag a column name */
-  public handleColumnDragStarted(event: CdkDragStart, index: number) {
-    console.log('started draggin', index, event)
-  }
-
   /** Callback for when user finished dragging & dropping a column */
   public handleColumnDragStopped(event: any) {
     if(event) {
       moveItemInArray(this.displayedColumns, event.previousIndex, event.currentIndex);
+      this.appConfig.setTorrentTableColumns(this.displayedColumns);
     }
   }
 

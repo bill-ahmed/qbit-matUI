@@ -38,7 +38,13 @@ export class ApplicationConfigService {
   /** If dark theme is enabled, then disable it in preferences. */
   setDarkThemeEnabled(val: boolean) {
     this.user_preferences.web_ui_options.dark_mode_enabled = val;
-    localStorage.setItem('web_ui_options', JSON.stringify(this.user_preferences.web_ui_options)); /** Info on dark theme is not stored in qBittorrent */
+    this._persistWebUIOptions()
+  }
+
+  /** Update which columns are chosen to be shown, as well as their order */
+  setTorrentTableColumns(cols: string[]) {
+    this.user_preferences.web_ui_options.torrent_table.columns_to_show = cols;
+    this._persistWebUIOptions();
   }
 
   async getQbittorrentBuildInfo(): Promise<QbittorrentBuildInfo> {
