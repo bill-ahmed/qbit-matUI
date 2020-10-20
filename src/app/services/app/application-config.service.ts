@@ -16,7 +16,11 @@ import { NetworkConnectionInformationService } from '../network/network-connecti
 export class ApplicationConfigService {
 
   static THEME_OPTIONS = ['Light', 'Dark'];
-  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS[] = ['Name', 'Size', 'Progress', 'Status', 'Down Speed', 'Up Speed', 'ETA', 'Completed On', 'Added On'];
+  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS[] = [
+    'Name', 'Size', 'Progress', 'Status',
+    'Down Speed', 'Up Speed', 'ETA',
+    'Completed On', 'Added On', 'Last Activity'
+  ];
 
   /** All available columns for the torrent table */
   static ALL_COLUMNS = ['select', 'Actions', ...ApplicationConfigService.TORRENT_TABLE_COLUMNS];
@@ -148,5 +152,5 @@ export class ApplicationConfigService {
   }
 }
 
-export type TORRENT_TABLE_COLUMNS = 'Name' | 'Size' | 'Progress' | 'Status' | 'Down Speed' | 'Up Speed' | 'ETA' | 'Completed On' | 'Added On';
-export type TORRENT_TABLE_COLUMNS_RAW = 'select' | 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down_Speed' | 'Up_Speed' | 'ETA' | 'Completed_On';
+export type TORRENT_TABLE_COLUMNS = 'Name' | 'Size' | 'Progress' | 'Status' | 'Down Speed' | 'Up Speed' | 'ETA' | 'Completed On' | 'Added On' | any;
+export type TORRENT_TABLE_COLUMNS_RAW = 'select' | 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down_Speed' | 'Up_Speed' | 'ETA' | 'Completed_On' | any;

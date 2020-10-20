@@ -24,13 +24,13 @@
             </mat-checkbox>
         </mat-header-cell>
 
-        <mat-cell *matCellDef="let torrent">
+        <mat-cell [ngSwitch]="column" *matCellDef="let torrent">
           <mat-checkbox *ngIf="column === 'select'" color="primary" (click)="$event.stopPropagation()"
                           (change)="$event ? handleTorrentSelected(torrent) : null"
                           [checked]="selection.isSelected(torrent)">
           </mat-checkbox>
 
-          <div *ngIf="column === 'Actions'">
+          <div *ngSwitchCase="'Actions'">
             <button color="warn" mat-icon-button matTooltip="Delete Torrent" matTooltipPosition="below" (click)="openDeleteTorrentDialog($event, [torrent])">
               <mat-icon>delete</mat-icon>
             </button>
@@ -50,19 +50,19 @@
             </button>
           </div>
 
-          <div *ngIf="column === 'Name'">
+          <div *ngSwitchCase="'Name'">
             {{torrent.name}}
           </div>
 
-          <div *ngIf="column === 'Size'">
+          <div *ngSwitchCase="'Size'">
             {{getFileSizeString(torrent.size)}}
           </div>
 
-          <p-progressBar class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}} {{column === 'Progress' ? '' : 'hidden'}}"
+          <p-progressBar *ngSwitchCase="'Progress'" class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"
               [value]="(torrent.progress * 100).toFixed(2)">
           </p-progressBar>
 
-          <div *ngIf="column === 'Status'">
+          <div *ngSwitchCase="'Status'">
             <mat-chip-list>
               <mat-chip color="{{torrent.state === 'downloading' ? 'primary' : isTorrentError(torrent) ? 'accent':'default'}}" disableRipple selected>
                 {{torrent.force_start ? '[F]' : ''}} {{getStatusString(torrent.state)}}
@@ -70,20 +70,28 @@
             </mat-chip-list>
           </div>
 
-          <div *ngIf="column === 'ETA'">
+          <div *ngSwitchCase="'ETA'">
             {{getTorrentETAString(torrent)}}
           </div>
 
-          <div *ngIf="column === 'Down Speed'">
+          <div *ngSwitchCase="'Down Speed'">
             {{getFileSizeString(torrent.dlspeed)}}/s
           </div>
 
-          <div *ngIf="column === 'Up Speed'">
+          <div *ngSwitchCase="'Up Speed'">
             {{getFileSizeString(torrent.upspeed)}}/s
           </div>
 
-          <div *ngIf="column === 'Completed On'">
+          <div *ngSwitchCase="'Completed On'">
             {{getCompletedOnString(torrent.completion_on)}}
+          </div>
+
+          <div *ngSwitchCase="'Added On'">
+            {{getCompletedOnString(torrent.added_on)}}
+          </div>
+
+          <div *ngSwitchCase="'Last Activity'">
+            {{getCompletedOnString(torrent.last_activity)}}
           </div>
         </mat-cell>
       </ng-container>

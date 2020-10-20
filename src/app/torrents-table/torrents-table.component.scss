@@ -114,7 +114,7 @@ mat-header-row {
 
 /** Sizes of each column */
 .mat-column-Name {
-    flex: 0 0 27% !important;
+    // flex: 0 0 27% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -137,7 +137,7 @@ mat-header-row {
 }
 
 .mat-column-Actions {
-    flex: 0 0 8% !important;
+    // flex: 0 0 8% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -151,7 +151,7 @@ mat-header-row {
 }
 
 .mat-column-Size {
-    flex: 0 0 5% !important;
+    // flex: 0 0 5% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -164,7 +164,7 @@ mat-header-row {
 }
 
 .mat-column-Progress {
-    flex: 0 0 12% !important;
+    // flex: 0 0 12% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -178,7 +178,7 @@ mat-header-row {
 }
 
 .mat-column-Status {
-    flex: 0 0 !important;
+    // flex: 0 0 !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -192,7 +192,7 @@ mat-header-row {
 }
 
 .mat-column-Down-Speed {
-    flex: 0 0 5% !important;
+    // flex: 0 0 5% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -204,7 +204,7 @@ mat-header-row {
 }
 
 .mat-column-Up-Speed {
-    flex: 0 0 5% !important;
+    // flex: 0 0 5% !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -216,7 +216,7 @@ mat-header-row {
 }
 
 .mat-column-ETA {
-    flex: 0 0 !important;
+    // flex: 0 0 !important;
     overflow-wrap: break-word;
 
     word-wrap: break-word;
@@ -230,7 +230,6 @@ mat-header-row {
     min-width: 140px;
 }
 
-
 .mat-column-Completed-On {
     overflow-wrap: break-word;
 
@@ -238,4 +237,22 @@ mat-header-row {
     word-break: break-word;
 
     min-width: 150px;
+}
+
+.mat-column-Added-On {
+  overflow-wrap: break-word;
+
+  word-wrap: break-word;
+  word-break: break-word;
+
+  min-width: 150px;
+}
+
+.mat-column-Last-Activity {
+  overflow-wrap: break-word;
+
+  word-wrap: break-word;
+  word-break: break-word;
+
+  min-width: 150px;
 }
