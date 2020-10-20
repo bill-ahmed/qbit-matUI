@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { CdkDragStart, CdkDropList, moveItemInArray } from "@angular/cdk/drag-drop";
 import { MainData, Torrent, NetworkConnection, UserPreferences } from '../../utils/Interfaces';
 
 
@@ -20,6 +21,7 @@ import { TorrentInfoDialogComponent } from '../modals/torrent-info-dialog/torren
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import { GetTorrentSearchName } from 'src/utils/Helpers';
+import { TorrentColumnNameToFieldMapping } from 'src/utils/mappings';
 import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
@@ -43,8 +45,11 @@ export class TorrentsTableComponent implements OnInit {
   selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
-  public tableColumns: string[] = ["select", ...ApplicationConfigService.TORRENT_TABLE_COLUMNS];
   public dataSource = new MatTableDataSource(this.filteredTorrentData ? this.filteredTorrentData : []);
+
+  // For drag & drop of columns
+  public displayedColumns: string[] = ['select', 'Actions', 'Name', 'Size', 'Progress', 'Status', 'Down Speed', 'Up Speed', 'ETA', 'Completed On'];
+  public previousIndex: number;
 
   // Other
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
@@ -114,6 +119,14 @@ export class TorrentsTableComponent implements OnInit {
 
   isTorrentPaused(tor: Torrent): boolean {
     return tor.state === "pausedDL" || tor.state === "pausedUP";
+  }
+
+  /** Get name of a field in a Torrent from a
+   * column name, e.g. Name -> 'name',
+   * Download Speed -> 'dlspeed', etc.
+   */
+  getFieldName(field: string) {
+    return TorrentColumnNameToFieldMapping[field];
   }
 
   getFileSizeString(size: number): string {
@@ -220,6 +233,20 @@ export class TorrentsTableComponent implements OnInit {
 
   minimumPriorityBulk(tor: Torrent[]) {
     this.data_store.AssignLowestPriority(tor).subscribe(res => { });
+  }
+
+  /** Callback for when user begins to drag a column name */
+  public handleColumnDragStarted(event: CdkDragStart, index: number) {
+    this.previousIndex = index;
+    console.log('started draggin', index, event)
+  }
+
+  /** Callback for when user finished dragging & dropping a column */
+  public handleColumnDragStopped(event: CdkDropList, index: number) {
+    if(event) {
+      moveItemInArray(this.displayedColumns, this.previousIndex, index);
+      // this.setDisplayedColumns();
+    }
   }
 
   /** Callback for when a torrent is selected in the table. Update row selection service with new data
@@ -370,6 +397,10 @@ export class TorrentsTableComponent implements OnInit {
     this.refreshDataSource();
   }
 
+  public shouldRenderColumn(col_name: string): boolean {
+    return this.displayedColumns.includes(col_name);
+  }
+
   private setUserPreferences(pref: UserPreferences) {
     this.userPref = pref;
 
@@ -382,6 +413,11 @@ export class TorrentsTableComponent implements OnInit {
 
     // Re-sort data
     this.onMatSortChange(this.currentMatSort);
+  }
+
+  /** Keep track of what columns we should display */
+  private setDisplayedColumns(colsChosen: string[]) {
+
   }
 
   private sortTorrentsByName(direction: string): void {
@@ -436,28 +472,8 @@ export class TorrentsTableComponent implements OnInit {
     this.dataSource.data = (this.filteredTorrentData ? this.filteredTorrentData : []);
   }
 
-  /** Reset all data in torrents table. This will also grab the entire
-   * torrent list again (rid = 0) via http request, and re-build the table.
-   *
-   * NOTE: THIS MAY CAUSE PERFORMANCE ISSUES -- USE ONLY WHEN NEEDED.
-   *
-   * @deprecated This method is no longer guaranteed to nuke the torrent table
-   */
-  private ResetAllTableData(): void {
-    this.handleBulkEditChange();
-    this.selection.clear();
-    this.torrentsSelectedService.clearSelection();
-
-    this.allTorrentInformation = null;
-    this.allTorrentData = null;
-    this.filteredTorrentData = null;
-
-    this.data_store.ResetAllData();
-  }
-
   /** Determine if table is loading data or not */
   isLoading(): boolean {
     return this.allTorrentData == null;
   }
-
 }
