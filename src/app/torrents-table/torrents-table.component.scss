@@ -57,11 +57,21 @@ mat-header-row {
 .mat-row {
     transition: background-color 0.15s ease;
     background-color: unset;
+
+    &.selected {
+      background-color: #f2f2f2;
+    }
 }
 
 .mat-row:hover {
     background-color: #f2f2f2;
 
+}
+
+.dark-theme .mat-row {
+  &.selected {
+    background-color: #5c5c5c;
+  }
 }
 
 .dark-theme .mat-row:hover {

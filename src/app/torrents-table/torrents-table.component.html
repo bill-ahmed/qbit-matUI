@@ -90,7 +90,7 @@
 
       <!-- Header row of table -->
       <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row (click)="handleTorrentSelected(row)" *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <mat-row (click)="handleTorrentSelected(row)" class="{{isSelected(row) ? 'selected' : ''}}" *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
     <mat-paginator class="{{!isLoading() && !isTorrentsEmpty() && userPref.web_ui_options?.torrent_table?.paginate ? '' : 'hidden'}}"
                   [pageSize]="userPref.web_ui_options?.torrent_table?.default_items_per_page"

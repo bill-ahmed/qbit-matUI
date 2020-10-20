@@ -241,6 +241,11 @@ export class TorrentsTableComponent implements OnInit {
     this._updateSelectionService();
   }
 
+  /** Determine whether a torrent is selected or not */
+  isSelected(tor: Torrent): boolean {
+    return this.selection.isSelected(tor);
+  }
+
   _updateSelectionService() {
     this.torrentsSelectedService.updateTorrentsSelected(this.selection.selected.map(elem => elem.hash));
   }
