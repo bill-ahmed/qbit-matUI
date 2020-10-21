@@ -55,6 +55,10 @@ export class TorrentsTableComponent implements OnInit {
   private currentMatSort = {active: "Completed On", direction: "desc"};
   private torrentSearchValue = "";
   private torrentsSelected: Torrent[] = [];     // Keep track of which torrents are currently selected
+
+  // Keep track of table header width, so the rows also match
+  public tableHeaderWidth: string = '-1px';
+
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
@@ -135,6 +139,11 @@ export class TorrentsTableComponent implements OnInit {
     return this.pp.pretty_print_completed_on(timestamp);
   }
 
+  setTableHeaderWidth() {
+    let elem = document.getElementById('torrent_table_header_row')
+    this.tableHeaderWidth = `${elem?.scrollWidth || -1}px`;
+  }
+
   onPaignationPageChanged() {
     let items_per_page = this.userPref.web_ui_options.torrent_table.default_items_per_page;
     this.pageSizeOptions = [...this.DEFUALT_PAGE_SIZE_OPTIONS, items_per_page]
@@ -161,6 +170,8 @@ export class TorrentsTableComponent implements OnInit {
     if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
       this.dataSource.paginator = this.paginator;
     }
+
+    this.setTableHeaderWidth();
   }
 
   private updateTorrentSearchValue(val: string): void {
@@ -415,11 +426,6 @@ export class TorrentsTableComponent implements OnInit {
 
     // Re-sort data
     this.onMatSortChange(this.currentMatSort);
-  }
-
-  /** Keep track of what columns we should display */
-  private setDisplayedColumns() {
-
   }
 
   private sortTorrentsByName(direction: string): void {

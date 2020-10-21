@@ -21,7 +21,7 @@ mat-spinner {
 
 mat-table {
     height: 73vh;
-    overflow-y: scroll;
+    overflow: scroll;
 }
 
 /** Progress bar components */
@@ -35,7 +35,10 @@ mat-table {
         }
         font-weight: 600;
       }
-
+      // #9DAFB8
+      .dark-theme .ui-progressbar-value{
+        background: #9DAFB8;
+      }
       .ui-progressbar-value {
         background: #03A9F4;
       }
@@ -50,11 +53,20 @@ mat-table {
   }
 }
 
+.dark-theme .custom_progress_bar {
+  .ui-progressbar.ui-progressbar-determinate {
+    .ui-progressbar-value {
+      background: #7abf7d;
+    }
+  }
+}
+
 mat-header-row {
   min-width: max-content;
 }
 
 .mat-row {
+  width: -1px;
     transition: background-color 0.15s ease;
     background-color: unset;
 
@@ -236,7 +248,7 @@ mat-header-row {
     word-wrap: break-word;
     word-break: break-word;
 
-    min-width: 150px;
+    min-width: 180px;
 }
 
 .mat-column-Added-On {
@@ -245,7 +257,7 @@ mat-header-row {
   word-wrap: break-word;
   word-break: break-word;
 
-  min-width: 150px;
+  min-width: 180px;
 }
 
 .mat-column-Last-Activity {
@@ -254,5 +266,5 @@ mat-header-row {
   word-wrap: break-word;
   word-break: break-word;
 
-  min-width: 150px;
+  min-width: 180px;
 }
