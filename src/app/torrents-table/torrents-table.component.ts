@@ -413,8 +413,6 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private setUserPreferences(pref: UserPreferences) {
-    pref = MergeDeep(ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS, pref) // Ensure all fields exist
-
     this.userPref = pref;
 
     let torren_table_pref = pref.web_ui_options?.torrent_table

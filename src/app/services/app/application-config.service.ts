@@ -40,7 +40,7 @@ export class ApplicationConfigService {
 
     this.user_preferences = { } as UserPreferences;
     this.user_preferences.web_ui_options = JSON.parse(localStorage.getItem('web_ui_options')) || { } as WebUISettings;
-    this.getUserPreferences();
+    this.updateUserPreferences();
   }
 
   /** If dark theme is enabled, then disable it in preferences. */
@@ -62,8 +62,10 @@ export class ApplicationConfigService {
   }
 
   async getUserPreferences(): Promise<UserPreferences> {
-    if(!this.user_preferences || !this.loaded_preferences) { this.loaded_preferences = true; await this.updateUserPreferences(); }
-
+    if(!this.user_preferences || !this.loaded_preferences) {
+      await this.updateUserPreferences();
+      this.loaded_preferences = true;
+    }
     return this.user_preferences;
   }
 
@@ -137,7 +139,7 @@ export class ApplicationConfigService {
      * takes over. This should help prevent breaking changes between
      * different Web UI versions as they become available.
      */
-    let web_ui_options =  MergeDeep(default_preferences, existing_preferences)
+    let web_ui_options = MergeDeep({ ...default_preferences }, existing_preferences)
 
     this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
     this.user_preferences.web_ui_options = web_ui_options || { } as WebUISettings;
@@ -150,6 +152,8 @@ export class ApplicationConfigService {
       this.networkInfo.disableAutoMode();
       this.networkInfo.setRefreshInterval(this.user_preferences.web_ui_options?.network?.refresh_interval || NetworkConnectionInformationService.DEFAULT_REFRESH_INTERVAL);
     }
+
+    this.loaded_preferences = true;
   }
 
   private async _persistWebUIOptions() {
