@@ -20,10 +20,11 @@ import { RowSelectionService } from '../services/torrent-management/row-selectio
 import { TorrentInfoDialogComponent } from '../modals/torrent-info-dialog/torrent-info-dialog.component';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
-import { GetTorrentSearchName } from 'src/utils/Helpers';
+import { GetTorrentSearchName, MergeDeep } from 'src/utils/Helpers';
 import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
+import { ApplicationDefaults } from '../services/app/defaults';
 
 @Component({
   selector: 'app-torrents-table',
@@ -412,6 +413,8 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   private setUserPreferences(pref: UserPreferences) {
+    pref = MergeDeep(ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS, pref) // Ensure all fields exist
+
     this.userPref = pref;
 
     let torren_table_pref = pref.web_ui_options?.torrent_table

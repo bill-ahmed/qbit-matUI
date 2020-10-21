@@ -9,6 +9,7 @@ import { IsDevEnv } from 'src/utils/Environment';
 import { HttpClient } from '@angular/common/http';
 import { ApplicationDefaults } from './defaults';
 import { NetworkConnectionInformationService } from '../network/network-connection-information.service';
+import { MergeDeep } from 'src/utils/Helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -128,7 +129,15 @@ export class ApplicationConfigService {
     let options = IsDevEnv() ? { } : { withCredentials: true }
 
     // Deep merge the properties using lodash
-    let web_ui_options =  { ...ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS, ...(this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web_ui_options'))) };
+    let existing_preferences = this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web_ui_options'))
+    let default_preferences = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS
+
+    /** Do a deep merge, such that existing_preferences take precedence.
+     * However, if a particular preference doens't exist, then the default
+     * takes over. This should help prevent breaking changes between
+     * different Web UI versions as they become available.
+     */
+    let web_ui_options =  MergeDeep(default_preferences, existing_preferences)
 
     this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
     this.user_preferences.web_ui_options = web_ui_options || { } as WebUISettings;
