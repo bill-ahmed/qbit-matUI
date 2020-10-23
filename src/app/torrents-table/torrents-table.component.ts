@@ -402,6 +402,16 @@ export class TorrentsTableComponent implements OnInit {
         this._sortByNumber("upspeed", event.direction);
         break;
 
+      case "Added On":
+      case "Added_On":
+        this._sortByNumber("added_on", event.direction);
+        break;
+
+      case "Last Activity":
+      case "Last_Activity":
+        this._sortByNumber("last_activity", event.direction);
+        break;
+
       default:
         return;
     }
