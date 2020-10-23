@@ -23,7 +23,7 @@
 
 .settings_categories, .rightNavigation {
   padding: 10px;
-  height: 90%;
+  height: 100%;
 }
 
 .settings_categories {
@@ -57,6 +57,8 @@
   min-height: 450px;
   overflow-y: scroll;
   max-width: 80%;
+
+  height: 100%;
 
   margin-left: 10px;
   padding: 0;

@@ -16,7 +16,8 @@ export class ApplicationDefaults {
       default_sort_order: {
         column_name: 'Completed On',
         order: 'desc'
-      }
+      },
+      columns_to_show: ['select', 'Actions', 'Name', 'Size', 'Progress', 'Status', 'Down Speed', 'Up Speed', 'ETA', 'Completed On']
     },
     upload_torrents: {
       show_parsed_torrents_from_file: true,

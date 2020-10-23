@@ -9,6 +9,7 @@ import { IsDevEnv } from 'src/utils/Environment';
 import { HttpClient } from '@angular/common/http';
 import { ApplicationDefaults } from './defaults';
 import { NetworkConnectionInformationService } from '../network/network-connection-information.service';
+import { MergeDeep } from 'src/utils/Helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,14 @@ import { NetworkConnectionInformationService } from '../network/network-connecti
 export class ApplicationConfigService {
 
   static THEME_OPTIONS = ['Light', 'Dark'];
-  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS_RAW[] = ["Actions", "Name", "Size", "Progress", "Status", "Down_Speed", "Up_Speed", "ETA", "Completed_On"];
+  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS[] = [
+    'Name', 'Size', 'Progress', 'Status',
+    'Down Speed', 'Up Speed', 'ETA',
+    'Completed On', 'Added On', 'Last Activity'
+  ];
+
+  /** All available columns for the torrent table */
+  static ALL_COLUMNS = ['select', 'Actions', ...ApplicationConfigService.TORRENT_TABLE_COLUMNS];
 
   private application_version: string;
   private user_preferences: UserPreferences;
@@ -32,13 +40,19 @@ export class ApplicationConfigService {
 
     this.user_preferences = { } as UserPreferences;
     this.user_preferences.web_ui_options = JSON.parse(localStorage.getItem('web_ui_options')) || { } as WebUISettings;
-    this.getUserPreferences();
+    this.updateUserPreferences();
   }
 
   /** If dark theme is enabled, then disable it in preferences. */
   setDarkThemeEnabled(val: boolean) {
     this.user_preferences.web_ui_options.dark_mode_enabled = val;
-    localStorage.setItem('web_ui_options', JSON.stringify(this.user_preferences.web_ui_options)); /** Info on dark theme is not stored in qBittorrent */
+    this._persistWebUIOptions()
+  }
+
+  /** Update which columns are chosen to be shown, as well as their order */
+  setTorrentTableColumns(cols: string[]) {
+    this.user_preferences.web_ui_options.torrent_table.columns_to_show = cols;
+    this._persistWebUIOptions();
   }
 
   async getQbittorrentBuildInfo(): Promise<QbittorrentBuildInfo> {
@@ -48,8 +62,10 @@ export class ApplicationConfigService {
   }
 
   async getUserPreferences(): Promise<UserPreferences> {
-    if(!this.user_preferences || !this.loaded_preferences) { this.loaded_preferences = true; await this.updateUserPreferences(); }
-
+    if(!this.user_preferences || !this.loaded_preferences) {
+      await this.updateUserPreferences();
+      this.loaded_preferences = true;
+    }
     return this.user_preferences;
   }
 
@@ -113,7 +129,17 @@ export class ApplicationConfigService {
 
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { } : { withCredentials: true }
-    let web_ui_options = this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web_ui_options'));
+
+    // Deep merge the properties using lodash
+    let existing_preferences = this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web_ui_options'))
+    let default_preferences = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS
+
+    /** Do a deep merge, such that existing_preferences take precedence.
+     * However, if a particular preference doens't exist, then the default
+     * takes over. This should help prevent breaking changes between
+     * different Web UI versions as they become available.
+     */
+    let web_ui_options = MergeDeep({ ...default_preferences }, existing_preferences)
 
     this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
     this.user_preferences.web_ui_options = web_ui_options || { } as WebUISettings;
@@ -126,6 +152,8 @@ export class ApplicationConfigService {
       this.networkInfo.disableAutoMode();
       this.networkInfo.setRefreshInterval(this.user_preferences.web_ui_options?.network?.refresh_interval || NetworkConnectionInformationService.DEFAULT_REFRESH_INTERVAL);
     }
+
+    this.loaded_preferences = true;
   }
 
   private async _persistWebUIOptions() {
@@ -137,5 +165,5 @@ export class ApplicationConfigService {
   }
 }
 
-export type TORRENT_TABLE_COLUMNS = 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down Speed' | 'Up Speed' | 'ETA' | 'Completed On';
-export type TORRENT_TABLE_COLUMNS_RAW = 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down_Speed' | 'Up_Speed' | 'ETA' | 'Completed_On';
+export type TORRENT_TABLE_COLUMNS = 'Name' | 'Size' | 'Progress' | 'Status' | 'Down Speed' | 'Up Speed' | 'ETA' | 'Completed On' | 'Added On' | any;
+export type TORRENT_TABLE_COLUMNS_RAW = 'select' | 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down_Speed' | 'Up_Speed' | 'ETA' | 'Completed_On' | any;
