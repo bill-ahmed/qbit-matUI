@@ -136,6 +136,14 @@ export class TorrentsTableComponent implements OnInit {
     return this.pp.pretty_print_eta(tor);
   }
 
+  getTorrentUploadedString(tor: Torrent): string {
+    return this.pp.pretty_print_uploaded(tor);
+  }
+
+  getTorrentRatioString(tor: Torrent): number {
+    return this.pp.pretty_print_ratio(tor);
+  }
+
   getCompletedOnString(timestamp: number): string {
     return this.pp.pretty_print_completed_on(timestamp);
   }
@@ -390,6 +398,12 @@ export class TorrentsTableComponent implements OnInit {
       case "ETA":
         this.sortByETA(event.direction);
         break;
+      case "Uploaded":
+        this.sortByUploaded(event.direction);
+        break;
+      case "Ratio":
+        this.sortByRatio(event.direction);
+        break;
       case "Progress":
         this._sortByNumber("progress", event.direction);
         break;
@@ -465,6 +479,14 @@ export class TorrentsTableComponent implements OnInit {
 
   private sortByETA(direction: string): void {
     this._sortByNumber("eta", direction);
+  }
+
+  private sortByUploaded(direction: string): void {
+    this._sortByNumber("uploaded", direction);
+  }
+
+  private sortByRatio(direction: string): void {
+    this._sortByNumber("ratio", direction);
   }
 
   /** Sort a object's property that is a number */

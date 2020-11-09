@@ -20,6 +20,7 @@ export class ApplicationConfigService {
   static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS[] = [
     'Name', 'Size', 'Progress', 'Status',
     'Down Speed', 'Up Speed', 'ETA',
+    'Ratio', 'Uploaded',
     'Completed On', 'Added On', 'Last Activity'
   ];
 
@@ -165,5 +166,5 @@ export class ApplicationConfigService {
   }
 }
 
-export type TORRENT_TABLE_COLUMNS = 'Name' | 'Size' | 'Progress' | 'Status' | 'Down Speed' | 'Up Speed' | 'ETA' | 'Completed On' | 'Added On' | any;
-export type TORRENT_TABLE_COLUMNS_RAW = 'select' | 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down_Speed' | 'Up_Speed' | 'ETA' | 'Completed_On' | any;
+export type TORRENT_TABLE_COLUMNS = 'Name' | 'Size' | 'Progress' | 'Status' | 'Down Speed' | 'Up Speed' | 'ETA' | 'Ratio' | 'Uploaded' | 'Completed On' | 'Added On' | any;
+export type TORRENT_TABLE_COLUMNS_RAW = 'select' | 'Actions' | 'Name' | 'Size' | 'Progress' | 'Status' | 'Down_Speed' | 'Up_Speed' | 'ETA' | 'Ratio' | 'Uploaded' | 'Completed_On' | any;
