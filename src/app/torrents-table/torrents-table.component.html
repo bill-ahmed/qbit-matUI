@@ -74,6 +74,14 @@
             {{getTorrentETAString(torrent)}}
           </div>
 
+          <div *ngSwitchCase="'Uploaded'">
+            {{getFileSizeString(torrent.uploaded)}}
+          </div>
+          
+          <div *ngSwitchCase="'Ratio'">
+            {{getTorrentRatioString(torrent)}}
+          </div>
+
           <div *ngSwitchCase="'Down Speed'">
             {{getFileSizeString(torrent.dlspeed)}}/s
           </div>

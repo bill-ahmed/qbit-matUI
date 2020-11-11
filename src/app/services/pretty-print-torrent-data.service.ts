@@ -52,6 +52,14 @@ export class PrettyPrintTorrentDataService {
     return result;
   }
 
+  pretty_print_uploaded(tor: Torrent): string {
+    return this.UnitConversion.GetFileSizeString(tor.uploaded);
+  }
+
+  pretty_print_ratio(tor: Torrent): number {
+    return Math.round(((tor.ratio) + Number.EPSILON) * 100) / 100;
+  }
+
   pretty_print_completed_on(timestamp: number): string {
     let dateCompleted = "";
     let date = new Date(timestamp * 1000)

@@ -85,6 +85,10 @@ export class TorrentInfoDialogComponent implements OnInit {
     return this.units_helper.GetFileSizeString(this.torrent.uploaded)
   }
 
+  ratio(): number {
+    return Math.round(((this.torrent.ratio) + Number.EPSILON) * 100) / 100;
+  }
+
   state(): string {
     return this.pp.pretty_print_status(this.torrent.state);
   }
