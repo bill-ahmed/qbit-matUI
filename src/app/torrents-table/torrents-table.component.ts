@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CdkDragStart, CdkDropList, moveItemInArray } from "@angular/cdk/drag-drop";
-import { MainData, Torrent, NetworkConnection, UserPreferences } from '../../utils/Interfaces';
+import { MainData, Torrent, UserPreferences } from '../../utils/Interfaces';
 
 
 // UI Components
@@ -20,11 +20,12 @@ import { RowSelectionService } from '../services/torrent-management/row-selectio
 import { TorrentInfoDialogComponent } from '../modals/torrent-info-dialog/torrent-info-dialog.component';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
-import { GetTorrentSearchName, MergeDeep } from 'src/utils/Helpers';
+import { GetTorrentSearchName } from 'src/utils/Helpers';
 import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
-import { ApplicationDefaults } from '../services/app/defaults';
+import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
+import { SnackbarService } from '../services/notifications/snackbar.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -36,7 +37,7 @@ export class TorrentsTableComponent implements OnInit {
   public allTorrentInformation: MainData;
   public allTorrentData : Torrent[];
   public filteredTorrentData: Torrent[];
-  public cookieValueSID: string;
+
   public isDarkTheme: Observable<boolean>;
   public userPref: UserPreferences = { } as UserPreferences;
 
@@ -45,7 +46,7 @@ export class TorrentsTableComponent implements OnInit {
   selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
-  public dataSource = new MatTableDataSource(this.filteredTorrentData ? this.filteredTorrentData : []);
+  public dataSource = new MatTableDataSource([]);
 
   // For drag & drop of columns
   public displayedColumns: any[];
@@ -65,7 +66,7 @@ export class TorrentsTableComponent implements OnInit {
 
   constructor(private appConfig: ApplicationConfigService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
-              private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService,
+              private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService, private snackbar: SnackbarService,
               private theme: ThemeService) { }
 
   ngOnInit(): void {
@@ -78,13 +79,10 @@ export class TorrentsTableComponent implements OnInit {
     });
 
     // Get user preferences
-    this.appConfig.getUserPreferences().then(res => { this.setUserPreferences(res) });
+    this.appConfig.getUserPreferencesSubscription().subscribe(res => { this.setUserPreferences(res) });
 
     // Setup sorting and pagination
     this.dataSource.sort = this.sort;
-    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
-      this.onPaignationPageChanged();
-    }
 
     // Retrieve all torrent data first, then update torrent data on interval
     this.allTorrentData = null;
@@ -148,6 +146,7 @@ export class TorrentsTableComponent implements OnInit {
     return this.pp.pretty_print_completed_on(timestamp);
   }
 
+  /** Hacky fix for table header not taking entire width of the table :( */
   setTableHeaderWidth() {
     let elem = document.getElementById('torrent_table_header_row')
     this.tableHeaderWidth = `${elem?.scrollWidth || -1}px`;
@@ -175,10 +174,6 @@ export class TorrentsTableComponent implements OnInit {
 
     // Filter by any search criteria
     this.updateTorrentsBasedOnSearchValue();
-
-    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
-      this.dataSource.paginator = this.paginator;
-    }
 
     this.setTableHeaderWidth();
   }
@@ -275,7 +270,6 @@ export class TorrentsTableComponent implements OnInit {
     if(event) { event.stopPropagation() };
 
     this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}, panelClass: "generic-dialog"});
-
     this.deleteTorDialogRef.afterClosed().subscribe((result: any) => {
       if (result.attemptedDelete) { this.torrentDeleteFinishCallback() }
     });
@@ -286,17 +280,14 @@ export class TorrentsTableComponent implements OnInit {
     if(event) { event.stopPropagation(); }
 
     this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}, autoFocus: false, panelClass: "generic-dialog"})
-
-    this.infoTorDialogRef.afterClosed().subscribe((result: any) => {
-    })
+    this.infoTorDialogRef.afterClosed().subscribe((result: any) => { })
   }
 
   /** Open the modal for adding a new torrent */
   openMoveTorrentDialog(): void {
     const addTorDialogRef = this.moveTorrentDialog.open(MoveTorrentsDialogComponent, {disableClose: true, panelClass: "generic-dialog"});
 
-    addTorDialogRef.afterClosed().subscribe((result: any) => {
-    });
+    addTorDialogRef.afterClosed().subscribe((result: any) => { });
   }
 
   public handleBulkEditChange(result?: string): void {
@@ -305,65 +296,30 @@ export class TorrentsTableComponent implements OnInit {
       this._updateSelectionService();
     }
 
-    const _clearAndClose = () => {
-      this.selection.clear();
-      _close();
+    const actions = {
+      'cancel': () => _close(),
+      'delete': () => this.openDeleteTorrentDialog(null, this.selection.selected),
+      'pause': () => this.pauseTorrentsBulk(this.selection.selected),
+      'play': () => this.resumeTorrentsBulk(this.selection.selected),
+      'forceStart': () => this.forceStartTorrentsBulk(this.selection.selected),
+      'increasePrio': () => this.increasePriorityBulk(this.selection.selected),
+      'decreasePrio': () => this.decreasePriorityBulk(this.selection.selected),
+      'maxPrio': () => this.maximumPriorityBulk(this.selection.selected),
+      'minPrio': () => this.minimumPriorityBulk(this.selection.selected),
+      'moveTorrent': () => this.openMoveTorrentDialog()
     }
 
-    // Depending on the result, we need to do different actions
-    if(result) {
-      switch (result) {
-        case "cancel":
-          _close();
-          break;
-        case "delete":
-          this.openDeleteTorrentDialog(null, this.selection.selected);
-          break;
-
-        case "pause":
-          this.pauseTorrentsBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "play":
-          this.resumeTorrentsBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "forceStart":
-          this.forceStartTorrentsBulk(this.selection.selected);
-          _close();
-
-        case "increasePrio":
-          this.increasePriorityBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "decreasePrio":
-          this.decreasePriorityBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "maxPrio":
-          this.maximumPriorityBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "minPrio":
-          this.minimumPriorityBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "moveTorrent":
-          this.openMoveTorrentDialog();
-          _close();
-
-        default:
-          break;
-      }
+    if(result && actions[result]) {
+      actions[result]();
     }
+    else {
+      this.snackbar.enqueueSnackBar(`Unable to perform the bulk action ${result}!`, { type: 'error' });
+    }
+
+    _close();
   }
 
+  /** After torrent delete action is completed */
   torrentDeleteFinishCallback(): void {
     this.selection.clear();
     this._updateSelectionService();
@@ -375,60 +331,7 @@ export class TorrentsTableComponent implements OnInit {
 
     this.currentMatSort = event;
 
-    /** NOTE: All cases that have a space character
-     * must ALSO account for the case where the spaces
-     * are replaced with underscored.
-     *
-     * EXAMPLE: "Last Updated At" --> "Last_Updated_At"
-     */
-    switch (event.active) {
-      case "Name":
-        this.sortTorrentsByName(event.direction);
-        break;
-      case "Completed On":
-      case "Completed_On":
-        this.sortTorrentsByCompletedOn(event.direction);
-        break;
-      case "Status":
-        this.sortTorrentsByStatus(event.direction);
-        break;
-      case "Size":
-        this.sortTorrentsBySize(event.direction);
-        break;
-      case "ETA":
-        this.sortByETA(event.direction);
-        break;
-      case "Uploaded":
-        this.sortByUploaded(event.direction);
-        break;
-      case "Ratio":
-        this.sortByRatio(event.direction);
-        break;
-      case "Progress":
-        this._sortByNumber("progress", event.direction);
-        break;
-      case "Down Speed":
-      case "Down_Speed":
-        this._sortByNumber("dlspeed", event.direction);
-        break;
-      case "Up Speed":
-      case "Up_Speed":
-        this._sortByNumber("upspeed", event.direction);
-        break;
-
-      case "Added On":
-      case "Added_On":
-        this._sortByNumber("added_on", event.direction);
-        break;
-
-      case "Last Activity":
-      case "Last_Activity":
-        this._sortByNumber("last_activity", event.direction);
-        break;
-
-      default:
-        return;
-    }
+    TorrentHelperService.sortByField(event.active, event.direction, this.filteredTorrentData);
     this.refreshDataSource();
   }
 
@@ -441,61 +344,23 @@ export class TorrentsTableComponent implements OnInit {
 
     let torren_table_pref = pref.web_ui_options?.torrent_table
     let table_sort_opt = torren_table_pref?.default_sort_order;
+
+    // Whether to enable pagination or not
+    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
+      this.dataSource.paginator = this.paginator;
+      this.onPaignationPageChanged();
+    }
+
     this.currentMatSort = table_sort_opt ? {
       active: table_sort_opt.column_name.replace(/\s/, '_'),
       direction: table_sort_opt.order
     } : this.currentMatSort
 
     // Column order
-    this.displayedColumns = pref.web_ui_options.torrent_table.columns_to_show;
+    this.displayedColumns = pref.web_ui_options?.torrent_table?.columns_to_show;
 
     // Re-sort data
     this.onMatSortChange(this.currentMatSort);
-  }
-
-  private sortTorrentsByName(direction: string): void {
-    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
-      let res = (a.name === b.name ? 0 : (a.name < b.name ? -1 : 1))
-      if(direction === "desc") { res = res * (-1) }
-      return res;
-    });
-  }
-
-  private sortTorrentsByCompletedOn(direction: string): void {
-    this._sortByNumber("completion_on", direction);
-  }
-
-  private sortTorrentsByStatus(direction: string): void {
-    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
-      let res = (a.state === b.state ? 0 : (a.state < b.state ? -1 : 1))
-      if(direction === "desc") { res = res * (-1) }
-      return res;
-    });
-  }
-
-  private sortTorrentsBySize(direction: string): void {
-    this._sortByNumber("size", direction);
-  }
-
-  private sortByETA(direction: string): void {
-    this._sortByNumber("eta", direction);
-  }
-
-  private sortByUploaded(direction: string): void {
-    this._sortByNumber("uploaded", direction);
-  }
-
-  private sortByRatio(direction: string): void {
-    this._sortByNumber("ratio", direction);
-  }
-
-  /** Sort a object's property that is a number */
-  private _sortByNumber(field: string, direction: string): void {
-    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
-      let res = (a[field] === b[field] ? 0 : (a[field] < b[field] ? -1 : 1))
-      if(direction === "desc") { res = res * (-1) }
-      return res;
-    });
   }
 
   /** Determine if torrent is in a error state */
