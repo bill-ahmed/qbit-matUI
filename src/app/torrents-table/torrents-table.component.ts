@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CdkDragStart, CdkDropList, moveItemInArray } from "@angular/cdk/drag-drop";
-import { MainData, Torrent, NetworkConnection, UserPreferences } from '../../utils/Interfaces';
+import { MainData, Torrent, UserPreferences } from '../../utils/Interfaces';
 
 
 // UI Components
@@ -20,11 +20,10 @@ import { RowSelectionService } from '../services/torrent-management/row-selectio
 import { TorrentInfoDialogComponent } from '../modals/torrent-info-dialog/torrent-info-dialog.component';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
-import { GetTorrentSearchName, MergeDeep } from 'src/utils/Helpers';
+import { GetTorrentSearchName } from 'src/utils/Helpers';
 import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
-import { ApplicationDefaults } from '../services/app/defaults';
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
 import { SnackbarService } from '../services/notifications/snackbar.service';
 
