@@ -7,12 +7,12 @@ import { Torrent } from 'src/utils/Interfaces';
 export class TorrentHelperService {
   /** Sort a given list of torrents by field name.
    *
-   * NOTE: TorrentHelperService will modify the given list of torrents in-memory!
+   * **NOTE: This will modify the given list of torrents in-place!**
    */
-  static sortByField(field: string, direction: string, torrents: Torrent[]) {
+  static sortByField(field: string, direction: string, torrents: Torrent[]): void {
     /** NOTE: All cases that have a space character
      * must ALSO account for the case where the spaces
-     * are replaced with underscored.
+     * are replaced with underscores.
      *
      * EXAMPLE: "Last Updated At" --> "Last_Updated_At"
      */
@@ -66,6 +66,7 @@ export class TorrentHelperService {
     }
   }
 
+  /** Sort torrents by name in-place */
   static sortTorrentsByName(direction: string, torrents: Torrent[]): void {
     torrents.sort((a: Torrent, b: Torrent) => {
       let res = (a.name === b.name ? 0 : (a.name < b.name ? -1 : 1))
@@ -74,10 +75,12 @@ export class TorrentHelperService {
     });
   }
 
+  /** Sort torrents by completed on date, in-place */
   static sortTorrentsByCompletedOn(direction: string, torrents: Torrent[]): void {
     TorrentHelperService._sortByNumber("completion_on", direction, torrents);
   }
 
+  /** Sort list of torrents by status, in-place */
   static sortTorrentsByStatus(direction: string, torrents: Torrent[]): void {
     torrents.sort((a: Torrent, b: Torrent) => {
       let res = (a.state === b.state ? 0 : (a.state < b.state ? -1 : 1))
@@ -86,26 +89,32 @@ export class TorrentHelperService {
     });
   }
 
+  /** Sort torrents by size, in-place */
   static sortTorrentsBySize(direction: string, torrents: Torrent[]): void {
     TorrentHelperService._sortByNumber("size", direction, torrents);
   }
 
+  /** Sort torrents by ETA, in-place */
   static sortByETA(direction: string, torrents: Torrent[]): void {
     TorrentHelperService._sortByNumber("eta", direction, torrents);
   }
 
+  /** Sort torrents by amount uploaded, in-place */
   static sortByUploaded(direction: string, torrents: Torrent[]): void {
     TorrentHelperService._sortByNumber("uploaded", direction, torrents);
   }
 
+  /** Sort torrents by ratio, in-place */
   static sortByRatio(direction: string, torrents: Torrent[]): void {
     TorrentHelperService._sortByNumber("ratio", direction, torrents);
   }
 
-  /** Sort a object's property that is a number */
+  /** Sort a object's property that is a number, in-place */
   static _sortByNumber(field: string, direction: string, torrents: Torrent[]): void {
     torrents.sort((a: Torrent, b: Torrent) => {
       let res = (a[field] === b[field] ? 0 : (a[field] < b[field] ? -1 : 1))
+
+      // Case when reverse direction is chosen
       if(direction === "desc") { res = res * (-1) }
       return res;
     });

@@ -26,6 +26,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { ApplicationDefaults } from '../services/app/defaults';
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
+import { SnackbarService } from '../services/notifications/snackbar.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -66,7 +67,7 @@ export class TorrentsTableComponent implements OnInit {
 
   constructor(private appConfig: ApplicationConfigService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
-              private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService,
+              private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService, private snackbar: SnackbarService,
               private theme: ThemeService) { }
 
   ngOnInit(): void {
@@ -146,6 +147,7 @@ export class TorrentsTableComponent implements OnInit {
     return this.pp.pretty_print_completed_on(timestamp);
   }
 
+  /** Hacky fix for table header not taking entire width of the table :( */
   setTableHeaderWidth() {
     let elem = document.getElementById('torrent_table_header_row')
     this.tableHeaderWidth = `${elem?.scrollWidth || -1}px`;
@@ -295,60 +297,30 @@ export class TorrentsTableComponent implements OnInit {
       this._updateSelectionService();
     }
 
-    // Depending on the result, we need to do different actions
-    if(result) {
-      switch (result) {
-        case "cancel":
-          _close();
-          break;
-        case "delete":
-          this.openDeleteTorrentDialog(null, this.selection.selected);
-          break;
-
-        case "pause":
-          this.pauseTorrentsBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "play":
-          this.resumeTorrentsBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "forceStart":
-          this.forceStartTorrentsBulk(this.selection.selected);
-          _close();
-
-        case "increasePrio":
-          this.increasePriorityBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "decreasePrio":
-          this.decreasePriorityBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "maxPrio":
-          this.maximumPriorityBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "minPrio":
-          this.minimumPriorityBulk(this.selection.selected);
-          _close();
-          break;
-
-        case "moveTorrent":
-          this.openMoveTorrentDialog();
-          _close();
-
-        default:
-          break;
-      }
+    const actions = {
+      'cancel': () => _close(),
+      'delete': () => this.openDeleteTorrentDialog(null, this.selection.selected),
+      'pause': () => this.pauseTorrentsBulk(this.selection.selected),
+      'play': () => this.resumeTorrentsBulk(this.selection.selected),
+      'forceStart': () => this.forceStartTorrentsBulk(this.selection.selected),
+      'increasePrio': () => this.increasePriorityBulk(this.selection.selected),
+      'decreasePrio': () => this.decreasePriorityBulk(this.selection.selected),
+      'maxPrio': () => this.maximumPriorityBulk(this.selection.selected),
+      'minPrio': () => this.minimumPriorityBulk(this.selection.selected),
+      'moveTorrent': () => this.openMoveTorrentDialog()
     }
+
+    if(result && actions[result]) {
+      actions[result]();
+    }
+    else {
+      this.snackbar.enqueueSnackBar(`Unable to perform the bulk action ${result}!`, { type: 'error' });
+    }
+
+    _close();
   }
 
+  /** After torrent delete action is completed */
   torrentDeleteFinishCallback(): void {
     this.selection.clear();
     this._updateSelectionService();
