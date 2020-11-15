@@ -78,13 +78,10 @@ export class TorrentsTableComponent implements OnInit {
     });
 
     // Get user preferences
-    this.appConfig.getUserPreferences().then(res => { this.setUserPreferences(res) });
+    this.appConfig.getUserPreferencesSubscription().subscribe(res => { this.setUserPreferences(res) });
 
     // Setup sorting and pagination
     this.dataSource.sort = this.sort;
-    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
-      this.onPaignationPageChanged();
-    }
 
     // Retrieve all torrent data first, then update torrent data on interval
     this.allTorrentData = null;
@@ -175,10 +172,6 @@ export class TorrentsTableComponent implements OnInit {
 
     // Filter by any search criteria
     this.updateTorrentsBasedOnSearchValue();
-
-    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
-      this.dataSource.paginator = this.paginator;
-    }
 
     this.setTableHeaderWidth();
   }
@@ -441,13 +434,20 @@ export class TorrentsTableComponent implements OnInit {
 
     let torren_table_pref = pref.web_ui_options?.torrent_table
     let table_sort_opt = torren_table_pref?.default_sort_order;
+
+    // Whether to enable pagination or not
+    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
+      this.dataSource.paginator = this.paginator;
+      this.onPaignationPageChanged();
+    }
+
     this.currentMatSort = table_sort_opt ? {
       active: table_sort_opt.column_name.replace(/\s/, '_'),
       direction: table_sort_opt.order
     } : this.currentMatSort
 
     // Column order
-    this.displayedColumns = pref.web_ui_options.torrent_table.columns_to_show;
+    this.displayedColumns = pref.web_ui_options?.torrent_table?.columns_to_show;
 
     // Re-sort data
     this.onMatSortChange(this.currentMatSort);

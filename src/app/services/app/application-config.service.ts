@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApplicationDefaults } from './defaults';
 import { NetworkConnectionInformationService } from '../network/network-connection-information.service';
 import { MergeDeep } from 'src/utils/Helpers';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +28,10 @@ export class ApplicationConfigService {
   /** All available columns for the torrent table */
   static ALL_COLUMNS = ['select', 'Actions', ...ApplicationConfigService.TORRENT_TABLE_COLUMNS];
 
-  private application_version: string;
   private user_preferences: UserPreferences;
+  private user_preference_obs = new BehaviorSubject<any>({ });
+
+  private application_version: string;
   private qBitBuildInfo: QbittorrentBuildInfo;
   private loaded_preferences = false;
 
@@ -68,6 +71,10 @@ export class ApplicationConfigService {
       this.loaded_preferences = true;
     }
     return this.user_preferences;
+  }
+
+  getUserPreferencesSubscription() {
+    return this.user_preference_obs
   }
 
   getApplicationVersion(): string {
@@ -145,8 +152,8 @@ export class ApplicationConfigService {
     this.user_preferences = await this.http.get(url, options).toPromise() as UserPreferences;
     this.user_preferences.web_ui_options = web_ui_options || { } as WebUISettings;
 
-    this._persistQbitorrentPreferences();
-    this._persistWebUIOptions();
+    this._persistQbitorrentPreferences(false);
+    this._persistWebUIOptions(false);
 
     // Network-related settings
     if(!this.user_preferences.web_ui_options.network?.auto_refresh) {
@@ -155,14 +162,22 @@ export class ApplicationConfigService {
     }
 
     this.loaded_preferences = true;
+    this._updateSubscription();
   }
 
-  private async _persistWebUIOptions() {
+  private async _persistWebUIOptions(update_sub?: boolean) {
     localStorage.setItem('web_ui_options', JSON.stringify(this.user_preferences.web_ui_options));
+    if(update_sub) { this._updateSubscription(); }
   }
 
-  private async _persistQbitorrentPreferences() {
+  private async _persistQbitorrentPreferences(update_sub?: boolean) {
     localStorage.setItem('preferences', JSON.stringify({...this.user_preferences, web_ui_options: null}));
+    if(update_sub) { this._updateSubscription(); }
+  }
+
+  /** Trigger user preferences observable */
+  private _updateSubscription() {
+    this.user_preference_obs.next(this.user_preferences);
   }
 }
 
