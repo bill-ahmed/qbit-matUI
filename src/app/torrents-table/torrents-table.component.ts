@@ -25,6 +25,7 @@ import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move
 import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { ApplicationDefaults } from '../services/app/defaults';
+import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
 
 @Component({
   selector: 'app-torrents-table',
@@ -45,7 +46,7 @@ export class TorrentsTableComponent implements OnInit {
   selection = new SelectionModel<Torrent>(true, []);
 
   // UI Components
-  public dataSource = new MatTableDataSource(this.filteredTorrentData ? this.filteredTorrentData : []);
+  public dataSource = new MatTableDataSource([]);
 
   // For drag & drop of columns
   public displayedColumns: any[];
@@ -268,7 +269,6 @@ export class TorrentsTableComponent implements OnInit {
     if(event) { event.stopPropagation() };
 
     this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}, panelClass: "generic-dialog"});
-
     this.deleteTorDialogRef.afterClosed().subscribe((result: any) => {
       if (result.attemptedDelete) { this.torrentDeleteFinishCallback() }
     });
@@ -279,28 +279,20 @@ export class TorrentsTableComponent implements OnInit {
     if(event) { event.stopPropagation(); }
 
     this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}, autoFocus: false, panelClass: "generic-dialog"})
-
-    this.infoTorDialogRef.afterClosed().subscribe((result: any) => {
-    })
+    this.infoTorDialogRef.afterClosed().subscribe((result: any) => { })
   }
 
   /** Open the modal for adding a new torrent */
   openMoveTorrentDialog(): void {
     const addTorDialogRef = this.moveTorrentDialog.open(MoveTorrentsDialogComponent, {disableClose: true, panelClass: "generic-dialog"});
 
-    addTorDialogRef.afterClosed().subscribe((result: any) => {
-    });
+    addTorDialogRef.afterClosed().subscribe((result: any) => { });
   }
 
   public handleBulkEditChange(result?: string): void {
 
     const _close = () => {
       this._updateSelectionService();
-    }
-
-    const _clearAndClose = () => {
-      this.selection.clear();
-      _close();
     }
 
     // Depending on the result, we need to do different actions
@@ -368,60 +360,7 @@ export class TorrentsTableComponent implements OnInit {
 
     this.currentMatSort = event;
 
-    /** NOTE: All cases that have a space character
-     * must ALSO account for the case where the spaces
-     * are replaced with underscored.
-     *
-     * EXAMPLE: "Last Updated At" --> "Last_Updated_At"
-     */
-    switch (event.active) {
-      case "Name":
-        this.sortTorrentsByName(event.direction);
-        break;
-      case "Completed On":
-      case "Completed_On":
-        this.sortTorrentsByCompletedOn(event.direction);
-        break;
-      case "Status":
-        this.sortTorrentsByStatus(event.direction);
-        break;
-      case "Size":
-        this.sortTorrentsBySize(event.direction);
-        break;
-      case "ETA":
-        this.sortByETA(event.direction);
-        break;
-      case "Uploaded":
-        this.sortByUploaded(event.direction);
-        break;
-      case "Ratio":
-        this.sortByRatio(event.direction);
-        break;
-      case "Progress":
-        this._sortByNumber("progress", event.direction);
-        break;
-      case "Down Speed":
-      case "Down_Speed":
-        this._sortByNumber("dlspeed", event.direction);
-        break;
-      case "Up Speed":
-      case "Up_Speed":
-        this._sortByNumber("upspeed", event.direction);
-        break;
-
-      case "Added On":
-      case "Added_On":
-        this._sortByNumber("added_on", event.direction);
-        break;
-
-      case "Last Activity":
-      case "Last_Activity":
-        this._sortByNumber("last_activity", event.direction);
-        break;
-
-      default:
-        return;
-    }
+    TorrentHelperService.sortByField(event.active, event.direction, this.filteredTorrentData);
     this.refreshDataSource();
   }
 
@@ -451,51 +390,6 @@ export class TorrentsTableComponent implements OnInit {
 
     // Re-sort data
     this.onMatSortChange(this.currentMatSort);
-  }
-
-  private sortTorrentsByName(direction: string): void {
-    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
-      let res = (a.name === b.name ? 0 : (a.name < b.name ? -1 : 1))
-      if(direction === "desc") { res = res * (-1) }
-      return res;
-    });
-  }
-
-  private sortTorrentsByCompletedOn(direction: string): void {
-    this._sortByNumber("completion_on", direction);
-  }
-
-  private sortTorrentsByStatus(direction: string): void {
-    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
-      let res = (a.state === b.state ? 0 : (a.state < b.state ? -1 : 1))
-      if(direction === "desc") { res = res * (-1) }
-      return res;
-    });
-  }
-
-  private sortTorrentsBySize(direction: string): void {
-    this._sortByNumber("size", direction);
-  }
-
-  private sortByETA(direction: string): void {
-    this._sortByNumber("eta", direction);
-  }
-
-  private sortByUploaded(direction: string): void {
-    this._sortByNumber("uploaded", direction);
-  }
-
-  private sortByRatio(direction: string): void {
-    this._sortByNumber("ratio", direction);
-  }
-
-  /** Sort a object's property that is a number */
-  private _sortByNumber(field: string, direction: string): void {
-    this.filteredTorrentData.sort((a: Torrent, b: Torrent) => {
-      let res = (a[field] === b[field] ? 0 : (a[field] < b[field] ? -1 : 1))
-      if(direction === "desc") { res = res * (-1) }
-      return res;
-    });
   }
 
   /** Determine if torrent is in a error state */
