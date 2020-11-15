@@ -37,7 +37,7 @@ export class TorrentsTableComponent implements OnInit {
   public allTorrentInformation: MainData;
   public allTorrentData : Torrent[];
   public filteredTorrentData: Torrent[];
-  public cookieValueSID: string;
+
   public isDarkTheme: Observable<boolean>;
   public userPref: UserPreferences = { } as UserPreferences;
 
