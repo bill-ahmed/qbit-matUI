@@ -98,15 +98,16 @@ export class AddTorrentDialogComponent implements OnInit {
   }
 
   async parse_uploaded_files() {
-    this.isTreeExplorerReady = false;
-
     let parsed_files = await this.torrentParser.ParseMultipleFiles(this.filesToUpload);
     this.serialized_nodes = await this.torrentParser.GetSerializedTorrentFromMultipleParsedFiles(parsed_files);
+
     this.isTreeExplorerReady = true;
   }
 
   /** Update which torrents the user wants to upload. */
   updateFiles(event: any): void {
+    this.isTreeExplorerReady = false;
+
     this.filesToUpload = event.target.files;
     this.parse_uploaded_files();
   }

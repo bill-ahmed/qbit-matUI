@@ -1,14 +1,14 @@
 .upload_container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  max-height: 95vh;
 
   mat-dialog-content.dialog_content {
     flex-grow: 1;
     max-height: unset;
 
     .files_in_torrents {
-      max-height: 200px;
+      max-height: 32vh;
       overflow-y: scroll;
     }
 
