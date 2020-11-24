@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { TorrentDataStoreService } from '../../services/torrent-management/torrent-data-store.service';
 import { NetworkConnectionInformationService } from '../../services/network/network-connection-information.service';
 import { FileSystemService, SerializedNode } from '../../services/file-system/file-system.service';
+import DirectoryNode from 'src/app/services/file-system/FileSystemNodes/DirectoryNode';
 
 @Component({
   selector: 'app-torrent-info-dialog',
@@ -51,9 +52,26 @@ export class TorrentInfoDialogComponent implements OnInit {
     if(this.REFRESH_INTERVAL) { clearInterval(this.REFRESH_INTERVAL) }
   }
 
-  private updateTorrentContents(content: TorrentContents[]): void {
+  private async updateTorrentContents(content: TorrentContents[]): void {
     this.torrentContents = content;
-    this.torrentContentsAsNodes = this.torrentContents.map(file => {return {name: "", path: file.name, size: file.size, progress: file.progress, type: "File" }})
+
+    let intermediate_nodes = this.torrentContents.map(file => {
+      return {
+        name: "",
+        path: file.name,
+        parentPath: '',
+        size: file.size,
+        progress: file.progress,
+        type: "File"
+      }
+    })
+
+    // Create a file systme represented by the above nodes
+    let fs_root = new DirectoryNode({ value: '', skipNameValidation: true })
+    await this.fs.populateFileSystemWithAdvancedOptions(intermediate_nodes as SerializedNode[], fs_root)
+
+    // Serialize & update
+    this.torrentContentsAsNodes = await this.fs.SerializeFileSystem(fs_root);
     this.isLoading = false;
   }
 
