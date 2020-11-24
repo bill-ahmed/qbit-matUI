@@ -52,7 +52,7 @@ export class TorrentInfoDialogComponent implements OnInit {
     if(this.REFRESH_INTERVAL) { clearInterval(this.REFRESH_INTERVAL) }
   }
 
-  private async updateTorrentContents(content: TorrentContents[]): void {
+  private async updateTorrentContents(content: TorrentContents[]): Promise<void> {
     this.torrentContents = content;
 
     let intermediate_nodes = this.torrentContents.map(file => {

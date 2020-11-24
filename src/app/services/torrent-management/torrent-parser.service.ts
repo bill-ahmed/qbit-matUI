@@ -38,11 +38,7 @@ export class TorrentParserService {
       queue.push(this.ParseFile(tor));
     }
 
-    console.log('Started parsing...')
-    let result = await Promise.all(queue);
-    console.log('Finished parsing!')
-
-    return result;
+    return await Promise.all(queue);
   }
 
   public async GetSerializedTorrentsFromParsedFile(file: ParsedTorrent): Promise<SerializedNode[]> {
@@ -77,13 +73,10 @@ export class TorrentParserService {
       if(nodes.length > 0) { res.push(...nodes) }
     })
 
-    console.log('Constructing filesystem...');
-    let s = new Date();
     // Construct a file system that represents the list of paths
     await this.fs.populateFileSystemWithAdvancedOptions(res, root, delimiter);
     serialized_fs = await this.fs.SerializeFileSystem(root);
 
-    console.log("Done getting serlized torrents", new Date().getTime() - s.getTime(), serialized_fs)
     return serialized_fs;
   }
 
