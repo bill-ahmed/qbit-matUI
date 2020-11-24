@@ -70,21 +70,11 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   }
 
   expandNode(node: SerializedNode): void {
-    this.expanded_nodes.add(node.parentPath);
-
-    if(node.name.includes('Screens')) { debugger; }
-
-    if(node.name !== '') {
-      console.log('EXPANDED: ', node.name, node.parentPath)
-      this.expanded_nodes.add(node.path);
-    }
-
-    console.log('list of expanded nodes', this.expanded_nodes)
+    this.expanded_nodes.add(node.path);
   }
 
   collapseNode(node: SerializedNode): void {
     this.expanded_nodes.delete(node.path);
-    console.log('list of expanded nodes', this.expanded_nodes)
   }
 
   collapseAllNodes(): void {
@@ -92,12 +82,10 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   }
 
   isExpanded(node: SerializedNode): boolean {
-    //if(node.name.includes('Screens')) { debugger; }
     return this.expanded_nodes.has(node.path);
   }
 
   isParentRendered(node: SerializedNode): boolean {
-    // console.log('is parent rendered', node.parentPath, this.appConfig.getFileSystemDelimiter())
     if(!this.expanded_nodes.has(node.parentPath)) {  }
     return this.expanded_nodes.has(node.parentPath);
   }
