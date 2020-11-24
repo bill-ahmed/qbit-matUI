@@ -4,6 +4,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { FileSystemService, SerializedNode } from '../services/file-system/file-system.service';
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
 import DirectoryNode from '../services/file-system/FileSystemNodes/DirectoryNode';
+import { ApplicationConfigService } from '../services/app/application-config.service';
 
 @Component({
   selector: 'app-file-system-tree-explorer',
@@ -23,7 +24,12 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   private root: DirectoryNode;                           /** File System to keep track of the files in a torrent */
   private expanded_nodes: Set<string> = new Set<string>();
 
-  constructor(private fs: FileSystemService, private pp: PrettyPrintTorrentDataService) { }
+  /** Keep track of which branches to render, for performance reasons
+   * Only the immediate children of nodes with this ID will render!
+   */
+  private parentsToRender: Set<string> = new Set<string>();
+
+  constructor(private appConfig: ApplicationConfigService, private pp: PrettyPrintTorrentDataService) { }
 
   ngOnInit(): void {
     this._updateData();
@@ -47,6 +53,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
     this.dataSource = new MatTreeNestedDataSource<SerializedNode>();
     this.dataSource.data = this.directories;
 
+    this.expanded_nodes.add('');
   }
 
   public hasChild(_: number, node: SerializedNode) {
@@ -63,11 +70,21 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   }
 
   expandNode(node: SerializedNode): void {
-    this.expanded_nodes.add(node.name);
+    this.expanded_nodes.add(node.parentPath);
+
+    if(node.name.includes('Screens')) { debugger; }
+
+    if(node.name !== '') {
+      console.log('EXPANDED: ', node.name, node.parentPath)
+      this.expanded_nodes.add(node.path);
+    }
+
+    console.log('list of expanded nodes', this.expanded_nodes)
   }
 
   collapseNode(node: SerializedNode): void {
-    this.expanded_nodes.delete(node.name);
+    this.expanded_nodes.delete(node.path);
+    console.log('list of expanded nodes', this.expanded_nodes)
   }
 
   collapseAllNodes(): void {
@@ -75,7 +92,14 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   }
 
   isExpanded(node: SerializedNode): boolean {
-    return this.expanded_nodes.has(node.name);
+    //if(node.name.includes('Screens')) { debugger; }
+    return this.expanded_nodes.has(node.path);
+  }
+
+  isParentRendered(node: SerializedNode): boolean {
+    // console.log('is parent rendered', node.parentPath, this.appConfig.getFileSystemDelimiter())
+    if(!this.expanded_nodes.has(node.parentPath)) {  }
+    return this.expanded_nodes.has(node.parentPath);
   }
 
   getNodeSize(node: SerializedNode): string {

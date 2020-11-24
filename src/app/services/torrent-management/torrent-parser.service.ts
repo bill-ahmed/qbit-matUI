@@ -52,6 +52,7 @@ export class TorrentParserService {
         res.push({
           name: elem.name,
           path: elem.path,
+          parentPath: '',
           size: elem.length,
           type: 'File'
         });
@@ -77,12 +78,12 @@ export class TorrentParserService {
     })
 
     console.log('Constructing filesystem...');
-
+    let s = new Date();
     // Construct a file system that represents the list of paths
     await this.fs.populateFileSystemWithAdvancedOptions(res, root, delimiter);
     serialized_fs = await this.fs.SerializeFileSystem(root);
 
-    console.log("Done getting serlized torrents")
+    console.log("Done getting serlized torrents", new Date().getTime() - s.getTime(), serialized_fs)
     return serialized_fs;
   }
 
