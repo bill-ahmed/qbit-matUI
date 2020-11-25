@@ -5,6 +5,7 @@ import { TorrentDataStoreService } from '../torrent-management/torrent-data-stor
 
 // Utils
 import * as http_endpoints from '../../../assets/http_config.json';
+import * as config from '../../../assets/config.json';
 import { IsDevEnv } from 'src/utils/Environment';
 import { HttpClient } from '@angular/common/http';
 import { ApplicationDefaults } from './defaults';
@@ -92,7 +93,7 @@ export class ApplicationConfigService {
 
   getFileSystemDelimiter(): string | null {
     let fs_opts = this.user_preferences.web_ui_options?.file_system
-    return fs_opts?.use_alt_delimiter ? fs_opts.delimiter : null;
+    return fs_opts?.use_alt_delimiter ? fs_opts.delimiter : config.filePathDelimeter;
   }
 
   setWebUIOptions(opt: WebUISettings) {

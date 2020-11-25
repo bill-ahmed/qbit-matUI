@@ -1,8 +1,9 @@
 <div>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+
     <!-- This is the tree node template for leaf nodes -->
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-      <li class="file-node mat-tree-node">
+      <li *ngIf="isParentRendered(node)" class="file-node mat-tree-node">
         <!-- use a disabled button to provide padding for tree leaf -->
         <button mat-icon-button disabled><mat-icon color="accent">file_copy</mat-icon></button>
         <div class="node-info">
@@ -22,9 +23,10 @@
         </div>
       </li>
     </mat-tree-node>
+
     <!-- This is the tree node template for expandable nodes -->
     <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-      <li class="directory-node">
+      <li *ngIf="isParentRendered(node)" class="directory-node">
         <div (click)="toggleNode(node)" matRipple matTreeNodeToggle class="mat-tree-node">
           <button mat-icon-button matTreeNodeToggle id="expand_folder_button"
                   [attr.aria-label]="'toggle ' + node.name">

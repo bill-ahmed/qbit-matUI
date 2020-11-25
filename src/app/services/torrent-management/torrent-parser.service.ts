@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Buffer } from 'buffer';
 import { ParsedTorrent } from 'src/utils/Interfaces';
-import { SerializedNode } from '../file-system/file-system.service';
+import { FileSystemService, SerializedNode } from '../file-system/file-system.service';
+import DirectoryNode from '../file-system/FileSystemNodes/DirectoryNode';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class TorrentParserService {
 
   private torrent_parser: (arg: any) => ParsedTorrent;
 
-  constructor() {
+  constructor(private fs: FileSystemService) {
     /**
      * DO NOT CHECK FOR TS ERRORS with parseTorrent.
      * This function is loadind via a script tag in index.html.
@@ -47,6 +48,7 @@ export class TorrentParserService {
         res.push({
           name: elem.name,
           path: elem.path,
+          parentPath: '',
           size: elem.length,
           type: 'File'
         });
@@ -55,15 +57,27 @@ export class TorrentParserService {
     return res;
   }
 
+  /** Get a serialized  filesystem from parsed torrents */
   public async GetSerializedTorrentFromMultipleParsedFiles(files: ParsedTorrent[]): Promise<SerializedNode[]> {
+    let root = new DirectoryNode({value: "", skipNameValidation: true});
+
+    // Guess what the delimiter is lmao
+    let delimiter = files.length === 0 ? "/" : FileSystemService.DetectFileDelimiter(files[0].files[0].path);
+
+    // Keep track of a list of all the files in torrent (flattened list)
     let res: SerializedNode[] = []
+    let serialized_fs: SerializedNode[];
 
     await files.forEach(async file => {
       let nodes = await this.GetSerializedTorrentsFromParsedFile(file);
       if(nodes.length > 0) { res.push(...nodes) }
     })
 
-    return res;
+    // Construct a file system that represents the list of paths
+    await this.fs.populateFileSystemWithAdvancedOptions(res, root, delimiter);
+    serialized_fs = await this.fs.SerializeFileSystem(root);
+
+    return serialized_fs;
   }
 
 }

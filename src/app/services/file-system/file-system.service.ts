@@ -137,7 +137,8 @@ export class FileSystemService {
       for(const child of node.getChildren()) {
         result.push({
           name: child.getValue(),
-          path: "",
+          path: child.getAbsolutePath(this.directoryDelimiter),
+          parentPath: node.getAbsolutePath(this.directoryDelimiter),
           children: await this._convertToJSON(child),
           size: child.getSize(),
           progress: child.getProgressAmount(),
@@ -192,6 +193,7 @@ export class FileSystemService {
 export interface SerializedNode {
   name: string,
   path: string,
+  parentPath: string,
   size: number,
   progress?: number,
   type?: 'File' | 'Directory',
