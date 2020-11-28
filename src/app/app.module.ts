@@ -112,7 +112,7 @@ if(!environment.production){
     DragDropModule,
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
     HttpClientModule,
     MatFormFieldModule,
     MatTableModule,

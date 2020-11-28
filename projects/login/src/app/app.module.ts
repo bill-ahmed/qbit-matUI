@@ -29,7 +29,7 @@ appRoutes = [
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
     AppRoutingModule,
     HttpClientModule,
     MatCardModule,

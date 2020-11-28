@@ -28,34 +28,34 @@ mat-table {
 .custom_progress_bar {
     width: 100%;
 
-    .ui-progressbar.ui-progressbar-determinate {
-      .ui-progressbar-label {
+    .p-progressbar.p-progressbar-determinate {
+      .p-progressbar-label {
         .white_label {
           color: white
         }
         font-weight: 600;
       }
       // #9DAFB8
-      .dark-theme .ui-progressbar-value{
+      .dark-theme .p-progressbar-value{
         background: #9DAFB8;
       }
-      .ui-progressbar-value {
+      .p-progressbar-value {
         background: #03A9F4;
       }
     }
 }
 
 .custom_progress_bar.white_label {
-  .ui-progressbar.ui-progressbar-determinate {
-    .ui-progressbar-label {
+  .p-progressbar.p-progressbar-determinate {
+    .p-progressbar-label {
       color: white
     }
   }
 }
 
 .dark-theme .custom_progress_bar {
-  .ui-progressbar.ui-progressbar-determinate {
-    .ui-progressbar-value {
+  .p-progressbar.p-progressbar-determinate {
+    .p-progressbar-value {
       background: #7abf7d;
     }
   }
