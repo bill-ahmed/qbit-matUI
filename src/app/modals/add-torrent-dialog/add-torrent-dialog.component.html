@@ -16,7 +16,7 @@
               &nbsp; Browse for files
             </button>
 
-            <button *ngIf="hadUploadedFiles()" color="warn" mat-stroked-button (click)="clearUploadedFiles($event)" style="margin-top: 10px;">
+            <button *ngIf="hasUploadedFiles()" color="warn" mat-stroked-button (click)="clearUploadedFiles($event)" style="margin-top: 10px;">
               <mat-icon>close</mat-icon>
               Clear selection
             </button>
@@ -32,7 +32,10 @@
 
           <div *ngIf="show_torrent_contents">
             <h3> Torrent Contents </h3>
-            <mat-card-subtitle> Note: Choosing too many files may cause slow-downs. </mat-card-subtitle>
+            <mat-card-subtitle *ngIf="!hasUploadedFiles()">
+              <i> Try uploading some files first. </i>
+            </mat-card-subtitle>
+
             <div class="files_in_torrents">
               <app-file-system-tree-explorer
               [showProgress]="false"

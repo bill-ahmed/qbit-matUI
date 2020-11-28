@@ -131,7 +131,7 @@ export class AddTorrentDialogComponent implements OnInit {
     this.parse_uploaded_files();
   }
 
-  hadUploadedFiles(): boolean {
+  hasUploadedFiles(): boolean {
     return this.filesToUpload?.length > 0;
   }
 
