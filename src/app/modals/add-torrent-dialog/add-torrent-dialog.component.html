@@ -7,7 +7,7 @@
         <div class="file_upload_container">
           <br/>
 
-          <div class="upload_files" appDragAndDropFiles (fileDropped)="updateFiles($event, true)" (click)="torrentFileUpload.click()">
+          <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="upload_files" appDragAndDropFiles (fileDropped)="updateFiles($event, true)" (click)="torrentFileUpload.click()">
             <!-- <h4>{{getFilesToUploadString()}}</h4> -->
 
             <h4>Drag and drop files here</h4>

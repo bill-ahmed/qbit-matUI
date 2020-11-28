@@ -64,13 +64,27 @@ mat-hint {
 
   align-self: center;
 
-  width: 95%;
+  width: 100%;
   min-height: 200px;
 
   padding: 5px;
   text-align: center;
 
+  /** Nice border */
   border: dashed 1px grey;
+  border-radius: 20px;
+
+  /** Styles to apply when hovering over drag & drop container */
+  &.fileover {
+    box-shadow: inset 0px 0px 60px -10px rgba(0, 0, 0, 0.2);
+    transition: all ease-in-out 200ms;
+  }
+
+  /** Styles to apply when hovering over drag & drop container */
+  &.dark-theme.fileover {
+    box-shadow: inset 0px 0px 60px -10px rgba(136, 136, 136, 1);
+    transition: all ease-in-out 200ms;
+  }
 }
 
 .no_torrent_contents_msg {
