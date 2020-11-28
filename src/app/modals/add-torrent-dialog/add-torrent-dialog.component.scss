@@ -52,8 +52,18 @@ mat-hint {
 
 .upload_files {
   display: flex;
-  flex-direction: row;
-  align-items: baseline;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 400px;
+  height: 200px;
+
+  padding: 5px;
+  text-align: center;
+
+  border: dashed 1px grey;
 }
 
 .upload_files h4 {

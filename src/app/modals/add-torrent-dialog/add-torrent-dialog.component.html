@@ -6,13 +6,16 @@
       <mat-tab label="File Upload">
         <br/>
 
-        <div class="upload_files">
-          <button color="accent" mat-raised-button (click)="torrentFileUpload.click()">
-            <mat-icon>attach_file</mat-icon>
-            &nbsp; Choose Files
-          </button>
+        <div class="upload_files" appDragAndDropFiles (fileDropped)="updateFiles($event)" (click)="torrentFileUpload.click()">
+          <!-- <h4>{{getFilesToUploadString()}}</h4> -->
 
-          <h4>{{getFilesToUploadString()}}</h4>
+          <h4>Drag and drop files here</h4>
+          <h4>or</h4>
+
+          <button color="accent" mat-flat-button>
+            <mat-icon>attach_file</mat-icon>
+            &nbsp; Browse for files
+          </button>
 
           <input multiple #torrentFileUpload type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
         </div>
