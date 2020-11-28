@@ -13,9 +13,14 @@
             <h4>Drag and drop files here</h4>
             <h4>or</h4>
 
-            <button color="accent" mat-flat-button>
+            <button color="primary" mat-flat-button>
               <mat-icon>attach_file</mat-icon>
               &nbsp; Browse for files
+            </button>
+
+            <button *ngIf="hadUploadedFiles()" color="warn" mat-stroked-button (click)="clearUploadedFiles($event)" style="margin-top: 10px;">
+              <mat-icon>close</mat-icon>
+              Clear selection
             </button>
 
             <br/>

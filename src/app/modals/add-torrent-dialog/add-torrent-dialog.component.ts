@@ -122,6 +122,19 @@ export class AddTorrentDialogComponent implements OnInit {
     this.parse_uploaded_files();
   }
 
+  /** Clear list of files user chose to upload */
+  clearUploadedFiles(e: any): void {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.filesToUpload = [];
+    this.parse_uploaded_files();
+  }
+
+  hadUploadedFiles(): boolean {
+    return this.filesToUpload?.length > 0;
+  }
+
   /** Whether the Upload button should be disabled or not */
   isUploadDisabled(): boolean {
     let destinationEmpty = this.filesDestination.trim() === "";
