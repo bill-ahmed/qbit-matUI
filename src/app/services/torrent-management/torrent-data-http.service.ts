@@ -195,10 +195,10 @@ export class TorrentDataHTTPService {
     let options = IsDevEnv() ? { responseType: 'text' } : { withCredentials: true, responseType: 'text'}
 
     //@ts-ignore It keeps complaining about the 'text' response type...won't allow any builds unless it's ignored
-    let app_version = await this.http.get<string>(url, options).toPromise()
+    let app_version = await this.http.get<string>(url, options).toPromise() as string
 
     //@ts-ignore It keeps complaining about the 'text' response type...won't allow any builds unless it's ignored
-    let api_version = await this.http.get<string>(url_2, options).toPromise();
+    let api_version = await this.http.get<string>(url_2, options).toPromise() as string;
 
     return { appVersion: app_version, apiVersion: api_version };
   }
