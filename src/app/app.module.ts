@@ -63,6 +63,7 @@ import { SuccessSnackbarComponent } from './services/notifications/snackbar/succ
 import { WarnSnackbarComponent } from './services/notifications/snackbar/warn-snackbar/warn-snackbar.component';
 import { ErrorSnackbarComponent } from './services/notifications/snackbar/error-snackbar/error-snackbar.component';
 import { InfoSnackbarComponent } from './services/notifications/snackbar/info-snackbar/info-snackbar.component';
+import { DragAndDropFilesDirective } from './drag-and-drop-files.directive';
 
 var appRoutes: Routes;
 
@@ -102,7 +103,8 @@ if(!environment.production){
     SuccessSnackbarComponent,
     WarnSnackbarComponent,
     ErrorSnackbarComponent,
-    InfoSnackbarComponent
+    InfoSnackbarComponent,
+    DragAndDropFilesDirective
   ],
   imports: [
     CdkTableModule,
