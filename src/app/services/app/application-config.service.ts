@@ -141,7 +141,9 @@ export class ApplicationConfigService {
 
     // Deep merge the properties using lodash
     let existing_preferences = this.user_preferences?.web_ui_options || JSON.parse(localStorage.getItem('web_ui_options'))
-    let default_preferences = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS
+
+    /** Deep copy! User preferences are pretty small, so we can do this fairly efficiently */
+    let default_preferences = JSON.parse(JSON.stringify(ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS))
 
     /** Do a deep merge, such that existing_preferences take precedence.
      * However, if a particular preference doens't exist, then the default
