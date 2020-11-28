@@ -4,33 +4,40 @@
   <mat-dialog-content class="mat-typography dialog_content">
     <mat-tab-group mat-align-tabs="start" (selectedTabChange)="handleTabChange($event)">
       <mat-tab label="File Upload">
-        <br/>
+        <div class="file_upload_container">
+          <br/>
 
-        <div class="upload_files" appDragAndDropFiles (fileDropped)="updateFiles($event)" (click)="torrentFileUpload.click()">
-          <!-- <h4>{{getFilesToUploadString()}}</h4> -->
+          <div class="upload_files" appDragAndDropFiles (fileDropped)="updateFiles($event, true)" (click)="torrentFileUpload.click()">
+            <!-- <h4>{{getFilesToUploadString()}}</h4> -->
 
-          <h4>Drag and drop files here</h4>
-          <h4>or</h4>
+            <h4>Drag and drop files here</h4>
+            <h4>or</h4>
 
-          <button color="accent" mat-flat-button>
-            <mat-icon>attach_file</mat-icon>
-            &nbsp; Browse for files
-          </button>
+            <button color="accent" mat-flat-button>
+              <mat-icon>attach_file</mat-icon>
+              &nbsp; Browse for files
+            </button>
 
-          <input multiple #torrentFileUpload type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
-        </div>
-        <br/>
+            <br/>
+            <h4 *ngIf="!show_torrent_contents">
+              <i> {{getFilesToUploadString()}} </i>
+            </h4>
 
-        <div *ngIf="show_torrent_contents">
-          <h3> Torrent Contents </h3>
-          <mat-card-subtitle> Note: Choosing too many files may cause slow-downs. </mat-card-subtitle>
-          <div class="files_in_torrents">
-            <app-file-system-tree-explorer
-            [showProgress]="false"
-            [directories]="serialized_nodes"> </app-file-system-tree-explorer>
+            <input multiple #torrentFileUpload type="file" accept=".torrent" id="torrentFileUpload" (change)="updateFiles($event)">
           </div>
           <br/>
-        </div>
+
+          <div *ngIf="show_torrent_contents">
+            <h3> Torrent Contents </h3>
+            <mat-card-subtitle> Note: Choosing too many files may cause slow-downs. </mat-card-subtitle>
+            <div class="files_in_torrents">
+              <app-file-system-tree-explorer
+              [showProgress]="false"
+              [directories]="serialized_nodes"> </app-file-system-tree-explorer>
+            </div>
+            <br/>
+          </div>
+      </div>
       </mat-tab>
 
       <mat-tab label="Magnet URL">

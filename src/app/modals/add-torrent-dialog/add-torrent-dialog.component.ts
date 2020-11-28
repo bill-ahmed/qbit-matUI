@@ -105,10 +105,20 @@ export class AddTorrentDialogComponent implements OnInit {
   }
 
   /** Update which torrents the user wants to upload. */
-  updateFiles(event: any): void {
+  updateFiles(event: any, dragAndDrop?: boolean): void {
     this.isTreeExplorerReady = false;
 
-    this.filesToUpload = event.target.files;
+    if(event.target.files.length === 0) { return; }
+
+    // When using drag & drop, append instead of override
+    if(dragAndDrop) {
+      let existing = this.filesToUpload || []
+      this.filesToUpload = [...existing, ...event.target.files]
+    }
+    else {
+      this.filesToUpload = event.target.files;
+    }
+
     this.parse_uploaded_files();
   }
 
@@ -147,7 +157,9 @@ export class AddTorrentDialogComponent implements OnInit {
 
   public getFilesToUploadString(): string {
     let len = this.filesToUpload ? this.filesToUpload.length : 0;
-    return len === 1 ? `${len} file` : `${len} files`;
+    let root = len === 1 ? `${len} file` : `${len} files`;
+
+    return `${root} chosen`;
   }
 
   /** Handle opening file explorer dialog & handling any callbacks */

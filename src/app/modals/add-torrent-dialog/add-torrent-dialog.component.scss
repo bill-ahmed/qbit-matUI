@@ -50,6 +50,11 @@ mat-hint {
   display: none;
 }
 
+.file_upload_container {
+  display: flex;
+  flex-direction: column;
+}
+
 .upload_files {
   display: flex;
   flex-direction: column;
@@ -57,13 +62,20 @@ mat-hint {
   justify-content: center;
   align-items: center;
 
-  width: 400px;
+  align-self: center;
+
+  width: 95%;
   height: 200px;
 
   padding: 5px;
   text-align: center;
 
   border: dashed 1px grey;
+}
+
+.no_torrent_contents_msg {
+  align-self: center;
+  width: 95%;
 }
 
 .upload_files h4 {
