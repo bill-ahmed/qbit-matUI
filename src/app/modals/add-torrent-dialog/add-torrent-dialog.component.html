@@ -71,7 +71,7 @@
     </mat-dialog-actions>
   </div>
 
-  <div *ngIf="show_torrent_contents && hasUploadedFiles()" class="mat-app-background torrent_contents_container">
+  <div *ngIf="show_torrent_contents && hasUploadedFiles()" [ngClass]="isOnFileUploadTab() ? '' : 'hidden'" class="mat-app-background torrent_contents_container">
     <h3> Torrent Contents </h3>
     <mat-card-subtitle *ngIf="!hasUploadedFiles()">
       <i> Try uploading some files first. </i>

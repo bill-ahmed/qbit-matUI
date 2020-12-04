@@ -90,6 +90,8 @@ mat-hint {
   border: dashed 1px grey;
   border-radius: 20px;
 
+  cursor: pointer;
+
   /** Styles to apply when hovering over drag & drop container */
   &.fileover {
     box-shadow: inset 0px 0px 60px -10px rgba(0, 0, 0, 0.2);
@@ -101,11 +103,6 @@ mat-hint {
     box-shadow: inset 0px 0px 60px -10px rgba(136, 136, 136, 1);
     transition: all ease-in-out 200ms;
   }
-}
-
-.no_torrent_contents_msg {
-  align-self: center;
-  width: 95%;
 }
 
 .upload_files h4 {

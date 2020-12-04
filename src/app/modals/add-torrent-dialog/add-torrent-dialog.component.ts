@@ -188,4 +188,7 @@ export class AddTorrentDialogComponent implements OnInit {
     })
   }
 
+  public isOnFileUploadTab(): Boolean {
+    return !this.currentTab || this.currentTab?.index === 0;
+  }
 }
