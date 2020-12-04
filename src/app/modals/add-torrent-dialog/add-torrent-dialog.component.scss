@@ -38,10 +38,11 @@
   max-width: 40vw;
 
   padding: 24px;
+  overflow: scroll;
 
   .files_in_torrents {
     max-height: 58vh;
-    overflow-y: scroll;
+    overflow: scroll;
   }
 }
 
