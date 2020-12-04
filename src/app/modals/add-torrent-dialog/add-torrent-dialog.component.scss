@@ -1,16 +1,20 @@
+.upload_outer_container {
+  display: flex;
+  flex-direction: row;
+}
+
 .upload_container {
   display: flex;
   flex-direction: column;
   max-height: 95vh;
 
+  flex-grow: 1;
+
+  // position: relative;
+
   mat-dialog-content.dialog_content {
     flex-grow: 1;
     max-height: unset;
-
-    .files_in_torrents {
-      max-height: 32vh;
-      overflow-y: scroll;
-    }
 
     #choose_save_location {
       width: 95%;
@@ -26,6 +30,18 @@
         margin-left: 20px;
       }
     }
+  }
+}
+
+.torrent_contents_container {
+  min-width: 400px;
+  max-width: 40vw;
+
+  padding: 24px;
+
+  .files_in_torrents {
+    max-height: 58vh;
+    overflow-y: scroll;
   }
 }
 
