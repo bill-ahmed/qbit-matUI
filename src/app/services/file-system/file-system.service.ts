@@ -159,9 +159,10 @@ export class FileSystemService {
     // Probability of having backslash character in unix file/folder name is
     // pretty unlikely LOL
     if(path.includes("\\")) {
-      console.log("using windows")
+      console.log("using windows delimiter")
       return "\\";
     }
+    console.log("using unix delimiter")
     return "/";
   }
 

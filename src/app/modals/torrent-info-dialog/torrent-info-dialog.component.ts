@@ -68,7 +68,9 @@ export class TorrentInfoDialogComponent implements OnInit {
 
     // Create a file systme represented by the above nodes
     let fs_root = new DirectoryNode({ value: '', skipNameValidation: true })
-    await this.fs.populateFileSystemWithAdvancedOptions(intermediate_nodes as SerializedNode[], fs_root)
+    let delimiter = intermediate_nodes.length > 0 ? FileSystemService.DetectFileDelimiter(intermediate_nodes[0].path) : '/'
+
+    await this.fs.populateFileSystemWithAdvancedOptions(intermediate_nodes as SerializedNode[], fs_root, delimiter)
 
     // Serialize & update
     this.torrentContentsAsNodes = await this.fs.SerializeFileSystem(fs_root);
