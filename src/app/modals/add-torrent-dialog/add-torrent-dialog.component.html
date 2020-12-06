@@ -61,14 +61,14 @@
           &nbsp; Choose Location
         </button>
       </div>
-
       <br/>
-
     </mat-dialog-content>
+
     <mat-dialog-actions align="end">
       <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>
       <button disabled={{isUploadDisabled()}} mat-raised-button (click)="handleUpload()" color="primary" cdkFocusInitial>Upload</button>
     </mat-dialog-actions>
+    <br/>
   </div>
 
   <div *ngIf="show_torrent_contents && hasUploadedFiles()" [ngClass]="isOnFileUploadTab() ? '' : 'hidden'" class="mat-app-background torrent_contents_container">
