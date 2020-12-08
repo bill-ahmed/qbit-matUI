@@ -47,6 +47,7 @@ export class AddTorrentDialogComponent implements OnInit {
   }
 
   handleTabChange(event: MatTabChangeEvent) {
+    event.index === 0 ? this.setDialogPosition() : this.resetDialogPosition();
     this.currentTab = event;
   }
 
@@ -110,7 +111,6 @@ export class AddTorrentDialogComponent implements OnInit {
 
     if(event.target.files.length === 0) { return; }
 
-    this.dialogRef.updatePosition({ left: '15%' })
     // When using drag & drop, append instead of override
     if(dragAndDrop) {
       let existing = this.filesToUpload || []
@@ -120,6 +120,7 @@ export class AddTorrentDialogComponent implements OnInit {
       this.filesToUpload = event.target.files;
     }
 
+    this.setDialogPosition();
     this.parse_uploaded_files();
   }
 
@@ -195,7 +196,17 @@ export class AddTorrentDialogComponent implements OnInit {
     return !this.currentTab || this.currentTab?.index === 0;
   }
 
+  private setDialogPosition() {
+    // Only move the dialog to the left if user can see torrent contents!
+    if(this.show_torrent_contents && this.hasUploadedFiles()) {
+      this.dialogRef.updatePosition({ left: '15%' })
+    }
+  }
+
   private resetDialogPosition() {
-    this.dialogRef.updatePosition({ left: '30%' })
+    // Don't bother updating unless user can see torrent contents
+    if(this.show_torrent_contents) {
+      this.dialogRef.updatePosition({ left: '30%' })
+    }
   }
 }
