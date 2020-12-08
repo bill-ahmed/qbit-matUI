@@ -1,6 +1,7 @@
 .upload_outer_container {
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
 .upload_container {
@@ -34,14 +35,24 @@
 }
 
 .torrent_contents_container {
-  min-width: 400px;
-  max-width: 40vw;
+  position: absolute;
+
+  top: 2%;
+  bottom: 3%;
+  right: -540px;
+  z-index: 10;
+
+  width: 550px;
+
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   padding: 24px;
   overflow: scroll;
 
   .files_in_torrents {
-    max-height: 58vh;
+    height: 90%;
+    min-width: max-content;
     overflow: scroll;
   }
 }

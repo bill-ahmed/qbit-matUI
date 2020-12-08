@@ -110,6 +110,7 @@ export class AddTorrentDialogComponent implements OnInit {
 
     if(event.target.files.length === 0) { return; }
 
+    this.dialogRef.updatePosition({ left: '15%' })
     // When using drag & drop, append instead of override
     if(dragAndDrop) {
       let existing = this.filesToUpload || []
@@ -126,6 +127,8 @@ export class AddTorrentDialogComponent implements OnInit {
   clearUploadedFiles(e: any): void {
     e.preventDefault();
     e.stopPropagation();
+
+    this.resetDialogPosition();
 
     this.filesToUpload = [];
     this.parse_uploaded_files();
@@ -190,5 +193,9 @@ export class AddTorrentDialogComponent implements OnInit {
 
   public isOnFileUploadTab(): Boolean {
     return !this.currentTab || this.currentTab?.index === 0;
+  }
+
+  private resetDialogPosition() {
+    this.dialogRef.updatePosition({ left: '30%' })
   }
 }
