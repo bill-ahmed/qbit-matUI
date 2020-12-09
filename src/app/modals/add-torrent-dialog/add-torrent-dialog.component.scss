@@ -43,16 +43,17 @@
   z-index: 10;
 
   width: 550px;
+  max-height: 95vh;
 
   border-radius: 15px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
-  padding: 24px;
-  overflow: scroll;
+  padding: 18px;
 
   .files_in_torrents {
     height: 90%;
-    min-width: max-content;
+
+    width: 100%;
     overflow: scroll;
   }
 }
@@ -119,4 +120,27 @@ mat-hint {
 
 .upload_files h4 {
   margin-left: 10px;
+}
+
+
+@media screen and (max-width: 1355px) {
+  .torrent_contents_container {
+    right: -470px;
+    width: 480px;
+  }
+}
+
+@media screen and (max-width: 1270px) {
+  .torrent_contents_container {
+    position: relative;
+
+    right: unset;
+    width: unset;
+    border-radius: unset;
+    box-shadow: unset;
+  }
+
+  .generic-dialog {
+    overflow: auto;
+  }
 }
