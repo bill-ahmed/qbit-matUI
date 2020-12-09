@@ -1,6 +1,6 @@
 # qBit MatUI <br/>[![Build Status](https://travis-ci.org/bill-ahmed/qbit-material-WebUI.svg?branch=master)](https://travis-ci.org/bill-ahmed/qbit-material-WebUI)
 
-<img src="builds/images/home_page_dark_shadow.jpg" alt="Home Page"/>
+<img src="builds/images/home_page_dark_shadow.png" alt="Home Page"/>
 
 <br/>
 <br/>
