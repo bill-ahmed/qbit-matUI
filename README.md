@@ -2,9 +2,6 @@
 
 <img src="builds/images/home_page_dark_shadow.png" alt="Home Page"/>
 
-<br/>
-<br/>
-
 A material-themed interface to the original [qBittorrent Web UI](https://github.com/qbittorrent/qBittorrent). This interface is more slimmed down, although still contains several features such as:
 
 * Bulk edit (pause, resume, delete, prioritize, and more)
