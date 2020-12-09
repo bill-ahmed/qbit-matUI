@@ -1,21 +1,19 @@
-# Qbit Material WebUI <br/>[![Build Status](https://travis-ci.org/bill-ahmed/qbit-material-WebUI.svg?branch=master)](https://travis-ci.org/bill-ahmed/qbit-material-WebUI)
+# qBit MatUI <br/>[![Build Status](https://travis-ci.org/bill-ahmed/qbit-material-WebUI.svg?branch=master)](https://travis-ci.org/bill-ahmed/qbit-material-WebUI)
+
+<img src="builds/images/home_page_dark_shadow.png" alt="Home Page"/>
 
 A material-themed interface to the original [qBittorrent Web UI](https://github.com/qbittorrent/qBittorrent). This interface is more slimmed down, although still contains several features such as:
 
-* Adding/Deleting torrents
 * Bulk edit (pause, resume, delete, prioritize, and more)
 * Sorting by different metrics (name, size, date completed, etc.)
-* File System Navigation (choose where to save a torrent, create sub-folders, etc.)
 * See torrent contents _before_ downloading
+* File system navigation (choose where to save a torrent, create sub-folders, etc.)
 * Manage local & qBittorrent preferences
 * A fully material-themed UI (Light & Dark themes)
 * ... and more!
 
 ## Demo!
 A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
-
-<img src="builds/images/home_page.jpg" alt="Home Page"/>
-
 
 ## Installation -- Replacing your existing qBittorrent Web UI
 This app is tested with **v4.1.5** and higher of qBittorrent, any lower version are not guaranteed to work.

@@ -22,7 +22,9 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   public dataSource = new MatTreeNestedDataSource<SerializedNode>();
 
   private root: DirectoryNode;                           /** File System to keep track of the files in a torrent */
+
   private expanded_nodes: Set<string> = new Set<string>();
+  private nodes_to_render: Set<string> = new Set<string>();
 
   /** Keep track of which branches to render, for performance reasons
    * Only the immediate children of nodes with this ID will render!
@@ -53,7 +55,8 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
     this.dataSource = new MatTreeNestedDataSource<SerializedNode>();
     this.dataSource.data = this.directories;
 
-    this.expanded_nodes.add('');
+    /** Should render the root node, which basically shows the top-level torrents */
+    this.nodes_to_render.add('');
   }
 
   public hasChild(_: number, node: SerializedNode) {
@@ -71,10 +74,14 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
   expandNode(node: SerializedNode): void {
     this.expanded_nodes.add(node.path);
+    this.nodes_to_render.add(node.path);
   }
 
   collapseNode(node: SerializedNode): void {
     this.expanded_nodes.delete(node.path);
+    /** Do not remove node from nodes_to_render! Want to keep it rendered
+     * to avoid having to re-create it from subsequent collapse/expand
+     */
   }
 
   collapseAllNodes(): void {
@@ -86,8 +93,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   }
 
   isParentRendered(node: SerializedNode): boolean {
-    if(!this.expanded_nodes.has(node.parentPath)) {  }
-    return this.expanded_nodes.has(node.parentPath);
+    return this.nodes_to_render.has(node.parentPath);
   }
 
   getNodeSize(node: SerializedNode): string {

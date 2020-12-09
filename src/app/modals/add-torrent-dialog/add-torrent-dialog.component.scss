@@ -1,16 +1,21 @@
+.upload_outer_container {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
 .upload_container {
   display: flex;
   flex-direction: column;
   max-height: 95vh;
 
+  flex-grow: 1;
+
+  // position: relative;
+
   mat-dialog-content.dialog_content {
     flex-grow: 1;
     max-height: unset;
-
-    .files_in_torrents {
-      max-height: 32vh;
-      overflow-y: scroll;
-    }
 
     #choose_save_location {
       width: 95%;
@@ -26,6 +31,30 @@
         margin-left: 20px;
       }
     }
+  }
+}
+
+.torrent_contents_container {
+  position: absolute;
+
+  top: 2%;
+  bottom: 3%;
+  right: -540px;
+  z-index: 10;
+
+  width: 550px;
+  max-height: 95vh;
+
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+  padding: 18px;
+
+  .files_in_torrents {
+    height: 90%;
+
+    width: 100%;
+    overflow: scroll;
   }
 }
 
@@ -74,6 +103,8 @@ mat-hint {
   border: dashed 1px grey;
   border-radius: 20px;
 
+  cursor: pointer;
+
   /** Styles to apply when hovering over drag & drop container */
   &.fileover {
     box-shadow: inset 0px 0px 60px -10px rgba(0, 0, 0, 0.2);
@@ -87,11 +118,29 @@ mat-hint {
   }
 }
 
-.no_torrent_contents_msg {
-  align-self: center;
-  width: 95%;
-}
-
 .upload_files h4 {
   margin-left: 10px;
+}
+
+
+@media screen and (max-width: 1355px) {
+  .torrent_contents_container {
+    right: -470px;
+    width: 480px;
+  }
+}
+
+@media screen and (max-width: 1270px) {
+  .torrent_contents_container {
+    position: relative;
+
+    right: unset;
+    width: unset;
+    border-radius: unset;
+    box-shadow: unset;
+  }
+
+  .generic-dialog {
+    overflow: auto;
+  }
 }

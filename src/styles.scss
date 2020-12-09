@@ -11,6 +11,7 @@ body {
 /** Styles applicable for all material dialogs */
 .generic-dialog .mat-dialog-container {
   padding: 0;
+  overflow: unset;
 }
 
 .mat-dialog-inner-container {
