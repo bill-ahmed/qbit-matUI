@@ -22,21 +22,24 @@ export class PrettyPrintTorrentDataService {
   pretty_print_status(status: string): string {
     let statusMapping = {
       forcedUP: "Seeding",
+      forceDL: "Downloading",
       error: "Error",
       pausedUP :"Paused",
       pausedDL: "Paused",
       queuedUP: "Queued",
       queuedDL: "Queued",
       uploading: "Seeding",
-      stalledUP: "Stalled",
-      stalledDL: "Stalled",
+      stalledUP: "Seeding",
+      stalledDL: "Seeding",
       checkingUP: "Loading...",
       checkingDL: "Loading...",
       downloading: "Downloading",
+      moving: 'Moving',
       metaDL: "Loading...",
+      missingFiles: "Missing!"
     }
 
-    return statusMapping[status] || "UNKNOWN";
+    return statusMapping[status] || "Unknown";
   }
 
   pretty_print_file_size(size: number): string {

@@ -15,7 +15,7 @@ const MAX_ETA_SIZE = 28800; // 8 hours
 // Some possible states a torrent can be in
 const torrent_states = [
   'forcedUP', 'error', 'pausedUP', 'pausedDL', 'queuedUP', 'uploading',
-  'stalledUP', 'downloading', 'stalledDL'
+  'stalledUP', 'downloading', 'stalledDL', 'moving'
 ];
 
 var RID = -1;    // For /sync/maindata endpoint
