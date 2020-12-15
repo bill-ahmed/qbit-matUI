@@ -10,6 +10,16 @@
   justify-content: center;
   align-items: center;
 
+  .dark-theme {
+    color: white;
+  }
+
+  #slideToggleTheme {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+  }
+
   mat-card {
     min-height: 400px;
     min-width: 340px;
@@ -29,6 +39,11 @@
 
       .card-header {
         text-align: center;
+
+        h1 { color: #555560; }
+        h1.dark-theme {
+          color: white
+        }
       }
 
       .login-details {
