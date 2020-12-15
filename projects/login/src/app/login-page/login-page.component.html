@@ -1,8 +1,8 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="container">
   <div id="slideToggleTheme">
-    <mat-icon>cloud_upload</mat-icon>
-    <mat-slide-toggle  (toggleChange)="handleSlideToggle()" [checked]="isDarkThemeEnabled()" color="primary">
-    </mat-slide-toggle>
+    <mat-icon>brightness_6</mat-icon>
+
+    <mat-slide-toggle  (toggleChange)="handleSlideToggle()" [checked]="isDarkThemeEnabled()" color="primary"></mat-slide-toggle>
   </div>
 
   <mat-card class="mat-elevation-z3">
