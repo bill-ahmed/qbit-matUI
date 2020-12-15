@@ -64,7 +64,7 @@
 
           <div *ngSwitchCase="'Status'">
             <mat-chip-list>
-              <mat-chip color="{{torrent.state === 'downloading' ? 'primary' : isTorrentError(torrent) ? 'accent':'default'}}" disableRipple selected>
+              <mat-chip color="{{isTorrentPrimaryAction(torrent) ? 'primary' : isTorrentError(torrent) ? 'accent' : 'default'}}" disableRipple selected>
                 {{torrent.force_start ? '[F]' : ''}} {{getStatusString(torrent.state)}}
               </mat-chip>
             </mat-chip-list>
@@ -77,7 +77,7 @@
           <div *ngSwitchCase="'Uploaded'">
             {{getFileSizeString(torrent.uploaded)}}
           </div>
-          
+
           <div *ngSwitchCase="'Ratio'">
             {{getTorrentRatioString(torrent)}}
           </div>

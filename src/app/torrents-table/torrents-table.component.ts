@@ -363,9 +363,14 @@ export class TorrentsTableComponent implements OnInit {
     this.onMatSortChange(this.currentMatSort);
   }
 
+  public isTorrentPrimaryAction(tor: Torrent): boolean {
+    let actions = ['downloading', 'moving'];
+    return actions.includes(tor.state);
+  }
+
   /** Determine if torrent is in a error state */
   public isTorrentError(tor: Torrent): boolean {
-    let errors = ['error', 'stalledUP', 'stalledDL', 'unknown'];
+    let errors = ['missingFiles', 'error', 'unknown'];
     return errors.includes(tor.state);
   }
 
