@@ -10,6 +10,26 @@
   justify-content: center;
   align-items: center;
 
+  .dark-theme {
+    color: white;
+  }
+
+  #slideToggleTheme {
+    cursor: pointer;
+
+    position: fixed;
+    top: 25px;
+    right: 25px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    mat-slide-toggle {
+      margin-left: 15px;
+    }
+  }
+
   mat-card {
     min-height: 400px;
     min-width: 340px;
@@ -29,6 +49,11 @@
 
       .card-header {
         text-align: center;
+
+        h1 { color: #555560; }
+        h1.dark-theme {
+          color: white
+        }
       }
 
       .login-details {
@@ -76,11 +101,19 @@
     border-top: 7px solid mat-color($my-app-primary);
     border-left: hidden;
   }
+
+  .dark-theme mat-card {
+    border-top: 7px solid mat-color($dark-primary);
+  }
 }
 
 /** For regular screens */
 @media only screen and (min-width: 769px) {
   mat-card {
     border-left: 7px solid mat-color($my-app-primary);
+  }
+
+  .dark-theme mat-card {
+    border-left: 7px solid mat-color($dark-primary);
   }
 }

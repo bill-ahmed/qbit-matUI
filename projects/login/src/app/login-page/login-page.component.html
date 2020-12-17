@@ -1,8 +1,14 @@
-<div class="container">
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="container">
+  <div (click)="handleSlideToggle()" id="slideToggleTheme">
+    <mat-icon>brightness_6</mat-icon>
+
+    <mat-slide-toggle (click)="false" (change)="false" [checked]="isDarkThemeEnabled()" color="primary"></mat-slide-toggle>
+  </div>
+
   <mat-card class="mat-elevation-z3">
     <mat-card-content>
       <div class="card-header">
-        <h1 style="color: #555560;">qBittorrent Web UI</h1>
+        <h1 [ngClass]="{'dark-theme': isDarkTheme | async}">qBittorrent Web UI</h1>
         <mat-card-subtitle>Sign in below to continue.</mat-card-subtitle>
       </div>
 

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 import * as http_config from '../../assets/http_config.json';
 import { IsDevEnv } from '../../utils/Environment';
+import { ThemeService } from '../services/theme.service';
 
 @Component({
   selector: 'app-login-page',
@@ -27,13 +30,26 @@ export class LoginPageComponent implements OnInit {
     password: new FormControl(this.password, [...this.common_validations])
   }
 
-  constructor(private http: HttpClient, private fb: FormBuilder) { this.http_endpoints = http_config.endpoints; }
+  isDarkTheme: Observable<boolean>;
+
+  constructor(private http: HttpClient, private fb: FormBuilder, private theme: ThemeService) { this.http_endpoints = http_config.endpoints; }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: [...this.common_validations],
       password: [...this.common_validations]
     });
+
+    this.isDarkTheme = this.theme.getThemeSubscription();
+  }
+
+  public isDarkThemeEnabled(): boolean {
+    return this.theme.getCurrentValue();
+  }
+
+  /** Invert theme selection */
+  public handleSlideToggle() {
+    this.theme.setDarkTheme(!this.isDarkThemeEnabled());
   }
 
   async login(): Promise<void> {
