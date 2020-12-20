@@ -11,12 +11,12 @@ export class ThemeService {
 
   constructor() {
     let web_ui_pref = JSON.parse(localStorage.getItem('web_ui_options'))
-    this.setDarkTheme(web_ui_pref.dark_mode_enabled)
+    this.setDarkTheme(!!web_ui_pref?.dark_mode_enabled)
   }
 
   public setDarkTheme(val: boolean): void {
     this.is_dark_theme_source.next(val);
-    let web_ui_pref = JSON.parse(localStorage.getItem('web_ui_options'))
+    let web_ui_pref = JSON.parse(localStorage.getItem('web_ui_options')) || { }
     web_ui_pref.dark_mode_enabled = val;
 
     localStorage.setItem('web_ui_options', JSON.stringify(web_ui_pref))
