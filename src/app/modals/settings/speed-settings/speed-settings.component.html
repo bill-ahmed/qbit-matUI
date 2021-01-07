@@ -5,7 +5,7 @@
     <div class="indented_field">
       <div class="field">
         <p>Upload limit:</p>
-        <mat-form-field class="small_numeric_field">
+        <mat-form-field class="medium numeric_field">
           <input matInput type="number" [(ngModel)]="speed_settings.up_limit" value="{{speed_settings.up_limit}}" [formControl]="validators.up_limit">
         </mat-form-field>
         <p>KiB/s (0 or -1 implies &infin;)</p>
@@ -14,12 +14,43 @@
 
       <div class="field">
         <p>Download limit:</p>
-        <mat-form-field class="small_numeric_field">
+        <mat-form-field class="medium numeric_field">
           <input matInput type="number" [(ngModel)]="speed_settings.dl_limit" value="{{speed_settings.dl_limit}}" [formControl]="validators.dl_limit">
         </mat-form-field>
         <p>KiB/s (0 or -1 implies &infin;)</p>
       </div>
       <mat-error *ngIf="validators.dl_limit.invalid">{{invalidLimitMessage()}}</mat-error>
+    </div>
+  </section>
+  <br/>
+
+  <section>
+    <h2> Alternative Rate Limits </h2>
+
+    <div class="indented_field">
+      <div class="field">
+        <p>Upload</p>
+        <mat-form-field class="medium numeric_field">
+          <input matInput type="number" [(ngModel)]="speed_settings.alt_up_limit" value="{{speed_settings.alt_up_limit}}" [formControl]="validators.alt_up_limit">
+        </mat-form-field>
+        <p>KiB/s (0 or -1 implies &infin;)</p>
+      </div>
+      <mat-error *ngIf="validators.alt_up_limit.invalid">{{invalidLimitMessage()}}</mat-error>
+
+      <div class="field">
+        <p>Download:</p>
+        <mat-form-field class="medium numeric_field">
+          <input matInput type="number" [(ngModel)]="speed_settings.alt_dl_limit" value="{{speed_settings.alt_dl_limit}}" [formControl]="validators.alt_dl_limit">
+        </mat-form-field>
+        <p>KiB/s (0 or -1 implies &infin;)</p>
+      </div>
+      <mat-error *ngIf="validators.alt_dl_limit.invalid">{{invalidLimitMessage()}}</mat-error>
+
+      <div class="indented_field">
+        <div class="field">
+          <p>Schedule use of alternative rate limits</p>
+        </div>
+      </div>
     </div>
   </section>
   <br/>

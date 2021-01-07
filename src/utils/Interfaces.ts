@@ -188,6 +188,30 @@ export interface SpeedSettings {
   dl_limit: number,
   /** Global upload limit in KiB/s (0 or -1 implies no limit) */
   up_limit: number,
+
+  /** Alternative global download speed limit in KiB/s */
+  alt_dl_limit: number,
+
+  /**	Alternative global upload speed limit in KiB/s */
+  alt_up_limit: number,
+
+  /** True if alternative limits should be applied according to schedule */
+  scheduler_enabled: boolean,
+
+  /** Scheduler starting hour */
+  schedule_from_hour: number,
+
+  /** Scheduler starting minute */
+  schedule_from_min: number,
+
+  /** Scheduler ending hour */
+  schedule_to_hour: number,
+
+  /** Scheduler ending minute */
+  schedule_to_min: number,
+
+  /** Scheduler days. See possible values in Web UI API */
+  scheduler_days: number
 }
 
 export interface QbittorrentBuildInfo {
