@@ -11,9 +11,10 @@
       </div>
 
       <div class="field">
-        <p>Keep incomplete torrents in:</p>
+        <mat-checkbox [(ngModel)]="downloadSettings.temp_path_enabled">Keep incomplete torrents in:</mat-checkbox>
+
         <mat-form-field appearance="outline" class="regular_field wide_field">
-          <input matInput type="text" [(ngModel)]="downloadSettings.temp_path" value="{{downloadSettings.temp_path}}">
+          <input disabled={{!downloadSettings.temp_path_enabled}} matInput type="text" [(ngModel)]="downloadSettings.temp_path" value="{{downloadSettings.temp_path}}">
         </mat-form-field>
       </div>
     </div>

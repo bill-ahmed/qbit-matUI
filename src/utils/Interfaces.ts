@@ -178,6 +178,9 @@ export interface DownloadSettings {
   /** Default save path for torrents */
   save_path: string,
   scan_dirs: string[],
+
+  /** True if folder for incomplete torrents is enabled */
+  temp_path_enabled: boolean,
   /** Path for incomplete torrents */
   temp_path: string,
 }
