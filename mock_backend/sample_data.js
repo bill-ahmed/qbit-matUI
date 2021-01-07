@@ -300,7 +300,8 @@ function _addTorrentEntriesToMockData(num_entries, data) {
  */
 function GetUserPreferences() {
     return (
-        {"locale":"ru_RU",
+        {
+        "locale":"ru_RU",
         "save_path":"C:/Users/Dayman/Downloads",
         "temp_path_enabled":false,
         "temp_path":"C:/Users/Dayman/Documents/Downloads/temp",
@@ -321,7 +322,16 @@ function GetUserPreferences() {
         "up_limit":0,
         "max_connec":500,
         "max_connec_per_torrent":100,
-        "max_uploads_per_torrent":15}
+        "max_uploads_per_torrent":15,
+        "schedule_from_hour": 8,
+        "schedule_from_min": 0,
+        "schedule_to_hour": 20,
+        "schedule_to_min": 0,
+        "scheduler_days": 0,
+        "scheduler_enabled": false,
+        "alt_dl_limit": 10240,
+        "alt_up_limit": 10240,
+      }
     );
 }
 
