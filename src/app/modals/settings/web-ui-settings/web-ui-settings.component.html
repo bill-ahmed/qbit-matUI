@@ -50,7 +50,7 @@
 
           <div class="field">
             <p>Default number of rows per page:</p>
-            <mat-form-field class="small_numeric_field">
+            <mat-form-field class="small numeric_field">
               <input matInput type="number" [(ngModel)]="torrent_table_settings.default_items_per_page" value="{{torrent_table_settings.default_items_per_page}}"
                     [formControl]="form_controls.default_items_per_page">
             </mat-form-field>
@@ -137,7 +137,7 @@
         <div class="indented_field {{file_system_settings.use_alt_delimiter ? '' : 'disabled'}}">
           <div class="field">
             <p>Delimiter to use:</p>
-            <mat-form-field class="small_numeric_field">
+            <mat-form-field class="small numeric_field">
               <input matInput type="text" [(ngModel)]="file_system_settings.delimiter" value="{{file_system_settings.delimiter}}">
             </mat-form-field>
           </div>

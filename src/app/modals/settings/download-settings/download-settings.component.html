@@ -28,7 +28,7 @@
     <div class="indented_field {{downloadSettings.queueing_enabled ? '' : 'disabled'}}">
       <div class="field">
         <p>Maximum active downloads:</p>
-        <mat-form-field class="small_numeric_field">
+        <mat-form-field class="small numeric_field">
           <input matInput type="number" [(ngModel)]="downloadSettings.max_active_downloads" value="{{downloadSettings.max_active_downloads}}"
                 [formControl]="form_controls.max_active_downloads">
         </mat-form-field>
@@ -36,7 +36,7 @@
 
       <div class="field">
         <p>Maximum active uploads:</p>
-        <mat-form-field class="small_numeric_field">
+        <mat-form-field class="small numeric_field">
           <input matInput type="number" [(ngModel)]="downloadSettings.max_active_uploads" value="{{downloadSettings.max_active_uploads}}"
                 [formControl]="form_controls.max_active_uploads">
         </mat-form-field>
@@ -44,7 +44,7 @@
 
       <div class="field">
         <p>Maximum active torrents:</p>
-        <mat-form-field class="small_numeric_field">
+        <mat-form-field class="small numeric_field">
           <input matInput type="number" [(ngModel)]="downloadSettings.max_active_torrents" value="{{downloadSettings.max_active_torrents}}"
                 [formControl]="form_controls.max_active_torrents">
         </mat-form-field>
