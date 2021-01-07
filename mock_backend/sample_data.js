@@ -327,7 +327,7 @@ function GetUserPreferences() {
         "schedule_from_min": 0,
         "schedule_to_hour": 20,
         "schedule_to_min": 0,
-        "scheduler_days": 0,
+        "scheduler_days": 2,
         "scheduler_enabled": false,
         "alt_dl_limit": 10240,
         "alt_up_limit": 10240,

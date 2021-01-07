@@ -26,6 +26,25 @@ export class SpeedSettingsComponent implements OnInit {
     scheduler_days: 0
   };
 
+  /**
+   * The index of each element is IMPORTANT! We send over the index
+   * rather than the string itself when updating preferences.
+   */
+  scheduler_days_ordering = [
+    'Every Day',
+    'Weekdays',
+    'Weekends',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
+  ];
+
+  scheduler_day_chosen: string = this.scheduler_days_ordering[0];
+
   common_validators = [Validators.required, Validators.min(-1)];
   validators = {
     up_limit: new FormControl(this.speed_settings.up_limit, [...this.common_validators]),
@@ -52,7 +71,9 @@ export class SpeedSettingsComponent implements OnInit {
         schedule_to_hour,
         schedule_to_min,
         scheduler_days
-      }
+      };
+
+      this.scheduler_day_chosen = this.scheduler_days_ordering[scheduler_days];
     })
   }
 
@@ -70,7 +91,9 @@ export class SpeedSettingsComponent implements OnInit {
     return {
       ...this.speed_settings,
       up_limit: this.units.Kibibits_to_bits(this.speed_settings.up_limit),
-      dl_limit: this.units.Kibibits_to_bits(this.speed_settings.dl_limit)
+      dl_limit: this.units.Kibibits_to_bits(this.speed_settings.dl_limit),
+
+      scheduler_days: this.scheduler_days_ordering.indexOf(this.scheduler_day_chosen)
     };
   }
 

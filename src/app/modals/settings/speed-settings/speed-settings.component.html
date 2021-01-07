@@ -46,9 +46,50 @@
       </div>
       <mat-error *ngIf="validators.alt_dl_limit.invalid">{{invalidLimitMessage()}}</mat-error>
 
-      <div class="indented_field">
+      <div>
         <div class="field">
-          <p>Schedule use of alternative rate limits</p>
+          <mat-checkbox [(ngModel)]="speed_settings.scheduler_enabled">Schedule use of alternative rate limits</mat-checkbox>
+        </div>
+
+        <div class="indented_field {{speed_settings.scheduler_enabled ? '' : 'disabled'}}">
+
+          <div class="field" style="justify-content: flex-start;">
+            <div>
+              From:
+              <mat-form-field class="x-small numeric_field">
+                <input matInput type="number" [(ngModel)]="speed_settings.schedule_from_hour" value="{{speed_settings.schedule_from_hour}}">
+              </mat-form-field>
+              :
+              <mat-form-field class="x-small numeric_field">
+                <input matInput type="number" [(ngModel)]="speed_settings.schedule_from_min" value="{{speed_settings.schedule_from_min}}">
+              </mat-form-field>
+            </div>
+
+            &nbsp;
+            &nbsp;
+
+            <div>
+              To:
+              <mat-form-field class="x-small numeric_field">
+                <input matInput type="number" [(ngModel)]="speed_settings.schedule_to_hour" value="{{speed_settings.schedule_to_hour}}">
+              </mat-form-field>
+              :
+              <mat-form-field class="x-small numeric_field">
+                <input matInput type="number" [(ngModel)]="speed_settings.schedule_to_min" value="{{speed_settings.schedule_to_min}}">
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="field">
+            <mat-form-field>
+              <mat-label>Which days</mat-label>
+              <mat-select disabled={{!speed_settings.scheduler_enabled}} [(value)]="scheduler_day_chosen">
+                <mat-option *ngFor="let day of scheduler_days_ordering" [value]="day">
+                  {{ day }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
       </div>
     </div>
