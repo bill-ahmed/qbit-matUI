@@ -49,9 +49,20 @@ body {
 
   margin-top: 5px;
 
-  .small_numeric_field {
-    margin-left: 10px;
+  .small {
     max-width: 35px;
+  }
+
+  .medium {
+    max-width: 60px;
+  }
+
+  .large {
+    max-width: 120px;
+  }
+
+  .numeric_field {
+    margin-left: 10px;
 
     /** Hide the annoying increase/decrease buttons on numeric input */
     /* Chrome, Safari, Edge, Opera */
