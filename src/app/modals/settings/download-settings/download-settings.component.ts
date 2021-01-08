@@ -50,7 +50,8 @@ export class DownloadSettingsComponent implements OnInit {
 
         create_subfolder_enabled: pref.create_subfolder_enabled,
         preallocate_all: pref.preallocate_all,
-        incomplete_files_ext: pref.incomplete_files_ext
+        incomplete_files_ext: pref.incomplete_files_ext,
+        start_paused_enabled: pref.start_paused_enabled
       }
     });
   }
