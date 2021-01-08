@@ -19,7 +19,12 @@ export class DownloadSettingsComponent implements OnInit {
     scan_dirs: [],
 
     temp_path_enabled: false,
-    temp_path: ""
+    temp_path: "",
+
+    create_subfolder_enabled: true,
+    preallocate_all: false,
+    incomplete_files_ext: false,
+    start_paused_enabled: false,
   };
 
   common_validations = [Validators.min(0)];
@@ -41,7 +46,11 @@ export class DownloadSettingsComponent implements OnInit {
         scan_dirs: pref.scan_dirs,
 
         temp_path_enabled: pref.temp_path_enabled,
-        temp_path: pref.temp_path
+        temp_path: pref.temp_path,
+
+        create_subfolder_enabled: pref.create_subfolder_enabled,
+        preallocate_all: pref.preallocate_all,
+        incomplete_files_ext: pref.incomplete_files_ext
       }
     });
   }

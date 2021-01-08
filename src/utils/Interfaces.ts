@@ -183,6 +183,18 @@ export interface DownloadSettings {
   temp_path_enabled: boolean,
   /** Path for incomplete torrents */
   temp_path: string,
+
+  /** True if a subfolder should be created when adding a torrent */
+  create_subfolder_enabled: boolean,
+
+  /** True if disk space should be pre-allocated for all files */
+  preallocate_all: boolean,
+
+  /** True if ".!qB" should be appended to incomplete files */
+  incomplete_files_ext: boolean,
+
+  /** True if torrents should be added in a Paused state */
+  start_paused_enabled: boolean,
 }
 
 /** Various speed-related settings. */

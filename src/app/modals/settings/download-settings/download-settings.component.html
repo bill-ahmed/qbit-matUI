@@ -1,6 +1,31 @@
 <div class="downloads_settings">
   <section>
-    <h2> Save Paths </h2>
+    <h3> Adding Torrents </h3>
+
+    <div class="indented_field">
+      <div class="field">
+        <mat-checkbox [(ngModel)]="downloadSettings.create_subfolder_enabled">Create subfolder for torrents with multiple files</mat-checkbox>
+      </div>
+
+      <div class="field">
+        <mat-checkbox [(ngModel)]="downloadSettings.start_paused_enabled">Do not start the download automatically</mat-checkbox>
+      </div>
+    </div>
+
+    <div class="indented_field">
+      <div class="field">
+        <mat-checkbox [(ngModel)]="downloadSettings.preallocate_all">Pre-allocate disk space for all files</mat-checkbox>
+      </div>
+
+      <div class="field">
+        <mat-checkbox [(ngModel)]="downloadSettings.incomplete_files_ext">Append .!qB extension to incomplete files</mat-checkbox>
+      </div>
+    </div>
+  </section>
+  <br/>
+
+  <section>
+    <h3> Save Paths </h3>
 
     <div class="indented_field">
       <div class="field">
@@ -22,7 +47,7 @@
   <br/>
 
   <section>
-    <h2> Torrent Queueing </h2>
+    <h3> Torrent Queueing </h3>
 
     <mat-checkbox [(ngModel)]="downloadSettings.queueing_enabled">Enable Queueing</mat-checkbox>
 
