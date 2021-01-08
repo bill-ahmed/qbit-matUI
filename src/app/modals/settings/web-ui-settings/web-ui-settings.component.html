@@ -2,7 +2,7 @@
   <mat-tab-group mat-align-tabs="start">
     <mat-tab label="General">
       <section>
-        <h2> Themeing </h2>
+        <h3> Themeing </h3>
 
         <div class="choose_theme">
           <p> Choose a theme:  </p>
@@ -16,7 +16,7 @@
       <br/>
 
       <section>
-        <h2> Notifications </h2>
+        <h3> Notifications </h3>
 
         <div class="field">
           <mat-checkbox [(ngModel)]="notification_settings.show_snack_notifications">Show snackbar notifications</mat-checkbox>
@@ -27,7 +27,7 @@
 
     <mat-tab label="Torrents">
       <section>
-        <h2> Uploading Torrents </h2>
+        <h3> Uploading Torrents </h3>
 
         <div class="field">
           <mat-checkbox [(ngModel)]="torrent_upload_settings.show_parsed_torrents_from_file">Show torrent contents in file upload</mat-checkbox>
@@ -39,7 +39,7 @@
       </section>
 
       <section>
-        <h2> Torrent Table </h2>
+        <h3> Torrent Table </h3>
 
         <mat-checkbox [(ngModel)]="torrent_table_settings.paginate">Paginate torrents</mat-checkbox>
 
@@ -59,7 +59,7 @@
       </section>
 
       <section>
-        <h2> Torrent Data </h2>
+        <h3> Torrent Data </h3>
 
         <div class="field">
           <p>How often to refresh torrent data:</p>
@@ -130,7 +130,7 @@
 
     <mat-tab label="Other">
       <section>
-        <h2> File System </h2>
+        <h3> File System </h3>
 
         <mat-checkbox [(ngModel)]="file_system_settings.use_alt_delimiter">Use Alternate File Path Delimiter</mat-checkbox>
 
@@ -155,7 +155,7 @@
       </section>
 
       <section>
-        <h2> Reset All Web UI Settings </h2>
+        <h3> Reset All Web UI Settings </h3>
         <p> You cannot undo this action! </p>
 
         <div class="field">
@@ -165,7 +165,7 @@
       <br/>
 
       <section>
-        <h2> Disable Material Web UI </h2>
+        <h3> Disable Material Web UI </h3>
         <p> Note: To re-enable this Web UI, you can go to Tools > Options > Web UI > Use alternative Web UI</p>
 
         <div class="field">
