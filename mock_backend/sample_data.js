@@ -38,7 +38,7 @@ function GetMainData(){
                 "alltime_ul": 169885275053,
                 "average_time_queue": 3787,
                 "connection_status": "connected",
-                "dht_nodes": 393,
+                "dht_nodes": GetRandomInt(0, 400),
                 "dl_info_data": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                 "dl_info_speed": GetRandomInt(MIN_SPEED, MAX_SPEED),
                 "dl_rate_limit": 0,
