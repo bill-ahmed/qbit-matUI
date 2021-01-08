@@ -84,11 +84,37 @@ app-search-torrents:focus-within {
   min-height: 100%;
   width: 100%;
 
-  flex-grow: 1;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-evenly;
 
-  padding-left: 8%;
-  padding-right: 8%;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.content app-torrents-table {
+  width: 83%;
+}
+
+.content app-global-transfer-info {
+  width: 15%;
+  margin-top: 30px;
+}
+
+/** For small screens */
+@media only screen and (max-width: 1500px) {
+  .content {
+    flex-direction: column;
+    padding: 0 5%;
+  }
+
+  .content app-torrents-table {
+    width: 100%;
+  }
+
+  .content app-global-transfer-info {
+    width: 100%;
+    margin-top: 10px;
+  }
 }
 
 /** For phone screens */
