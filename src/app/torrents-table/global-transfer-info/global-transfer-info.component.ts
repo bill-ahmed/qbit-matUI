@@ -31,6 +31,14 @@ export class GlobalTransferInfoComponent implements OnInit {
     this.data = newData;
   }
 
+  handleDownloadLimitSelect() {
+    console.log('set down')
+  }
+
+  handleUploadLimitSelect() {
+    console.log('set up')
+  }
+
   getDownloadSpeedString() {
     return `${this.units_helper.GetFileSizeString(this.data.dl_info_speed)}/s`;
   }

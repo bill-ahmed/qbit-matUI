@@ -1,40 +1,58 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="global-transfer-info-container mat-app-background">
-    <mat-card class="mat-elevation-z1 data-container">
+    <mat-card class="mat-elevation-z3 data-container">
       <section id="disk_summary">
-        <h3>
-          <b>Disk Summary</b>
-        </h3>
+        <h2>
+          Disk Summary
+        </h2>
 
-        <div>
-            <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
+        <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
 
-            <div *ngIf="!isLoading()" id="summaryContent">
-                <mat-icon color="primary">storage</mat-icon>
-                <h4>Free Space: {{getFreeSpaceOnDisk()}}</h4>
-            </div>
+        <div *ngIf="!isLoading()" id="summaryContent">
+          <mat-chip color="default" disableRipple selected>
+            <mat-icon color="primary">storage</mat-icon>
+            <h4>Free space: {{getFreeSpaceOnDisk()}}</h4>
+          </mat-chip>
         </div>
       </section>
-      <br/>
+
+      <div>
+        <br/>
+        <mat-divider [inset]="true"></mat-divider>
+        <br/>
+      </div>
 
       <section id="global_transfer">
-        <h3>
-          <b>Global Transfer</b>
-        </h3>
+        <h2>
+          Global Transfer
+        </h2>
 
-        <div>
-            <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
+        <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
+        <div *ngIf="!isLoading()" id="summaryContent">
+          <mat-chip-list>
+            <mat-chip color="primary" (click)="handleDownloadLimitSelect()" disableRipple selected matTooltip="Click to set download limit" matTooltipPosition="above">
+              <mat-icon>arrow_downward</mat-icon>
+              <h4>{{getDownloadSpeedString()}} ({{getDownloadedString()}})</h4>
+            </mat-chip>
 
-            <div *ngIf="!isLoading()" id="summaryContent">
+            <mat-chip color="accent" (click)="handleUploadLimitSelect()" disableRipple selected matTooltip="Click to set upload limit" matTooltipPosition="below">
+              <mat-icon>arrow_upward</mat-icon>
+              <h4>{{getUploadSpeedString()}} ({{getUploadedString()}})</h4>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </section>
 
-                <mat-icon color="primary">arrow_downward</mat-icon>
-                <h4>{{getDownloadSpeedString()}} ({{getDownloadedString()}})</h4>
+      <div>
+        <br/>
+        <mat-divider [inset]="true"></mat-divider>
+        <br/>
+      </div>
 
-                <mat-divider id="summaryContentDivider" [vertical]="true"></mat-divider>
-
-                <mat-icon color="accent">arrow_upward</mat-icon>
-                <h4>{{getUploadSpeedString()}} ({{getUploadedString()}})</h4>
-
-            </div>
+      <section id="bottom_actions">
+        <div class="row">
+          <mat-slide-toggle labelPosition="before" id="useAltLimits" (click)="false" (change)="false" color="primary" matTooltip="Use alt speed limits" matTooltipPosition="above">
+            <mat-icon style="margin-top: 8px;">speed</mat-icon>
+          </mat-slide-toggle>
         </div>
       </section>
     </mat-card>
