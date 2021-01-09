@@ -73,6 +73,8 @@ export interface GlobalTransferInfo {
     free_space_on_disk: number,
     total_peer_connections: number,
 
+    /** True if alternative speed limits are enabled */
+    use_alt_speed_limits: boolean
 }
 
 /** Response when requesting torrent data from server */

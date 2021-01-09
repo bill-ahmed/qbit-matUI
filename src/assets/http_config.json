@@ -17,6 +17,7 @@
         "torrentContents": "/torrents/files",
         "userPreferences": "/app/preferences",
         "setPreferences": "/app/setPreferences",
+        "toggleSpeedLimitsMode": "/transfer/toggleSpeedLimitsMode",
         "applicationVersion": "/app/version",
         "apiVersion": "/app/webapiVersion"
     },

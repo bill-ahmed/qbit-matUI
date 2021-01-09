@@ -214,6 +214,17 @@ export class TorrentDataHTTPService {
     return this.sendTorrentHashesPOST(url, [hash], null, body);
   }
 
+  async ToggleAltSpeedLimits(): Promise<void> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.toggleSpeedLimitsMode;
+    let url = root + endpoint;
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { } : { withCredentials: true }
+
+    await this.http.post(url, {}, options).toPromise();
+  }
+
   /** Send a list of torrent hashes joined by "|" to a given endpoint
    * This functionality is used across many common actions
    * @param endpoint The endpoint to send a POST request to

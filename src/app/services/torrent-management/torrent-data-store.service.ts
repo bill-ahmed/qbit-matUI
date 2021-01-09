@@ -146,6 +146,10 @@ export class TorrentDataStoreService {
     return this.torrent_http_service.GetTorrentContents(tor.hash);
   }
 
+  public async ToggleAltSpeedLimits() {
+    await this.torrent_http_service.ToggleAltSpeedLimits();
+  }
+
   /** Update observable with new data */
   private _updateDataSource(source: MainData): void {
     this._torrentMainDataSource.next(source);

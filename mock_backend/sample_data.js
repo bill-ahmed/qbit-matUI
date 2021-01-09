@@ -56,7 +56,7 @@ function GetMainData(){
                 "up_info_data": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                 "up_info_speed": GetRandomInt(MIN_SPEED, MAX_SPEED),
                 "up_rate_limit": 0,
-                "use_alt_speed_limits": false,
+                "use_alt_speed_limits": GetRandomInt(1, 4) % 2 === 0,
                 "write_cache_overload": "0"
             },
             "torrents_removed": ["0daea5cece5"],
