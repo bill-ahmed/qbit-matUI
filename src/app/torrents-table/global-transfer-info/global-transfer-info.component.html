@@ -50,7 +50,7 @@
 
       <section id="bottom_actions">
         <div class="row">
-          <mat-slide-toggle labelPosition="before" id="useAltLimits" (click)="false" (change)="false" color="primary" matTooltip="Use alt speed limits" matTooltipPosition="above">
+          <mat-slide-toggle labelPosition="before" id="useAltLimits" (toggleChange)="toggleAltSpeedLimits()" [checked]="isAltSpeedEnabled" color="primary" matTooltip="Use alt speed limits" matTooltipPosition="above">
             <mat-icon style="margin-top: 8px;">speed</mat-icon>
           </mat-slide-toggle>
         </div>

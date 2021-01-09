@@ -13,6 +13,8 @@ import { Observable } from 'rxjs';
 export class GlobalTransferInfoComponent implements OnInit {
 
   public data: GlobalTransferInfo = null;
+  public isAltSpeedEnabled: boolean;
+
   public isDarkTheme: Observable<boolean>;
 
   constructor(private data_store: TorrentDataStoreService, private units_helper: UnitsHelperService, private theme: ThemeService) { }
@@ -29,6 +31,7 @@ export class GlobalTransferInfoComponent implements OnInit {
 
   handleDataChange(newData: GlobalTransferInfo): void {
     this.data = newData;
+    this.isAltSpeedEnabled = this.data.use_alt_speed_limits;
   }
 
   handleDownloadLimitSelect() {
@@ -37,6 +40,12 @@ export class GlobalTransferInfoComponent implements OnInit {
 
   handleUploadLimitSelect() {
     console.log('set up')
+  }
+
+  async toggleAltSpeedLimits() {
+    console.log('toggled alt limits')
+    this.isAltSpeedEnabled = !this.isAltSpeedEnabled
+    await this.data_store.ToggleAltSpeedLimits();
   }
 
   getDownloadSpeedString() {
