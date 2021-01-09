@@ -4,6 +4,7 @@ import { GlobalTransferInfo, MainData } from 'src/utils/Interfaces';
 import { UnitsHelperService } from 'src/app/services/units-helper.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { Observable } from 'rxjs';
+import { NetworkConnectionInformationService } from 'src/app/services/network/network-connection-information.service';
 
 @Component({
   selector: 'app-global-transfer-info',
@@ -15,9 +16,11 @@ export class GlobalTransferInfoComponent implements OnInit {
   public data: GlobalTransferInfo = null;
   public isAltSpeedEnabled: boolean;
 
+  public refreshInterval = -1;
+
   public isDarkTheme: Observable<boolean>;
 
-  constructor(private data_store: TorrentDataStoreService, private units_helper: UnitsHelperService, private theme: ThemeService) { }
+  constructor(private data_store: TorrentDataStoreService, private networkInfo: NetworkConnectionInformationService, private units_helper: UnitsHelperService, private theme: ThemeService) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
@@ -26,6 +29,13 @@ export class GlobalTransferInfoComponent implements OnInit {
       if(res) {
         this.handleDataChange(res.server_state);
       }
+    });
+
+    // Store refresh interval & subscribe to any changes
+    this.refreshInterval = this.networkInfo.getRefreshInterval();
+    this.networkInfo.get_network_change_subscription()
+    .subscribe(newInterval => {
+      this.refreshInterval = this.networkInfo.getRefreshInterval();
     })
   }
 
@@ -62,6 +72,14 @@ export class GlobalTransferInfoComponent implements OnInit {
 
   getUploadedString() {
     return `${this.units_helper.GetFileSizeString(this.data.up_info_data)}`;
+  }
+
+  getDownLimitString() {
+    return this.isAltSpeedEnabled ? `[${this.units_helper.GetFileSizeString(this.data.dl_rate_limit)}/s]` : '';
+  }
+
+  getUpLimitString() {
+    return this.isAltSpeedEnabled ? `[${this.units_helper.GetFileSizeString(this.data.up_rate_limit)}/s]` : '';
   }
 
   getFreeSpaceOnDisk() {
