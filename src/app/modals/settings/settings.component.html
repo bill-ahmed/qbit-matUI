@@ -1,7 +1,7 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background settings_container">
 
   <h2 mat-dialog-title>Settings</h2>
-  <mat-card-subtitle>Manage local and qBittorrent preferences. Clicking save will reload the page.</mat-card-subtitle>
+  <mat-card-subtitle>Manage local and qBittorrent preferences. Clicking save will reload the page!</mat-card-subtitle>
 
   <mat-dialog-content class="mat-typography dialog_content">
     <div class="content_container">
@@ -23,7 +23,7 @@
           <mat-list-item class="{{getClassForTab('speed')}}" (click)="onTabSelect('speed')">
             <mat-icon color="{{tab_selected === 'speed' ? 'primary' : ''}}" mat-list-icon>speed</mat-icon>
             <div mat-line>Speed</div>
-            <div mat-line>Global speed options</div>
+            <div mat-line>Global/Alt speed options</div>
           </mat-list-item>
 
           <mat-list-item class="{{getClassForTab('rss')}}" (click)="onTabSelect('rss')">
@@ -49,7 +49,6 @@
     <mat-divider></mat-divider>
   </mat-dialog-content>
 
-  <br/>
   <mat-dialog-actions align="end">
     <button mat-button [disabled]="loading" [mat-dialog-close]="true">Cancel</button>
     <button mat-raised-button [disabled]="loading" color="primary" (click)="onSave()" cdkFocusInitial>Save</button>

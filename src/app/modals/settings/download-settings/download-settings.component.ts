@@ -10,7 +10,22 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class DownloadSettingsComponent implements OnInit {
 
-  downloadSettings: DownloadSettings = { queueing_enabled: false, max_active_downloads: 0, max_active_torrents: 0, max_active_uploads: 0, save_path: "", scan_dirs: [], temp_path: "" };
+  downloadSettings: DownloadSettings = {
+    queueing_enabled: false,
+    max_active_downloads: 0,
+    max_active_torrents: 0,
+    max_active_uploads: 0,
+    save_path: "",
+    scan_dirs: [],
+
+    temp_path_enabled: false,
+    temp_path: "",
+
+    create_subfolder_enabled: true,
+    preallocate_all: false,
+    incomplete_files_ext: false,
+    start_paused_enabled: false,
+  };
 
   common_validations = [Validators.min(0)];
   form_controls = {
@@ -29,7 +44,14 @@ export class DownloadSettingsComponent implements OnInit {
         max_active_uploads: pref.max_active_uploads,
         save_path: pref.save_path,
         scan_dirs: pref.scan_dirs,
-        temp_path: pref.temp_path
+
+        temp_path_enabled: pref.temp_path_enabled,
+        temp_path: pref.temp_path,
+
+        create_subfolder_enabled: pref.create_subfolder_enabled,
+        preallocate_all: pref.preallocate_all,
+        incomplete_files_ext: pref.incomplete_files_ext,
+        start_paused_enabled: pref.start_paused_enabled
       }
     });
   }

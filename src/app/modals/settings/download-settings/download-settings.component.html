@@ -1,6 +1,31 @@
 <div class="downloads_settings">
   <section>
-    <h2> Save Paths </h2>
+    <h3> Adding Torrents </h3>
+
+    <div class="indented_field">
+      <div class="field">
+        <mat-checkbox [(ngModel)]="downloadSettings.create_subfolder_enabled">Create subfolder for torrents with multiple files</mat-checkbox>
+      </div>
+
+      <div class="field">
+        <mat-checkbox [(ngModel)]="downloadSettings.start_paused_enabled">Do not start the download automatically</mat-checkbox>
+      </div>
+    </div>
+
+    <div class="indented_field">
+      <div class="field">
+        <mat-checkbox [(ngModel)]="downloadSettings.preallocate_all">Pre-allocate disk space for all files</mat-checkbox>
+      </div>
+
+      <div class="field">
+        <mat-checkbox [(ngModel)]="downloadSettings.incomplete_files_ext">Append .!qB extension to incomplete files</mat-checkbox>
+      </div>
+    </div>
+  </section>
+  <br/>
+
+  <section>
+    <h3> Save Paths </h3>
 
     <div class="indented_field">
       <div class="field">
@@ -11,9 +36,10 @@
       </div>
 
       <div class="field">
-        <p>Keep incomplete torrents in:</p>
+        <mat-checkbox [(ngModel)]="downloadSettings.temp_path_enabled">Keep incomplete torrents in:</mat-checkbox>
+
         <mat-form-field appearance="outline" class="regular_field wide_field">
-          <input matInput type="text" [(ngModel)]="downloadSettings.temp_path" value="{{downloadSettings.temp_path}}">
+          <input disabled={{!downloadSettings.temp_path_enabled}} matInput type="text" [(ngModel)]="downloadSettings.temp_path" value="{{downloadSettings.temp_path}}">
         </mat-form-field>
       </div>
     </div>
@@ -21,14 +47,14 @@
   <br/>
 
   <section>
-    <h2> Torrent Queueing </h2>
+    <h3> Torrent Queueing </h3>
 
     <mat-checkbox [(ngModel)]="downloadSettings.queueing_enabled">Enable Queueing</mat-checkbox>
 
     <div class="indented_field {{downloadSettings.queueing_enabled ? '' : 'disabled'}}">
       <div class="field">
         <p>Maximum active downloads:</p>
-        <mat-form-field class="small_numeric_field">
+        <mat-form-field class="small numeric_field">
           <input matInput type="number" [(ngModel)]="downloadSettings.max_active_downloads" value="{{downloadSettings.max_active_downloads}}"
                 [formControl]="form_controls.max_active_downloads">
         </mat-form-field>
@@ -36,7 +62,7 @@
 
       <div class="field">
         <p>Maximum active uploads:</p>
-        <mat-form-field class="small_numeric_field">
+        <mat-form-field class="small numeric_field">
           <input matInput type="number" [(ngModel)]="downloadSettings.max_active_uploads" value="{{downloadSettings.max_active_uploads}}"
                 [formControl]="form_controls.max_active_uploads">
         </mat-form-field>
@@ -44,7 +70,7 @@
 
       <div class="field">
         <p>Maximum active torrents:</p>
-        <mat-form-field class="small_numeric_field">
+        <mat-form-field class="small numeric_field">
           <input matInput type="number" [(ngModel)]="downloadSettings.max_active_torrents" value="{{downloadSettings.max_active_torrents}}"
                 [formControl]="form_controls.max_active_torrents">
         </mat-form-field>
