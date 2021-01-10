@@ -41,7 +41,7 @@ function GetMainData(){
                 "dht_nodes": GetRandomInt(0, 400),
                 "dl_info_data": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                 "dl_info_speed": GetRandomInt(MIN_SPEED, MAX_SPEED),
-                "dl_rate_limit": 0,
+                "dl_rate_limit": GetRandomInt(MIN_SPEED, 10000),
                 "free_space_on_disk": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE * 100),
                 "global_ratio": "1.25",
                 "queued_io_jobs": 0,
@@ -55,7 +55,7 @@ function GetMainData(){
                 "total_wasted_session": 0,
                 "up_info_data": GetRandomInt(MIN_FILE_SIZE, MAX_FILE_SIZE),
                 "up_info_speed": GetRandomInt(MIN_SPEED, MAX_SPEED),
-                "up_rate_limit": 0,
+                "up_rate_limit": GetRandomInt(MIN_SPEED, 10000),
                 "use_alt_speed_limits": GetRandomInt(1, 4) % 2 === 0,
                 "write_cache_overload": "0"
             },

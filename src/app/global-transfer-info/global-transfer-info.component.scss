@@ -58,12 +58,12 @@ mat-chip {
 }
 
 /** For small screens */
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1550px) {
   .global-transfer-info-container {
     padding-top: 0;
 
-    .data-container {
-      flex-direction: row;
+    .hide-small {
+      display: none;
     }
   }
 }

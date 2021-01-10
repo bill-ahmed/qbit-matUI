@@ -101,7 +101,7 @@ app-search-torrents:focus-within {
 }
 
 /** For small screens */
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1550px) {
   .content {
     flex-direction: column;
     padding: 0 5%;

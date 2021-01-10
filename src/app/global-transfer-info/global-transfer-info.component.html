@@ -18,11 +18,9 @@
         </div>
       </section>
 
-      <div>
-        <br/>
-        <mat-divider [inset]="true"></mat-divider>
-        <br/>
-      </div>
+      <br class="hide-small"/>
+      <mat-divider class="hide-small" [inset]="true"></mat-divider>
+      <br/>
 
       <section id="global_transfer">
         <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
@@ -52,13 +50,13 @@
         </div>
       </section>
 
-      <div>
+      <div class="hide-small">
         <br/>
         <mat-divider [inset]="true"></mat-divider>
         <br/>
       </div>
 
-      <section id="bottom_actions">
+      <section class="hide-small" id="bottom_actions">
         <div class="row">
           <mat-slide-toggle labelPosition="before" id="useAltLimits" (toggleChange)="toggleAltSpeedLimits()" [checked]="isAltSpeedEnabled" color="primary" matTooltip="Use alt speed limits" matTooltipPosition="above">
             <mat-icon style="margin-top: 8px;">speed</mat-icon>
