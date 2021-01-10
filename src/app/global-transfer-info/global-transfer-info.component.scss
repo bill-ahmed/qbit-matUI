@@ -1,0 +1,69 @@
+.global-transfer-info-container {
+  height: 100%;
+  padding-top: 56px;
+
+  .data-container {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    section h2 {
+      font-weight: 400;
+    }
+
+    #disk_summary, #global_transfer {
+      display: flex;
+      flex-direction: column;
+
+      width: 100%;
+    }
+
+    #global_transfer {
+      flex-grow: 1;
+    }
+
+    #bottom_actions {
+      width: 100%;
+
+      #useAltLimits > label > span {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+
+  margin: 5px 0;
+}
+
+h3 {
+    font-size: 11pt;
+    margin: 0;
+}
+
+#summaryContent h4 {
+    font-size: 10pt;
+    margin: 0 5px 0 5px;
+}
+
+mat-chip {
+  border-radius: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+/** For small screens */
+@media only screen and (max-width: 1550px) {
+  .global-transfer-info-container {
+    padding-top: 0;
+
+    .hide-small {
+      display: none;
+    }
+  }
+}

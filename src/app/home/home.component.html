@@ -4,12 +4,11 @@
   <div class="toolbar">
     <mat-toolbar>
       <div>
-        <h1>
-          Manage Torrents
-        </h1>
-        <p class="hide_mobile" id="qbit_version_info" style="margin-bottom: 0; font-size: 11pt;">
-          Qbittorrent {{getAppVersion()}}, API v{{getAPIVersion()}}
-        </p>
+        <h1> qBittorrent </h1>
+
+        <h3 class="hide_mobile" style="font-size: 11pt;">
+          {{getAppVersion()}}, API v{{getAPIVersion()}}
+        </h3>
       </div>
 
       <app-search-torrents></app-search-torrents>
@@ -56,6 +55,7 @@
 
   <!-- Main Content -->
   <div class="content" role="main">
-      <app-torrents-table></app-torrents-table>
+    <app-torrents-table></app-torrents-table>
+    <app-global-transfer-info></app-global-transfer-info>
   </div>
 </div>

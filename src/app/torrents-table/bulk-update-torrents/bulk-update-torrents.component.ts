@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
-import { NetworkConnectionInformationService } from 'src/app/services/network/network-connection-information.service';
 import { RowSelectionService } from 'src/app/services/torrent-management/row-selection.service';
 
 @Component({
@@ -13,7 +12,6 @@ export class BulkUpdateTorrentsComponent implements OnInit {
 
   public torrentsSelected: string[] = [];
   public canUserEdit: boolean = false;
-  public refreshInterval = -1;
 
   private loading: boolean = false;
   private actions: {
@@ -29,7 +27,7 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     "moveTor": () => void,
   };
 
-  constructor(private torrentsSelectedService: RowSelectionService, private networkInfo: NetworkConnectionInformationService) {
+  constructor(private torrentsSelectedService: RowSelectionService) {
 
     // Assign all possible actions
     this.actions = {
@@ -44,13 +42,6 @@ export class BulkUpdateTorrentsComponent implements OnInit {
       "minPrio": () => this.onChange.emit("minPrio"),
       "moveTor": () => this.onChange.emit("moveTorrent")
     };
-
-    // Store refresh interval & subscribe to any changes
-    this.refreshInterval = this.networkInfo.getRefreshInterval();
-    this.networkInfo.get_network_change_subscription()
-    .subscribe(newInterval => {
-      this.refreshInterval = this.networkInfo.getRefreshInterval();
-    })
    }
 
   ngOnInit(): void {

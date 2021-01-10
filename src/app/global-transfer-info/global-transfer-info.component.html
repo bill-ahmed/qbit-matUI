@@ -1,0 +1,67 @@
+<div [ngClass]="{'dark-theme': isDarkTheme | async}" class="global-transfer-info-container mat-app-background">
+    <mat-card class="mat-elevation-z3 data-container">
+      <section id="disk_summary">
+        <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
+
+        <div *ngIf="!isLoading()" id="summaryContent">
+          <mat-chip-list>
+            <mat-chip color="default" disableRipple selected>
+              <mat-icon color="primary">refresh</mat-icon>
+              <h4>Refresh Interval: {{refreshInterval / 1000}}s</h4>
+            </mat-chip>
+
+            <mat-chip color="default" disableRipple selected>
+              <mat-icon color="primary">storage</mat-icon>
+              <h4>Free space: {{getFreeSpaceOnDisk()}}</h4>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </section>
+
+      <br class="hide-small"/>
+      <mat-divider class="hide-small" [inset]="true"></mat-divider>
+      <br/>
+
+      <section id="global_transfer">
+        <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
+        <div *ngIf="!isLoading()" id="summaryContent">
+          <mat-chip-list>
+            <mat-chip color="primary" (click)="handleDownloadLimitSelect()" disableRipple selected matTooltip="Click to set download limit" matTooltipPosition="above">
+              <mat-icon>arrow_downward</mat-icon>
+              <h4>{{getDownloadSpeedString()}} {{getDownLimitString()}}</h4>
+            </mat-chip>
+
+            <mat-chip disableRipple>
+              <mat-icon>vertical_align_bottom</mat-icon>
+              <h4>Downloaded: {{getDownloadedString()}}</h4>
+            </mat-chip>
+
+            <br/>
+            <mat-chip color="accent" (click)="handleUploadLimitSelect()" disableRipple selected matTooltip="Click to set upload limit" matTooltipPosition="below">
+              <mat-icon>arrow_upward</mat-icon>
+              <h4>{{getUploadSpeedString()}} {{getUpLimitString()}}</h4>
+            </mat-chip>
+
+            <mat-chip disableRipple>
+              <mat-icon>vertical_align_top</mat-icon>
+              <h4>Uploaded: {{getUploadedString()}}</h4>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </section>
+
+      <div class="hide-small">
+        <br/>
+        <mat-divider [inset]="true"></mat-divider>
+        <br/>
+      </div>
+
+      <section class="hide-small" id="bottom_actions">
+        <div class="row">
+          <mat-slide-toggle labelPosition="before" id="useAltLimits" (toggleChange)="toggleAltSpeedLimits()" [checked]="isAltSpeedEnabled" color="primary" matTooltip="Use alt speed limits" matTooltipPosition="above">
+            <mat-icon style="margin-top: 8px;">speed</mat-icon>
+          </mat-slide-toggle>
+        </div>
+      </section>
+    </mat-card>
+</div>

@@ -59,11 +59,11 @@ export class SpeedSettingsComponent implements OnInit {
       let { up_limit, dl_limit, alt_dl_limit, alt_up_limit, scheduler_enabled, schedule_from_hour, schedule_from_min, schedule_to_hour, schedule_to_min, scheduler_days } = pref;
 
       this.speed_settings = {
-        up_limit,
-        dl_limit,
+        up_limit: up_limit / 1024,
+        dl_limit: dl_limit / 1024,
 
-        alt_dl_limit,
-        alt_up_limit,
+        alt_dl_limit: alt_dl_limit / 1024,
+        alt_up_limit: alt_up_limit / 1024,
 
         scheduler_enabled,
         schedule_from_hour,
@@ -92,6 +92,9 @@ export class SpeedSettingsComponent implements OnInit {
       ...this.speed_settings,
       up_limit: this.units.Kibibits_to_bits(this.speed_settings.up_limit),
       dl_limit: this.units.Kibibits_to_bits(this.speed_settings.dl_limit),
+
+      alt_up_limit: this.units.Kibibits_to_bits(this.speed_settings.alt_up_limit),
+      alt_dl_limit: this.units.Kibibits_to_bits(this.speed_settings.alt_dl_limit),
 
       scheduler_days: this.scheduler_days_ordering.indexOf(this.scheduler_day_chosen)
     };
