@@ -27,7 +27,7 @@ export class RateLimitsDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
-    this.newLimit = this.inputData.currentLimit
+    this.newLimit = this.inputData.currentLimit / 1024    // Want KB!
   }
 
   async updateLimit() {

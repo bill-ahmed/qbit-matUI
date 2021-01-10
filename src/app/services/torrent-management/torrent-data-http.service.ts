@@ -222,7 +222,7 @@ export class TorrentDataHTTPService {
     // Do not send cookies in dev mode
     let options = IsDevEnv() ? { } : { withCredentials: true }
 
-    await this.http.post(url, {}, options).toPromise();
+    await this.http.post(url, null, options).toPromise();
   }
 
   async SetDownloadLimit(limit: number) {
