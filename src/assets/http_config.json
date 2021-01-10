@@ -18,6 +18,8 @@
         "userPreferences": "/app/preferences",
         "setPreferences": "/app/setPreferences",
         "toggleSpeedLimitsMode": "/transfer/toggleSpeedLimitsMode",
+        "setDownloadLimit": "/transfer/setDownloadLimit",
+        "setUploadLimit": "/transfer/setUploadLimit",
         "applicationVersion": "/app/version",
         "apiVersion": "/app/webapiVersion"
     },
