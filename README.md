@@ -15,7 +15,9 @@ A material-themed interface to the original [qBittorrent Web UI](https://github.
 ## Demo!
 A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 
-## Installation -- Replacing your existing qBittorrent Web UI
+-----
+
+## Installation
 This app is tested with **v4.1.5** and higher of qBittorrent, any lower version are not guaranteed to work.
 
 1. Take a production-ready build from [releases](https://github.com/bill-ahmed/qbit-material-WebUI/releases), or [build it yourself](#build)

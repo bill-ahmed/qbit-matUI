@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { TorrentDataStoreService } from 'src/app/services/torrent-management/torrent-data-store.service';
 import { GlobalTransferInfo, MainData } from 'src/utils/Interfaces';
 import { UnitsHelperService } from 'src/app/services/units-helper.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import { Observable } from 'rxjs';
 import { NetworkConnectionInformationService } from 'src/app/services/network/network-connection-information.service';
+import { RateLimitsDialogComponent } from '../modals/rate-limits-dialog/rate-limits-dialog.component';
 
 @Component({
   selector: 'app-global-transfer-info',
@@ -20,7 +22,10 @@ export class GlobalTransferInfoComponent implements OnInit {
 
   public isDarkTheme: Observable<boolean>;
 
-  constructor(private data_store: TorrentDataStoreService, private networkInfo: NetworkConnectionInformationService, private units_helper: UnitsHelperService, private theme: ThemeService) { }
+  private rateLimitDiaglogRef: MatDialogRef<RateLimitsDialogComponent>;
+
+  constructor(private data_store: TorrentDataStoreService, private networkInfo: NetworkConnectionInformationService, private units_helper:
+              UnitsHelperService, private rateLimitDialog: MatDialog, private theme: ThemeService) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
@@ -45,11 +50,25 @@ export class GlobalTransferInfoComponent implements OnInit {
   }
 
   handleDownloadLimitSelect() {
-    console.log('set down')
+    this.rateLimitDiaglogRef = this.rateLimitDialog.open(RateLimitsDialogComponent, {
+      autoFocus: false,
+      data: {
+        for: 'Download',
+        currentLimit: this.data.dl_rate_limit
+      },
+      panelClass: "generic-dialog"
+    });
   }
 
   handleUploadLimitSelect() {
-    console.log('set up')
+    this.rateLimitDiaglogRef = this.rateLimitDialog.open(RateLimitsDialogComponent, {
+      autoFocus: false,
+      data: {
+        for: 'Upload',
+        currentLimit: this.data.dl_rate_limit
+      },
+      panelClass: "generic-dialog"
+    });
   }
 
   async toggleAltSpeedLimits() {

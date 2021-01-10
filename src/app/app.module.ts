@@ -31,7 +31,7 @@ import { DeleteTorrentDialogComponent } from './modals/delete-torrent-dialog/del
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SearchTorrentsComponent } from './home/search-torrents/search-torrents.component';
 import { MatCardModule } from '@angular/material/card';
-import { GlobalTransferInfoComponent } from './torrents-table/global-transfer-info/global-transfer-info.component';
+import { GlobalTransferInfoComponent } from './global-transfer-info/global-transfer-info.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -64,6 +64,7 @@ import { WarnSnackbarComponent } from './services/notifications/snackbar/warn-sn
 import { ErrorSnackbarComponent } from './services/notifications/snackbar/error-snackbar/error-snackbar.component';
 import { InfoSnackbarComponent } from './services/notifications/snackbar/info-snackbar/info-snackbar.component';
 import { DragAndDropFilesDirective } from './drag-and-drop-files.directive';
+import { RateLimitsDialogComponent } from './modals/rate-limits-dialog/rate-limits-dialog.component';
 
 var appRoutes: Routes;
 
@@ -104,7 +105,8 @@ if(!environment.production){
     WarnSnackbarComponent,
     ErrorSnackbarComponent,
     InfoSnackbarComponent,
-    DragAndDropFilesDirective
+    DragAndDropFilesDirective,
+    RateLimitsDialogComponent
   ],
   imports: [
     CdkTableModule,

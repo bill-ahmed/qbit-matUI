@@ -1,5 +1,6 @@
 .global-transfer-info-container {
   height: 100%;
+  padding-top: 56px;
 
   .data-container {
     height: 100%;
@@ -59,6 +60,8 @@ mat-chip {
 /** For small screens */
 @media only screen and (max-width: 1500px) {
   .global-transfer-info-container {
+    padding-top: 0;
+
     .data-container {
       flex-direction: row;
     }
