@@ -94,11 +94,11 @@ export class GlobalTransferInfoComponent implements OnInit {
   }
 
   getDownLimitString() {
-    return this.isAltSpeedEnabled ? `[${this.units_helper.GetFileSizeString(this.data.dl_rate_limit)}/s]` : '';
+    return (this.isAltSpeedEnabled || this.data.dl_rate_limit > 0) ? `[${this.units_helper.GetFileSizeString(this.data.dl_rate_limit)}/s]` : '';
   }
 
   getUpLimitString() {
-    return this.isAltSpeedEnabled ? `[${this.units_helper.GetFileSizeString(this.data.up_rate_limit)}/s]` : '';
+    return (this.isAltSpeedEnabled || this.data.up_rate_limit > 0) ? `[${this.units_helper.GetFileSizeString(this.data.up_rate_limit)}/s]` : '';
   }
 
   getFreeSpaceOnDisk() {
