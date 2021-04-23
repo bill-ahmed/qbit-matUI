@@ -6,6 +6,70 @@
 
     <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading() && !isTorrentsEmpty()"></app-bulk-update-torrents>
 
+    <!-- Mat menu target -->
+    <mat-menu #torrentOptionsMenu>
+      <button mat-menu-item (click)="pauseTorrentsBulk(selection.selected)">
+        <mat-icon color="accent">pause</mat-icon>
+        <span> Pause </span>
+      </button>
+
+      <button mat-menu-item (click)="resumeTorrentsBulk(selection.selected)">
+        <mat-icon color="primary">play_arrow</mat-icon>
+        <span> Resume </span>
+      </button>
+
+      <button mat-menu-item (click)="forceStartTorrentsBulk(selection.selected)">
+        <mat-icon color="primary">fast_forward</mat-icon>
+        <span> Force Resume </span>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item (click)="openDeleteTorrentDialog(null, selection.selected)">
+        <mat-icon color="warn">delete</mat-icon>
+        <span> Delete </span>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item (click)="openMoveTorrentDialog()">
+        <mat-icon color="primary">folder</mat-icon>
+        <span> Set location... </span>
+      </button>
+
+      <button mat-menu-item (click)="recheckTorrents(selection.selected)">
+        <mat-icon color="yellow">refresh</mat-icon>
+        <span> Force recheck </span>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item (click)="maximumPriorityBulk(selection.selected)">
+        <mat-icon>vertical_align_top</mat-icon>
+        <span> Max Priority </span>
+      </button>
+
+      <button mat-menu-item (click)="increasePriorityBulk(selection.selected)">
+        <mat-icon>arrow_upward</mat-icon>
+        <span> Increase Priority </span>
+      </button>
+
+      <button mat-menu-item (click)="decreasePriorityBulk(selection.selected)">
+        <mat-icon>arrow_downward</mat-icon>
+        <span> Decrease Priority </span>
+      </button>
+
+      <button mat-menu-item (click)="minimumPriorityBulk(selection.selected)">
+        <mat-icon>vertical_align_bottom</mat-icon>
+        <span> Min Priority </span>
+      </button>
+
+      <mat-divider></mat-divider>
+    </mat-menu>
+
+    <!-- Top-level menu rendered in here -->
+    <div style="visibility: hidden; position: fixed;" [style.left]="menuTopLeftPosition.x" [style.top]="menuTopLeftPosition.y" [matMenuTriggerFor]="torrentOptionsMenu"></div>
+
     <!-- Table of torrent data -->
     <mat-table *ngIf="!isLoading() && !isTorrentsEmpty()" mat-table [dataSource]="dataSource" matSort (matSortChange)="onMatSortChange($event)" class="mat-elevation-z1"
         cdkDropList
@@ -62,12 +126,14 @@
               [value]="(torrent.progress * 100).toFixed(2)">
           </p-progressBar>
 
-          <div *ngSwitchCase="'Status'">
-            <mat-chip-list>
+          <div style="width: 100%;" *ngSwitchCase="'Status'">
+            <div class="status-chips-container">
+              <app-chip-label *ngIf="torrent.force_start" label="[F]"></app-chip-label>
+
               <mat-chip color="{{isTorrentPrimaryAction(torrent) ? 'primary' : isTorrentError(torrent) ? 'accent' : 'default'}}" disableRipple selected>
-                {{torrent.force_start ? '[F]' : ''}} {{getStatusString(torrent.state)}}
+                 {{getStatusString(torrent.state)}}
               </mat-chip>
-            </mat-chip-list>
+            </div>
           </div>
 
           <div *ngSwitchCase="'ETA'">
@@ -106,7 +172,12 @@
 
       <!-- Header row of table -->
       <mat-header-row id="torrent_table_header_row" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row [ngStyle]="{'width': tableHeaderWidth}" (click)="handleTorrentSelected(row)" class="{{isSelected(row) ? 'selected' : ''}}" *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <mat-row
+          [ngStyle]="{'width': tableHeaderWidth}"
+          (click)="handleTorrentSelected(row)" class="{{isSelected(row) ? 'selected' : ''}}"
+          (contextmenu)="onTorrentRightClick($event, row)"
+          *matRowDef="let row; columns: displayedColumns">
+      </mat-row>
     </mat-table>
     <mat-paginator class="{{!isLoading() && !isTorrentsEmpty() && userPref.web_ui_options?.torrent_table?.paginate ? '' : 'hidden'}}"
                   [pageSize]="userPref.web_ui_options?.torrent_table?.default_items_per_page"

@@ -27,7 +27,8 @@
               "src/theme.scss",
               "node_modules/primeng/resources/themes/nova/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/material-icons-font/material-icons-font.css"
             ],
             "scripts": []
           },
@@ -158,7 +159,8 @@
             ],
             "styles": [
               "projects/login/src/styles.scss",
-              "projects/login/src/theme.scss"
+              "projects/login/src/theme.scss",
+              "node_modules/material-icons-font/material-icons-font.css"
             ],
             "scripts": []
           },

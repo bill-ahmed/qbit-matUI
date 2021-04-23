@@ -10,6 +10,7 @@ import { GetDefaultSaveLocation } from 'src/utils/Helpers';
 import { RowSelectionService } from 'src/app/services/torrent-management/row-selection.service';
 import { TorrentDataStoreService } from 'src/app/services/torrent-management/torrent-data-store.service';
 import { Torrent } from 'src/utils/Interfaces';
+import { SnackbarService } from 'src/app/services/notifications/snackbar.service';
 
 @Component({
   selector: 'app-move-torrents-dialog',
@@ -27,13 +28,17 @@ export class MoveTorrentsDialogComponent implements OnInit {
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
   constructor(public fileSystemDialog: MatDialog, private data_store: TorrentDataStoreService,
-              private theme: ThemeService, private torrentsSelected: RowSelectionService, private dialogRef:MatDialogRef<MoveTorrentsDialogComponent>) { }
+              private theme: ThemeService, private torrentsSelected: RowSelectionService,
+              private snackbar: SnackbarService, private dialogRef:MatDialogRef<MoveTorrentsDialogComponent>) { }
 
   ngOnInit(): void {
     let torrent_ids = this.torrentsSelected.getTorrentsSelectedValue();
 
     this.filesDestination = GetDefaultSaveLocation();
+
     this.torrents = this.data_store.GetTorrentsByIDs(torrent_ids);
+    this.torrents.sort((a, b) => a.name > b.name ? 1 : -1);
+
     this.isDarkTheme = this.theme.getThemeSubscription();
   }
 
@@ -41,9 +46,10 @@ export class MoveTorrentsDialogComponent implements OnInit {
     this.isLoading = true;
     this.data_store.MoveTorrents(this.torrents, this.filesDestination)
     .subscribe(
-    res => { }
+    res => { this.snackbar.enqueueSnackBar(`Successfully moved ${this.torrents.length} torrent(s).`, { type: 'success' }) }
     ,
     err => {
+      this.snackbar.enqueueSnackBar('Failed to move torrent(s). Check console logs!', { type: 'error' });
       console.error("Error moving torrents", err);
     },
     () => { this.dialogRef.close(); })           // Completion callback

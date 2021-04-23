@@ -6,6 +6,7 @@
         "torrentList": "/sync/maindata",
         "uploadTorrents": "/torrents/add",
         "deleteTorrent": "/torrents/delete",
+        "recheckTorrent": "/torrents/recheck",
         "pauseTorrents": "/torrents/pause",
         "playTorrents": "/torrents/resume",
         "forceStart": "/torrents/setForceStart",

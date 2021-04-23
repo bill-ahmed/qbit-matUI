@@ -26,6 +26,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
 import { SnackbarService } from '../services/notifications/snackbar.service';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-torrents-table',
@@ -50,6 +51,10 @@ export class TorrentsTableComponent implements OnInit {
 
   // For drag & drop of columns
   public displayedColumns: any[];
+
+  // Right-click on row options
+  public menuTopLeftPosition = {x: '0', y: '0'};
+  @ViewChild(MatMenuTrigger, {static: true}) torrentMenuTrigger: MatMenuTrigger;
 
   // Other
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
@@ -203,6 +208,7 @@ export class TorrentsTableComponent implements OnInit {
     }
     else if(this.torrentSearchValue === "") {   // If searching for value is empty, restore filteredTorrentData
       this.filteredTorrentData = this.allTorrentData
+      this.refreshDataSource();
     }
   }
 
@@ -210,34 +216,54 @@ export class TorrentsTableComponent implements OnInit {
    * @param tor The torrents in question.
    */
   pauseTorrentsBulk(tor: Torrent[]) {
-    this.data_store.PauseTorrents(tor).subscribe(res => { });
+    this.data_store.PauseTorrents(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Paused "${tor[0].name}".` : `Paused ${tor.length} torrent(s)`)
+    });
   }
 
   /** Resume given array of torrents
    * @param tor The torrents in question
    */
   resumeTorrentsBulk(tor: Torrent[]) {
-    this.data_store.ResumeTorrents(tor).subscribe(res => { });
+    this.data_store.ResumeTorrents(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Resumed "${tor[0].name}".` : `Resumed ${tor.length} torrent(s)`)
+    });
   }
 
   forceStartTorrentsBulk(tor: Torrent[]) {
-    this.data_store.ForceStartTorrents(tor).subscribe(res => { });
+    this.data_store.ForceStartTorrents(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Force started "${tor[0].name}".` : `Force started ${tor.length} torrent(s)`)
+    });
   }
 
   increasePriorityBulk(tor: Torrent[]) {
-    this.data_store.IncreaseTorrentPriority(tor).subscribe(res => { });
+    this.data_store.IncreaseTorrentPriority(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Increased priority for "${tor[0].name}".` : `Increased priority for ${tor.length} torrent(s)`)
+    });
   }
 
   decreasePriorityBulk(tor: Torrent[]) {
-    this.data_store.DecreaseTorrentPriority(tor).subscribe(res => { })
+    this.data_store.DecreaseTorrentPriority(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Decreased priority for "${tor[0].name}".` : `Decreased priority for ${tor.length} torrent(s)`)
+    })
   }
 
   maximumPriorityBulk(tor: Torrent[]) {
-    this.data_store.AssignTopPriority(tor).subscribe(res => { });
+    this.data_store.AssignTopPriority(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Maximum priority for "${tor[0].name}".` : `Maximum priority for ${tor.length} torrent(s)`)
+    });
   }
 
   minimumPriorityBulk(tor: Torrent[]) {
-    this.data_store.AssignLowestPriority(tor).subscribe(res => { });
+    this.data_store.AssignLowestPriority(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Minimum priority for "${tor[0].name}".` : `Minimum priority for ${tor.length} torrent(s)`)
+    });
+  }
+
+  recheckTorrents(tor: Torrent[]) {
+    this.data_store.RecheckTorrents(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Rechecked ${tor[0].name}.` : `Rechecked ${tor.length} torrent(s).`)
+    });
   }
 
   /** Callback for when user finished dragging & dropping a column */
@@ -333,6 +359,21 @@ export class TorrentsTableComponent implements OnInit {
 
     TorrentHelperService.sortByField(event.active, event.direction, this.filteredTorrentData);
     this.refreshDataSource();
+  }
+
+  /** When user right-clicks on a torrent row */
+  onTorrentRightClick(event: MouseEvent, item: Torrent) {
+    event.preventDefault();
+
+
+    // If torrent not already selected, select it
+    if(!this.isSelected(item))
+      this.handleTorrentSelected(item);
+
+    this.menuTopLeftPosition.x = event.clientX + 'px';
+    this.menuTopLeftPosition.y = event.clientY + 'px';
+
+    this.torrentMenuTrigger.openMenu();
   }
 
   public shouldRenderColumn(col_name: string): boolean {

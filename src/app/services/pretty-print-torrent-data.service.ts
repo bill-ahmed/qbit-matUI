@@ -21,6 +21,7 @@ export class PrettyPrintTorrentDataService {
    */
   pretty_print_status(status: string): string {
     let statusMapping = {
+      allocating: 'Allocating',
       forcedUP: "Seeding",
       forceDL: "Downloading",
       error: "Error",
@@ -30,12 +31,13 @@ export class PrettyPrintTorrentDataService {
       queuedDL: "Queued",
       uploading: "Seeding",
       stalledUP: "Seeding",
-      stalledDL: "Seeding",
-      checkingUP: "Loading...",
-      checkingDL: "Loading...",
+      stalledDL: "Stalled",
+      checkingUP: "Rechecking...",
+      checkingDL: "Rechecking...",
+      checkingResumeData: 'Checking...',
       downloading: "Downloading",
       moving: 'Moving',
-      metaDL: "Loading...",
+      metaDL: "Metadata...",
       missingFiles: "Missing!"
     }
 
