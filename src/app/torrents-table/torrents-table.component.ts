@@ -215,34 +215,48 @@ export class TorrentsTableComponent implements OnInit {
    * @param tor The torrents in question.
    */
   pauseTorrentsBulk(tor: Torrent[]) {
-    this.data_store.PauseTorrents(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Paused ${tor.length} torrent(s)`) });
+    this.data_store.PauseTorrents(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Paused "${tor[0].name}".` : `Paused ${tor.length} torrent(s)`)
+    });
   }
 
   /** Resume given array of torrents
    * @param tor The torrents in question
    */
   resumeTorrentsBulk(tor: Torrent[]) {
-    this.data_store.ResumeTorrents(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Resumed ${tor.length} torrent(s)`) });
+    this.data_store.ResumeTorrents(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Resumed "${tor[0].name}".` : `Resumed ${tor.length} torrent(s)`)
+    });
   }
 
   forceStartTorrentsBulk(tor: Torrent[]) {
-    this.data_store.ForceStartTorrents(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Force started ${tor.length} torrent(s)`) });
+    this.data_store.ForceStartTorrents(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Force started "${tor[0].name}".` : `Force started ${tor.length} torrent(s)`)
+    });
   }
 
   increasePriorityBulk(tor: Torrent[]) {
-    this.data_store.IncreaseTorrentPriority(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Increased priority for ${tor.length} torrent(s)`) });
+    this.data_store.IncreaseTorrentPriority(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Increased priority for "${tor[0].name}".` : `Increased priority for ${tor.length} torrent(s)`)
+    });
   }
 
   decreasePriorityBulk(tor: Torrent[]) {
-    this.data_store.DecreaseTorrentPriority(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Decreased priority for ${tor.length} torrent(s)`) })
+    this.data_store.DecreaseTorrentPriority(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Decreased priority for "${tor[0].name}".` : `Decreased priority for ${tor.length} torrent(s)`)
+    })
   }
 
   maximumPriorityBulk(tor: Torrent[]) {
-    this.data_store.AssignTopPriority(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Maximum priority for ${tor.length} torrent(s)`) });
+    this.data_store.AssignTopPriority(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Maximum priority for "${tor[0].name}".` : `Maximum priority for ${tor.length} torrent(s)`)
+    });
   }
 
   minimumPriorityBulk(tor: Torrent[]) {
-    this.data_store.AssignLowestPriority(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Minimum priority for ${tor.length} torrent(s)`) });
+    this.data_store.AssignLowestPriority(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Minimum priority for "${tor[0].name}".` : `Minimum priority for ${tor.length} torrent(s)`)
+    });
   }
 
   /** Callback for when user finished dragging & dropping a column */
@@ -343,7 +357,11 @@ export class TorrentsTableComponent implements OnInit {
   /** When user right-clicks on a torrent row */
   onTorrentRightClick(event: MouseEvent, item: Torrent) {
     event.preventDefault();
-    console.log('opening menu')
+
+
+    // If torrent not already selected, select it
+    if(!this.isSelected(item))
+      this.handleTorrentSelected(item);
 
     this.menuTopLeftPosition.x = event.clientX + 'px';
     this.menuTopLeftPosition.y = event.clientY + 'px';

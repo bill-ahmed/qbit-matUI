@@ -32,6 +32,7 @@ export class DeleteTorrentDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
+    this.torrentsToDelete.sort((a, b) => a.name > b.name ? 1 : -1)
   }
 
   updateDeleteFilesFromDisk(event: MatCheckboxChange): void {
@@ -48,7 +49,11 @@ export class DeleteTorrentDialogComponent implements OnInit {
     this.TorrentService.DeleteTorrent(this.torrentsToDelete.map((elem) => elem.hash), this.deleteFilesOnDisk)
     .subscribe(
     (res: any) => {
-      this.snackbar.enqueueSnackBar(`Successfully deleted ${this.torrentsToDelete.length} torrent(s)`, { type: 'warn' });
+      let deleted = this.torrentsToDelete;
+      this.snackbar.enqueueSnackBar(
+        deleted.length === 1 ? `Successfully deleted "${deleted[0].name}".` : `Successfully deleted ${deleted.length} torrent(s)`,
+        { type: 'warn' });
+
       this.finishCallback(res);
 
     },

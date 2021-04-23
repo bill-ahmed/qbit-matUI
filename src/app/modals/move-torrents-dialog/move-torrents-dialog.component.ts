@@ -35,7 +35,10 @@ export class MoveTorrentsDialogComponent implements OnInit {
     let torrent_ids = this.torrentsSelected.getTorrentsSelectedValue();
 
     this.filesDestination = GetDefaultSaveLocation();
+
     this.torrents = this.data_store.GetTorrentsByIDs(torrent_ids);
+    this.torrents.sort((a, b) => a.name > b.name ? 1 : -1);
+
     this.isDarkTheme = this.theme.getThemeSubscription();
   }
 
@@ -43,7 +46,7 @@ export class MoveTorrentsDialogComponent implements OnInit {
     this.isLoading = true;
     this.data_store.MoveTorrents(this.torrents, this.filesDestination)
     .subscribe(
-    res => { this.snackbar.enqueueSnackBar('Successfully moved torrent(s).', { type: 'success' }) }
+    res => { this.snackbar.enqueueSnackBar(`Successfully moved ${this.torrents.length} torrent(s).`, { type: 'success' }) }
     ,
     err => {
       this.snackbar.enqueueSnackBar('Failed to move torrent(s). Check console logs!', { type: 'error' });
