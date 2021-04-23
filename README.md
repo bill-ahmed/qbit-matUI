@@ -1,7 +1,6 @@
 # qBit MatUI <br/>[![Qbit Material WebUI Build](https://github.com/bill-ahmed/qbit-matUI/actions/workflows/nodejs.yml/badge.svg?branch=master)](https://github.com/bill-ahmed/qbit-matUI/actions/workflows/nodejs.yml)
 
 <img src="builds/images/home_page_dark_shadow.png" alt="Home Page"/>
-<img src="builds/images/torrent_contents_shadow.png" alt="See torrent contents before downloading"/>
 
 A material-themed UI for [qBittorrent](https://github.com/qbittorrent/qBittorrent). This interface is more slimmed down, although still contains several features such as:
 
