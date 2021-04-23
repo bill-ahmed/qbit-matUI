@@ -8,7 +8,7 @@ export class ApplicationDefaults {
     dark_mode_enabled: false,
     file_system: { use_alt_delimiter: false, delimiter: '/' },
     network: { refresh_interval: 1500, auto_refresh: true },
-    notifications: { show_snack_notifications: false },
+    notifications: { show_snack_notifications: true },
     torrent_table: {
       paginate: false,
       default_items_per_page: 10,
