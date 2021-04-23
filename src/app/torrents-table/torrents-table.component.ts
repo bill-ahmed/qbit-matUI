@@ -215,34 +215,34 @@ export class TorrentsTableComponent implements OnInit {
    * @param tor The torrents in question.
    */
   pauseTorrentsBulk(tor: Torrent[]) {
-    this.data_store.PauseTorrents(tor).subscribe(res => { });
+    this.data_store.PauseTorrents(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Paused ${tor.length} torrent(s)`) });
   }
 
   /** Resume given array of torrents
    * @param tor The torrents in question
    */
   resumeTorrentsBulk(tor: Torrent[]) {
-    this.data_store.ResumeTorrents(tor).subscribe(res => { });
+    this.data_store.ResumeTorrents(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Resumed ${tor.length} torrent(s)`) });
   }
 
   forceStartTorrentsBulk(tor: Torrent[]) {
-    this.data_store.ForceStartTorrents(tor).subscribe(res => { });
+    this.data_store.ForceStartTorrents(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Force started ${tor.length} torrent(s)`) });
   }
 
   increasePriorityBulk(tor: Torrent[]) {
-    this.data_store.IncreaseTorrentPriority(tor).subscribe(res => { });
+    this.data_store.IncreaseTorrentPriority(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Increased priority for ${tor.length} torrent(s)`) });
   }
 
   decreasePriorityBulk(tor: Torrent[]) {
-    this.data_store.DecreaseTorrentPriority(tor).subscribe(res => { })
+    this.data_store.DecreaseTorrentPriority(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Decreased priority for ${tor.length} torrent(s)`) })
   }
 
   maximumPriorityBulk(tor: Torrent[]) {
-    this.data_store.AssignTopPriority(tor).subscribe(res => { });
+    this.data_store.AssignTopPriority(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Maximum priority for ${tor.length} torrent(s)`) });
   }
 
   minimumPriorityBulk(tor: Torrent[]) {
-    this.data_store.AssignLowestPriority(tor).subscribe(res => { });
+    this.data_store.AssignLowestPriority(tor).subscribe(res => { this.snackbar.enqueueSnackBar(`Minimum priority for ${tor.length} torrent(s)`) });
   }
 
   /** Callback for when user finished dragging & dropping a column */
