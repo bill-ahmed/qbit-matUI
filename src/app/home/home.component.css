@@ -55,6 +55,9 @@
 #addTorrentButton, #logoutButton {
   margin-right: 5px;
   font-size: 12pt;
+
+  height: 42px;
+  width: 130px;
 }
 
 app-search-torrents {

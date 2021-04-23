@@ -208,6 +208,7 @@ export class TorrentsTableComponent implements OnInit {
     }
     else if(this.torrentSearchValue === "") {   // If searching for value is empty, restore filteredTorrentData
       this.filteredTorrentData = this.allTorrentData
+      this.refreshDataSource();
     }
   }
 
