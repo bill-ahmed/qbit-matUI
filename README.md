@@ -1,8 +1,9 @@
-# qBit MatUI <br/>[![Build Status](https://travis-ci.org/bill-ahmed/qbit-material-WebUI.svg?branch=master)](https://travis-ci.org/bill-ahmed/qbit-material-WebUI)
+# qBit MatUI <br/>[![Qbit Material WebUI Build](https://github.com/bill-ahmed/qbit-matUI/actions/workflows/nodejs.yml/badge.svg?branch=master)](https://github.com/bill-ahmed/qbit-matUI/actions/workflows/nodejs.yml)
 
 <img src="builds/images/home_page_dark_shadow.png" alt="Home Page"/>
+<img src="builds/images/torrent_contents_shadow.png" alt="See torrent contents before downloading"/>
 
-A material-themed interface to the original [qBittorrent Web UI](https://github.com/qbittorrent/qBittorrent). This interface is more slimmed down, although still contains several features such as:
+A material-themed UI for [qBittorrent](https://github.com/qbittorrent/qBittorrent). This interface is more slimmed down, although still contains several features such as:
 
 * Bulk edit (pause, resume, delete, prioritize, and more)
 * Sorting by different metrics (name, size, date completed, etc.)
@@ -15,7 +16,7 @@ A material-themed interface to the original [qBittorrent Web UI](https://github.
 ## Demo!
 A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
 
------
+<br/>
 
 ## Installation
 This app is tested with **v4.1.5** and higher of qBittorrent, any lower version are not guaranteed to work.
@@ -25,7 +26,7 @@ This app is tested with **v4.1.5** and higher of qBittorrent, any lower version 
 3. In qBittorrent, under Tools > Options > Web UI > Use alternative Web UI, set the file location as the folder you created in Step 2.
 4. Done!
 
------
+<br/>
 
 ## Development
 This app relies on a couple files to work properly.
@@ -37,6 +38,8 @@ Under `src/assets/` there are two files: `config.json` and `config.prod.json`. T
 Under `src/assets/` there are two files: `http_config.json` and `http_config.prod.json`. During the production build, the former is replaced with the latter file. 
 
 If you wish to configure your endpoints and other data for dev/prod, do so here.
+
+<br/>
 
 ## Running the App
 To install the dependencies, run `npm install` in both the root directory and the `mock_backend/` folder.
@@ -54,7 +57,7 @@ To run the login page standalone, do: `ng serve login` and navigate to `http://l
 
 The app will automatically reload if you make changes to any of the Angular source code.
 
------
+<br/>
 
 ## Build
 
