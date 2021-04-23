@@ -95,6 +95,10 @@ export class TorrentDataStoreService {
     return this.torrent_http_service.UploadNewTorrentsFromMagnetURLs(urls, destination);
   }
 
+  public RecheckTorrents(tor: Torrent[]): Observable<any> {
+    return this.torrent_http_service.RecheckTorrents(tor.map(elem => elem.hash));
+  }
+
   public MoveTorrents(torrents: Torrent[], destination: string): Observable<any> {
     return this.torrent_http_service.MoveTorrents(torrents.map(elem => elem.hash), destination);
   }

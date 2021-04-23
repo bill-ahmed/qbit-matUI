@@ -91,6 +91,22 @@ export class TorrentDataHTTPService {
     return this.http.post(url, body, options);
   }
 
+  /** Recheck list of torrents with given hashes. */
+  RecheckTorrents(hashes: string[]): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.recheckTorrent;
+    let url = root + endpoint;
+
+    // body parameters
+    let body = new FormData();
+    body.append("hashes", hashes.join("|"));
+
+    // Do not send cookies in dev mode
+    let options = IsDevEnv() ? { } : { withCredentials: true }
+
+    return this.http.post(url, body, options);
+  }
+
   /** Pause given array of torrents
    * @param hashes The hashes of the torrents to pause.
    */

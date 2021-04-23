@@ -259,6 +259,12 @@ export class TorrentsTableComponent implements OnInit {
     });
   }
 
+  recheckTorrents(tor: Torrent[]) {
+    this.data_store.RecheckTorrents(tor).subscribe(res => {
+      this.snackbar.enqueueSnackBar(tor.length === 1 ? `Rechecked ${tor[0].name}.` : `Rechecked ${tor.length} torrent(s).`)
+    });
+  }
+
   /** Callback for when user finished dragging & dropping a column */
   public handleColumnDragStopped(event: any) {
     if(event) {

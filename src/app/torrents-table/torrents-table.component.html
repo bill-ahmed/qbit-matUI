@@ -37,8 +37,8 @@
         <span> Set location... </span>
       </button>
 
-      <button mat-menu-item>
-        <mat-icon color="yellow">cloud_upload</mat-icon>
+      <button mat-menu-item (click)="recheckTorrents(selection.selected)">
+        <mat-icon color="yellow">refresh</mat-icon>
         <span> Force recheck </span>
       </button>
 
