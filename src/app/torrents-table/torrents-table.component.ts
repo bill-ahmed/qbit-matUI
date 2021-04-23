@@ -26,6 +26,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
 import { SnackbarService } from '../services/notifications/snackbar.service';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-torrents-table',
@@ -50,6 +51,10 @@ export class TorrentsTableComponent implements OnInit {
 
   // For drag & drop of columns
   public displayedColumns: any[];
+
+  // Right-click on row options
+  public menuTopLeftPosition = {x: '0', y: '0'};
+  @ViewChild(MatMenuTrigger, {static: true}) torrentMenuTrigger: MatMenuTrigger;
 
   // Other
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
@@ -333,6 +338,17 @@ export class TorrentsTableComponent implements OnInit {
 
     TorrentHelperService.sortByField(event.active, event.direction, this.filteredTorrentData);
     this.refreshDataSource();
+  }
+
+  /** When user right-clicks on a torrent row */
+  onTorrentRightClick(event: MouseEvent, item: Torrent) {
+    event.preventDefault();
+    console.log('opening menu')
+
+    this.menuTopLeftPosition.x = event.clientX + 'px';
+    this.menuTopLeftPosition.y = event.clientY + 'px';
+
+    this.torrentMenuTrigger.openMenu();
   }
 
   public shouldRenderColumn(col_name: string): boolean {

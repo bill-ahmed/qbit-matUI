@@ -6,6 +6,49 @@
 
     <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading() && !isTorrentsEmpty()"></app-bulk-update-torrents>
 
+    <!-- Mat menu target -->
+    <mat-menu #torrentOptionsMenu>
+      <button mat-menu-item>
+        <mat-icon color="accent">pause</mat-icon>
+        <span> Pause </span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon color="primary">play_arrow</mat-icon>
+        <span> Resume </span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon color="primary">fast_forward</mat-icon>
+        <span> Force Resume </span>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item>
+        <mat-icon color="warn">delete</mat-icon>
+        <span> Delete </span>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item>
+        <mat-icon color="primary">folder</mat-icon>
+        <span> Set location... </span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon color="yellow">cloud_upload</mat-icon>
+        <span> Force recheck </span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon color="default">cloud_upload</mat-icon>
+        <span> Priority </span>
+      </button>
+    </mat-menu>
+    <div style="visibility: hidden; position: fixed;" [style.left]="menuTopLeftPosition.x" [style.top]="menuTopLeftPosition.y" [matMenuTriggerFor]="torrentOptionsMenu"></div>
+
     <!-- Table of torrent data -->
     <mat-table *ngIf="!isLoading() && !isTorrentsEmpty()" mat-table [dataSource]="dataSource" matSort (matSortChange)="onMatSortChange($event)" class="mat-elevation-z1"
         cdkDropList
@@ -106,7 +149,12 @@
 
       <!-- Header row of table -->
       <mat-header-row id="torrent_table_header_row" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row [ngStyle]="{'width': tableHeaderWidth}" (click)="handleTorrentSelected(row)" class="{{isSelected(row) ? 'selected' : ''}}" *matRowDef="let row; columns: displayedColumns"></mat-row>
+      <mat-row
+          [ngStyle]="{'width': tableHeaderWidth}"
+          (click)="handleTorrentSelected(row)" class="{{isSelected(row) ? 'selected' : ''}}"
+          (contextmenu)="onTorrentRightClick($event, row)"
+          *matRowDef="let row; columns: displayedColumns">
+      </mat-row>
     </mat-table>
     <mat-paginator class="{{!isLoading() && !isTorrentsEmpty() && userPref.web_ui_options?.torrent_table?.paginate ? '' : 'hidden'}}"
                   [pageSize]="userPref.web_ui_options?.torrent_table?.default_items_per_page"
