@@ -9,6 +9,12 @@ body {
 
 }
 
+.debug-r { border: solid 1px red; }
+.debug-g { border: solid 1px green; }
+.debug-b { border: solid 1px blue; }
+.debug-y { border: solid 1px yellow; }
+.debug-p { border: solid 1px purple; }
+
 /** Styles applicable for all material dialogs */
 .generic-dialog .mat-dialog-container {
   padding: 0;

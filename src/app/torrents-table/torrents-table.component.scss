@@ -196,11 +196,21 @@ mat-header-row {
     word-wrap: break-word;
     word-break: break-word;
 
-    justify-content: center;
+    // justify-content: center;
 
     min-width: 140px;
     margin-left: 10px;
     margin-right: 10px;
+
+    .status-chips-container {
+      display: flex;
+      flex-direction: row;
+      flex-grow: 1;
+
+      justify-content: center;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
 }
 
 .mat-column-Down-Speed {

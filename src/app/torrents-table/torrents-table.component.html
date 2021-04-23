@@ -126,12 +126,14 @@
               [value]="(torrent.progress * 100).toFixed(2)">
           </p-progressBar>
 
-          <div *ngSwitchCase="'Status'">
-            <mat-chip-list>
+          <div style="width: 100%;" *ngSwitchCase="'Status'">
+            <div class="status-chips-container">
+              <app-chip-label *ngIf="torrent.force_start" label="[F]"></app-chip-label>
+
               <mat-chip color="{{isTorrentPrimaryAction(torrent) ? 'primary' : isTorrentError(torrent) ? 'accent' : 'default'}}" disableRipple selected>
-                {{torrent.force_start ? '[F]' : ''}} {{getStatusString(torrent.state)}}
+                 {{getStatusString(torrent.state)}}
               </mat-chip>
-            </mat-chip-list>
+            </div>
           </div>
 
           <div *ngSwitchCase="'ETA'">

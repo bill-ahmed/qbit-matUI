@@ -2,12 +2,9 @@
   background: #1976D2;
   color: white;
 
-  padding-left: 25px;
-  padding-right: 25px;
+  padding: 0 25px;
 
   margin-bottom: 15px;
-
-  height: 80px;
 
   display: flex;
   flex-direction: row;

@@ -1,0 +1,14 @@
+.chip-label {
+  background-color: #e0e0e0;
+
+  padding: 5px;
+  margin: 3px 5px;
+
+  border-radius: 5px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.dark-theme.chip-label {
+  background-color: #616161;
+}

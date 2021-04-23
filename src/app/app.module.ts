@@ -65,6 +65,7 @@ import { ErrorSnackbarComponent } from './services/notifications/snackbar/error-
 import { InfoSnackbarComponent } from './services/notifications/snackbar/info-snackbar/info-snackbar.component';
 import { DragAndDropFilesDirective } from './drag-and-drop-files.directive';
 import { RateLimitsDialogComponent } from './modals/rate-limits-dialog/rate-limits-dialog.component';
+import { ChipLabelComponent } from './chip-label/chip-label.component';
 
 var appRoutes: Routes;
 
@@ -106,7 +107,8 @@ if(!environment.production){
     ErrorSnackbarComponent,
     InfoSnackbarComponent,
     DragAndDropFilesDirective,
-    RateLimitsDialogComponent
+    RateLimitsDialogComponent,
+    ChipLabelComponent
   ],
   imports: [
     CdkTableModule,
