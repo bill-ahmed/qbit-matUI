@@ -63,8 +63,35 @@ mat-chip {
   .global-transfer-info-container {
     padding-top: 0;
 
+    .data-container {
+      flex-direction: row;
+
+      #summaryContent {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+
+        width: 100%;
+
+        .mat-chip-list {
+          margin: 0 5px;
+          flex-grow: 1;
+
+          min-width: 250px;
+        }
+      }
+    }
+
     .hide-small {
       display: none;
     }
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .data-container {
+    flex-wrap: wrap;
+
+    #summaryContent { margin-top: 20px; }
   }
 }

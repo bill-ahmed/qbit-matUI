@@ -35,8 +35,10 @@
               <mat-icon>vertical_align_bottom</mat-icon>
               <h4>Downloaded: {{getDownloadedString()}}</h4>
             </mat-chip>
+          </mat-chip-list>
+          <br/>
 
-            <br/>
+          <mat-chip-list>
             <mat-chip color="accent" (click)="handleUploadLimitSelect()" disableRipple selected matTooltip="Click to set upload limit" matTooltipPosition="below">
               <mat-icon>arrow_upward</mat-icon>
               <h4>{{getUploadSpeedString()}} {{getUpLimitString()}}</h4>
