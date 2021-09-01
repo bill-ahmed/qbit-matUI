@@ -82,24 +82,47 @@
 
       [scrollable]="true"
       scrollHeight="73vh"
-      [virtualScroll]="!userPref.web_ui_options?.torrent_table?.paginate" [virtualRowHeight]="50"
       [rows]="userPref.web_ui_options?.torrent_table?.default_items_per_page"
+
+      [virtualRowHeight]="50"
+      [virtualScroll]="!userPref.web_ui_options?.torrent_table?.paginate"
+
+      [reorderableColumns]="true"
       >
 
+      <!-- TABLE HEADER -->
       <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let col of displayedColumns">
-            {{ col }}
+          <th *ngFor="let col of displayedColumns" pReorderableColumn>
+            <div [ngSwitch]="col">
+              <!-- Checkbox for selecting ALL torrents -->
+              <div *ngSwitchCase="'select'">
+                <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+                  [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </div>
+
+              <div *ngSwitchDefault>{{col}}</div>
+            </div>
           </th>
         </tr>
       </ng-template>
 
+      <!-- TABLE ROWS -->
       <ng-template pTemplate="body" let-torrent let-columns="columns">
         <tr>
           <td *ngFor="let col of columns">
             <div [ngSwitch]="col">
-              <div *ngSwitchCase="'select'">select me</div>
+              <div *ngSwitchCase="'select'">
+                <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                          (change)="$event ? handleTorrentSelected(torrent) : null"
+                          [checked]="selection.isSelected(torrent)">
+                </mat-checkbox>
+              </div>
+
               <div *ngSwitchCase="'Actions'">action me </div>
+
               <div *ngSwitchCase="'Progress'">
                 <p-progressBar class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"
                   [value]="(torrent.progress * 100).toFixed(2)">
