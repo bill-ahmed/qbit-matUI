@@ -42,12 +42,7 @@ export class TorrentsTableComponent implements OnInit {
   public isDarkTheme: Observable<boolean>;
   public userPref: UserPreferences = { } as UserPreferences;
 
-  public DEFUALT_PAGE_SIZE_OPTIONS = [10, 25, 50, 100, 500]
-  public pageSizeOptions = this.DEFUALT_PAGE_SIZE_OPTIONS;
   selection = new SelectionModel<Torrent>(true, []);
-
-  // UI Components
-  public dataSource = new MatTableDataSource([]);
 
   // For drag & drop of columns
   public displayedColumns: any[];
@@ -61,8 +56,7 @@ export class TorrentsTableComponent implements OnInit {
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   private infoTorDialogRef: MatDialogRef<TorrentInfoDialogComponent, any>;
   private currentMatSort = {active: "Completed On", direction: "desc"};
-  private torrentSearchValue = "";
-  private torrentsSelected: Torrent[] = [];     // Keep track of which torrents are currently selected
+  private torrentSearchValue = ""; // Keep track of which torrents are currently selected
 
   // Keep track of table header width, so the rows also match
   public tableHeaderWidth: string = '-1px';
@@ -87,9 +81,6 @@ export class TorrentsTableComponent implements OnInit {
     // Get user preferences
     this.appConfig.getUserPreferencesSubscription().subscribe(res => { this.setUserPreferences(res) });
 
-    // Setup sorting and pagination
-    this.dataSource.sort = this.sort;
-
     // Retrieve all torrent data first, then update torrent data on interval
     this.allTorrentData = null;
     this.filteredTorrentData = null;
@@ -110,18 +101,13 @@ export class TorrentsTableComponent implements OnInit {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    return numSelected === this.filteredTorrentData.length;
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+    this.isAllSelected() ? this.selection.clear() : this.filteredTorrentData.forEach(row => this.selection.select(row));
     this._updateSelectionService();
-  }
-
-  areTorrentsSelected(): boolean {
-    return this.torrentsSelected.length === 0;
   }
 
   isTorrentPaused(tor: Torrent): boolean {
@@ -156,21 +142,6 @@ export class TorrentsTableComponent implements OnInit {
     return 'table-col table-col-' + column.replace(/ /g, '-')
   }
 
-  /** Hacky fix for table header not taking entire width of the table :( */
-  setTableHeaderWidth() {
-    let elem = document.getElementById('torrent_table_header_row')
-    this.tableHeaderWidth = `${elem?.scrollWidth || -1}px`;
-  }
-
-  onPaignationPageChanged() {
-    let items_per_page = this.userPref.web_ui_options.torrent_table.default_items_per_page;
-    this.pageSizeOptions = [...this.DEFUALT_PAGE_SIZE_OPTIONS, items_per_page]
-
-    // Remove duplicates & sort
-    this.pageSizeOptions = [...new Set(this.pageSizeOptions)];
-    this.pageSizeOptions.sort();
-  }
-
   /** Get all torrent data and update the table */
   private async updateTorrentData(data): Promise<void>{
 
@@ -180,12 +151,10 @@ export class TorrentsTableComponent implements OnInit {
     this.filteredTorrentData = data.torrents;
 
     // Re-sort data
-    this.onMatSortChange(this.currentMatSort);
+    this.handleSortChange(this.currentMatSort);
 
     // Filter by any search criteria
     this.updateTorrentsBasedOnSearchValue();
-
-    this.setTableHeaderWidth();
   }
 
   private updateTorrentSearchValue(val: string): void {
@@ -208,13 +177,18 @@ export class TorrentsTableComponent implements OnInit {
       .filter((tor: Torrent) => {
         return GetTorrentSearchName(tor.name).includes(this.torrentSearchValue);
       });
-
-      this.refreshDataSource();
     }
     else if(this.torrentSearchValue === "") {   // If searching for value is empty, restore filteredTorrentData
       this.filteredTorrentData = this.allTorrentData
-      this.refreshDataSource();
     }
+  }
+
+  handleSortChange(event: any) {
+    if(!this.filteredTorrentData) { return; }
+
+    this.currentMatSort = event;
+
+    TorrentHelperService.sortByField(event.active, event.direction, this.filteredTorrentData);
   }
 
   /** Pause given array of torrents
@@ -269,14 +243,6 @@ export class TorrentsTableComponent implements OnInit {
     this.data_store.RecheckTorrents(tor).subscribe(res => {
       this.snackbar.enqueueSnackBar(tor.length === 1 ? `Rechecked ${tor[0].name}.` : `Rechecked ${tor.length} torrent(s).`)
     });
-  }
-
-  /** Callback for when user finished dragging & dropping a column */
-  public handleColumnDragStopped(event: any) {
-    if(event) {
-      moveItemInArray(this.displayedColumns, event.previousIndex, event.currentIndex);
-      this.appConfig.setTorrentTableColumns(this.displayedColumns);
-    }
   }
 
   /** Callback for when a torrent is selected in the table. Update row selection service with new data
@@ -356,46 +322,11 @@ export class TorrentsTableComponent implements OnInit {
     this._updateSelectionService();
   }
 
-  onMatSortChange(event: any): void {
-    // If data not yet loaded, exit
-    if(!this.filteredTorrentData) { return; }
-
-    this.currentMatSort = event;
-
-    TorrentHelperService.sortByField(event.active, event.direction, this.filteredTorrentData);
-    this.refreshDataSource();
-  }
-
-  /** When user right-clicks on a torrent row */
-  onTorrentRightClick(event: MouseEvent, item: Torrent) {
-    event.preventDefault();
-
-
-    // If torrent not already selected, select it
-    if(!this.isSelected(item))
-      this.handleTorrentSelected(item);
-
-    this.menuTopLeftPosition.x = event.clientX + 'px';
-    this.menuTopLeftPosition.y = event.clientY + 'px';
-
-    this.torrentMenuTrigger.openMenu();
-  }
-
-  public shouldRenderColumn(col_name: string): boolean {
-    return this.displayedColumns.includes(col_name);
-  }
-
   private setUserPreferences(pref: UserPreferences) {
     this.userPref = pref;
 
-    let torren_table_pref = pref.web_ui_options?.torrent_table
-    let table_sort_opt = torren_table_pref?.default_sort_order;
-
-    // Whether to enable pagination or not
-    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
-      this.dataSource.paginator = this.paginator;
-      this.onPaignationPageChanged();
-    }
+    let torrent_table_pref = pref.web_ui_options?.torrent_table
+    let table_sort_opt = torrent_table_pref?.default_sort_order;
 
     this.currentMatSort = table_sort_opt ? {
       active: table_sort_opt.column_name.replace(/\s/, '_'),
@@ -406,7 +337,7 @@ export class TorrentsTableComponent implements OnInit {
     this.displayedColumns = pref.web_ui_options?.torrent_table?.columns_to_show;
 
     // Re-sort data
-    this.onMatSortChange(this.currentMatSort);
+    this.handleSortChange(this.currentMatSort);
   }
 
   public isTorrentPrimaryAction(tor: Torrent): boolean {
@@ -433,11 +364,6 @@ export class TorrentsTableComponent implements OnInit {
 
   public isTorrentsEmpty() {
     return this.filteredTorrentData?.length === 0;
-  }
-
-  private refreshDataSource(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.data = (this.filteredTorrentData ? this.filteredTorrentData : []);
   }
 
   /** Determine if table is loading data or not */

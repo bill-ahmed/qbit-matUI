@@ -72,7 +72,7 @@
 
     <p-table *ngIf="!isLoading() && !isTorrentsEmpty()" styleClass="p-datatable-sm"
       [columns]="displayedColumns"
-      [value]="allTorrentData"
+      [value]="filteredTorrentData"
 
 
       [scrollable]="true"
@@ -88,8 +88,8 @@
       <!-- TABLE HEADER -->
       <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let col of displayedColumns" [class]="getClassNameForColumns(col)" pReorderableColumn>
-            <div [ngSwitch]="col">
+          <th *ngFor="let col of displayedColumns" [class]="getClassNameForColumns(col)" pReorderableColumn [pSortableColumn]="displayedColumnsMapping[col]">
+            <div style="display: flex;" [ngSwitch]="col">
               <!-- Checkbox for selecting ALL torrents -->
               <div *ngSwitchCase="'select'">
                 <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
@@ -99,6 +99,8 @@
               </div>
 
               <div *ngSwitchDefault>{{col}}</div>
+
+              <p-sortIcon *ngIf="!['select', 'Actions'].includes(col)" [field]="displayedColumnsMapping[col]"></p-sortIcon>
             </div>
           </th>
         </tr>
