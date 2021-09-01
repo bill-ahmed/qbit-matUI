@@ -3,13 +3,11 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Material theme components
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -45,7 +43,6 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatRippleModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { TableModule } from 'primeng/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -113,7 +110,6 @@ if(!environment.production){
     ChipLabelComponent
   ],
   imports: [
-    CdkTableModule,
     CdkTreeModule,
     DragDropModule,
     BrowserModule,
@@ -121,7 +117,6 @@ if(!environment.production){
     RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
     HttpClientModule,
     MatFormFieldModule,
-    MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
@@ -149,7 +144,6 @@ if(!environment.production){
     MatRippleModule,
     MatRadioModule,
     MatSelectModule,
-    MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule
   ],

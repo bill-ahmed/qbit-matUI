@@ -264,13 +264,10 @@ export interface WebUIFileSystemSettings {
 }
 
 export interface WebUITorrentTableSettings {
-  paginate: boolean,
-  default_items_per_page: number,
   default_sort_order: {
     column_name: TORRENT_TABLE_COLUMNS,
     order: 'asc' | 'desc'
   },
-  showFirstAndLastOptions: boolean
   columns_to_show: string[]
 }
 

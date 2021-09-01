@@ -22,7 +22,6 @@ import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import { GetTorrentSearchName } from 'src/utils/Helpers';
 import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
-import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
 import { SnackbarService } from '../services/notifications/snackbar.service';
@@ -60,9 +59,6 @@ export class TorrentsTableComponent implements OnInit {
 
   // Keep track of table header width, so the rows also match
   public tableHeaderWidth: string = '-1px';
-
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private appConfig: ApplicationConfigService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
@@ -351,7 +347,7 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   public isTorrentWarning(tor: Torrent): boolean {
-    let warnings = ['stalledUP', 'stalledDL', 'moving'];
+    let warnings = ['moving', 'checkingDL'];
     return warnings.includes(tor.state);
   }
 
