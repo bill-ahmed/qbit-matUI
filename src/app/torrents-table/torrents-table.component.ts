@@ -152,6 +152,10 @@ export class TorrentsTableComponent implements OnInit {
     return this.pp.pretty_print_completed_on(timestamp);
   }
 
+  getClassNameForColumns(column: string): string {
+    return 'table-col table-col-' + column.replace(/ /g, '-')
+  }
+
   /** Hacky fix for table header not taking entire width of the table :( */
   setTableHeaderWidth() {
     let elem = document.getElementById('torrent_table_header_row')
@@ -406,14 +410,25 @@ export class TorrentsTableComponent implements OnInit {
   }
 
   public isTorrentPrimaryAction(tor: Torrent): boolean {
-    let actions = ['downloading', 'moving'];
-    return actions.includes(tor.state);
+    return tor.state === 'downloading';
   }
 
   /** Determine if torrent is in a error state */
   public isTorrentError(tor: Torrent): boolean {
     let errors = ['missingFiles', 'error', 'unknown'];
     return errors.includes(tor.state);
+  }
+
+  public isTorrentWarning(tor: Torrent): boolean {
+    let warnings = ['stalledUP', 'stalledDL', 'moving'];
+    return warnings.includes(tor.state);
+  }
+
+  public getClassForStatus(torrent: Torrent): string {
+    let root = 'torrent-table-status '
+    let suffix = this.isTorrentPrimaryAction(torrent) ? 'primary' : this.isTorrentError(torrent) ? 'danger' : this.isTorrentWarning(torrent) ? 'warning' : 'info'
+
+    return root + suffix;
   }
 
   public isTorrentsEmpty() {

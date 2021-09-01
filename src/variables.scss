@@ -2,11 +2,17 @@
 @include mat-core();
 
 /** Light theme **/
+$my-app-default:    #e0e0e0;
 $my-app-primary:    mat-palette($mat-blue);
 $my-app-accent:     mat-palette($mat-deep-orange);
 $my-app-warn:       mat-palette($mat-red, 500, 900, A400);
 
 /** Dark theme **/
-$dark-primary: mat-palette($mat-blue-gray, 300, 100, 500);
-$dark-accent: mat-palette($mat-green, 300, 100, 500);
-$dark-warn: mat-palette($mat-red);
+$dark-default:      #616161;
+$dark-primary:      mat-palette($mat-blue-gray, 300, 100, 500);
+$dark-accent:       mat-palette($mat-green, 300, 100, 500);
+$dark-warn:         mat-palette($mat-red);
+
+/** Torrent table specific */
+$table-surface-1:   #595959;
+$table-surface-2:     #424242

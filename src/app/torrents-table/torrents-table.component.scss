@@ -1,3 +1,6 @@
+@import "~@angular/material/theming";
+@import "../../variables.scss";
+
 .hidden {
   position: absolute;
   visibility: hidden;
@@ -10,18 +13,10 @@
     flex-direction: column;
 }
 
-th.mat-sort-header-sorted {
-    color: black;
-}
 
 mat-spinner {
     align-self: center;
     margin: 5% auto 10px auto;
-}
-
-mat-table {
-    height: 73vh;
-    overflow: scroll;
 }
 
 /** Progress bar components */
@@ -61,237 +56,115 @@ mat-table {
   }
 }
 
-mat-header-row {
-  min-width: max-content;
-}
-
-.mat-row {
-  width: -1px;
-    transition: background-color 0.15s ease;
-    background-color: unset;
-
-    &.selected {
-      background-color: #f2f2f2;
-    }
-}
-
-.mat-row:hover {
-    background-color: #f2f2f2;
-
-}
-
-.dark-theme .mat-row {
-  &.selected {
-    background-color: #5c5c5c;
-  }
-}
-
-.dark-theme .mat-row:hover {
-    background-color: #5c5c5c;
-}
-
-.mat-cell {
-    font-size: 13.5px;
-    cursor: pointer;
-}
-
-#deleteTorrents {
-    margin: 15px;
-    margin-left: 10px;
-}
-
 #loading_p {
     width: 50px;
     align-self: center;
     margin: 10px auto 10px auto;
 }
 
-.cdk-drag-preview {
-  box-sizing: border-box;
-  border-radius: 4px;
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-              0 8px 10px 1px rgba(0, 0, 0, 0.14),
-              0 3px 14px 2px rgba(0, 0, 0, 0.12);
-
-  padding: 5px;
-}
-
-.cdk-drag-placeholder {
-  opacity: 0;
-}
-
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
 /** Sizes of each column */
-.mat-column-Name {
-    // flex: 0 0 20% !important;
-    overflow-wrap: break-word;
+.table-col-Name {
+  overflow-wrap: break-word;
 
-    word-wrap: break-word;
-    word-break: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 
-    margin-left: 20px;
-
-    min-width: 400px;
+  width: 400px;
 }
 
-.mat-column-select {
-    flex: 0 0 3% !important;
-    overflow-wrap: break-word;
-
-    word-wrap: break-word;
-    word-break: break-word;
-
-    min-width: 55px;
-    margin-left: 10px;
+.table-col-select {
+  width: 50px;
 }
 
-.mat-column-Actions {
-    // flex: 0 0 8% !important;
-    overflow-wrap: break-word;
-
-    word-wrap: break-word;
-    word-break: break-word;
-
-    justify-content: center;
-
-    margin: 2px;
-
-    min-width: 150px;
+.table-col-Actions {
+  width: 150px;
 }
 
-.mat-column-Size {
-    // flex: 0 0 5% !important;
-    overflow-wrap: break-word;
+.torrent-table-status {
+  color: white;
 
-    word-wrap: break-word;
-    word-break: break-word;
+  &.primary {
+    background: mat-color($my-app-primary)
+  }
 
-    padding-left: 10px;
-    justify-content: center;
+  &.warning {
+    background: mat-color($my-app-accent)
+  }
 
-    min-width: 80px;
+  &.danger {
+    background: mat-color($my-app-warn)
+  }
+
+  &.info {
+    background: $my-app-default;
+    color: rgba(0,0,0,.87);
+  }
 }
 
-.mat-column-Progress {
-    // flex: 0 0 12% !important;
-    overflow-wrap: break-word;
-
-    word-wrap: break-word;
-    word-break: break-word;
-
-    justify-content: center;
-
-    min-width: 180px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.mat-column-Status {
-    // flex: 0 0 !important;
-    overflow-wrap: break-word;
-
-    word-wrap: break-word;
-    word-break: break-word;
-
-    min-width: 150px;
-    margin-left: 10px;
-    margin-right: 10px;
-
-    .status-chips-container {
-      display: flex;
-      flex-direction: row;
-      flex-grow: 1;
-
-      justify-content: center;
-      align-items: baseline;
-      flex-wrap: wrap;
+// For dark mode!
+.dark-theme {
+  .torrent-table-status {
+    &.primary {
+      background: mat-color($dark-primary)
     }
+
+    &.warning {
+      background: mat-color($dark-accent)
+    }
+
+    &.danger {
+      background: mat-color($dark-warn)
+    }
+
+    &.info {
+      background: $dark-default;
+      color: white;
+    }
+  }
 }
 
-.mat-column-Down-Speed {
-    // flex: 0 0 5% !important;
-    overflow-wrap: break-word;
+.p-datatable .p-datatable-thead > tr > th {
+  background: white;
+  color: rgba(0,0,0,.54);
+  border-color: #E0E0E0;
 
-    word-wrap: break-word;
-    word-break: break-word;
-
-    justify-content: center;
-
-    min-width: 90px;
+  font-size: 10pt;
 }
 
-.mat-column-Up-Speed {
-    // flex: 0 0 5% !important;
-    overflow-wrap: break-word;
+.p-datatable .p-datatable-tbody > tr {
+  background: white;
+  color: rgba(0, 0, 0, 0.87);
 
-    word-wrap: break-word;
-    word-break: break-word;
-
-    justify-content: center;
-
-    min-width: 90px;
+  font-size: 12pt;
 }
 
-.mat-column-ETA {
-    // flex: 0 0 !important;
-    overflow-wrap: break-word;
-
-    word-wrap: break-word;
-    word-break: break-word;
-
-    padding-left: 5px;
-    padding-right: 5px;
-
-    justify-content: center;
-
-    min-width: 140px;
+.p-datatable .p-datatable-tbody > tr > td {
+  border-color: #E0E0E0;
 }
 
-.mat-column-Completed-On {
-    overflow-wrap: break-word;
-
-    word-wrap: break-word;
-    word-break: break-word;
-
-    min-width: 160px;
+// Hacky fix :(
+.p-datatable-scrollable-header-box {
+  background: white;
 }
 
-.mat-column-Added-On {
-  overflow-wrap: break-word;
+.dark-theme {
+  .p-datatable .p-datatable-thead > tr > th {
+    background: $table-surface-2;
+    color: hsla(0,0%,100%,.7);
+    border-color: $table-surface-1;
+  }
 
-  word-wrap: break-word;
-  word-break: break-word;
+  .p-datatable .p-datatable-tbody > tr {
+    background: $table-surface-2;
+    color: white;
+  }
 
-  min-width: 180px;
-}
+  .p-datatable .p-datatable-tbody > tr > td {
+    border-color: $table-surface-1;
+  }
 
-.mat-column-Uploaded {
-    // flex: 0 0 5% !important;
-    overflow-wrap: break-word;
-
-    word-wrap: break-word;
-    word-break: break-word;
-
-    padding-left: 5px;
-    justify-content: center;
-
-    min-width: 100px;
-}
-
-.mat-column-Ratio {
-  overflow-wrap: break-word;
-
-  min-width: 50px;
-}
-
-.mat-column-Last-Activity {
-  overflow-wrap: break-word;
-
-  word-wrap: break-word;
-  word-break: break-word;
-
-  min-width: 180px;
+  // Hacky fix
+  .p-datatable-scrollable-header-box {
+    background: $table-surface-2;
+  }
 }

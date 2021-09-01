@@ -67,6 +67,7 @@ import { InfoSnackbarComponent } from './services/notifications/snackbar/info-sn
 import { DragAndDropFilesDirective } from './drag-and-drop-files.directive';
 import { RateLimitsDialogComponent } from './modals/rate-limits-dialog/rate-limits-dialog.component';
 import { ChipLabelComponent } from './chip-label/chip-label.component';
+import { TagModule } from 'primeng/tag';
 
 var appRoutes: Routes;
 
@@ -127,6 +128,7 @@ if(!environment.production){
     MatButtonModule,
     ProgressBarModule,
     TableModule,
+    TagModule,
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,

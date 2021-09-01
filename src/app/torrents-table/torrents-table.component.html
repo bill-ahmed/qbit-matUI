@@ -74,18 +74,13 @@
       [columns]="displayedColumns"
       [value]="allTorrentData"
 
-      [showCurrentPageReport]="true"
-      [rowsPerPageOptions]="pageSizeOptions"
-      currentPageReportTemplate="{first} – {last} of {totalRecords}"
-      [paginator]="!isLoading() && !isTorrentsEmpty() && userPref.web_ui_options?.torrent_table?.paginate"
-
 
       [scrollable]="true"
       scrollHeight="73vh"
       [rows]="userPref.web_ui_options?.torrent_table?.default_items_per_page"
 
       [virtualRowHeight]="50"
-      [virtualScroll]="!userPref.web_ui_options?.torrent_table?.paginate"
+      [virtualScroll]="true"
 
       [reorderableColumns]="true"
       >
@@ -93,7 +88,7 @@
       <!-- TABLE HEADER -->
       <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let col of displayedColumns" pReorderableColumn>
+          <th *ngFor="let col of displayedColumns" [class]="getClassNameForColumns(col)" pReorderableColumn>
             <div [ngSwitch]="col">
               <!-- Checkbox for selecting ALL torrents -->
               <div *ngSwitchCase="'select'">
@@ -111,8 +106,8 @@
 
       <!-- TABLE ROWS -->
       <ng-template pTemplate="body" let-torrent let-columns="columns">
-        <tr>
-          <td *ngFor="let col of columns">
+        <tr class="torrent-table-row">
+          <td *ngFor="let col of columns" [class]="getClassNameForColumns(col)">
             <div [ngSwitch]="col">
               <div *ngSwitchCase="'select'">
                 <mat-checkbox color="primary" (click)="$event.stopPropagation()"
@@ -163,6 +158,14 @@
 
               <div *ngSwitchCase="'Last Activity'">
                 {{getCompletedOnString(torrent.last_activity)}}
+              </div>
+
+              <div *ngSwitchCase="'Status'">
+                <p-tag
+                  [value]="getStatusString(torrent.state)"
+                  [styleClass]="getClassForStatus(torrent)"
+                  >
+                </p-tag>
               </div>
 
               <div *ngSwitchDefault>{{torrent[displayedColumnsMapping[col]]}}</div>
