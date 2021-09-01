@@ -94,7 +94,7 @@
               <div *ngSwitchCase="'select'">
                 <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
                   [checked]="selection.hasValue() && isAllSelected()"
-                  [indeterminate]="selection.hasValue() && !isAllSelected()">
+                  [indeterminate]="selection.hasValue() && !isAllSelected()" [style]="{margin: '5px 15px'}">
                 </mat-checkbox>
               </div>
 
@@ -112,11 +112,29 @@
               <div *ngSwitchCase="'select'">
                 <mat-checkbox color="primary" (click)="$event.stopPropagation()"
                           (change)="$event ? handleTorrentSelected(torrent) : null"
-                          [checked]="selection.isSelected(torrent)">
+                          [checked]="selection.isSelected(torrent)" [style]="{margin: '5px 15px'}">
                 </mat-checkbox>
               </div>
 
-              <div *ngSwitchCase="'Actions'">action me </div>
+              <div *ngSwitchCase="'Actions'">
+                <button color="warn" mat-icon-button matTooltip="Delete Torrent" matTooltipPosition="below" (click)="openDeleteTorrentDialog($event, [torrent])">
+                  <mat-icon>delete</mat-icon>
+                </button>
+
+                <button *ngIf="!isTorrentPaused(torrent)" mat-icon-button matTooltip="Pause Torrent" color="accent" matTooltipPosition="below"
+                (click)="$event.stopPropagation();pauseTorrentsBulk([torrent])">
+                    <mat-icon>pause</mat-icon>
+                </button>
+
+                <button *ngIf="isTorrentPaused(torrent)" mat-icon-button matTooltip="Resume Torrent" color="primary" matTooltipPosition="below"
+                (click)="$event.stopPropagation();resumeTorrentsBulk([torrent])">
+                    <mat-icon>play_arrow</mat-icon>
+                </button>
+
+                <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="right" (click)="openInfoTorrentDialog($event, torrent)">
+                    <mat-icon>info</mat-icon>
+                </button>
+              </div>
 
               <div *ngSwitchCase="'Progress'">
                 <p-progressBar class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"
