@@ -24,8 +24,8 @@
     "buffer": "^5.6.0",
     "material-icons-font": "^2.1.0",
     "ngx-cookie-service": "^2.4.0",
-    "primeicons": "^4.0.0",
-    "primeng": "^10.0.1",
+    "primeicons": "^4.1.0",
+    "primeng": "^11.4.5",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
