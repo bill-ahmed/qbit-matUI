@@ -162,6 +162,15 @@
 
               <div *ngSwitchCase="'Status'">
                 <p-tag
+                  *ngIf="torrent.force_start"
+                  value="[F]"
+                  styleClass="torrent-table-status info"
+                  [style]="{marginRight: '5px'}"
+                  >
+
+                </p-tag>
+
+                <p-tag
                   [value]="getStatusString(torrent.state)"
                   [styleClass]="getClassForStatus(torrent)"
                   >

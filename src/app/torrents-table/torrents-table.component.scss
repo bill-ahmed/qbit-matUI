@@ -97,7 +97,7 @@ mat-spinner {
 
   &.info {
     background: $my-app-default;
-    color: rgba(0,0,0,.87);
+    color: $table-black-color;
   }
 }
 
@@ -105,15 +105,17 @@ mat-spinner {
 .dark-theme {
   .torrent-table-status {
     &.primary {
-      background: mat-color($dark-primary)
+      background: mat-color($dark-primary);
+      color: $table-black-color;
     }
 
     &.warning {
-      background: mat-color($dark-accent)
+      background: mat-color($dark-accent);
+      color: $table-black-color;
     }
 
     &.danger {
-      background: mat-color($dark-warn)
+      background: mat-color($dark-warn);
     }
 
     &.info {
@@ -133,7 +135,7 @@ mat-spinner {
 
 .p-datatable .p-datatable-tbody > tr {
   background: white;
-  color: rgba(0, 0, 0, 0.87);
+  color: $table-black-color;
 
   font-size: 12pt;
 }
