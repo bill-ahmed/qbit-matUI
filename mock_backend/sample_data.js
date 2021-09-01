@@ -236,7 +236,7 @@ function GetMainData(){
                 }
             }
         };
-    _addTorrentEntriesToMockData(25, result.torrents);
+    _addTorrentEntriesToMockData(1000, result.torrents);
     return result;
 }
 

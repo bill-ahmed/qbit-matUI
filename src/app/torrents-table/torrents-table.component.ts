@@ -51,6 +51,7 @@ export class TorrentsTableComponent implements OnInit {
 
   // For drag & drop of columns
   public displayedColumns: any[];
+  public displayedColumnsMapping = ApplicationConfigService.TORRENT_TABLE_COLUMNS_MAPPING
 
   // Right-click on row options
   public menuTopLeftPosition = {x: '0', y: '0'};

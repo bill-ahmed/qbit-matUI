@@ -70,121 +70,84 @@
     <!-- Top-level menu rendered in here -->
     <div style="visibility: hidden; position: fixed;" [style.left]="menuTopLeftPosition.x" [style.top]="menuTopLeftPosition.y" [matMenuTriggerFor]="torrentOptionsMenu"></div>
 
-    <!-- Table of torrent data -->
-    <mat-table *ngIf="!isLoading() && !isTorrentsEmpty()" mat-table [dataSource]="dataSource" matSort (matSortChange)="onMatSortChange($event)" class="mat-elevation-z1"
-        cdkDropList
-        cdkDropListLockAxis="x" cdkDropListOrientation="horizontal"
-        (cdkDropListDropped)="handleColumnDragStopped($event)">
+    <p-table *ngIf="!isLoading() && !isTorrentsEmpty()" styleClass="p-datatable-sm"
+      [columns]="displayedColumns"
+      [value]="allTorrentData"
 
-      <ng-container *ngFor="let column of displayedColumns; let i = index" [matColumnDef]="column">
-        <mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
-            <div *ngIf="column !== 'select'">
-              {{column}}
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="pageSizeOptions"
+      currentPageReportTemplate="{first} – {last} of {totalRecords}"
+      [paginator]="!isLoading() && !isTorrentsEmpty() && userPref.web_ui_options?.torrent_table?.paginate"
+
+
+      [scrollable]="true"
+      scrollHeight="73vh"
+      [virtualScroll]="!userPref.web_ui_options?.torrent_table?.paginate" [virtualRowHeight]="50"
+      [rows]="userPref.web_ui_options?.torrent_table?.default_items_per_page"
+      >
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of displayedColumns">
+            {{ col }}
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-torrent let-columns="columns">
+        <tr>
+          <td *ngFor="let col of columns">
+            <div [ngSwitch]="col">
+              <div *ngSwitchCase="'select'">select me</div>
+              <div *ngSwitchCase="'Actions'">action me </div>
+              <div *ngSwitchCase="'Progress'">
+                <p-progressBar class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"
+                  [value]="(torrent.progress * 100).toFixed(2)">
+                </p-progressBar>
+              </div>
+
+              <div *ngSwitchCase="'Size'">
+                {{getFileSizeString(torrent.size)}}
+              </div>
+
+              <div *ngSwitchCase="'ETA'">
+                {{getTorrentETAString(torrent)}}
+              </div>
+
+              <div *ngSwitchCase="'Uploaded'">
+                {{getFileSizeString(torrent.uploaded)}}
+              </div>
+
+              <div *ngSwitchCase="'Ratio'">
+                {{getTorrentRatioString(torrent)}}
+              </div>
+
+              <div *ngSwitchCase="'Down Speed'">
+                {{getFileSizeString(torrent.dlspeed)}}/s
+              </div>
+
+              <div *ngSwitchCase="'Up Speed'">
+                {{getFileSizeString(torrent.upspeed)}}/s
+              </div>
+
+              <div *ngSwitchCase="'Completed On'">
+                {{getCompletedOnString(torrent.completion_on)}}
+              </div>
+
+              <div *ngSwitchCase="'Added On'">
+                {{getCompletedOnString(torrent.added_on)}}
+              </div>
+
+              <div *ngSwitchCase="'Last Activity'">
+                {{getCompletedOnString(torrent.last_activity)}}
+              </div>
+
+              <div *ngSwitchDefault>{{torrent[displayedColumnsMapping[col]]}}</div>
             </div>
-
-            <mat-checkbox *ngIf="column === 'select'" color="primary" (change)="$event ? masterToggle() : null"
-              [checked]="selection.hasValue() && isAllSelected()"
-              [indeterminate]="selection.hasValue() && !isAllSelected()">
-            </mat-checkbox>
-        </mat-header-cell>
-
-        <mat-cell [ngSwitch]="column" *matCellDef="let torrent">
-          <mat-checkbox *ngIf="column === 'select'" color="primary" (click)="$event.stopPropagation()"
-                          (change)="$event ? handleTorrentSelected(torrent) : null"
-                          [checked]="selection.isSelected(torrent)">
-          </mat-checkbox>
-
-          <div *ngSwitchCase="'Actions'">
-            <button color="warn" mat-icon-button matTooltip="Delete Torrent" matTooltipPosition="below" (click)="openDeleteTorrentDialog($event, [torrent])">
-              <mat-icon>delete</mat-icon>
-            </button>
-
-            <button *ngIf="!isTorrentPaused(torrent)" mat-icon-button matTooltip="Pause Torrent" color="accent" matTooltipPosition="below"
-            (click)="$event.stopPropagation();pauseTorrentsBulk([torrent])">
-                <mat-icon>pause</mat-icon>
-            </button>
-
-            <button *ngIf="isTorrentPaused(torrent)" mat-icon-button matTooltip="Resume Torrent" color="primary" matTooltipPosition="below"
-            (click)="$event.stopPropagation();resumeTorrentsBulk([torrent])">
-                <mat-icon>play_arrow</mat-icon>
-            </button>
-
-            <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="right" (click)="openInfoTorrentDialog($event, torrent)">
-                <mat-icon>info</mat-icon>
-            </button>
-          </div>
-
-          <div *ngSwitchCase="'Name'">
-            {{torrent.name}}
-          </div>
-
-          <div *ngSwitchCase="'Size'">
-            {{getFileSizeString(torrent.size)}}
-          </div>
-
-          <p-progressBar *ngSwitchCase="'Progress'" class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"
-              [value]="(torrent.progress * 100).toFixed(2)">
-          </p-progressBar>
-
-          <div style="width: 100%;" *ngSwitchCase="'Status'">
-            <div class="status-chips-container">
-              <app-chip-label *ngIf="torrent.force_start" label="[F]"></app-chip-label>
-
-              <mat-chip color="{{isTorrentPrimaryAction(torrent) ? 'primary' : isTorrentError(torrent) ? 'accent' : 'default'}}" disableRipple selected>
-                 {{getStatusString(torrent.state)}}
-              </mat-chip>
-            </div>
-          </div>
-
-          <div *ngSwitchCase="'ETA'">
-            {{getTorrentETAString(torrent)}}
-          </div>
-
-          <div *ngSwitchCase="'Uploaded'">
-            {{getFileSizeString(torrent.uploaded)}}
-          </div>
-
-          <div *ngSwitchCase="'Ratio'">
-            {{getTorrentRatioString(torrent)}}
-          </div>
-
-          <div *ngSwitchCase="'Down Speed'">
-            {{getFileSizeString(torrent.dlspeed)}}/s
-          </div>
-
-          <div *ngSwitchCase="'Up Speed'">
-            {{getFileSizeString(torrent.upspeed)}}/s
-          </div>
-
-          <div *ngSwitchCase="'Completed On'">
-            {{getCompletedOnString(torrent.completion_on)}}
-          </div>
-
-          <div *ngSwitchCase="'Added On'">
-            {{getCompletedOnString(torrent.added_on)}}
-          </div>
-
-          <div *ngSwitchCase="'Last Activity'">
-            {{getCompletedOnString(torrent.last_activity)}}
-          </div>
-        </mat-cell>
-      </ng-container>
-
-      <!-- Header row of table -->
-      <mat-header-row id="torrent_table_header_row" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row
-          [ngStyle]="{'width': tableHeaderWidth}"
-          (click)="handleTorrentSelected(row)" class="{{isSelected(row) ? 'selected' : ''}}"
-          (contextmenu)="onTorrentRightClick($event, row)"
-          *matRowDef="let row; columns: displayedColumns">
-      </mat-row>
-    </mat-table>
-    <mat-paginator class="{{!isLoading() && !isTorrentsEmpty() && userPref.web_ui_options?.torrent_table?.paginate ? '' : 'hidden'}}"
-                  [pageSize]="userPref.web_ui_options?.torrent_table?.default_items_per_page"
-                  [pageSizeOptions]="pageSizeOptions"
-                  (page)="onPaignationPageChanged()"
-                  showFirstLastButtons={{userPref.web_ui_options?.torrent_table?.showFirstAndLastOptions}}>
-    </mat-paginator>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
 
     <div *ngIf="isTorrentsEmpty()">
       <p> No torrents found. Try adding one by clicking Upload at the top-right. </p>

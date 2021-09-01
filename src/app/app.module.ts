@@ -47,6 +47,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { TableModule } from 'primeng/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './modals/torrent-info-dialog/torrent-info-dialog.component';
@@ -125,6 +126,7 @@ if(!environment.production){
     MatToolbarModule,
     MatButtonModule,
     ProgressBarModule,
+    TableModule,
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
