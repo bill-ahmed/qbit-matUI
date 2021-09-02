@@ -42,15 +42,19 @@ export class HomeComponent implements OnInit {
     this.getUserPreferences();
     this.isDarkTheme = this.theme.getThemeSubscription();
     this.getQbitBuildInfo();
+
+    // Check if user was led here via a magnet download link
+    this.handleMagnetURLCheck();
   }
 
   /** Open the modal for adding a new torrent */
-  openAddTorrentDialog(): void {
+  openAddTorrentDialog(opts?: any): void {
     const addTorDialogRef = this.dialog.open(AddTorrentDialogComponent,
       {
         disableClose: true,
         panelClass: "generic-dialog",
         minWidth: "40%",
+        data: opts
       }
     );
 
@@ -77,6 +81,20 @@ export class HomeComponent implements OnInit {
 
   /** Callback for when user is finished uploading a torrent */
   handleAddTorrentDialogClosed(data: any): void {
+  }
+
+  handleMagnetURLCheck() {
+    let downloadHash = '#download=';
+
+    // Make sure it exists and is at the front
+    if(location.hash.indexOf(downloadHash) !== 0)
+      return;
+
+    // Now that it exists, we can take it by reading up to downloadHash's length
+    let target_url = decodeURIComponent(location.hash.substring(downloadHash.length));
+    history.replaceState('', document.title, location.pathname);
+
+    this.openAddTorrentDialog({ magnetURL: target_url });
   }
 
   public toggleTheme(): void {

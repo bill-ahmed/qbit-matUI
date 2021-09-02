@@ -5,6 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { NetworkConnectionInformationService } from 'src/app/services/network/network-connection-information.service';
 import { ApplicationDefaults } from 'src/app/services/app/defaults';
+import { SnackbarService } from 'src/app/services/notifications/snackbar.service';
 
 @Component({
   selector: 'app-web-ui-settings',
@@ -36,7 +37,7 @@ export class WebUiSettingsComponent implements OnInit {
 
   private web_ui_options: WebUISettings;
 
-  constructor(private appConfig: ApplicationConfigService, private auth_service: AuthService) { this.theme_options = ApplicationConfigService.THEME_OPTIONS }
+  constructor(private appConfig: ApplicationConfigService, private auth_service: AuthService, private snackbar: SnackbarService) { this.theme_options = ApplicationConfigService.THEME_OPTIONS }
 
   ngOnInit(): void {
     this.web_ui_options = this.appConfig.getWebUISettings();
@@ -65,6 +66,23 @@ export class WebUiSettingsComponent implements OnInit {
       upload_torrents: this.torrent_upload_settings,
       notifications: this.notification_settings,
     }
+  }
+
+  registerMagnetHandler() {
+    if(location.protocol !== 'https:') {
+      this.snackbar.enqueueSnackBar('HTTPS is required to register magnet URLs!', { type: 'error' });
+      return;
+    }
+
+    if(typeof navigator.registerProtocolHandler !== 'function') {
+      this.snackbar.enqueueSnackBar('Your browser does not support registering magnet URLs.', { type: 'error' });
+      return;
+    }
+
+    let templateHashString = 'download=%s';
+    let templateURL = location.origin + location.pathname + `#${templateHashString}`;
+
+    navigator.registerProtocolHandler('magnet', templateURL, 'qBittorrent WebUI magnet handler');
   }
 
   _resetAllSettings() {
