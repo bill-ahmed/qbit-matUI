@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 // Material UI Components
 import { MatFormField } from '@angular/material/form-field';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TorrentDataStoreService } from '../../services/torrent-management/torrent-data-store.service';
 import { FileSystemDialogComponent } from '../file-system-dialog/file-system-dialog.component';
 import { ThemeService } from '../../services/theme.service';
@@ -34,16 +34,24 @@ export class AddTorrentDialogComponent implements OnInit {
   public serialized_nodes: SerializedNode[] = [];
 
   /** Keep track of the mat-tab the user is currently in. */
-  private currentTab: MatTabChangeEvent;
+  public currentTab: MatTabChangeEvent;
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
+  private inputData: any;
+
   constructor(private appConfig: ApplicationConfigService, private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService,
-              private torrentParser: TorrentParserService, public fileSystemDialog: MatDialog, public snackbar: SnackbarService, private theme: ThemeService) { }
+              private torrentParser: TorrentParserService, public fileSystemDialog: MatDialog, public snackbar: SnackbarService, private theme: ThemeService,
+              @Inject(MAT_DIALOG_DATA) inputData) { this.inputData = inputData }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
     this.updateDefaultSaveLocationFromDisk();
     this.appConfig.getUserPreferences().then(pref => { this.show_torrent_contents = pref.web_ui_options.upload_torrents?.show_parsed_torrents_from_file ?? true });
+
+    if(this.inputData?.magnetURL) {
+      this.urlsToUpload = this.inputData.magnetURL;
+      this.handleTabChange({ index: 1 } as any)
+    }
   }
 
   handleTabChange(event: MatTabChangeEvent) {
