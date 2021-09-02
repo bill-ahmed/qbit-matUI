@@ -244,6 +244,11 @@ export class TorrentsTableComponent implements OnInit {
     this._updateSelectionService();
   }
 
+  /** Callback for when columns are re-ordered in the torrent table. */
+  handleColumnReorder(event: any) {
+    this.appConfig.setTorrentTableColumns(event.columns, true);
+  }
+
   /** Determine whether a torrent is selected or not */
   isSelected(tor: Torrent): boolean {
     return this.selection.isSelected(tor);

@@ -89,7 +89,7 @@ export class ApplicationConfigService {
     return this.user_preferences;
   }
 
-  getUserPreferencesSubscription() {
+  getUserPreferencesSubscription(): BehaviorSubject<UserPreferences> {
     return this.user_preference_obs
   }
 

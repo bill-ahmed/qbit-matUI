@@ -25,6 +25,8 @@
 
       [contextMenu]="cm"
       [(contextMenuSelection)]="contextMenuSelectedTorrent"
+
+      (onColReorder)="handleColumnReorder($event)"
       >
 
       <!-- TABLE HEADER -->

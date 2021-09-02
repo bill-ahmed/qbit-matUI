@@ -60,6 +60,14 @@ export class BulkUpdateTorrentsComponent implements OnInit {
       newTorrents.length === 0 ? this.canUserEdit = false : this.canUserEdit = true;
     });
 
+    this.appConfig.getUserPreferencesSubscription().subscribe(res => {
+      this.columnsSelected = res.web_ui_options.torrent_table.columns_to_show;
+
+      // Update allColumns to be in the same order as columnsSelected
+      let diff = this.allColumns.filter(elem => !this.columnsSelected.includes(elem));
+      this.allColumns = [...this.columnsSelected, ...diff];
+    })
+
     this.columnsSelected = this.appConfig.getWebUISettings().torrent_table.columns_to_show;
   }
 
