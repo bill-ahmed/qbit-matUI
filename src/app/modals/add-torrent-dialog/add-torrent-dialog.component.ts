@@ -101,7 +101,9 @@ export class AddTorrentDialogComponent implements OnInit {
 
     } catch (error) {
       console.error('uploaded magnet URLs!', error);
-      this.snackbar.enqueueSnackBar("Error uploding torrents, check console log for details.", { type: 'error' });
+
+      if(error?.status !== 200 && error?.statusText !== 'OK')
+        this.snackbar.enqueueSnackBar("Error uploding torrents, check console log for details.", { type: 'error' });
     }
 
   }
