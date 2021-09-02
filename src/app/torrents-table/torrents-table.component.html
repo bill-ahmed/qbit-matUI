@@ -12,7 +12,7 @@
     <p-table *ngIf="!isLoading() && !isTorrentsEmpty()" styleClass="p-datatable-sm mat-elevation-z1"
       [columns]="displayedColumns"
       [value]="filteredTorrentData"
-
+      dataKey="hash"
 
       [scrollable]="true"
       scrollHeight="73vh"

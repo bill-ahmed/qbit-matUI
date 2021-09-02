@@ -11,6 +11,7 @@
 .torrent-table-container {
     display: flex;
     flex-direction: column;
+    overflow: scroll;
 }
 
 
@@ -63,21 +64,33 @@ mat-spinner {
 }
 
 /** Sizes of each column */
-.table-col-Name {
-  overflow-wrap: break-word;
+.table-col   {
+  width: max-content;
 
-  word-wrap: break-word;
-  word-break: break-word;
+  &.table-col-Name {
+    overflow-wrap: break-word;
 
-  width: 400px;
-}
+    word-wrap: break-word;
+    word-break: break-word;
 
-.table-col-select {
-  width: 50px;
-}
+    width: 450px;
+  }
 
-.table-col-Actions {
-  width: 150px;
+  /** MUST HAVE SIZES FOR EACH COLUMN!! */
+
+  &.table-col-select     { width: 50px; }
+  &.table-col-Actions    { width: 140px; }
+  &.table-col-Size       { width: 85px; }
+  &.table-col-Progress   { width: 200px; }
+  &.table-col-Status     { width: 140px; }
+  &.table-col-Up-Speed   { width: 100px; }
+  &.table-col-Down-Speed { width: 120px; }
+  &.table-col-ETA        { width: 125px; }
+  &.table-col-Ratio      { width: 75px; }
+  &.table-col-Uploaded   { width: 85px; }
+  &.table-col-Added-On   { width: 150px; }
+  &.table-col-Completed-On { width: 150px; }
+  &.table-col-Last-Activity { width: 150px; }
 }
 
 .torrent-table-status {
@@ -133,7 +146,7 @@ mat-spinner {
   color: rgba(0,0,0,.54);
   border-color: #E0E0E0;
 
-  font-size: 10pt;
+  font-size: 12px;
 }
 
 .p-datatable .p-datatable-tbody > tr.torrent-table-row {
