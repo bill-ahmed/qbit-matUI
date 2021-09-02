@@ -9,6 +9,11 @@
 # ***
 # NOTE: IT IS ASSUMED THIS SCRIPT IS RUN FROM THE PROJECT ROOT
 # ***
+if [ $# -eq 0 ]
+then
+  echo "Error: Must provide an application version!"
+  exit -1
+fi
 
 # Current application version -- SHOULD BE SAME AS IN app.config.json
 app_ver=$1
