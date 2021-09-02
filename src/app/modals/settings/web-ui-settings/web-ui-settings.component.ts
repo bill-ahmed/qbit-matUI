@@ -69,10 +69,10 @@ export class WebUiSettingsComponent implements OnInit {
   }
 
   registerMagnetHandler() {
-    // if(location.protocol !== 'https:') {
-    //   this.snackbar.enqueueSnackBar('HTTPS is required to register magnet URLs!', { type: 'error' });
-    //   return;
-    // }
+    if(location.protocol !== 'https:') {
+      this.snackbar.enqueueSnackBar('HTTPS is required to register magnet URLs!', { type: 'error' });
+      return;
+    }
 
     if(typeof navigator.registerProtocolHandler !== 'function') {
       this.snackbar.enqueueSnackBar('Your browser does not support registering magnet URLs.', { type: 'error' });
