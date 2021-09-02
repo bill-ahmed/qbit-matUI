@@ -125,19 +125,29 @@ mat-spinner {
   }
 }
 
+.p-datatable .p-datatable-tbody > tr.torrent-table-row {
+  cursor: pointer;
+
+  background: white;
+  color: $table-black-color;
+
+  font-size: 13.5px;
+
+  &:hover {
+    background: $row-hover-light;
+  }
+
+  &.selected {
+    background: $row-hover-light;
+  }
+}
+
 .p-datatable .p-datatable-thead > tr > th {
   background: white;
   color: rgba(0,0,0,.54);
   border-color: #E0E0E0;
 
   font-size: 10pt;
-}
-
-.p-datatable .p-datatable-tbody > tr {
-  background: white;
-  color: $table-black-color;
-
-  font-size: 13.5px;
 }
 
 .p-datatable .p-datatable-tbody > tr > td {
@@ -156,9 +166,17 @@ mat-spinner {
     border-color: $table-surface-1;
   }
 
-  .p-datatable .p-datatable-tbody > tr {
+  .p-datatable .p-datatable-tbody > tr.torrent-table-row {
     background: $table-surface-2;
     color: white;
+
+    &:hover {
+      background: $row-hover-dark;
+    }
+
+    &.selected {
+      background: $row-hover-dark;
+    }
   }
 
   .p-datatable .p-datatable-tbody > tr > td {

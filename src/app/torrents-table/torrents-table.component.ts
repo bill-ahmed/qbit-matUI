@@ -45,6 +45,8 @@ export class TorrentsTableComponent implements OnInit {
 
   // For drag & drop of columns
   public displayedColumns: any[];
+
+  // A reverse mapping from column name to torrent property
   public displayedColumnsMapping = ApplicationConfigService.TORRENT_TABLE_COLUMNS_MAPPING
 
   // Right-click on row options

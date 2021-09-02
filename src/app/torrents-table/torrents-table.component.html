@@ -108,7 +108,7 @@
 
       <!-- TABLE ROWS -->
       <ng-template pTemplate="body" let-torrent let-columns="columns">
-        <tr class="torrent-table-row">
+        <tr class="torrent-table-row" [ngClass]="{selected: isSelected(torrent)}" (click)="handleTorrentSelected(torrent)">
           <td *ngFor="let col of columns" [class]="getClassNameForColumns(col)">
             <div [ngSwitch]="col">
               <div *ngSwitchCase="'select'">
