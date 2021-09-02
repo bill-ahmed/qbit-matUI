@@ -125,6 +125,17 @@ mat-spinner {
   }
 }
 
+
+/** Torrent table header and row styles **/
+
+.p-datatable .p-datatable-thead > tr > th {
+  background: white;
+  color: rgba(0,0,0,.54);
+  border-color: #E0E0E0;
+
+  font-size: 10pt;
+}
+
 .p-datatable .p-datatable-tbody > tr.torrent-table-row {
   cursor: pointer;
 
@@ -144,14 +155,6 @@ mat-spinner {
   }
 }
 
-.p-datatable .p-datatable-thead > tr > th {
-  background: white;
-  color: rgba(0,0,0,.54);
-  border-color: #E0E0E0;
-
-  font-size: 10pt;
-}
-
 .p-datatable .p-datatable-tbody > tr > td {
   border-color: #E0E0E0;
 }
@@ -166,6 +169,11 @@ mat-spinner {
     background: $table-surface-2;
     color: hsla(0,0%,100%,.7);
     border-color: $table-surface-1;
+
+    &:hover {
+      background: $row-hover-dark;
+      color: white;
+    }
   }
 
   .p-datatable .p-datatable-tbody > tr.torrent-table-row {
