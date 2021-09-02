@@ -70,9 +70,9 @@ export class ApplicationConfigService {
   }
 
   /** Update which columns are chosen to be shown, as well as their order */
-  setTorrentTableColumns(cols: string[]) {
+  setTorrentTableColumns(cols: string[], updateNow?: boolean) {
     this.user_preferences.web_ui_options.torrent_table.columns_to_show = cols;
-    this._persistWebUIOptions();
+    this._persistWebUIOptions(updateNow);
   }
 
   async getQbittorrentBuildInfo(): Promise<QbittorrentBuildInfo> {
