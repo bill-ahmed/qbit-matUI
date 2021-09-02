@@ -133,6 +133,8 @@ mat-spinner {
 
   font-size: 13.5px;
 
+  transition: background-color 0.15s ease;
+
   &:hover {
     background: $row-hover-light;
   }

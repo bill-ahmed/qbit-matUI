@@ -65,6 +65,7 @@ import { DragAndDropFilesDirective } from './drag-and-drop-files.directive';
 import { RateLimitsDialogComponent } from './modals/rate-limits-dialog/rate-limits-dialog.component';
 import { ChipLabelComponent } from './chip-label/chip-label.component';
 import { TagModule } from 'primeng/tag';
+import { ContextMenuModule } from 'primeng/contextmenu';
 
 var appRoutes: Routes;
 
@@ -124,6 +125,7 @@ if(!environment.production){
     ProgressBarModule,
     TableModule,
     TagModule,
+    ContextMenuModule,
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,

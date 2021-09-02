@@ -70,7 +70,9 @@
     <!-- Top-level menu rendered in here -->
     <div style="visibility: hidden; position: fixed;" [style.left]="menuTopLeftPosition.x" [style.top]="menuTopLeftPosition.y" [matMenuTriggerFor]="torrentOptionsMenu"></div>
 
-    <p-table *ngIf="!isLoading() && !isTorrentsEmpty()" styleClass="p-datatable-sm"
+    <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
+
+    <p-table *ngIf="!isLoading() && !isTorrentsEmpty()" styleClass="p-datatable-sm mat-elevation-z1"
       [columns]="displayedColumns"
       [value]="filteredTorrentData"
 
@@ -83,6 +85,9 @@
       [virtualScroll]="true"
 
       [reorderableColumns]="true"
+
+      [contextMenu]="cm"
+      [(contextMenuSelection)]="contextMenuSelectedTorrent"
       >
 
       <!-- TABLE HEADER -->
@@ -108,7 +113,14 @@
 
       <!-- TABLE ROWS -->
       <ng-template pTemplate="body" let-torrent let-columns="columns">
-        <tr class="torrent-table-row" [ngClass]="{selected: isSelected(torrent)}" (click)="handleTorrentSelected(torrent)">
+        <tr class="torrent-table-row"
+            [ngClass]="{selected: isSelected(torrent)}"
+
+            (click)="handleTorrentSelected(torrent)"
+            (contextmenu)="handleTorrentSelected(torrent)"
+
+            [pContextMenuRow]="torrent"
+            >
           <td *ngFor="let col of columns" [class]="getClassNameForColumns(col)">
             <div [ngSwitch]="col">
               <div *ngSwitchCase="'select'">

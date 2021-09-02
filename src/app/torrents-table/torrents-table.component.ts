@@ -26,6 +26,8 @@ import { ApplicationConfigService } from '../services/app/application-config.ser
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
 import { SnackbarService } from '../services/notifications/snackbar.service';
 import { MatMenuTrigger } from '@angular/material/menu';
+import { MenuItem } from 'primeng/api';
+
 
 @Component({
   selector: 'app-torrents-table',
@@ -52,6 +54,10 @@ export class TorrentsTableComponent implements OnInit {
   // Right-click on row options
   public menuTopLeftPosition = {x: '0', y: '0'};
   @ViewChild(MatMenuTrigger, {static: true}) torrentMenuTrigger: MatMenuTrigger;
+
+  // Context menu items
+  public contextMenuItems: MenuItem[];
+  public contextMenuSelectedTorrent: Torrent;
 
   // Other
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
@@ -92,6 +98,22 @@ export class TorrentsTableComponent implements OnInit {
         this.selection.clear();
       }
     });
+
+    this.contextMenuItems = [
+      { label: 'Pause', icon: 'pi pi-fw pi-pause', command: () => this.pauseTorrentsBulk(this.selection.selected) },
+      { label: 'Resume', icon: 'pi pi-fw pi-play', command: () => this.resumeTorrentsBulk(this.selection.selected) },
+      { label: 'Force Resume', icon: 'pi pi-fw pi-forward', command: () => this.forceStartTorrentsBulk(this.selection.selected) },
+      { /* Divider */ },
+      { label: 'Delete', icon: 'pi pi-fw pi-trash', command: () => this.openDeleteTorrentDialog(null, this.selection.selected) },
+      { /* Divider */ },
+      { label: 'Set location...', icon: 'pi pi-fw pi-folder', command: () => this.openMoveTorrentDialog() },
+      { label: 'Force recheck', icon: 'pi pi-fw pi-refresh', command: () => this.recheckTorrents(this.selection.selected) },
+      { /* Divider */ },
+      { label: 'Increase Priority', icon: 'pi pi-fw pi-chevron-up', command: () => this.increasePriorityBulk(this.selection.selected) },
+      { label: 'Decrease Priority', icon: 'pi pi-fw pi-chevron-down', command: () => this.decreasePriorityBulk(this.selection.selected) },
+      { label: 'Max Priority', icon: 'pi pi-fw pi-angle-double-up', command: () => this.maximumPriorityBulk(this.selection.selected) },
+      { label: 'Min Priority', icon: 'pi pi-fw pi-angle-double-down', command: () => this.minimumPriorityBulk(this.selection.selected) },
+    ]
   }
 
   ngOnDestroy(): void { }
