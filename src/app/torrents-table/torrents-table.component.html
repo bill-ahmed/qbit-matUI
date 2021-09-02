@@ -6,70 +6,7 @@
 
     <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading() && !isTorrentsEmpty()"></app-bulk-update-torrents>
 
-    <!-- Mat menu target -->
-    <mat-menu #torrentOptionsMenu>
-      <button mat-menu-item (click)="pauseTorrentsBulk(selection.selected)">
-        <mat-icon color="accent">pause</mat-icon>
-        <span> Pause </span>
-      </button>
-
-      <button mat-menu-item (click)="resumeTorrentsBulk(selection.selected)">
-        <mat-icon color="primary">play_arrow</mat-icon>
-        <span> Resume </span>
-      </button>
-
-      <button mat-menu-item (click)="forceStartTorrentsBulk(selection.selected)">
-        <mat-icon color="primary">fast_forward</mat-icon>
-        <span> Force Resume </span>
-      </button>
-
-      <mat-divider></mat-divider>
-
-      <button mat-menu-item (click)="openDeleteTorrentDialog(null, selection.selected)">
-        <mat-icon color="warn">delete</mat-icon>
-        <span> Delete </span>
-      </button>
-
-      <mat-divider></mat-divider>
-
-      <button mat-menu-item (click)="openMoveTorrentDialog()">
-        <mat-icon color="primary">folder</mat-icon>
-        <span> Set location... </span>
-      </button>
-
-      <button mat-menu-item (click)="recheckTorrents(selection.selected)">
-        <mat-icon color="yellow">refresh</mat-icon>
-        <span> Force recheck </span>
-      </button>
-
-      <mat-divider></mat-divider>
-
-      <button mat-menu-item (click)="maximumPriorityBulk(selection.selected)">
-        <mat-icon>vertical_align_top</mat-icon>
-        <span> Max Priority </span>
-      </button>
-
-      <button mat-menu-item (click)="increasePriorityBulk(selection.selected)">
-        <mat-icon>arrow_upward</mat-icon>
-        <span> Increase Priority </span>
-      </button>
-
-      <button mat-menu-item (click)="decreasePriorityBulk(selection.selected)">
-        <mat-icon>arrow_downward</mat-icon>
-        <span> Decrease Priority </span>
-      </button>
-
-      <button mat-menu-item (click)="minimumPriorityBulk(selection.selected)">
-        <mat-icon>vertical_align_bottom</mat-icon>
-        <span> Min Priority </span>
-      </button>
-
-      <mat-divider></mat-divider>
-    </mat-menu>
-
-    <!-- Top-level menu rendered in here -->
-    <div style="visibility: hidden; position: fixed;" [style.left]="menuTopLeftPosition.x" [style.top]="menuTopLeftPosition.y" [matMenuTriggerFor]="torrentOptionsMenu"></div>
-
+    <!-- Handle context menu -->
     <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
 
     <p-table *ngIf="!isLoading() && !isTorrentsEmpty()" styleClass="p-datatable-sm mat-elevation-z1"

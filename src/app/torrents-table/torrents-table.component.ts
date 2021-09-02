@@ -1,11 +1,7 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { CdkDragStart, CdkDropList, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MainData, Torrent, UserPreferences } from '../../utils/Interfaces';
 
-
 // UI Components
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatSpinner } from '@angular/material/progress-spinner';
 
 // Helpers
@@ -25,7 +21,6 @@ import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
 import { SnackbarService } from '../services/notifications/snackbar.service';
-import { MatMenuTrigger } from '@angular/material/menu';
 import { MenuItem } from 'primeng/api';
 
 
@@ -51,10 +46,6 @@ export class TorrentsTableComponent implements OnInit {
   // A reverse mapping from column name to torrent property
   public displayedColumnsMapping = ApplicationConfigService.TORRENT_TABLE_COLUMNS_MAPPING
 
-  // Right-click on row options
-  public menuTopLeftPosition = {x: '0', y: '0'};
-  @ViewChild(MatMenuTrigger, {static: true}) torrentMenuTrigger: MatMenuTrigger;
-
   // Context menu items
   public contextMenuItems: MenuItem[];
   public contextMenuSelectedTorrent: Torrent;
@@ -65,16 +56,13 @@ export class TorrentsTableComponent implements OnInit {
   private currentMatSort = {active: "Completed On", direction: "desc"};
   private torrentSearchValue = ""; // Keep track of which torrents are currently selected
 
-  // Keep track of table header width, so the rows also match
-  public tableHeaderWidth: string = '-1px';
-
   constructor(private appConfig: ApplicationConfigService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
               private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService, private snackbar: SnackbarService,
               private theme: ThemeService) { }
 
   ngOnInit(): void {
-    // Themeing
+    // Theming
     this.isDarkTheme = this.theme.getThemeSubscription();
 
     // Subscribe to torrent searching service
@@ -134,29 +122,12 @@ export class TorrentsTableComponent implements OnInit {
     return tor.state === "pausedDL" || tor.state === "pausedUP";
   }
 
-  getFileSizeString(size: number): string {
-    return this.pp.pretty_print_file_size(size);
-  }
-
-  getStatusString(status: string): string {
-    return this.pp.pretty_print_status(status);
-  }
-
-  getTorrentETAString(tor: Torrent): string {
-    return this.pp.pretty_print_eta(tor);
-  }
-
-  getTorrentUploadedString(tor: Torrent): string {
-    return this.pp.pretty_print_uploaded(tor);
-  }
-
-  getTorrentRatioString(tor: Torrent): number {
-    return this.pp.pretty_print_ratio(tor);
-  }
-
-  getCompletedOnString(timestamp: number): string {
-    return this.pp.pretty_print_completed_on(timestamp);
-  }
+  getFileSizeString(size: number): string         { return this.pp.pretty_print_file_size(size); }
+  getStatusString(status: string): string         { return this.pp.pretty_print_status(status); }
+  getTorrentETAString(tor: Torrent): string       { return this.pp.pretty_print_eta(tor); }
+  getTorrentUploadedString(tor: Torrent): string  { return this.pp.pretty_print_uploaded(tor); }
+  getTorrentRatioString(tor: Torrent): number     { return this.pp.pretty_print_ratio(tor); }
+  getCompletedOnString(timestamp: number): string { return this.pp.pretty_print_completed_on(timestamp); }
 
   getClassNameForColumns(column: string): string {
     return 'table-col table-col-' + column.replace(/ /g, '-')
