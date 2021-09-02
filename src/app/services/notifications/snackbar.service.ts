@@ -52,7 +52,13 @@ export class SnackbarService {
 
     // If user chose not to view snackbar notifications, then don't enqueue them and instead log to console
     if(!this.appConfig.canViewSnackbarNotification()) {
-      options?.type === 'error' ? console.error('[Error] ' + message) : console.log(`[Notice] ` + message);
+      if(options?.type === 'error'){
+        console.error('[Error] ' + message)
+        alert('[Error] ' + message)
+      }
+      else
+        console.log(`[Notice] ` + message)
+
       return;
     }
 
