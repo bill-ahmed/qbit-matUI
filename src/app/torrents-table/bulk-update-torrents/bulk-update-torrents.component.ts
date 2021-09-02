@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject, Output, EventEmitter } from '@angular/core';
+import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
 import { RowSelectionService } from 'src/app/services/torrent-management/row-selection.service';
 
 @Component({
@@ -12,6 +13,10 @@ export class BulkUpdateTorrentsComponent implements OnInit {
 
   public torrentsSelected: string[] = [];
   public canUserEdit: boolean = false;
+
+  // ALlow user to change columns that appear
+  public allColumns = ApplicationConfigService.ALL_COLUMNS;
+  public columnsSelected: string[];
 
   private loading: boolean = false;
   private actions: {
@@ -27,7 +32,7 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     "moveTor": () => void,
   };
 
-  constructor(private torrentsSelectedService: RowSelectionService) {
+  constructor(private torrentsSelectedService: RowSelectionService, private appConfig: ApplicationConfigService) {
 
     // Assign all possible actions
     this.actions = {
@@ -53,7 +58,19 @@ export class BulkUpdateTorrentsComponent implements OnInit {
 
       this.torrentsSelected = newTorrents;
       newTorrents.length === 0 ? this.canUserEdit = false : this.canUserEdit = true;
+    });
+
+    this.appConfig.getUserPreferencesSubscription().subscribe(res => {
+      this.columnsSelected = res.web_ui_options?.torrent_table.columns_to_show;
+
+      if(this.columnsSelected) {
+        // Update allColumns to be in the same order as columnsSelected
+        let diff = this.allColumns.filter(elem => !this.columnsSelected.includes(elem));
+        this.allColumns = [...this.columnsSelected, ...diff];
+      }
     })
+
+    this.columnsSelected = this.appConfig.getWebUISettings().torrent_table.columns_to_show;
   }
 
   /** Get appropriate message to display in snackbar */
@@ -67,6 +84,10 @@ export class BulkUpdateTorrentsComponent implements OnInit {
     this.loading = true;
     this.actions[action]();
     this.loading = false;
+  }
+
+  public handleColumnsChange() {
+    this.appConfig.setTorrentTableColumns(this.columnsSelected, true);
   }
 
   public clearSelectedTorrents(): void {

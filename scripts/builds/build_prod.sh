@@ -9,6 +9,11 @@
 # ***
 # NOTE: IT IS ASSUMED THIS SCRIPT IS RUN FROM THE PROJECT ROOT
 # ***
+if [ $# -eq 0 ]
+then
+  echo "Error: Must provide an application version!"
+  exit -1
+fi
 
 # Current application version -- SHOULD BE SAME AS IN app.config.json
 app_ver=$1
@@ -61,11 +66,11 @@ cp -r "$default_build_path/$login_build" "$default_build_path/$win_build/public"
 cp -r "$default_build_path/$login_build" "$default_build_path/$unix_build/public"
 
 # Step (6) -- Compress both builds into .zip
-echo "Compressing builds..."
-pushd "$default_build_path" > /dev/null
-tar -zcvf "$win_build.zip" "$win_build"
-tar -zcvf "$unix_build.zip" "$unix_build"
-popd > /dev/null
+# echo "Compressing builds..."
+# pushd "$default_build_path" > /dev/null
+# tar -zcvf "$win_build.zip" "$win_build"
+# tar -zcvf "$unix_build.zip" "$unix_build"
+# popd > /dev/null
 
 echo
 echo "Done!"

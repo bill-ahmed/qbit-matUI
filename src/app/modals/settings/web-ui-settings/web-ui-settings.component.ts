@@ -31,7 +31,7 @@ export class WebUiSettingsComponent implements OnInit {
   /** Validations */
   common_validators = [Validators.min(0)];
   form_controls = {
-    default_items_per_page: new FormControl(this.torrent_table_settings.default_items_per_page, [...this.common_validators])
+    default_items_per_page: new FormControl([...this.common_validators])
   }
 
   private web_ui_options: WebUISettings;

@@ -6,185 +6,154 @@
 
     <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading() && !isTorrentsEmpty()"></app-bulk-update-torrents>
 
-    <!-- Mat menu target -->
-    <mat-menu #torrentOptionsMenu>
-      <button mat-menu-item (click)="pauseTorrentsBulk(selection.selected)">
-        <mat-icon color="accent">pause</mat-icon>
-        <span> Pause </span>
-      </button>
+    <!-- Handle context menu -->
+    <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
 
-      <button mat-menu-item (click)="resumeTorrentsBulk(selection.selected)">
-        <mat-icon color="primary">play_arrow</mat-icon>
-        <span> Resume </span>
-      </button>
+    <p-table *ngIf="!isLoading() && !isTorrentsEmpty()" styleClass="p-datatable-sm mat-elevation-z1"
+      [columns]="displayedColumns"
+      [value]="filteredTorrentData"
+      dataKey="hash"
 
-      <button mat-menu-item (click)="forceStartTorrentsBulk(selection.selected)">
-        <mat-icon color="primary">fast_forward</mat-icon>
-        <span> Force Resume </span>
-      </button>
+      [scrollable]="true"
+      scrollHeight="73vh"
+      [rows]="userPref.web_ui_options?.torrent_table?.default_items_per_page"
 
-      <mat-divider></mat-divider>
+      [virtualRowHeight]="50"
+      [virtualScroll]="true"
 
-      <button mat-menu-item (click)="openDeleteTorrentDialog(null, selection.selected)">
-        <mat-icon color="warn">delete</mat-icon>
-        <span> Delete </span>
-      </button>
+      [reorderableColumns]="true"
 
-      <mat-divider></mat-divider>
+      [contextMenu]="cm"
+      [(contextMenuSelection)]="contextMenuSelectedTorrent"
 
-      <button mat-menu-item (click)="openMoveTorrentDialog()">
-        <mat-icon color="primary">folder</mat-icon>
-        <span> Set location... </span>
-      </button>
+      (onColReorder)="handleColumnReorder($event)"
+      >
 
-      <button mat-menu-item (click)="recheckTorrents(selection.selected)">
-        <mat-icon color="yellow">refresh</mat-icon>
-        <span> Force recheck </span>
-      </button>
+      <!-- TABLE HEADER -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of displayedColumns" [class]="getClassNameForColumns(col)" pReorderableColumn [pSortableColumn]="displayedColumnsMapping[col]">
+            <div style="display: flex;" [ngSwitch]="col">
+              <!-- Checkbox for selecting ALL torrents -->
+              <div *ngSwitchCase="'select'">
+                <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+                  [checked]="selection.hasValue() && isAllSelected()"
+                  [indeterminate]="selection.hasValue() && !isAllSelected()" [style]="{margin: '5px 15px'}">
+                </mat-checkbox>
+              </div>
 
-      <mat-divider></mat-divider>
+              <div *ngSwitchDefault>{{col}}</div>
 
-      <button mat-menu-item (click)="maximumPriorityBulk(selection.selected)">
-        <mat-icon>vertical_align_top</mat-icon>
-        <span> Max Priority </span>
-      </button>
-
-      <button mat-menu-item (click)="increasePriorityBulk(selection.selected)">
-        <mat-icon>arrow_upward</mat-icon>
-        <span> Increase Priority </span>
-      </button>
-
-      <button mat-menu-item (click)="decreasePriorityBulk(selection.selected)">
-        <mat-icon>arrow_downward</mat-icon>
-        <span> Decrease Priority </span>
-      </button>
-
-      <button mat-menu-item (click)="minimumPriorityBulk(selection.selected)">
-        <mat-icon>vertical_align_bottom</mat-icon>
-        <span> Min Priority </span>
-      </button>
-
-      <mat-divider></mat-divider>
-    </mat-menu>
-
-    <!-- Top-level menu rendered in here -->
-    <div style="visibility: hidden; position: fixed;" [style.left]="menuTopLeftPosition.x" [style.top]="menuTopLeftPosition.y" [matMenuTriggerFor]="torrentOptionsMenu"></div>
-
-    <!-- Table of torrent data -->
-    <mat-table *ngIf="!isLoading() && !isTorrentsEmpty()" mat-table [dataSource]="dataSource" matSort (matSortChange)="onMatSortChange($event)" class="mat-elevation-z1"
-        cdkDropList
-        cdkDropListLockAxis="x" cdkDropListOrientation="horizontal"
-        (cdkDropListDropped)="handleColumnDragStopped($event)">
-
-      <ng-container *ngFor="let column of displayedColumns; let i = index" [matColumnDef]="column">
-        <mat-header-cell *matHeaderCellDef mat-sort-header cdkDrag>
-            <div *ngIf="column !== 'select'">
-              {{column}}
+              <p-sortIcon *ngIf="!['select', 'Actions'].includes(col)" [field]="displayedColumnsMapping[col]"></p-sortIcon>
             </div>
+          </th>
+        </tr>
+      </ng-template>
 
-            <mat-checkbox *ngIf="column === 'select'" color="primary" (change)="$event ? masterToggle() : null"
-              [checked]="selection.hasValue() && isAllSelected()"
-              [indeterminate]="selection.hasValue() && !isAllSelected()">
-            </mat-checkbox>
-        </mat-header-cell>
+      <!-- TABLE ROWS -->
+      <ng-template pTemplate="body" let-torrent let-columns="columns">
+        <tr class="torrent-table-row"
+            [ngClass]="{selected: isSelected(torrent)}"
 
-        <mat-cell [ngSwitch]="column" *matCellDef="let torrent">
-          <mat-checkbox *ngIf="column === 'select'" color="primary" (click)="$event.stopPropagation()"
+            (click)="handleTorrentSelected(torrent)"
+            (contextmenu)="handleTorrentSelected(torrent)"
+
+            [pContextMenuRow]="torrent"
+            >
+          <td *ngFor="let col of columns" [class]="getClassNameForColumns(col)">
+            <div [ngSwitch]="col">
+              <div *ngSwitchCase="'select'">
+                <mat-checkbox color="primary" (click)="$event.stopPropagation()"
                           (change)="$event ? handleTorrentSelected(torrent) : null"
-                          [checked]="selection.isSelected(torrent)">
-          </mat-checkbox>
+                          [checked]="selection.isSelected(torrent)" [style]="{margin: '5px 15px'}">
+                </mat-checkbox>
+              </div>
 
-          <div *ngSwitchCase="'Actions'">
-            <button color="warn" mat-icon-button matTooltip="Delete Torrent" matTooltipPosition="below" (click)="openDeleteTorrentDialog($event, [torrent])">
-              <mat-icon>delete</mat-icon>
-            </button>
+              <div *ngSwitchCase="'Actions'">
+                <button color="warn" mat-icon-button matTooltip="Delete Torrent" matTooltipPosition="below" (click)="openDeleteTorrentDialog($event, [torrent])">
+                  <mat-icon>delete</mat-icon>
+                </button>
 
-            <button *ngIf="!isTorrentPaused(torrent)" mat-icon-button matTooltip="Pause Torrent" color="accent" matTooltipPosition="below"
-            (click)="$event.stopPropagation();pauseTorrentsBulk([torrent])">
-                <mat-icon>pause</mat-icon>
-            </button>
+                <button *ngIf="!isTorrentPaused(torrent)" mat-icon-button matTooltip="Pause Torrent" color="accent" matTooltipPosition="below"
+                (click)="$event.stopPropagation();pauseTorrentsBulk([torrent])">
+                    <mat-icon>pause</mat-icon>
+                </button>
 
-            <button *ngIf="isTorrentPaused(torrent)" mat-icon-button matTooltip="Resume Torrent" color="primary" matTooltipPosition="below"
-            (click)="$event.stopPropagation();resumeTorrentsBulk([torrent])">
-                <mat-icon>play_arrow</mat-icon>
-            </button>
+                <button *ngIf="isTorrentPaused(torrent)" mat-icon-button matTooltip="Resume Torrent" color="primary" matTooltipPosition="below"
+                (click)="$event.stopPropagation();resumeTorrentsBulk([torrent])">
+                    <mat-icon>play_arrow</mat-icon>
+                </button>
 
-            <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="right" (click)="openInfoTorrentDialog($event, torrent)">
-                <mat-icon>info</mat-icon>
-            </button>
-          </div>
+                <button color="primary" mat-icon-button matTooltip="More Info" matTooltipPosition="right" (click)="openInfoTorrentDialog($event, torrent)">
+                    <mat-icon>info</mat-icon>
+                </button>
+              </div>
 
-          <div *ngSwitchCase="'Name'">
-            {{torrent.name}}
-          </div>
+              <div *ngSwitchCase="'Progress'">
+                <p-progressBar class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"
+                  [value]="(torrent.progress * 100).toFixed(2)">
+                </p-progressBar>
+              </div>
 
-          <div *ngSwitchCase="'Size'">
-            {{getFileSizeString(torrent.size)}}
-          </div>
+              <div *ngSwitchCase="'Size'">
+                {{getFileSizeString(torrent.size)}}
+              </div>
 
-          <p-progressBar *ngSwitchCase="'Progress'" class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"
-              [value]="(torrent.progress * 100).toFixed(2)">
-          </p-progressBar>
+              <div *ngSwitchCase="'ETA'">
+                {{getTorrentETAString(torrent)}}
+              </div>
 
-          <div style="width: 100%;" *ngSwitchCase="'Status'">
-            <div class="status-chips-container">
-              <app-chip-label *ngIf="torrent.force_start" label="[F]"></app-chip-label>
+              <div *ngSwitchCase="'Uploaded'">
+                {{getFileSizeString(torrent.uploaded)}}
+              </div>
 
-              <mat-chip color="{{isTorrentPrimaryAction(torrent) ? 'primary' : isTorrentError(torrent) ? 'accent' : 'default'}}" disableRipple selected>
-                 {{getStatusString(torrent.state)}}
-              </mat-chip>
+              <div *ngSwitchCase="'Ratio'">
+                {{getTorrentRatioString(torrent)}}
+              </div>
+
+              <div *ngSwitchCase="'Down Speed'">
+                {{getFileSizeString(torrent.dlspeed)}}/s
+              </div>
+
+              <div *ngSwitchCase="'Up Speed'">
+                {{getFileSizeString(torrent.upspeed)}}/s
+              </div>
+
+              <div *ngSwitchCase="'Completed On'">
+                {{getCompletedOnString(torrent.completion_on)}}
+              </div>
+
+              <div *ngSwitchCase="'Added On'">
+                {{getCompletedOnString(torrent.added_on)}}
+              </div>
+
+              <div *ngSwitchCase="'Last Activity'">
+                {{getCompletedOnString(torrent.last_activity)}}
+              </div>
+
+              <div *ngSwitchCase="'Status'">
+                <p-tag
+                  *ngIf="torrent.force_start"
+                  value="[F]"
+                  styleClass="torrent-table-status info"
+                  [style]="{marginRight: '5px'}"
+                  >
+
+                </p-tag>
+
+                <p-tag
+                  [value]="getStatusString(torrent.state)"
+                  [styleClass]="getClassForStatus(torrent)"
+                  >
+                </p-tag>
+              </div>
+
+              <div *ngSwitchDefault>{{torrent[displayedColumnsMapping[col]]}}</div>
             </div>
-          </div>
-
-          <div *ngSwitchCase="'ETA'">
-            {{getTorrentETAString(torrent)}}
-          </div>
-
-          <div *ngSwitchCase="'Uploaded'">
-            {{getFileSizeString(torrent.uploaded)}}
-          </div>
-
-          <div *ngSwitchCase="'Ratio'">
-            {{getTorrentRatioString(torrent)}}
-          </div>
-
-          <div *ngSwitchCase="'Down Speed'">
-            {{getFileSizeString(torrent.dlspeed)}}/s
-          </div>
-
-          <div *ngSwitchCase="'Up Speed'">
-            {{getFileSizeString(torrent.upspeed)}}/s
-          </div>
-
-          <div *ngSwitchCase="'Completed On'">
-            {{getCompletedOnString(torrent.completion_on)}}
-          </div>
-
-          <div *ngSwitchCase="'Added On'">
-            {{getCompletedOnString(torrent.added_on)}}
-          </div>
-
-          <div *ngSwitchCase="'Last Activity'">
-            {{getCompletedOnString(torrent.last_activity)}}
-          </div>
-        </mat-cell>
-      </ng-container>
-
-      <!-- Header row of table -->
-      <mat-header-row id="torrent_table_header_row" *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-      <mat-row
-          [ngStyle]="{'width': tableHeaderWidth}"
-          (click)="handleTorrentSelected(row)" class="{{isSelected(row) ? 'selected' : ''}}"
-          (contextmenu)="onTorrentRightClick($event, row)"
-          *matRowDef="let row; columns: displayedColumns">
-      </mat-row>
-    </mat-table>
-    <mat-paginator class="{{!isLoading() && !isTorrentsEmpty() && userPref.web_ui_options?.torrent_table?.paginate ? '' : 'hidden'}}"
-                  [pageSize]="userPref.web_ui_options?.torrent_table?.default_items_per_page"
-                  [pageSizeOptions]="pageSizeOptions"
-                  (page)="onPaignationPageChanged()"
-                  showFirstLastButtons={{userPref.web_ui_options?.torrent_table?.showFirstAndLastOptions}}>
-    </mat-paginator>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
 
     <div *ngIf="isTorrentsEmpty()">
       <p> No torrents found. Try adding one by clicking Upload at the top-right. </p>

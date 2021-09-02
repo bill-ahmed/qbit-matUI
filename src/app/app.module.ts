@@ -3,13 +3,11 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Material theme components
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatTableModule } from '@angular/material/table';
 
 import { AppComponent } from './app.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -45,8 +43,8 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatRippleModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { TableModule } from 'primeng/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
 import { TorrentInfoDialogComponent } from './modals/torrent-info-dialog/torrent-info-dialog.component';
@@ -66,6 +64,8 @@ import { InfoSnackbarComponent } from './services/notifications/snackbar/info-sn
 import { DragAndDropFilesDirective } from './drag-and-drop-files.directive';
 import { RateLimitsDialogComponent } from './modals/rate-limits-dialog/rate-limits-dialog.component';
 import { ChipLabelComponent } from './chip-label/chip-label.component';
+import { TagModule } from 'primeng/tag';
+import { ContextMenuModule } from 'primeng/contextmenu';
 
 var appRoutes: Routes;
 
@@ -111,7 +111,6 @@ if(!environment.production){
     ChipLabelComponent
   ],
   imports: [
-    CdkTableModule,
     CdkTreeModule,
     DragDropModule,
     BrowserModule,
@@ -119,12 +118,14 @@ if(!environment.production){
     RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
     HttpClientModule,
     MatFormFieldModule,
-    MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
     MatToolbarModule,
     MatButtonModule,
     ProgressBarModule,
+    TableModule,
+    TagModule,
+    ContextMenuModule,
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
@@ -145,7 +146,6 @@ if(!environment.production){
     MatRippleModule,
     MatRadioModule,
     MatSelectModule,
-    MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule
   ],

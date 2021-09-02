@@ -10,9 +10,6 @@ export class ApplicationDefaults {
     network: { refresh_interval: 1500, auto_refresh: true },
     notifications: { show_snack_notifications: true },
     torrent_table: {
-      paginate: false,
-      default_items_per_page: 10,
-      showFirstAndLastOptions: false,
       default_sort_order: {
         column_name: 'Completed On',
         order: 'desc'

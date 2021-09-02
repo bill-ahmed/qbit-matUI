@@ -1,11 +1,7 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { CdkDragStart, CdkDropList, moveItemInArray } from "@angular/cdk/drag-drop";
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MainData, Torrent, UserPreferences } from '../../utils/Interfaces';
 
-
 // UI Components
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatSpinner } from '@angular/material/progress-spinner';
 
 // Helpers
@@ -22,11 +18,11 @@ import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
 import { GetTorrentSearchName } from 'src/utils/Helpers';
 import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
-import { MatPaginator } from '@angular/material/paginator';
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
 import { SnackbarService } from '../services/notifications/snackbar.service';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MenuItem } from 'primeng/api';
+
 
 @Component({
   selector: 'app-torrents-table',
@@ -42,32 +38,23 @@ export class TorrentsTableComponent implements OnInit {
   public isDarkTheme: Observable<boolean>;
   public userPref: UserPreferences = { } as UserPreferences;
 
-  public DEFUALT_PAGE_SIZE_OPTIONS = [10, 25, 50, 100, 500]
-  public pageSizeOptions = this.DEFUALT_PAGE_SIZE_OPTIONS;
   selection = new SelectionModel<Torrent>(true, []);
-
-  // UI Components
-  public dataSource = new MatTableDataSource([]);
 
   // For drag & drop of columns
   public displayedColumns: any[];
 
-  // Right-click on row options
-  public menuTopLeftPosition = {x: '0', y: '0'};
-  @ViewChild(MatMenuTrigger, {static: true}) torrentMenuTrigger: MatMenuTrigger;
+  // A reverse mapping from column name to torrent property
+  public displayedColumnsMapping = ApplicationConfigService.TORRENT_TABLE_COLUMNS_MAPPING
+
+  // Context menu items
+  public contextMenuItems: MenuItem[];
+  public contextMenuSelectedTorrent: Torrent;
 
   // Other
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   private infoTorDialogRef: MatDialogRef<TorrentInfoDialogComponent, any>;
   private currentMatSort = {active: "Completed On", direction: "desc"};
-  private torrentSearchValue = "";
-  private torrentsSelected: Torrent[] = [];     // Keep track of which torrents are currently selected
-
-  // Keep track of table header width, so the rows also match
-  public tableHeaderWidth: string = '-1px';
-
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  private torrentSearchValue = ""; // Keep track of which torrents are currently selected
 
   constructor(private appConfig: ApplicationConfigService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
@@ -75,7 +62,7 @@ export class TorrentsTableComponent implements OnInit {
               private theme: ThemeService) { }
 
   ngOnInit(): void {
-    // Themeing
+    // Theming
     this.isDarkTheme = this.theme.getThemeSubscription();
 
     // Subscribe to torrent searching service
@@ -85,9 +72,6 @@ export class TorrentsTableComponent implements OnInit {
 
     // Get user preferences
     this.appConfig.getUserPreferencesSubscription().subscribe(res => { this.setUserPreferences(res) });
-
-    // Setup sorting and pagination
-    this.dataSource.sort = this.sort;
 
     // Retrieve all torrent data first, then update torrent data on interval
     this.allTorrentData = null;
@@ -102,6 +86,22 @@ export class TorrentsTableComponent implements OnInit {
         this.selection.clear();
       }
     });
+
+    this.contextMenuItems = [
+      { label: 'Pause', icon: 'pi pi-fw pi-pause', command: () => this.pauseTorrentsBulk(this.selection.selected) },
+      { label: 'Resume', icon: 'pi pi-fw pi-play', command: () => this.resumeTorrentsBulk(this.selection.selected) },
+      { label: 'Force Resume', icon: 'pi pi-fw pi-forward', command: () => this.forceStartTorrentsBulk(this.selection.selected) },
+      { /* Divider */ },
+      { label: 'Delete', icon: 'pi pi-fw pi-trash', command: () => this.openDeleteTorrentDialog(null, this.selection.selected) },
+      { /* Divider */ },
+      { label: 'Set location...', icon: 'pi pi-fw pi-folder', command: () => this.openMoveTorrentDialog() },
+      { label: 'Force recheck', icon: 'pi pi-fw pi-refresh', command: () => this.recheckTorrents(this.selection.selected) },
+      { /* Divider */ },
+      { label: 'Increase Priority', icon: 'pi pi-fw pi-chevron-up', command: () => this.increasePriorityBulk(this.selection.selected) },
+      { label: 'Decrease Priority', icon: 'pi pi-fw pi-chevron-down', command: () => this.decreasePriorityBulk(this.selection.selected) },
+      { label: 'Max Priority', icon: 'pi pi-fw pi-angle-double-up', command: () => this.maximumPriorityBulk(this.selection.selected) },
+      { label: 'Min Priority', icon: 'pi pi-fw pi-angle-double-down', command: () => this.minimumPriorityBulk(this.selection.selected) },
+    ]
   }
 
   ngOnDestroy(): void { }
@@ -109,61 +109,28 @@ export class TorrentsTableComponent implements OnInit {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    return numSelected === this.filteredTorrentData.length;
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+    this.isAllSelected() ? this.selection.clear() : this.filteredTorrentData.forEach(row => this.selection.select(row));
     this._updateSelectionService();
-  }
-
-  areTorrentsSelected(): boolean {
-    return this.torrentsSelected.length === 0;
   }
 
   isTorrentPaused(tor: Torrent): boolean {
     return tor.state === "pausedDL" || tor.state === "pausedUP";
   }
 
-  getFileSizeString(size: number): string {
-    return this.pp.pretty_print_file_size(size);
-  }
+  getFileSizeString(size: number): string         { return this.pp.pretty_print_file_size(size); }
+  getStatusString(status: string): string         { return this.pp.pretty_print_status(status); }
+  getTorrentETAString(tor: Torrent): string       { return this.pp.pretty_print_eta(tor); }
+  getTorrentUploadedString(tor: Torrent): string  { return this.pp.pretty_print_uploaded(tor); }
+  getTorrentRatioString(tor: Torrent): number     { return this.pp.pretty_print_ratio(tor); }
+  getCompletedOnString(timestamp: number): string { return this.pp.pretty_print_completed_on(timestamp); }
 
-  getStatusString(status: string): string {
-    return this.pp.pretty_print_status(status);
-  }
-
-  getTorrentETAString(tor: Torrent): string {
-    return this.pp.pretty_print_eta(tor);
-  }
-
-  getTorrentUploadedString(tor: Torrent): string {
-    return this.pp.pretty_print_uploaded(tor);
-  }
-
-  getTorrentRatioString(tor: Torrent): number {
-    return this.pp.pretty_print_ratio(tor);
-  }
-
-  getCompletedOnString(timestamp: number): string {
-    return this.pp.pretty_print_completed_on(timestamp);
-  }
-
-  /** Hacky fix for table header not taking entire width of the table :( */
-  setTableHeaderWidth() {
-    let elem = document.getElementById('torrent_table_header_row')
-    this.tableHeaderWidth = `${elem?.scrollWidth || -1}px`;
-  }
-
-  onPaignationPageChanged() {
-    let items_per_page = this.userPref.web_ui_options.torrent_table.default_items_per_page;
-    this.pageSizeOptions = [...this.DEFUALT_PAGE_SIZE_OPTIONS, items_per_page]
-
-    // Remove duplicates & sort
-    this.pageSizeOptions = [...new Set(this.pageSizeOptions)];
-    this.pageSizeOptions.sort();
+  getClassNameForColumns(column: string): string {
+    return 'table-col table-col-' + column.replace(/ /g, '-')
   }
 
   /** Get all torrent data and update the table */
@@ -175,12 +142,10 @@ export class TorrentsTableComponent implements OnInit {
     this.filteredTorrentData = data.torrents;
 
     // Re-sort data
-    this.onMatSortChange(this.currentMatSort);
+    this.handleSortChange(this.currentMatSort);
 
     // Filter by any search criteria
     this.updateTorrentsBasedOnSearchValue();
-
-    this.setTableHeaderWidth();
   }
 
   private updateTorrentSearchValue(val: string): void {
@@ -203,13 +168,18 @@ export class TorrentsTableComponent implements OnInit {
       .filter((tor: Torrent) => {
         return GetTorrentSearchName(tor.name).includes(this.torrentSearchValue);
       });
-
-      this.refreshDataSource();
     }
     else if(this.torrentSearchValue === "") {   // If searching for value is empty, restore filteredTorrentData
       this.filteredTorrentData = this.allTorrentData
-      this.refreshDataSource();
     }
+  }
+
+  handleSortChange(event: any) {
+    if(!this.filteredTorrentData) { return; }
+
+    this.currentMatSort = event;
+
+    TorrentHelperService.sortByField(event.active, event.direction, this.filteredTorrentData);
   }
 
   /** Pause given array of torrents
@@ -266,20 +236,17 @@ export class TorrentsTableComponent implements OnInit {
     });
   }
 
-  /** Callback for when user finished dragging & dropping a column */
-  public handleColumnDragStopped(event: any) {
-    if(event) {
-      moveItemInArray(this.displayedColumns, event.previousIndex, event.currentIndex);
-      this.appConfig.setTorrentTableColumns(this.displayedColumns);
-    }
-  }
-
   /** Callback for when a torrent is selected in the table. Update row selection service with new data
    * @param event The event thrown.
    */
   handleTorrentSelected(tor: Torrent): void {
     this.selection.toggle(tor);
     this._updateSelectionService();
+  }
+
+  /** Callback for when columns are re-ordered in the torrent table. */
+  handleColumnReorder(event: any) {
+    this.appConfig.setTorrentTableColumns(event.columns, true);
   }
 
   /** Determine whether a torrent is selected or not */
@@ -351,46 +318,11 @@ export class TorrentsTableComponent implements OnInit {
     this._updateSelectionService();
   }
 
-  onMatSortChange(event: any): void {
-    // If data not yet loaded, exit
-    if(!this.filteredTorrentData) { return; }
-
-    this.currentMatSort = event;
-
-    TorrentHelperService.sortByField(event.active, event.direction, this.filteredTorrentData);
-    this.refreshDataSource();
-  }
-
-  /** When user right-clicks on a torrent row */
-  onTorrentRightClick(event: MouseEvent, item: Torrent) {
-    event.preventDefault();
-
-
-    // If torrent not already selected, select it
-    if(!this.isSelected(item))
-      this.handleTorrentSelected(item);
-
-    this.menuTopLeftPosition.x = event.clientX + 'px';
-    this.menuTopLeftPosition.y = event.clientY + 'px';
-
-    this.torrentMenuTrigger.openMenu();
-  }
-
-  public shouldRenderColumn(col_name: string): boolean {
-    return this.displayedColumns.includes(col_name);
-  }
-
   private setUserPreferences(pref: UserPreferences) {
     this.userPref = pref;
 
-    let torren_table_pref = pref.web_ui_options?.torrent_table
-    let table_sort_opt = torren_table_pref?.default_sort_order;
-
-    // Whether to enable pagination or not
-    if(this.userPref?.web_ui_options?.torrent_table?.paginate) {
-      this.dataSource.paginator = this.paginator;
-      this.onPaignationPageChanged();
-    }
+    let torrent_table_pref = pref.web_ui_options?.torrent_table
+    let table_sort_opt = torrent_table_pref?.default_sort_order;
 
     this.currentMatSort = table_sort_opt ? {
       active: table_sort_opt.column_name.replace(/\s/, '_'),
@@ -401,12 +333,11 @@ export class TorrentsTableComponent implements OnInit {
     this.displayedColumns = pref.web_ui_options?.torrent_table?.columns_to_show;
 
     // Re-sort data
-    this.onMatSortChange(this.currentMatSort);
+    this.handleSortChange(this.currentMatSort);
   }
 
   public isTorrentPrimaryAction(tor: Torrent): boolean {
-    let actions = ['downloading', 'moving'];
-    return actions.includes(tor.state);
+    return tor.state === 'downloading';
   }
 
   /** Determine if torrent is in a error state */
@@ -415,13 +346,20 @@ export class TorrentsTableComponent implements OnInit {
     return errors.includes(tor.state);
   }
 
-  public isTorrentsEmpty() {
-    return this.filteredTorrentData?.length === 0;
+  public isTorrentWarning(tor: Torrent): boolean {
+    let warnings = ['moving', 'checkingDL'];
+    return warnings.includes(tor.state);
   }
 
-  private refreshDataSource(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.data = (this.filteredTorrentData ? this.filteredTorrentData : []);
+  public getClassForStatus(torrent: Torrent): string {
+    let root = 'torrent-table-status '
+    let suffix = this.isTorrentPrimaryAction(torrent) ? 'primary' : this.isTorrentError(torrent) ? 'danger' : this.isTorrentWarning(torrent) ? 'warning' : 'info'
+
+    return root + suffix;
+  }
+
+  public isTorrentsEmpty() {
+    return this.filteredTorrentData?.length === 0;
   }
 
   /** Determine if table is loading data or not */
