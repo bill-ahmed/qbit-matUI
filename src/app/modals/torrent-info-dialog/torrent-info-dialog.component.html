@@ -3,10 +3,19 @@
     <h2 mat-dialog-title>
         {{torrent.name}}
         <p></p>
-        <mat-chip-list id="torrent-info-chip-list">
-            <mat-chip color="primary" selected>{{state()}}</mat-chip>
-            <mat-chip *ngIf="torrent.force_start" color="accent" selected>Forced Start</mat-chip>
-        </mat-chip-list>
+        <div class="torrent_tags">
+          <p-tag
+            [value]="state()"
+            [styleClass]="getClassForStatus(torrent)"
+            >
+          </p-tag>
+
+          <p-tag *ngIf="torrent.force_start"
+            value="Forced Start"
+            [styleClass]="getClassForStatus(torrent)"
+            >
+          </p-tag>
+        </div>
     </h2>
 
     <mat-dialog-content class="mat-typography torrent-info-container">

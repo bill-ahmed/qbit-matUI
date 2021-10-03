@@ -9,6 +9,7 @@ import { TorrentDataStoreService } from '../../services/torrent-management/torre
 import { NetworkConnectionInformationService } from '../../services/network/network-connection-information.service';
 import { FileSystemService, SerializedNode } from '../../services/file-system/file-system.service';
 import DirectoryNode from 'src/app/services/file-system/FileSystemNodes/DirectoryNode';
+import { getClassForStatus } from 'src/utils/Helpers';
 
 @Component({
   selector: 'app-torrent-info-dialog',
@@ -124,5 +125,7 @@ export class TorrentInfoDialogComponent implements OnInit {
   isPanelOpen(name: string): boolean {
     return this.panelsOpen.has(name);
   }
+
+  public getClassForStatus(t: Torrent): string { return getClassForStatus(t); }
 
 }

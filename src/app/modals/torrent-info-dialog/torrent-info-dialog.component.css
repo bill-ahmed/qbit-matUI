@@ -23,3 +23,7 @@ mat-chip-list {
   /* flex-grow: 1; */
   padding: 5px;
 }
+
+.torrent_tags p-tag {
+  margin-right: 8px;
+}
