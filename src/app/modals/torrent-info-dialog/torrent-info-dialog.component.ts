@@ -78,41 +78,28 @@ export class TorrentInfoDialogComponent implements OnInit {
     this.isLoading = false;
   }
 
-  get_content_directories_as_advanced_nodes(): SerializedNode[] {
-    return this.torrentContentsAsNodes;
-  }
+  get_content_directories_as_advanced_nodes(): SerializedNode[] { return this.torrentContentsAsNodes; }
 
-  added_on(): string {
-    return this.units_helper.GetDateString(this.torrent.added_on);
-  }
+  added_on() { return this.units_helper.GetDateString(this.torrent.added_on); }
+  completed_on() { return this.pp.pretty_print_completed_on(this.torrent.completion_on); }
+  last_activity() { return this.pp.pretty_print_completed_on(this.torrent.last_activity); }
 
-  completed_on(): string {
-    return this.pp.pretty_print_completed_on(this.torrent.completion_on);
-  }
+  total_size() { return this.units_helper.GetFileSizeString(this.torrent.total_size); }
 
-  last_activity(): string {
-    return this.pp.pretty_print_completed_on(this.torrent.last_activity)
-  }
+  downloaded() { return this.units_helper.GetFileSizeString(this.torrent.downloaded); }
+  uploaded() { return this.units_helper.GetFileSizeString(this.torrent.uploaded); }
 
-  total_size(): string {
-    return this.units_helper.GetFileSizeString(this.torrent.total_size);
-  }
+  dl_speed() { return this.units_helper.GetFileSizeString(this.torrent.dlspeed) + '/s'; }
+  up_speed() { return this.units_helper.GetFileSizeString(this.torrent.upspeed) + '/s'; }
+  dl_speed_avg() { return this.units_helper.GetFileSizeString(this.torrent.dl_speed_avg) + (this.torrent.dl_speed_avg ? '/s' : ''); }
+  up_speed_avg() { return this.units_helper.GetFileSizeString(this.torrent.up_speed_avg) + (this.torrent.up_speed_avg ? '/s' : ''); }
 
-  downloaded(): string {
-    return this.units_helper.GetFileSizeString(this.torrent.downloaded);
-  }
+  dl_limit() { return this.units_helper.GetFileSizeString(this.torrent.dl_limit) + (this.torrent.dl_limit < 0 ? '' : '/s'); }
+  up_limit() { return this.units_helper.GetFileSizeString(this.torrent.up_limit) + (this.torrent.up_limit < 0 ? '' : '/s'); }
 
-  uploaded(): string {
-    return this.units_helper.GetFileSizeString(this.torrent.uploaded)
-  }
+  ratio() { return Math.round(((this.torrent.ratio) + Number.EPSILON) * 100) / 100; }
 
-  ratio(): number {
-    return Math.round(((this.torrent.ratio) + Number.EPSILON) * 100) / 100;
-  }
-
-  state(): string {
-    return this.pp.pretty_print_status(this.torrent.state);
-  }
+  state() { return this.pp.pretty_print_status(this.torrent.state); }
 
   openPanel(name: string): void {
     this.panelsOpen.add(name);

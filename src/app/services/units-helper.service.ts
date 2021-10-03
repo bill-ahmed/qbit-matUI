@@ -12,6 +12,9 @@ export class UnitsHelperService {
    * e.g. 1,572,864 -> 1.57 MB
    */
   public GetFileSizeString(size: number): string {
+    if(size < 0) return '∞';
+    if(size === undefined || size == null) return 'Unknown';
+
     const DP = 2;   // Number of fixed decimal places for rounding
 
     const B = 1;
@@ -47,6 +50,7 @@ export class UnitsHelperService {
       return TB_s;
     }
 
+    console.error('File size too large to convert:', size);
     return "ERROR -- Too large";
   }
 
@@ -102,9 +106,10 @@ export class UnitsHelperService {
    */
   public GetDateString(timestamp: number): string {
     let date = new Date(timestamp * 1000);
+    let am_pm = date.getHours() > 11 ? 'PM' : 'AM';
     let result =
     `${this.getDay(date)}/${this.getMonth(date)}/${date.getFullYear()},
-    ${this.getHours(date)}:${this.getMinutes(date)}:${this.getSeconds(date)}`;
+    ${this.getHours(date)}:${this.getMinutes(date)}:${this.getSeconds(date)} ${am_pm}`;
 
     return result;
   }
@@ -131,6 +136,6 @@ export class UnitsHelperService {
   }
 
   private getHours(date: Date): string {
-    return (date.getHours()) < 10 ? `0${date.getHours()}` : `${date.getHours()}`
+    return (date.getHours() % 12) < 10 ? `0${date.getHours() % 12}` : `${date.getHours() % 12}`
   }
 }

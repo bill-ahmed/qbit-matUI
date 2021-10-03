@@ -7,19 +7,22 @@ app-file-system-tree-explorer {
 }
 
 .torrent-info-general-content, .torrent-info-content-content {
-    margin: 20px 10px 10px 10px;
-    min-height: 150px;
+    overflow-y: scroll;
+}
 
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+.row {
+  margin: 10px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 mat-chip-list {
     align-self: flex-end;
 }
 
-.leftPanel, .rightPanel {
+.panel {
   /* flex-grow: 1; */
   padding: 5px;
 }
