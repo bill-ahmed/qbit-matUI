@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { FileSystemService, SerializedNode } from '../services/file-system/file-system.service';
@@ -14,12 +14,17 @@ import { ApplicationConfigService } from '../services/app/application-config.ser
 export class FileSystemTreeExplorerComponent implements OnChanges {
   @Input() directories: SerializedNode[];
   @Input() showProgress: boolean = false;
+  @Input() allowSetPriority: boolean = false;
+
+  @Output() onPriorityChange = new EventEmitter<{id: string, priority: number}>();
 
   public isLoading = true;
 
   /** Controls for tree components */
   public treeControl = new NestedTreeControl<SerializedNode>(node => node.children);
   public dataSource = new MatTreeNestedDataSource<SerializedNode>();
+
+  public file_priorities = ApplicationConfigService.FILE_PRIORITY_OPTS;
 
   private root: DirectoryNode;                           /** File System to keep track of the files in a torrent */
 
@@ -35,6 +40,8 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
   ngOnInit(): void {
     this._updateData();
+
+    console.log('allow set priority?', this.allowSetPriority)
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -43,9 +50,8 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
       this._updateData();
     }
 
-    if(changes.showProgress) {
-      this.showProgress = changes.showProgress.currentValue;
-    }
+    if(changes.showProgress) { this.showProgress = changes.showProgress.currentValue; }
+    if(changes.allowSetPriority) { this.allowSetPriority = changes.allowSetPriority.currentValue }
   }
 
   /** Refresh all filesystem data. This could potentially be an
@@ -57,6 +63,8 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
     /** Should render the root node, which basically shows the top-level torrents */
     this.nodes_to_render.add('');
+
+    console.log('rendering:', this.directories)
   }
 
   public hasChild(_: number, node: SerializedNode) {

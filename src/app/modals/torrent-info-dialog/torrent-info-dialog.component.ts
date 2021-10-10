@@ -63,6 +63,7 @@ export class TorrentInfoDialogComponent implements OnInit {
         parentPath: '',
         size: file.size,
         progress: file.progress,
+        priority: file.priority,
         type: "File"
       }
     })
@@ -76,6 +77,10 @@ export class TorrentInfoDialogComponent implements OnInit {
     // Serialize & update
     this.torrentContentsAsNodes = await this.fs.SerializeFileSystem(fs_root);
     this.isLoading = false;
+  }
+
+  handleFilePriorityChange(file: any, priority: number) {
+    console.log('changing file', file, 'with priority', priority)
   }
 
   get_content_directories_as_advanced_nodes(): SerializedNode[] { return this.torrentContentsAsNodes; }

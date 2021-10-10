@@ -11,6 +11,17 @@
             {{node.name}}
           </div>
 
+          <div *ngIf="allowSetPriority">
+            <mat-form-field>
+              <mat-label>Choose priority</mat-label>
+              <mat-select [(value)]="node.priority">
+                <mat-option *ngFor="let item of file_priorities" [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
           <div class="grow">
             <div id="progress" *ngIf="showProgress">
               Done: {{getNodeProgress(node)}}%
@@ -37,6 +48,17 @@
           <div class="node-info">
             <div id="node-title">
               {{node.name}}
+            </div>
+
+            <div *ngIf="allowSetPriority" (click)="$event.stopPropagation()">
+              <mat-form-field>
+                <mat-label>Choose priority</mat-label>
+                <mat-select [(value)]="node.priority">
+                  <mat-option *ngFor="let item of file_priorities" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
 
             <div class="grow">

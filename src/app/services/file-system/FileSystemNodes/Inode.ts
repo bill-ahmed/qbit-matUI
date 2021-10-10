@@ -11,6 +11,7 @@ export default class Inode extends TreeNode implements SerializableNode {
   children: Inode[];
   parent: Inode;
   size: number;
+  priority?: number;
   type = FileSystemType.InodeType;
 
   public static VALID_NAME_REGEX = /^[-\w^&'@{}[\],$=!#():.%+~ ]+$/;
@@ -22,6 +23,7 @@ export default class Inode extends TreeNode implements SerializableNode {
 
     this.progress = options.progress || 1;              // Assume file is fully downloaded otherwise
     this.size = options.size || 0;
+    this.priority = options.priority || 1;
   }
 
   /** Download progress of a file/folder as fraction between 0 and 1.
@@ -145,6 +147,7 @@ export default class Inode extends TreeNode implements SerializableNode {
 export interface InodeConstructor extends TreeNodeConstructor{
   children?: Inode[],
   progress?: number,
+  priority?: number,
   /** Whether to skip name validation or not.
    * DANGEROUS -- USE WITH CAUTION!
    */

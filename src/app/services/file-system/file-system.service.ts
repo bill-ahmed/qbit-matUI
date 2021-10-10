@@ -91,8 +91,8 @@ export class FileSystemService {
         let newDirNode: any;
 
         // If a folder, create directory type
-        if(dir === lastElement && data.type === "File") { newDirNode = new FileNode({value: dir, children: null, size: data.size, progress: data.progress}); }
-        else { newDirNode = new DirectoryNode({value: dir}); }
+        if(dir === lastElement && data.type === "File") { newDirNode = new FileNode({value: dir, children: null, size: data.size, progress: data.progress, priority: data.priority}); }
+        else { newDirNode = new DirectoryNode({value: dir, priority: data.priority}); }
 
         curr.addChildNode(newDirNode);
         curr = newDirNode;
@@ -142,6 +142,7 @@ export class FileSystemService {
           children: await this._convertToJSON(child),
           size: child.getSize(),
           progress: child.getProgressAmount(),
+          priority: child.priority,
           type: child.type
         });
       }
@@ -197,6 +198,7 @@ export interface SerializedNode {
   parentPath: string,
   size: number,
   progress?: number,
+  priority?: number,
   type?: 'File' | 'Directory',
   children?: SerializedNode[]
 }
