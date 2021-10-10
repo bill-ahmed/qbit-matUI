@@ -91,8 +91,8 @@ export class FileSystemService {
         let newDirNode: any;
 
         // If a folder, create directory type
-        if(dir === lastElement && data.type === "File") { newDirNode = new FileNode({value: dir, children: null, size: data.size, progress: data.progress, priority: data.priority}); }
-        else { newDirNode = new DirectoryNode({value: dir, priority: data.priority}); }
+        if(dir === lastElement && data.type === "File") { newDirNode = new FileNode({index: data.index, value: dir, children: null, size: data.size, progress: data.progress, priority: data.priority}); }
+        else { newDirNode = new DirectoryNode({index: data.index, value: dir, priority: data.priority}); }
 
         curr.addChildNode(newDirNode);
         curr = newDirNode;
@@ -136,6 +136,7 @@ export class FileSystemService {
     if(node.hasChildren()) {
       for(const child of node.getChildren()) {
         result.push({
+          index: child.index,
           name: child.getValue(),
           path: child.getAbsolutePath(this.directoryDelimiter),
           parentPath: node.getAbsolutePath(this.directoryDelimiter),
@@ -193,6 +194,7 @@ export class FileSystemService {
 }
 
 export interface SerializedNode {
+  index?: any,
   name: string,
   path: string,
   parentPath: string,

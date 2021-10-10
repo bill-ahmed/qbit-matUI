@@ -6,6 +6,7 @@ import { InvalidNameError } from '../Exceptions/FileSystemExceptions';
 /** A class to represent object in a File System. */
 export default class Inode extends TreeNode implements SerializableNode {
 
+  index: any;
   value: string;
   progress: number;
   children: Inode[];
@@ -21,6 +22,7 @@ export default class Inode extends TreeNode implements SerializableNode {
 
     if(!options.skipNameValidation) { this.validateName(); }
 
+    this.index = options?.index;
     this.progress = options.progress || 1;              // Assume file is fully downloaded otherwise
     this.size = options.size || 0;
     this.priority = options.priority || 1;
@@ -148,6 +150,7 @@ export interface InodeConstructor extends TreeNodeConstructor{
   children?: Inode[],
   progress?: number,
   priority?: number,
+  index?: any,
   /** Whether to skip name validation or not.
    * DANGEROUS -- USE WITH CAUTION!
    */

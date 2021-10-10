@@ -58,6 +58,7 @@ export class TorrentInfoDialogComponent implements OnInit {
 
     let intermediate_nodes = this.torrentContents.map(file => {
       return {
+        index: file.index,
         name: "",
         path: file.name,
         parentPath: '',

@@ -60,6 +60,7 @@ app.post('/api/v2/torrents/files', function(req, res) {
       is_seed: true,
       piece_range: [],
       availability: Math.random(),
+      index: 0,
   }, {
     name: "Ubuntu LTS 20.20/another.iso",
     /** File size (bytes) */
@@ -69,6 +70,7 @@ app.post('/api/v2/torrents/files', function(req, res) {
     is_seed: false,
     piece_range: [],
     availability: Math.random(),
+    index: 1
   }];
   res.json(response);
 });

@@ -97,6 +97,7 @@ export interface MainData {
 
 /** The contents of a torrent */
 export interface TorrentContents {
+  index: any,
   /** File name (including relative path) */
   name: string,
   /** File size (bytes) */
