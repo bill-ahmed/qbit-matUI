@@ -16,7 +16,7 @@
               <mat-label>Choose priority</mat-label>
               <mat-select (selectionChange)="handleFilePriorityChange(node)" [(value)]="node.priority">
                 <mat-option *ngFor="let item of file_priorities" [value]="item">
-                  {{ item }}
+                  {{ file_priorities_mapping[item] }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -55,7 +55,7 @@
                 <mat-label>Choose priority</mat-label>
                 <mat-select (selectionChange)="handleFilePriorityChange(node)" [(value)]="node.priority">
                   <mat-option *ngFor="let item of file_priorities" [value]="item">
-                    {{ item }}
+                    {{ file_priorities_mapping[item] }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>

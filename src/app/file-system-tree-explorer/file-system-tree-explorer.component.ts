@@ -25,6 +25,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   public dataSource = new MatTreeNestedDataSource<SerializedNode>();
 
   public file_priorities = ApplicationConfigService.FILE_PRIORITY_OPTS;
+  public file_priorities_mapping = ApplicationConfigService.FILE_PRIORITY_OPTS_MAPPING;
 
   private root: DirectoryNode;                           /** File System to keep track of the files in a torrent */
 

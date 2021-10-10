@@ -48,6 +48,12 @@ export class ApplicationConfigService {
    * @see https://github.com/qbittorrent/qBittorrent/wiki/WebUI-API-(qBittorrent-4.1)#get-torrent-contents
   */
   static FILE_PRIORITY_OPTS = [0, 1, 6, 7];
+  static FILE_PRIORITY_OPTS_MAPPING = {
+    0: 'Don\'t Download',
+    1: 'Normal',
+    6: 'High',
+    7: 'Maximum'
+  }
 
   private user_preferences: UserPreferences;
   private user_preference_obs = new BehaviorSubject<any>({ });
