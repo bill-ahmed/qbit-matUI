@@ -10,6 +10,7 @@ import { NetworkConnectionInformationService } from '../../services/network/netw
 import { FileSystemService, SerializedNode } from '../../services/file-system/file-system.service';
 import DirectoryNode from 'src/app/services/file-system/FileSystemNodes/DirectoryNode';
 import { getClassForStatus } from 'src/utils/Helpers';
+import { SnackbarService } from 'src/app/services/notifications/snackbar.service';
 
 @Component({
   selector: 'app-torrent-info-dialog',
@@ -29,7 +30,7 @@ export class TorrentInfoDialogComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any, private units_helper: UnitsHelperService,
               private pp: PrettyPrintTorrentDataService, private theme: ThemeService, private data_store: TorrentDataStoreService,
-              private network_info: NetworkConnectionInformationService, private fs: FileSystemService) {
+              private network_info: NetworkConnectionInformationService, private fs: FileSystemService, private snackbar: SnackbarService) {
     this.torrent = data.torrent;
   }
 
@@ -80,8 +81,33 @@ export class TorrentInfoDialogComponent implements OnInit {
     this.isLoading = false;
   }
 
-  handleFilePriorityChange(file: any, priority: number) {
-    console.log('changing file', file, 'with priority', priority)
+  handleFilePriorityChange(node: SerializedNode) {
+    let newPriority = node.priority;
+
+    // Recursively collect list of indexes that need to be changed.
+    let indexes = this._filePriChangeHelper(node, []);
+
+    // Dedupe
+    indexes = [...new Set(indexes)];
+
+    this.data_store.SetFilePriority(this.torrent, indexes, newPriority).subscribe(() => {
+      this.snackbar.enqueueSnackBar("Updated file priority.");
+    });
+  }
+
+  /** Recursively update list of indexes with index
+   *  of each node
+   */
+  private _filePriChangeHelper(node: SerializedNode, indexes: any[]): any[] {
+    indexes.push(node.index);
+
+    if(node.children) {
+      for (let child of node.children) {
+        indexes = this._filePriChangeHelper(child, indexes);
+      }
+    }
+
+    return indexes;
   }
 
   get_content_directories_as_advanced_nodes(): SerializedNode[] { return this.torrentContentsAsNodes; }

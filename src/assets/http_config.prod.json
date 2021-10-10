@@ -14,6 +14,7 @@
         "decreasePrio": "/torrents/decreasePrio",
         "maxPrio": "/torrents/topPrio",
         "minPrio": "/torrents/bottomPrio",
+        "filePrio": "/torrents/filePrio",
         "moveTorrents": "/torrents/setLocation",
         "torrentContents": "/torrents/files",
         "userPreferences": "/app/preferences",

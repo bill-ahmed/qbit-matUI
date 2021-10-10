@@ -131,6 +131,10 @@ export class TorrentDataStoreService {
     return this.torrent_http_service.SetMinimumPriority(tor.map(elem => elem.hash));
   }
 
+  public SetFilePriority(tor: Torrent, indexes: any[], priority: number): Observable<any> {
+    return this.torrent_http_service.SetFilePriority(tor, indexes, priority);
+  }
+
   public SetUserPreferences(pref: UserPreferences): Observable<any> {
     return this.torrent_http_service.SetPreferences(pref);
   }

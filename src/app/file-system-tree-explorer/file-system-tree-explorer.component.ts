@@ -16,7 +16,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   @Input() showProgress: boolean = false;
   @Input() allowSetPriority: boolean = false;
 
-  @Output() onPriorityChange = new EventEmitter<{id: string, priority: number}>();
+  @Output() onPriorityChange = new EventEmitter<SerializedNode>();
 
   public isLoading = true;
 
@@ -54,6 +54,8 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
     if(changes.allowSetPriority) { this.allowSetPriority = changes.allowSetPriority.currentValue }
   }
 
+  handleFilePriorityChange(node: SerializedNode) { this.onPriorityChange.emit(node); }
+
   /** Refresh all filesystem data. This could potentially be an
    *  expensive operation.
    */
@@ -63,8 +65,6 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
     /** Should render the root node, which basically shows the top-level torrents */
     this.nodes_to_render.add('');
-
-    console.log('rendering:', this.directories)
   }
 
   public hasChild(_: number, node: SerializedNode) {

@@ -61,7 +61,8 @@ app.post('/api/v2/torrents/files', function(req, res) {
       piece_range: [],
       availability: Math.random(),
       index: 0,
-  }, {
+  },
+  {
     name: "Ubuntu LTS 20.20/another.iso",
     /** File size (bytes) */
     size: GetRandomInt(0, 900000000000),
@@ -71,7 +72,19 @@ app.post('/api/v2/torrents/files', function(req, res) {
     piece_range: [],
     availability: Math.random(),
     index: 1
-  }];
+  },
+  {
+    name: "Ubuntu LTS 20.20/folder1/new.iso",
+    /** File size (bytes) */
+    size: GetRandomInt(0, 900000000000),
+    progress: Math.random(),
+    priority: 7,//torrent_priorities[GetRandomInt(0, torrent_priorities.length)],
+    is_seed: false,
+    piece_range: [],
+    availability: Math.random(),
+    index: 2
+  }
+];
   res.json(response);
 });
 
