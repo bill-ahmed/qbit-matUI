@@ -28,6 +28,8 @@ export class TorrentInfoDialogComponent implements OnInit {
   private panelsOpen: Set<string> = new Set<string>();
   private REFRESH_INTERVAL: any;
 
+  private allowDataRefresh = true;
+
   constructor(@Inject(MAT_DIALOG_DATA) data: any, private units_helper: UnitsHelperService,
               private pp: PrettyPrintTorrentDataService, private theme: ThemeService, private data_store: TorrentDataStoreService,
               private network_info: NetworkConnectionInformationService, private fs: FileSystemService, private snackbar: SnackbarService) {
@@ -41,13 +43,7 @@ export class TorrentInfoDialogComponent implements OnInit {
     this.data_store.GetTorrentContents(this.torrent).toPromise().then(res => {this.updateTorrentContents(res)});
 
     /** Refresh torrent contents data on the recommended interval */
-    this.REFRESH_INTERVAL = setInterval(() => {
-      this.data_store.GetTorrentContents(this.torrent).subscribe(content => {
-        this.updateTorrentContents(content);
-      });
-    },
-      this.network_info.get_refresh_interval_from_network_type("medium")
-    );
+    this.setRefreshInterval();
   }
 
   ngOnDestroy(): void {
@@ -55,6 +51,8 @@ export class TorrentInfoDialogComponent implements OnInit {
   }
 
   private async updateTorrentContents(content: TorrentContents[]): Promise<void> {
+    if(!this.allowDataRefresh) return;
+
     this.torrentContents = content;
 
     let intermediate_nodes = this.torrentContents.map(file => {
@@ -95,6 +93,8 @@ export class TorrentInfoDialogComponent implements OnInit {
     });
   }
 
+  handlePriorityChangeToggled() { this.allowDataRefresh = !this.allowDataRefresh; }
+
   /** Recursively update list of indexes with index
    *  of each node
    */
@@ -108,6 +108,16 @@ export class TorrentInfoDialogComponent implements OnInit {
     }
 
     return indexes;
+  }
+
+  private setRefreshInterval() {
+    this.REFRESH_INTERVAL = setInterval(() => {
+      this.data_store.GetTorrentContents(this.torrent).subscribe(content => {
+        this.updateTorrentContents(content);
+      });
+    },
+      this.network_info.get_refresh_interval_from_network_type("medium")
+    );
   }
 
   get_content_directories_as_advanced_nodes(): SerializedNode[] { return this.torrentContentsAsNodes; }

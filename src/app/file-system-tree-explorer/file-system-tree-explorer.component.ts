@@ -16,7 +16,11 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   @Input() showProgress: boolean = false;
   @Input() allowSetPriority: boolean = false;
 
+  /** When user changes the priority */
   @Output() onPriorityChange = new EventEmitter<SerializedNode>();
+
+  /** When user toggles the drop-down menu in order to choose a priority */
+  @Output() onPriorityChangeToggled = new EventEmitter();
 
   public isLoading = true;
 
@@ -56,6 +60,7 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   }
 
   handleFilePriorityChange(node: SerializedNode) { this.onPriorityChange.emit(node); }
+  handleFilePriorityToggled() { this.onPriorityChangeToggled.emit(''); }
 
   /** Refresh all filesystem data. This could potentially be an
    *  expensive operation.

@@ -67,7 +67,9 @@
                       [showProgress]="true"
                       [allowSetPriority]="true"
                       [directories]="get_content_directories_as_advanced_nodes()"
-                      (onPriorityChange)="handleFilePriorityChange($event)">
+
+                      (onPriorityChange)="handleFilePriorityChange($event)"
+                      (onPriorityChangeToggled)="handlePriorityChangeToggled()">
                   </app-file-system-tree-explorer>
 
                   <mat-spinner *ngIf="isLoading"></mat-spinner>
