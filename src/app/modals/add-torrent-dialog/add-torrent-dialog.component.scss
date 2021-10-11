@@ -56,6 +56,12 @@
     width: 100%;
     overflow: scroll;
   }
+
+  .torrent-contents-header {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+  }
 }
 
 .mat-raised-button {
