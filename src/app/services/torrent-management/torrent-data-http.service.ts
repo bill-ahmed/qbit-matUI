@@ -21,12 +21,12 @@ export class TorrentDataHTTPService {
    */
   GetAllTorrentData(RID: number): Observable<MainData> {
 
-    let root = this.http_endpoints.root;
+    let root = this.http_endpoints.root
     let endpoint = this.http_endpoints.torrentList;
     let url = root + endpoint + `?rid=${RID}`;
 
     // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
+    let options = { withCredentials: true }
 
     return this.http.get<MainData>(url, options);
   }
@@ -40,7 +40,7 @@ export class TorrentDataHTTPService {
     let url = root + endpoint;
 
     // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true, responseType: 'text', observe: 'response'}
+    let options = { withCredentials: true, responseType: 'text', observe: 'response'}
 
     let result = await this.sendFiles(files, url, options, destination);
     return result;
@@ -86,7 +86,7 @@ export class TorrentDataHTTPService {
     body.append("deleteFiles", `${deleteFromDisk}`);
 
     // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
+    let options = { withCredentials: true }
 
     return this.http.post(url, body, options);
   }
@@ -102,7 +102,7 @@ export class TorrentDataHTTPService {
     body.append("hashes", hashes.join("|"));
 
     // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
+    let options = { withCredentials: true }
 
     return this.http.post(url, body, options);
   }
@@ -249,7 +249,7 @@ export class TorrentDataHTTPService {
     let url = root + endpoint;
 
     // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
+    let options = { withCredentials: true }
 
     await this.http.post(url, null, options).toPromise();
   }
@@ -263,7 +263,7 @@ export class TorrentDataHTTPService {
     body.append("limit", limit.toString());
 
     // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
+    let options = { withCredentials: true }
 
     return this.http.post(url, body, options).toPromise();
   }
@@ -277,7 +277,7 @@ export class TorrentDataHTTPService {
     body.append("limit", limit.toString());
 
     // Do not send cookies in dev mode
-    let options = IsDevEnv() ? { } : { withCredentials: true }
+    let options = { withCredentials: true }
 
     return this.http.post(url, body, options).toPromise();
   }
@@ -293,7 +293,7 @@ export class TorrentDataHTTPService {
   private sendTorrentHashesPOST(endpoint: string, hashes: string[], options?: any, body?: any): Observable<any> {
 
     // Do not send cookies in dev mode
-    options = options || IsDevEnv() ? { } : { withCredentials: true }
+    options = options || { withCredentials: true }
 
     // body parameters
     if(!body) { body = new FormData(); body.append("hashes", hashes.join("|")); }

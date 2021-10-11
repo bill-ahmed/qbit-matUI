@@ -44,3 +44,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+
+# qBittorrent dev container
+dev/config
+dev/downloads
+dev/www
