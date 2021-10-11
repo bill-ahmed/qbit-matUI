@@ -22,6 +22,7 @@ import { ApplicationConfigService } from '../services/app/application-config.ser
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
 import { SnackbarService } from '../services/notifications/snackbar.service';
 import { MenuItem } from 'primeng/api';
+import { getClassForStatus } from '../../utils/Helpers'
 
 
 @Component({
@@ -336,27 +337,7 @@ export class TorrentsTableComponent implements OnInit {
     this.handleSortChange(this.currentMatSort);
   }
 
-  public isTorrentPrimaryAction(tor: Torrent): boolean {
-    return tor.state === 'downloading';
-  }
-
-  /** Determine if torrent is in a error state */
-  public isTorrentError(tor: Torrent): boolean {
-    let errors = ['missingFiles', 'error', 'unknown'];
-    return errors.includes(tor.state);
-  }
-
-  public isTorrentWarning(tor: Torrent): boolean {
-    let warnings = ['moving', 'checkingDL'];
-    return warnings.includes(tor.state);
-  }
-
-  public getClassForStatus(torrent: Torrent): string {
-    let root = 'torrent-table-status '
-    let suffix = this.isTorrentPrimaryAction(torrent) ? 'primary' : this.isTorrentError(torrent) ? 'danger' : this.isTorrentWarning(torrent) ? 'warning' : 'info'
-
-    return root + suffix;
-  }
+  public getClassForStatus(t: Torrent): string { return getClassForStatus(t); }
 
   public isTorrentsEmpty() {
     return this.filteredTorrentData?.length === 0;

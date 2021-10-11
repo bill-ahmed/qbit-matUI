@@ -1,3 +1,5 @@
+import { Torrent } from "./Interfaces";
+
 /** Get more easily comparable name for a torrent
  * Commonly, torrents will substitute a "." period for a space.
  *
@@ -21,6 +23,28 @@ export function GetDefaultSaveLocation(): string {
   }
 
   return save_location || "";
+}
+
+function isTorrentPrimaryAction(tor: Torrent): boolean {
+  return tor.state === 'downloading';
+}
+
+/** Determine if torrent is in a error state */
+function isTorrentError(tor: Torrent): boolean {
+  let errors = ['missingFiles', 'error', 'unknown'];
+  return errors.includes(tor.state);
+}
+
+function isTorrentWarning(tor: Torrent): boolean {
+  let warnings = ['moving', 'checkingDL'];
+  return warnings.includes(tor.state);
+}
+
+export function getClassForStatus(torrent: Torrent): string {
+  let root = 'torrent-status '
+  let suffix = isTorrentPrimaryAction(torrent) ? 'primary' : isTorrentError(torrent) ? 'danger' : isTorrentWarning(torrent) ? 'warning' : 'info'
+
+  return root + suffix;
 }
 
 

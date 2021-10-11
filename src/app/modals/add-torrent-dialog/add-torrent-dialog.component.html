@@ -47,21 +47,18 @@
       <br/>
 
       <h3>Save Location</h3>
-      <p>Pick a location to save the files. If none is chosen, the default shown will be used instead.</p>
 
       <div id="choose_save_location">
         <mat-form-field appearance="outline">
           <mat-label>Download To...</mat-label>
           <input value="{{filesDestination}}" name="savepath" type="text" id="savepath" (change)="updateFileDestination($event)" matInput >
-          <mat-icon matSuffix>folder_open</mat-icon>
         </mat-form-field>
 
-        <button id="trigger_file_explorer" color="primary" mat-raised-button (click)="openFileSystemExplorerDialog($event)">
+        <button id="trigger_file_explorer" color="accent" mat-raised-button (click)="openFileSystemExplorerDialog($event)">
           <mat-icon>folder</mat-icon>
           &nbsp; Choose Location
         </button>
       </div>
-      <br/>
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
@@ -72,10 +69,11 @@
   </div>
 
   <div *ngIf="show_torrent_contents && hasUploadedFiles()" [ngClass]="isOnFileUploadTab() ? '' : 'hidden'" class="mat-app-background torrent_contents_container">
-    <h3> Torrent Contents </h3>
-    <mat-card-subtitle *ngIf="!hasUploadedFiles()">
-      <i> Try uploading some files first. </i>
-    </mat-card-subtitle>
+    <div class="torrent-contents-header">
+      <h3> Torrent Contents</h3>
+      <p>&nbsp; • &nbsp;</p>
+      <p> {{getFilesToUploadString()}} </p>
+    </div>
 
     <div class="files_in_torrents">
       <app-file-system-tree-explorer

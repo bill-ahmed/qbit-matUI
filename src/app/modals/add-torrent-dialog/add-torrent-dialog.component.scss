@@ -18,7 +18,7 @@
     max-height: unset;
 
     #choose_save_location {
-      width: 95%;
+      width: 85%;
       min-width: 300px;
 
       display: flex;
@@ -55,6 +55,12 @@
 
     width: 100%;
     overflow: scroll;
+  }
+
+  .torrent-contents-header {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
   }
 }
 

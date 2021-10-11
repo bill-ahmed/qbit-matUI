@@ -21,7 +21,11 @@ export interface Torrent {
     uploaded: number,
     progress: number,
     dlspeed: number,
+    dl_speed_avg: number,
     upspeed: number,
+    up_speed_avg: number,
+    up_limit: number,
+    dl_limit: number,
     priority: number,
     num_seeds: number,
     num_leechs: number,
@@ -93,6 +97,7 @@ export interface MainData {
 
 /** The contents of a torrent */
 export interface TorrentContents {
+  index: any,
   /** File name (including relative path) */
   name: string,
   /** File size (bytes) */

@@ -9,6 +9,8 @@ import { TorrentDataStoreService } from '../../services/torrent-management/torre
 import { NetworkConnectionInformationService } from '../../services/network/network-connection-information.service';
 import { FileSystemService, SerializedNode } from '../../services/file-system/file-system.service';
 import DirectoryNode from 'src/app/services/file-system/FileSystemNodes/DirectoryNode';
+import { getClassForStatus } from 'src/utils/Helpers';
+import { SnackbarService } from 'src/app/services/notifications/snackbar.service';
 
 @Component({
   selector: 'app-torrent-info-dialog',
@@ -26,9 +28,11 @@ export class TorrentInfoDialogComponent implements OnInit {
   private panelsOpen: Set<string> = new Set<string>();
   private REFRESH_INTERVAL: any;
 
+  private allowDataRefresh = true;
+
   constructor(@Inject(MAT_DIALOG_DATA) data: any, private units_helper: UnitsHelperService,
               private pp: PrettyPrintTorrentDataService, private theme: ThemeService, private data_store: TorrentDataStoreService,
-              private network_info: NetworkConnectionInformationService, private fs: FileSystemService) {
+              private network_info: NetworkConnectionInformationService, private fs: FileSystemService, private snackbar: SnackbarService) {
     this.torrent = data.torrent;
   }
 
@@ -39,13 +43,7 @@ export class TorrentInfoDialogComponent implements OnInit {
     this.data_store.GetTorrentContents(this.torrent).toPromise().then(res => {this.updateTorrentContents(res)});
 
     /** Refresh torrent contents data on the recommended interval */
-    this.REFRESH_INTERVAL = setInterval(() => {
-      this.data_store.GetTorrentContents(this.torrent).subscribe(content => {
-        this.updateTorrentContents(content);
-      });
-    },
-      this.network_info.get_refresh_interval_from_network_type("medium")
-    );
+    this.setRefreshInterval();
   }
 
   ngOnDestroy(): void {
@@ -53,15 +51,19 @@ export class TorrentInfoDialogComponent implements OnInit {
   }
 
   private async updateTorrentContents(content: TorrentContents[]): Promise<void> {
+    if(!this.allowDataRefresh) return;
+
     this.torrentContents = content;
 
     let intermediate_nodes = this.torrentContents.map(file => {
       return {
+        index: file.index,
         name: "",
         path: file.name,
         parentPath: '',
         size: file.size,
         progress: file.progress,
+        priority: file.priority,
         type: "File"
       }
     })
@@ -77,41 +79,69 @@ export class TorrentInfoDialogComponent implements OnInit {
     this.isLoading = false;
   }
 
-  get_content_directories_as_advanced_nodes(): SerializedNode[] {
-    return this.torrentContentsAsNodes;
+  handleFilePriorityChange(node: SerializedNode) {
+    let newPriority = node.priority;
+
+    // Recursively collect list of indexes that need to be changed.
+    let indexes = this._filePriChangeHelper(node, []);
+
+    // Dedupe
+    indexes = [...new Set(indexes)];
+
+    this.data_store.SetFilePriority(this.torrent, indexes, newPriority).subscribe(() => {
+      this.snackbar.enqueueSnackBar("Updated file priority.");
+    });
   }
 
-  added_on(): string {
-    return this.units_helper.GetDateString(this.torrent.added_on);
+  handlePriorityChangeToggled() { this.allowDataRefresh = !this.allowDataRefresh; }
+
+  /** Recursively update list of indexes with index
+   *  of each node
+   */
+  private _filePriChangeHelper(node: SerializedNode, indexes: any[]): any[] {
+    indexes.push(node.index);
+
+    if(node.children) {
+      for (let child of node.children) {
+        indexes = this._filePriChangeHelper(child, indexes);
+      }
+    }
+
+    return indexes;
   }
 
-  completed_on(): string {
-    return this.pp.pretty_print_completed_on(this.torrent.completion_on);
+  private setRefreshInterval() {
+    this.REFRESH_INTERVAL = setInterval(() => {
+      this.data_store.GetTorrentContents(this.torrent).subscribe(content => {
+        this.updateTorrentContents(content);
+      });
+    },
+      this.network_info.get_refresh_interval_from_network_type("medium")
+    );
   }
 
-  last_activity(): string {
-    return this.pp.pretty_print_completed_on(this.torrent.last_activity)
-  }
+  get_content_directories_as_advanced_nodes(): SerializedNode[] { return this.torrentContentsAsNodes; }
 
-  total_size(): string {
-    return this.units_helper.GetFileSizeString(this.torrent.total_size);
-  }
+  added_on() { return this.units_helper.GetDateString(this.torrent.added_on); }
+  completed_on() { return this.pp.pretty_print_completed_on(this.torrent.completion_on); }
+  last_activity() { return this.pp.pretty_print_completed_on(this.torrent.last_activity); }
 
-  downloaded(): string {
-    return this.units_helper.GetFileSizeString(this.torrent.downloaded);
-  }
+  total_size() { return this.units_helper.GetFileSizeString(this.torrent.total_size); }
 
-  uploaded(): string {
-    return this.units_helper.GetFileSizeString(this.torrent.uploaded)
-  }
+  downloaded() { return this.units_helper.GetFileSizeString(this.torrent.downloaded); }
+  uploaded() { return this.units_helper.GetFileSizeString(this.torrent.uploaded); }
 
-  ratio(): number {
-    return Math.round(((this.torrent.ratio) + Number.EPSILON) * 100) / 100;
-  }
+  dl_speed() { return this.units_helper.GetFileSizeString(this.torrent.dlspeed) + '/s'; }
+  up_speed() { return this.units_helper.GetFileSizeString(this.torrent.upspeed) + '/s'; }
+  dl_speed_avg() { return this.units_helper.GetFileSizeString(this.torrent.dl_speed_avg) + (this.torrent.dl_speed_avg ? '/s' : ''); }
+  up_speed_avg() { return this.units_helper.GetFileSizeString(this.torrent.up_speed_avg) + (this.torrent.up_speed_avg ? '/s' : ''); }
 
-  state(): string {
-    return this.pp.pretty_print_status(this.torrent.state);
-  }
+  dl_limit() { return this.units_helper.GetFileSizeString(this.torrent.dl_limit) + (this.torrent.dl_limit < 0 ? '' : '/s'); }
+  up_limit() { return this.units_helper.GetFileSizeString(this.torrent.up_limit) + (this.torrent.up_limit < 0 ? '' : '/s'); }
+
+  ratio() { return Math.round(((this.torrent.ratio) + Number.EPSILON) * 100) / 100; }
+
+  state() { return this.pp.pretty_print_status(this.torrent.state); }
 
   openPanel(name: string): void {
     this.panelsOpen.add(name);
@@ -124,5 +154,7 @@ export class TorrentInfoDialogComponent implements OnInit {
   isPanelOpen(name: string): boolean {
     return this.panelsOpen.has(name);
   }
+
+  public getClassForStatus(t: Torrent): string { return getClassForStatus(t); }
 
 }

@@ -18,11 +18,15 @@
     cursor: default;
   }
 
-  overflow-x: scroll;
+  word-wrap: break-word;
 }
 
 #expand_folder_button {
   pointer-events: none;
+}
+
+.toggle_checkbox {
+  margin: 0 10px 0 20px;
 }
 
 .node-info {
@@ -31,12 +35,19 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
 
-  #node-title {
-    flex-grow: 1;
-    width: 70%;
+  width: 100%;
+
+  padding: 0 10px;
+
+  .node-title {
     word-wrap: break-word;
+    width: 360px;
+  }
+
+  .priority_selection {
+    font-size: 10pt;
+    padding-top: 10px;
   }
 
   #progress, #fileSize {
@@ -50,7 +61,13 @@
   flex-direction: row;
   justify-content: space-evenly;
 
+  flex-grow: 0.1;
+
   #progress, #fileSize {
-    margin: 0 8px;
+    margin: 0 2px;
+    width: 80px;
+    text-align: end;
   }
+
+  #progress { width: 100px; }
 }

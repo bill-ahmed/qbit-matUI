@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'style/fonts.scss';
+@import "~@angular/material/theming";
+@import "variables.scss";
 
 html, body { height: 100%; min-width: 800px;}
 body {
@@ -126,9 +128,54 @@ body {
 .snackbar-error   { background: #F44336; }
 .snackbar-info    { background: #2196F3; }
 
+.torrent-status {
+  color: white;
+
+  &.primary {
+    background: mat-color($my-app-primary)
+  }
+
+  &.warning {
+    background: mat-color($my-app-accent)
+  }
+
+  &.danger {
+    background: mat-color($my-app-warn)
+  }
+
+  &.info {
+    background: $my-app-default;
+    color: $table-black-color;
+  }
+}
+
+// For dark mode!
+.dark-theme {
+  .torrent-status {
+    &.primary {
+      background: mat-color($dark-primary);
+      color: $table-black-color;
+    }
+
+    &.warning {
+      background: mat-color($dark-accent);
+      color: $table-black-color;
+    }
+
+    &.danger {
+      background: mat-color($dark-warn);
+    }
+
+    &.info {
+      background: $dark-default;
+      color: white;
+    }
+  }
+}
+
 /*** CUSTOM SCROLLBAR ***/
 ::-webkit-scrollbar {
-  width: 5px;   /** Target vertical scroll-bars */
+  width: 8px;   /** Target vertical scroll-bars */
   height: 8px;  /** Target horizontal scroll-bars */
 }
 

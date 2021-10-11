@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, Output, EventEmitter } from '@angular/core';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { FileSystemService, SerializedNode } from '../services/file-system/file-system.service';
@@ -14,12 +14,22 @@ import { ApplicationConfigService } from '../services/app/application-config.ser
 export class FileSystemTreeExplorerComponent implements OnChanges {
   @Input() directories: SerializedNode[];
   @Input() showProgress: boolean = false;
+  @Input() allowSetPriority: boolean = false;
+
+  /** When user changes the priority */
+  @Output() onPriorityChange = new EventEmitter<SerializedNode>();
+
+  /** When user toggles the drop-down menu in order to choose a priority */
+  @Output() onPriorityChangeToggled = new EventEmitter();
 
   public isLoading = true;
 
   /** Controls for tree components */
   public treeControl = new NestedTreeControl<SerializedNode>(node => node.children);
   public dataSource = new MatTreeNestedDataSource<SerializedNode>();
+
+  public file_priorities = ApplicationConfigService.FILE_PRIORITY_OPTS;
+  public file_priorities_mapping = ApplicationConfigService.FILE_PRIORITY_OPTS_MAPPING;
 
   private root: DirectoryNode;                           /** File System to keep track of the files in a torrent */
 
@@ -35,6 +45,8 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
   ngOnInit(): void {
     this._updateData();
+
+    console.log('allow set priority?', this.allowSetPriority)
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -43,10 +55,18 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
       this._updateData();
     }
 
-    if(changes.showProgress) {
-      this.showProgress = changes.showProgress.currentValue;
-    }
+    if(changes.showProgress) { this.showProgress = changes.showProgress.currentValue; }
+    if(changes.allowSetPriority) { this.allowSetPriority = changes.allowSetPriority.currentValue }
   }
+
+  handleCheckboxClick(node: SerializedNode) {
+    let o = node.progress;
+    node.progress = o === 0 ? 1 : 0
+
+    this.onPriorityChange.emit(node);
+  }
+  handleFilePriorityChange(node: SerializedNode) { this.onPriorityChange.emit(node); }
+  handleFilePriorityToggled() { this.onPriorityChangeToggled.emit(''); }
 
   /** Refresh all filesystem data. This could potentially be an
    *  expensive operation.

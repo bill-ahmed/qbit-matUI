@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MainData, QbittorrentBuildInfo, TorrentContents, UserPreferences } from 'src/utils/Interfaces';
+import { MainData, QbittorrentBuildInfo, Torrent, TorrentContents, UserPreferences } from 'src/utils/Interfaces';
 import { Observable } from 'rxjs';
 
 // Utils
@@ -187,6 +187,19 @@ export class TorrentDataHTTPService {
     let url = root + endpoint;
 
     return this.sendTorrentHashesPOST(url, hashes);
+  }
+
+  SetFilePriority(tor: Torrent, indexes: any[], priority: number): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.filePrio;
+    let url = root + endpoint;
+
+    let body = new FormData();
+    body.append('hash', tor.hash);
+    body.append('id', indexes.join('|'));
+    body.append('priority', priority.toString());
+
+    return this.sendTorrentHashesPOST(url, null, null, body)
   }
 
   SetPreferences(pref: UserPreferences): Observable<any> {

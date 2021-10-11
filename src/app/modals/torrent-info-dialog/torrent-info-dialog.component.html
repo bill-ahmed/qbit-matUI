@@ -2,33 +2,58 @@
 
     <h2 mat-dialog-title>
         {{torrent.name}}
+        <p style="font-size: 10pt; margin: 0;"><i>{{torrent.hash}}</i></p>
         <p></p>
-        <mat-chip-list id="torrent-info-chip-list">
-            <mat-chip color="primary" selected>{{state()}}</mat-chip>
-            <mat-chip *ngIf="torrent.force_start" color="accent" selected>Forced Start</mat-chip>
-        </mat-chip-list>
+
+        <div class="torrent_tags">
+          <p-tag
+            [value]="state()"
+            [styleClass]="getClassForStatus(torrent)"
+            >
+          </p-tag>
+
+          <p-tag *ngIf="torrent.force_start"
+            value="Forced Start"
+            [styleClass]="getClassForStatus(torrent)"
+            >
+          </p-tag>
+        </div>
     </h2>
 
     <mat-dialog-content class="mat-typography torrent-info-container">
         <mat-tab-group mat-align-tabs="start">
-
             <mat-tab label="General">
                 <div class="torrent-info-general-content">
-                    <div class="leftPanel">
-                        <p><b>Name:</b> {{torrent.name}}</p>
-                        <p><b>Total Size:</b> {{total_size()}}</p>
-                        <p><b>Downloaded:</b> {{downloaded()}} / {{total_size()}}</p>
-                        <p><b>Uploaded:</b> {{uploaded()}}</p>
-                        <p><b>Ratio:</b> {{ratio()}}</p>
+                  <div class="row">
+                    <div class="panel">
+                      <p><b>Name:</b> {{torrent.name}}</p>
+                      <p><b>Total Size:</b> {{total_size()}}</p>
+                      <p><b>Save Path:</b> {{torrent.save_path}}</p>
                     </div>
 
-                    <div class="rightPanel">
-                        <p><b>Added On:</b> {{added_on()}}</p>
-                        <p><b>Completed On:</b> {{completed_on()}}</p>
-                        <p><b>Last Activity:</b> {{last_activity()}}</p>
-                        <p><b>Save Location:</b> {{torrent.save_path}}</p>
+                    <div class="panel">
+                      <p><b>Added On:</b> {{added_on()}}</p>
+                      <p><b>Completed On:</b> {{completed_on()}}</p>
+                      <p><b>Last Activity:</b> {{last_activity()}}</p>
+                    </div>
+                  </div>
+
+                  <mat-divider></mat-divider>
+
+                  <div class="row">
+                    <div class="panel">
+                        <p>Downloaded: {{downloaded()}} / {{total_size()}}</p>
+                        <p>Download Speed: {{dl_speed()}} ({{dl_speed_avg()}} avg.)</p>
+                        <p>Download Limit: {{dl_limit()}}</p>
+                        <p>Share Ratio: {{ratio()}}</p>
                     </div>
 
+                    <div class="panel">
+                      <p>Uploaded: {{uploaded()}}</p>
+                      <p>Upload Speed: {{up_speed()}} ({{up_speed_avg()}} avg.)</p>
+                      <p>Upload Limit: {{up_limit()}}</p>
+                    </div>
+                  </div>
                 </div>
             </mat-tab>
 
@@ -40,7 +65,12 @@
                   <app-file-system-tree-explorer
                       *ngIf="!isLoading"
                       [showProgress]="true"
-                      [directories]="get_content_directories_as_advanced_nodes()"></app-file-system-tree-explorer>
+                      [allowSetPriority]="true"
+                      [directories]="get_content_directories_as_advanced_nodes()"
+
+                      (onPriorityChange)="handleFilePriorityChange($event)"
+                      (onPriorityChangeToggled)="handlePriorityChangeToggled()">
+                  </app-file-system-tree-explorer>
 
                   <mat-spinner *ngIf="isLoading"></mat-spinner>
                 </div>

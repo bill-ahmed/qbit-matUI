@@ -131,6 +131,10 @@ export class TorrentDataStoreService {
     return this.torrent_http_service.SetMinimumPriority(tor.map(elem => elem.hash));
   }
 
+  public SetFilePriority(tor: Torrent, indexes: any[], priority: number): Observable<any> {
+    return this.torrent_http_service.SetFilePriority(tor, indexes, priority);
+  }
+
   public SetUserPreferences(pref: UserPreferences): Observable<any> {
     return this.torrent_http_service.SetPreferences(pref);
   }
@@ -204,6 +208,9 @@ export class TorrentDataStoreService {
     if(new Date(tor.completion_on * 1000) < TorrentDataStoreService.CREATED_AT_THRESHOLD) {
       tor.completion_on = TorrentDataStoreService.FUTURE_MOST_DATE.valueOf() / 1000
     }
+
+    // Ensure progress is between 0 and 1
+    tor.progress = Math.max(0, Math.min(1, tor.progress));
   }
 
   /** Update server status in changelog */
