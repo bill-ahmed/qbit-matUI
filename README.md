@@ -32,8 +32,6 @@ This app relies on a couple files to work properly.
 Under `src/assets/` there are two files: `config.json` and `config.prod.json`. This will store general configuration, such as the delimeter used when parsing file paths (Unix vs. Windows).
 
 ### HTTP Config
-Under `src/assets/` there are two files: `http_config.json` and `http_config.prod.json`. During the production build, the former is replaced with the latter file. 
-
 If you wish to configure your endpoints and other data for dev/prod, do so here.
 
 
