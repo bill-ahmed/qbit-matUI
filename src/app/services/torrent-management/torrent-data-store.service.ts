@@ -208,6 +208,9 @@ export class TorrentDataStoreService {
     if(new Date(tor.completion_on * 1000) < TorrentDataStoreService.CREATED_AT_THRESHOLD) {
       tor.completion_on = TorrentDataStoreService.FUTURE_MOST_DATE.valueOf() / 1000
     }
+
+    // Ensure progress is between 0 and 1
+    tor.progress = Math.max(0, Math.min(1, tor.progress));
   }
 
   /** Update server status in changelog */

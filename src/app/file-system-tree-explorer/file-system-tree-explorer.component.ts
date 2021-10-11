@@ -59,6 +59,12 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
     if(changes.allowSetPriority) { this.allowSetPriority = changes.allowSetPriority.currentValue }
   }
 
+  handleCheckboxClick(node: SerializedNode) {
+    let o = node.progress;
+    node.progress = o === 0 ? 1 : 0
+
+    this.onPriorityChange.emit(node);
+  }
   handleFilePriorityChange(node: SerializedNode) { this.onPriorityChange.emit(node); }
   handleFilePriorityToggled() { this.onPriorityChangeToggled.emit(''); }
 
