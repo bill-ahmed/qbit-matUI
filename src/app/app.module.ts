@@ -13,7 +13,6 @@ import { AppComponent } from './app.component';
 import { CookieService } from 'ngx-cookie-service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TorrentsTableComponent } from './torrents-table/torrents-table.component';
-import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { environment } from 'src/environments/environment';
 import { MatSortModule } from '@angular/material/sort';
@@ -72,8 +71,7 @@ var appRoutes: Routes;
 // Login page is only needed during development/testing
 if(!environment.production){
   appRoutes = [
-    { path: '', component: LoginComponent},
-    { path: 'home', component: HomeComponent}
+    { path: '', component: HomeComponent}
   ]
 } else {
   appRoutes = [
@@ -85,7 +83,6 @@ if(!environment.production){
   declarations: [
     AppComponent,
     TorrentsTableComponent,
-    LoginComponent,
     HomeComponent,
     AddTorrentDialogComponent,
     DeleteTorrentDialogComponent,

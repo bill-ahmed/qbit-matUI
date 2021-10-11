@@ -65,12 +65,5 @@ echo "Copying login page to existing builds..."
 cp -r "$default_build_path/$login_build" "$default_build_path/$win_build/public"
 cp -r "$default_build_path/$login_build" "$default_build_path/$unix_build/public"
 
-# Step (6) -- Compress both builds into .zip
-# echo "Compressing builds..."
-# pushd "$default_build_path" > /dev/null
-# tar -zcvf "$win_build.zip" "$win_build"
-# tar -zcvf "$unix_build.zip" "$unix_build"
-# popd > /dev/null
-
 echo
 echo "Done!"

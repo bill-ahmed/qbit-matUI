@@ -1,0 +1,19 @@
+version: "2.1"
+services:
+  qbittorrent:
+    image: linuxserver/qbittorrent:version-14.3.8.99202110081405-7423-ac5c264e6ubuntu20.04.1
+    container_name: qbit-matUI-dev-container
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - WEBUI_PORT=8090
+    volumes:
+      - ./config:/config
+      - ./downloads:/downloads
+      - ./www:/www
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+      - 8090:8090
+    restart: unless-stopped
