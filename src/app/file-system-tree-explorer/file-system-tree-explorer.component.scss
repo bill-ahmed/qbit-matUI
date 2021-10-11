@@ -18,7 +18,7 @@
     cursor: default;
   }
 
-  overflow-x: scroll;
+  word-wrap: break-word;
 }
 
 #expand_folder_button {
@@ -38,9 +38,11 @@
 
   width: 100%;
 
+  padding: 0 10px;
+
   .node-title {
-    flex-grow: 0.6;
     word-wrap: break-word;
+    width: 360px;
   }
 
   .priority_selection {
@@ -63,6 +65,9 @@
 
   #progress, #fileSize {
     margin: 0 2px;
-    min-width: 70px;
+    width: 80px;
+    text-align: end;
   }
+
+  #progress { width: 100px; }
 }
