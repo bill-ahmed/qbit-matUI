@@ -23,9 +23,9 @@ export default class Inode extends TreeNode implements SerializableNode {
     if(!options.skipNameValidation) { this.validateName(); }
 
     this.index = options?.index;
-    this.progress = options.progress || 1;              // Assume file is fully downloaded otherwise
+    this.progress = options.progress ?? 1;              // Assume file is fully downloaded otherwise
     this.size = options.size || 0;
-    this.priority = options.priority || 1;
+    this.priority = options.priority ?? 1;
   }
 
   /** Download progress of a file/folder as fraction between 0 and 1.

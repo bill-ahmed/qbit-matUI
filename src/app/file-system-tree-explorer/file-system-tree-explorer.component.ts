@@ -60,8 +60,8 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
   }
 
   handleCheckboxClick(node: SerializedNode) {
-    let o = node.progress;
-    node.progress = o === 0 ? 1 : 0
+    let o = node.priority;
+    node.priority = o === 0 ? 1 : 0
 
     this.onPriorityChange.emit(node);
   }
