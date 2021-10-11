@@ -31,12 +31,17 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
 
-  #node-title {
-    flex-grow: 1;
-    width: 70%;
+  width: 100%;
+
+  .node-title {
+    flex-grow: 0.6;
     word-wrap: break-word;
+  }
+
+  .priority_selection {
+    font-size: 10pt;
+    padding-top: 10px;
   }
 
   #progress, #fileSize {
@@ -50,7 +55,10 @@
   flex-direction: row;
   justify-content: space-evenly;
 
+  flex-grow: 0.1;
+
   #progress, #fileSize {
-    margin: 0 8px;
+    margin: 0 2px;
+    min-width: 70px;
   }
 }

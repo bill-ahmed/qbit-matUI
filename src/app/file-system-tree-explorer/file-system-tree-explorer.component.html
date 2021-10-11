@@ -7,12 +7,12 @@
         <!-- use a disabled button to provide padding for tree leaf -->
         <button mat-icon-button disabled><mat-icon color="accent">file_copy</mat-icon></button>
         <div class="node-info">
-          <div id="node-title">
+          <div class="node-title">
             {{node.name}}
           </div>
 
-          <div *ngIf="allowSetPriority">
-            <mat-form-field appearance="fill">
+          <div class="priority_selection" *ngIf="allowSetPriority" style="padding: 10px 0;">
+            <mat-form-field>
               <mat-label>Choose priority</mat-label>
               <mat-select (selectionChange)="handleFilePriorityChange(node)" (openedChange)="handleFilePriorityToggled()" [(value)]="node.priority">
                 <mat-option *ngFor="let item of file_priorities" [value]="item">
@@ -46,12 +46,12 @@
             </mat-icon>
           </button>
           <div class="node-info">
-            <div id="node-title">
+            <div class="node-title">
               {{node.name}}
             </div>
 
-            <div *ngIf="allowSetPriority" (click)="$event.stopPropagation()">
-              <mat-form-field appearance="fill">
+            <div class="priority_selection" *ngIf="allowSetPriority" (click)="$event.stopPropagation()">
+              <mat-form-field>
                 <mat-label>Choose priority</mat-label>
                 <mat-select (selectionChange)="handleFilePriorityChange(node)" (openedChange)="handleFilePriorityToggled()" [(value)]="node.priority">
                   <mat-option *ngFor="let item of file_priorities" [value]="item">
@@ -69,7 +69,7 @@
               <div id="fileSize">
                 {{getNodeSize(node)}}
               </div>
-          </div>
+            </div>
           </div>
         </div>
         <ul [class.tree-invisible]="!isExpanded(node)">
