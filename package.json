@@ -3,6 +3,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "dev": "ng build --watch --output-path=\"dev/www/private\"",
     "build": "ng build",
     "build_prod": "ng build --prod",
     "test": "ng test",
