@@ -12,21 +12,21 @@ import { HttpClient } from '@angular/common/http';
 })
 export class TorrentDataHTTPService {
 
-  private http_endpoints: any;
+  http_endpoints: any;
 
   constructor(private http: HttpClient) { this.http_endpoints = http_config.endpoints; }
 
   /** Get all torrent data from server
    * @param RID The rid key for changelogs. Set to 0 if you want all data instead of changes from previous.
    */
-  GetAllTorrentData(RID: number): Observable<MainData> {
+  GetAllTorrentData(RID: number, opts?: any): Observable<MainData | any> {
 
     let root = this.http_endpoints.root
     let endpoint = this.http_endpoints.torrentList;
     let url = root + endpoint + `?rid=${RID}`;
 
     // Do not send cookies in dev mode
-    let options = { withCredentials: true }
+    let options = opts ?? { withCredentials: true };
 
     return this.http.get<MainData>(url, options);
   }
@@ -34,13 +34,13 @@ export class TorrentDataHTTPService {
   /** Send batch of 1 or more torrents to server for enqueue.
    * @param files The files to upload.
    */
-  async UploadNewTorrents(files: FileList[], destination: string): Promise<any> {
+  async UploadNewTorrents(files: FileList[], destination: string, opts?: any): Promise<any> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.uploadTorrents;
     let url = root + endpoint;
 
     // Do not send cookies in dev mode
-    let options = { withCredentials: true, responseType: 'text', observe: 'response'}
+    let options = opts ?? { withCredentials: true, responseType: 'text', observe: 'response'}
 
     let result = await this.sendFiles(files, url, options, destination);
     return result;
@@ -243,18 +243,18 @@ export class TorrentDataHTTPService {
     return this.sendTorrentHashesPOST(url, [hash], null, body);
   }
 
-  async ToggleAltSpeedLimits(): Promise<void> {
+  async ToggleAltSpeedLimits(opts?: any): Promise<void> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.toggleSpeedLimitsMode;
     let url = root + endpoint;
 
     // Do not send cookies in dev mode
-    let options = { withCredentials: true }
+    let options = opts ?? { withCredentials: true }
 
     await this.http.post(url, null, options).toPromise();
   }
 
-  async SetDownloadLimit(limit: number) {
+  async SetDownloadLimit(limit: number, opts?: any) {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.setDownloadLimit;
     let url = root + endpoint;
@@ -263,12 +263,12 @@ export class TorrentDataHTTPService {
     body.append("limit", limit.toString());
 
     // Do not send cookies in dev mode
-    let options = { withCredentials: true }
+    let options = opts ?? { withCredentials: true }
 
     return this.http.post(url, body, options).toPromise();
   }
 
-  async SetUploadLimit(limit: number) {
+  async SetUploadLimit(limit: number, opts?: any) {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.setUploadLimit;
     let url = root + endpoint;
@@ -277,7 +277,7 @@ export class TorrentDataHTTPService {
     body.append("limit", limit.toString());
 
     // Do not send cookies in dev mode
-    let options = { withCredentials: true }
+    let options = opts ?? { withCredentials: true }
 
     return this.http.post(url, body, options).toPromise();
   }
