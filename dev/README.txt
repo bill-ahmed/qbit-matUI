@@ -19,3 +19,4 @@ To setup the dev env:
 7. Go to http://localhost:8090
 
 Note: If you make any changes to the source code, you will have to hard-reload the page each time (Ctrl + Shift + R on Windows).
+Note: Skip steps #6 and #7 if you're only running the test suite.

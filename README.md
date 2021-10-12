@@ -52,6 +52,18 @@ To run the login page standalone, do: `ng serve login` and navigate to `http://l
 The app will automatically reload if you make changes to any of the Angular source code.
 
 
+## Testing
+The tests make use of an actual qBittorrent instance running inside a docker container. First, 
+follow the instruction located under: `dev/README.txt`.
+
+Then, to run the tests we need to run two separate terminals:
+
+- In the first terminal, run:
+  1. `cd mock_backend`
+  2. `node proxy.js`
+- In a new terminal:
+  1. `ng test`
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build. 

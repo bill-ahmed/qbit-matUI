@@ -16,6 +16,16 @@ export class TorrentDataHTTPService {
 
   constructor(private http: HttpClient) { this.http_endpoints = http_config.endpoints; }
 
+  Login(url: string, username: string, password: string, opts?: any) {
+    let options = opts ?? { withCredentials: true, responseType: 'text' };
+
+    let body = new FormData();
+    body.append('username', username);
+    body.append('password', password);
+
+    return this.http.post<any>(url, body, options).toPromise();
+  }
+
   /** Get all torrent data from server
    * @param RID The rid key for changelogs. Set to 0 if you want all data instead of changes from previous.
    */

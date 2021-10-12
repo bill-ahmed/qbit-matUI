@@ -267,6 +267,8 @@ export class TorrentDataStoreService {
     this.refresh_interval = setInterval(callback, int)
   }
 
+  public StopRefreshingData() { if(this.refresh_interval) clearInterval(this.refresh_interval); }
+
   /** Delete all data in store
    */
   public ResetAllData(): void {
