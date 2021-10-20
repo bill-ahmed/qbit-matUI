@@ -16,7 +16,7 @@ import { RowSelectionService } from '../services/torrent-management/row-selectio
 import { TorrentInfoDialogComponent } from '../modals/torrent-info-dialog/torrent-info-dialog.component';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
-import { GetTorrentSearchName } from 'src/utils/Helpers';
+import { GetTorrentSearchName, IsMobileUser } from 'src/utils/Helpers';
 import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
@@ -50,6 +50,8 @@ export class TorrentsTableComponent implements OnInit {
   // Context menu items
   public contextMenuItems: MenuItem[];
   public contextMenuSelectedTorrent: Torrent;
+
+  public isMobileUser = IsMobileUser();
 
   // Other
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;

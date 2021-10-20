@@ -1,5 +1,7 @@
 import { Torrent } from "./Interfaces";
 
+const MOBILE_USER_AGENT_REGEX = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+
 /** Get more easily comparable name for a torrent
  * Commonly, torrents will substitute a "." period for a space.
  *
@@ -45,6 +47,13 @@ export function getClassForStatus(torrent: Torrent): string {
   let suffix = isTorrentPrimaryAction(torrent) ? 'primary' : isTorrentError(torrent) ? 'danger' : isTorrentWarning(torrent) ? 'warning' : 'info'
 
   return root + suffix;
+}
+
+/** True iff user is on a mobile device. Not perfect as
+ * some browsers may want to force desktop view, which is fine.
+ */
+export function IsMobileUser(): boolean {
+  return true//MOBILE_USER_AGENT_REGEX.test(navigator.userAgent);
 }
 
 

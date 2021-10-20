@@ -11,6 +11,10 @@ body {
 
 }
 
+.spacer {
+  flex-grow: 1;
+}
+
 .debug-r { border: solid 1px red; }
 .debug-g { border: solid 1px green; }
 .debug-b { border: solid 1px blue; }

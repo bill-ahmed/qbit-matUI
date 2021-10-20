@@ -4,12 +4,13 @@
     <mat-spinner diameter=50 *ngIf="isLoading()"></mat-spinner>
     <p id="loading_p" *ngIf="isLoading()">Loading...</p>
 
-    <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading() && !isTorrentsEmpty()"></app-bulk-update-torrents>
+    <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading() && !isTorrentsEmpty() && !isMobileUser"></app-bulk-update-torrents>
 
     <!-- Handle context menu -->
     <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
 
-    <p-table *ngIf="!isLoading() && !isTorrentsEmpty()" styleClass="p-datatable-sm mat-elevation-z1"
+    <!-- Only show on desktop sized browsers -->
+    <p-table *ngIf="!isLoading() && !isTorrentsEmpty() && !isMobileUser" styleClass="p-datatable-sm mat-elevation-z1"
       [columns]="displayedColumns"
       [value]="filteredTorrentData"
       dataKey="hash"
@@ -154,6 +155,47 @@
         </tr>
       </ng-template>
     </p-table>
+
+    <!-- If mobile browser, simpler list view -->
+    <!-- TODO: Add virtual scrolling... -->
+    <p-virtualScroller [value]="filteredTorrentData" scrollHeight="73vh">
+      <ng-template let-torrent pTemplate="torrent">
+        <mat-card class="torrent-card-view mat-elevation-z0">
+          <mat-card-header>
+            <mat-card-title>{{torrent.name}}</mat-card-title>
+            <mat-card-subtitle> {{getFileSizeString(torrent.downloaded > torrent.size ? torrent.size : torrent.downloaded)}} / {{getFileSizeString(torrent.size)}} </mat-card-subtitle>
+
+            <div class="spacer"></div>
+
+            <div style="display: flex; min-width: 100px; justify-content: end;">
+              <p-tag
+                *ngIf="torrent.force_start"
+                value="[F]"
+                styleClass="torrent-status info"
+                [style]="{marginRight: '5px'}"
+                >
+
+              </p-tag>
+
+              <p-tag
+                [value]="getStatusString(torrent.state)"
+                [styleClass]="getClassForStatus(torrent)"
+                >
+              </p-tag>
+            </div>
+          </mat-card-header>
+          <mat-card-content>
+            <span>
+              <div>
+                <p-progressBar class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"
+                  [value]="(torrent.progress * 100).toFixed(2)">
+                </p-progressBar>
+              </div>
+            </span>
+          </mat-card-content>
+        </mat-card>
+      </ng-template>
+    </p-virtualScroller>
 
     <div *ngIf="isTorrentsEmpty()">
       <p> No torrents found. Try adding one by clicking Upload at the top-right. </p>

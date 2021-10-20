@@ -13,6 +13,21 @@
     overflow: scroll;
 }
 
+.dark-theme {
+  .torrent-card-view {
+    border-color: $dark-default;
+  }
+
+  .p-virtualscroller-content {
+    background: $table-surface-2;
+  }
+}
+
+.torrent-card-view {
+  margin: 10px 5px;
+  border: solid 1px $my-app-default;
+}
+
 
 mat-spinner {
     align-self: center;
