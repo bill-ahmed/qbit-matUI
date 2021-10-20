@@ -163,7 +163,7 @@
         <mat-card class="torrent-card-view mat-elevation-z0" style="padding: 15px 0;">
           <mat-card-header style="margin: 0; padding-right: 16px;">
             <mat-card-title style="word-break: break-all; font-size: 14pt;">{{torrent.name}}</mat-card-title>
-            <mat-card-subtitle>
+            <mat-card-subtitle style="width: max-content;">
               <p-tag
               *ngIf="torrent.force_start"
               value="[F]"
@@ -177,6 +177,10 @@
                 [value]="getStatusString(torrent.state)"
                 [styleClass]="getClassForStatus(torrent)"
                 >
+              </p-tag>
+
+              <p-tag styleClass="torrent-status primary" style="margin: 0 10px; cursor: pointer;" (click)="openInfoTorrentDialog($event, torrent)">
+                <i class="pi pi-info-circle"></i>&nbsp; More info
               </p-tag>
             </mat-card-subtitle>
 
@@ -197,10 +201,6 @@
                 <i class="pi pi-arrow-down"></i>&nbsp;: {{getFileSizeString(torrent.dlspeed)}}/s,
                 <i class="pi pi-arrow-up"></i>&nbsp;: {{getFileSizeString(torrent.upspeed)}}/s
               </p>
-
-              <button color="primary" mat-stroked-button (click)="openInfoTorrentDialog($event, torrent)">
-                More info
-              </button>
             </div>
 
             <!-- Progress bar -->
