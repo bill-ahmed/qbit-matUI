@@ -36,9 +36,7 @@ export class AuthService {
     this.cs.deleteAll();
 
     await this._sentLogoutRequest();
-
-    if(IsDevEnv())  { this.router.navigate(['/']); }
-    else            { window.location.reload(); }
+    window.location.reload();
   }
 
   /** HTTP request to end user's current session */

@@ -53,7 +53,7 @@ export function getClassForStatus(torrent: Torrent): string {
  * some browsers may want to force desktop view, which is fine.
  */
 export function IsMobileUser(): boolean {
-  return true//MOBILE_USER_AGENT_REGEX.test(navigator.userAgent);
+  return MOBILE_USER_AGENT_REGEX.test(navigator.userAgent);
 }
 
 

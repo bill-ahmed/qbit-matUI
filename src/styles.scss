@@ -3,7 +3,7 @@
 @import "~@angular/material/theming";
 @import "variables.scss";
 
-html, body { height: 100%; min-width: 800px;}
+html, body { height: 100%; }
 body {
   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -24,13 +24,15 @@ body {
 /** Flex layouts **/
 .row { display: flex; flex-direction: row; }
 .col { display: flex; flex-direction: column; }
-.space-between { justify-content: space-between; }
-.space-evenly { justify-content: space-evenly; }
-.space-around { justify-content: space-around; }
+.space-between  { justify-content: space-between; }
+.space-evenly   { justify-content: space-evenly; }
+.space-around   { justify-content: space-around; }
 
-.wrap { flex-wrap: wrap; }
-.no-wrap { flex-wrap: nowrap; }
+.wrap     { flex-wrap: wrap; }
+.no-wrap  { flex-wrap: nowrap; }
 
+.align-center   { align-items: center; }
+.align-baseline { align-items: baseline; }
 
 .grow { flex-grow: 1; }
 .grow-1 { flex-grow: 0.1; }

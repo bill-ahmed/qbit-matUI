@@ -9,6 +9,7 @@ import { FileSystemService } from '../../services/file-system/file-system.servic
 import { DirectoryNotFoundError, InvalidNameError } from '../../services/file-system/Exceptions/FileSystemExceptions';
 import DirectoryNode from '../../services/file-system/FileSystemNodes/DirectoryNode';
 import FileNode from '../../services/file-system/FileSystemNodes/FileNode';
+import { IsMobileUser } from 'src/utils/Helpers';
 
 @Component({
   selector: 'app-file-system-dialog',
@@ -25,6 +26,8 @@ export class FileSystemDialogComponent implements OnInit {
   public isCreatingNewFolder: boolean = false;       // Keep track of when user wants to create a new folder
 
   public searchQuery: string = "";
+
+  public isMobileUser = IsMobileUser();
 
   private _rightChildrenRaw: (DirectoryNode | FileNode)[] = [];
   private newDirValue: string = ""          // Name of new folder to create

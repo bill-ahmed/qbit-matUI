@@ -274,8 +274,19 @@ export class TorrentsTableComponent implements OnInit {
   /** Open modal for viewing details torrent information */
   openInfoTorrentDialog(event: any, tor: Torrent): void {
     if(event) { event.stopPropagation(); }
+    let opts: any = {data: {torrent: tor}, autoFocus: false, panelClass: "generic-dialog"};
 
-    this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}, autoFocus: false, panelClass: "generic-dialog"})
+    if(this.isMobileUser) {
+      opts = {
+        ...opts,
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%'
+      }
+    }
+
+    this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, opts)
     this.infoTorDialogRef.afterClosed().subscribe((result: any) => { })
   }
 
