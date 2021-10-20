@@ -215,6 +215,9 @@ export class FileSystemDialogComponent implements OnInit {
 
   /** Clear any searched user is doing */
   private clearSearchQuery() {
+    // Skip if mobile user, because search input doesn't exist!
+    if(this.isMobileUser) return;
+
     this.searchQuery = "";
     (document.getElementById('directorySearchInput') as any).value = '';
     this.updateRightChildren();

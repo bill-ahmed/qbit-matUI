@@ -158,9 +158,9 @@
 
     <!-- If mobile browser, simpler list view -->
     <!-- TODO: Add virtual scrolling... -->
-    <p-virtualScroller [value]="filteredTorrentData" scrollHeight="90vh">
+    <p-virtualScroller *ngIf="isMobileUser" [value]="filteredTorrentData" scrollHeight="90vh" [lazy]="true" [itemSize]="225">
       <ng-template let-torrent pTemplate="torrent">
-        <mat-card class="torrent-card-view mat-elevation-z0" style="padding: 15px 0;">
+        <mat-card class="torrent-card-view mat-elevation-z0" style="padding: 15px 0; height: 90%;">
           <mat-card-header style="margin: 0; padding-right: 16px;">
             <mat-card-title style="word-break: break-all; font-size: 14pt;">{{torrent.name}}</mat-card-title>
             <mat-card-subtitle style="width: max-content;">

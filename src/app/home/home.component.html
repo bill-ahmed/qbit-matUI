@@ -3,22 +3,26 @@
   <!-- Toolbar -->
   <div class="toolbar">
     <mat-toolbar>
-      <div>
+      <div *ngIf="!isMobileUser">
         <h1> qBittorrent </h1>
       </div>
 
       <app-search-torrents *ngIf="!isMobileUser"></app-search-torrents>
 
-      <div *ngIf="isMobileUser" class="actions">
-        <div id="toolbar_actions">
-          <button mat-raised-button color="warn" (click)="openAddTorrentDialog()">
-            <span>Upload</span>
-          </button>
+      <div *ngIf="isMobileUser" class="row space-evenly" style="width: 100%;">
+        <button mat-raised-button color="warn" (click)="openAddTorrentDialog()">
+          <span>Upload</span>
+        </button>
 
-          <button mat-raised-button color="default" (click)="logout()">
-            <span>Logout</span>
-          </button>
-        </div>
+        <button mat-flat-button (click)="$event.stopPropagation();handleSlideToggle()">
+          <mat-icon>brightness_6</mat-icon>
+          <mat-slide-toggle style="padding-left: 10px;" (click)="false" (change)="false" [checked]="isDarkThemeEnabled()" color="primary">
+          </mat-slide-toggle>
+        </button>
+
+        <button mat-raised-button color="default" (click)="logout()">
+          <span>Logout</span>
+        </button>
       </div>
 
       <div *ngIf="!isMobileUser" class="actions">

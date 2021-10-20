@@ -8,7 +8,7 @@ import { FileSystemDialogComponent } from '../file-system-dialog/file-system-dia
 import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
 import { SerializedNode } from '../../services/file-system/file-system.service';
-import { GetDefaultSaveLocation } from 'src/utils/Helpers';
+import { GetDefaultSaveLocation, IsMobileUser } from 'src/utils/Helpers';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { TorrentParserService } from 'src/app/services/torrent-management/torrent-parser.service';
 import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
@@ -32,6 +32,8 @@ export class AddTorrentDialogComponent implements OnInit {
   public isDarkTheme: Observable<boolean>;
 
   public serialized_nodes: SerializedNode[] = [];
+
+  public isMobileUser = IsMobileUser();
 
   /** Keep track of the mat-tab the user is currently in. */
   public currentTab: MatTabChangeEvent;
@@ -191,8 +193,26 @@ export class AddTorrentDialogComponent implements OnInit {
 
   /** Handle opening file explorer dialog & handling any callbacks */
   public openFileSystemExplorerDialog(event: any): void {
-    this.fileSystemExplorerDialogREF = this.fileSystemDialog.open(FileSystemDialogComponent,
-      {minWidth: "50%", panelClass: "generic-dialog", autoFocus: false, data: { initialFilePath: this.filesDestination }});
+    let opts: any = {
+      minWidth: "50%",
+      panelClass: "generic-dialog",
+      autoFocus: false,
+      data: {
+        initialFilePath: this.filesDestination
+      }
+    };
+
+    if(this.isMobileUser) {
+      opts = {
+        ...opts,
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%'
+      }
+    }
+
+    this.fileSystemExplorerDialogREF = this.fileSystemDialog.open(FileSystemDialogComponent, opts);
 
     this.fileSystemExplorerDialogREF.afterClosed().subscribe((res: string) => {
       // If use confirmed choice of file path
