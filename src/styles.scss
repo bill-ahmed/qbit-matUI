@@ -21,6 +21,25 @@ body {
 .debug-y { border: solid 1px yellow; }
 .debug-p { border: solid 1px purple; }
 
+/** Flex layouts **/
+.row { display: flex; flex-direction: row; }
+.col { display: flex; flex-direction: column; }
+.space-between { justify-content: space-between; }
+.space-evenly { justify-content: space-evenly; }
+.space-around { justify-content: space-around; }
+
+.wrap { flex-wrap: wrap; }
+.no-wrap { flex-wrap: nowrap; }
+
+
+.grow { flex-grow: 1; }
+.grow-1 { flex-grow: 0.1; }
+.grow-3 { flex-grow: 0.3; }
+.grow-4 { flex-grow: 0.4; }
+.grow-5 { flex-grow: 0.5; }
+.grow-6 { flex-grow: 0.6; }
+.grow-7 { flex-grow: 0.7; }
+
 /** Styles applicable for all material dialogs */
 .generic-dialog .mat-dialog-container {
   padding: 0;

@@ -160,20 +160,16 @@
     <!-- TODO: Add virtual scrolling... -->
     <p-virtualScroller [value]="filteredTorrentData" scrollHeight="73vh">
       <ng-template let-torrent pTemplate="torrent">
-        <mat-card class="torrent-card-view mat-elevation-z0">
-          <mat-card-header>
-            <mat-card-title>{{torrent.name}}</mat-card-title>
-            <mat-card-subtitle> {{getFileSizeString(torrent.downloaded > torrent.size ? torrent.size : torrent.downloaded)}} / {{getFileSizeString(torrent.size)}} </mat-card-subtitle>
-
-            <div class="spacer"></div>
-
-            <div style="display: flex; min-width: 100px; justify-content: end;">
+        <mat-card class="torrent-card-view mat-elevation-z0" style="padding: 15px 0;">
+          <mat-card-header style="margin: 0; padding-right: 16px;">
+            <mat-card-title style="word-break: break-all;">{{torrent.name}}</mat-card-title>
+            <mat-card-subtitle>
               <p-tag
-                *ngIf="torrent.force_start"
-                value="[F]"
-                styleClass="torrent-status info"
-                [style]="{marginRight: '5px'}"
-                >
+              *ngIf="torrent.force_start"
+              value="[F]"
+              styleClass="torrent-status info"
+              [style]="{marginRight: '5px'}"
+              >
 
               </p-tag>
 
@@ -182,16 +178,43 @@
                 [styleClass]="getClassForStatus(torrent)"
                 >
               </p-tag>
+            </mat-card-subtitle>
+
+            <div class="spacer"></div>
+
+            <!-- Show status -->
+            <div style="display: flex; min-width: 100px; justify-content: end;">
+              <mat-card-subtitle>
+                {{getFileSizeString(torrent.downloaded > torrent.size ? torrent.size : torrent.downloaded)}} / {{getFileSizeString(torrent.size)}}
+              </mat-card-subtitle>
             </div>
           </mat-card-header>
-          <mat-card-content>
-            <span>
-              <div>
+          <mat-card-content style="padding: 0 16px;">
+
+            <!-- Progress bar, completed on, and other info -->
+            <div class="row">
+              <!-- Download/upload speed indicators -->
+              <div class="col grow-6">
+                <div>
+                  <p>
+                    <i class="pi pi-arrow-down"></i>&nbsp;: {{getFileSizeString(torrent.dlspeed)}}/s,
+                    <i class="pi pi-arrow-up"></i>&nbsp;: {{getFileSizeString(torrent.upspeed)}}/s
+                  </p>
+                </div>
+
+                <div>
+                  <p>Added on: {{getCompletedOnString(torrent.added_on)}}</p>
+                  <p>Completed on: {{getCompletedOnString(torrent.completion_on)}}</p>
+                </div>
+              </div>
+
+              <!-- Progress bar -->
+              <div class="grow-4">
                 <p-progressBar class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"
                   [value]="(torrent.progress * 100).toFixed(2)">
                 </p-progressBar>
               </div>
-            </span>
+            </div>
           </mat-card-content>
         </mat-card>
       </ng-template>
