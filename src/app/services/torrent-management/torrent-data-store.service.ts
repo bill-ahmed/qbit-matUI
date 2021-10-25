@@ -230,29 +230,29 @@ export class TorrentDataStoreService {
    */
   private updateTorrentChanges(allData: any) {
     let data = allData.torrents;
+    let tor_removed = allData.torrents_removed;
 
-    if(!allData || !data) {
-      return;
-    }
+    // If any torrents have changed, update their properties
+    if(data) {
+      for(const key of Object.keys(data)){
+        let torID = key;
 
-    for(const key of Object.keys(data)){
-      let torID = key;
+        // If this torrent is new, create space for it
+        if(!this.rawData.torrents[torID]) {
+          this.rawData.torrents[torID] = {};
+        }
 
-      // If this torrent is new, create space for it
-      if(!this.rawData.torrents[torID]) {
-        this.rawData.torrents[torID] = {};
-      }
-
-      if(data[torID]){
-        for(const torKey of Object.keys(data[torID])){
-          this.rawData.torrents[torID][torKey] = data[torID][torKey];
+        if(data[torID]){
+          for(const torKey of Object.keys(data[torID])){
+            this.rawData.torrents[torID][torKey] = data[torID][torKey];
+          }
         }
       }
     }
 
     //Remove all torrents that were deleted in this changelog
-    if(allData.torrents_removed) {
-      (allData.torrents_removed as string[]).forEach(id => {
+    if(tor_removed) {
+      (tor_removed as string[]).forEach(id => {
         delete this.rawData.torrents[id];
       });
     }
