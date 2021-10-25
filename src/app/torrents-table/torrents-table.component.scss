@@ -7,6 +7,11 @@
   pointer-events: none;
 }
 
+.mobile-status {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
 .torrent-table-container {
     display: flex;
     flex-direction: column;

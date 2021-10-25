@@ -162,7 +162,7 @@
       <ng-template let-torrent pTemplate="torrent">
         <mat-card class="torrent-card-view mat-elevation-z0" style="padding: 15px 0; height: 90%;">
           <mat-card-header style="margin: 0;">
-            <mat-card-title style="word-break: break-all; font-size: 12pt;">{{torrent.name}}</mat-card-title>
+            <mat-card-title class="word-break-all" style="font-size: 12pt;">{{torrent.name}}</mat-card-title>
             <!-- Show how much has downloaded -->
             <mat-card-subtitle>
               {{getFileSizeString(torrent.downloaded > torrent.size ? torrent.size : torrent.downloaded)}} / {{getFileSizeString(torrent.size)}}
@@ -185,7 +185,7 @@
                 >
               </p-tag>
 
-              <p-tag styleClass="torrent-status primary" style="margin: 0 10px; cursor: pointer;" (click)="openInfoTorrentDialog($event, torrent)">
+              <p-tag styleClass="torrent-status primary mobile-status" (click)="openInfoTorrentDialog($event, torrent)">
                 <i class="pi pi-info-circle"></i>&nbsp; More info
               </p-tag>
             </mat-card-subtitle>
