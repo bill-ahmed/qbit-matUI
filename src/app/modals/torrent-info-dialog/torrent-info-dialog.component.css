@@ -1,5 +1,6 @@
 .mat-dialog-inner-container {
     min-width: 50vw;
+    height: 100%;
 }
 
 app-file-system-tree-explorer {

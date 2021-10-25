@@ -158,11 +158,17 @@
 
     <!-- If mobile browser, simpler list view -->
     <!-- TODO: Add virtual scrolling... -->
-    <p-virtualScroller *ngIf="isMobileUser" [value]="filteredTorrentData" scrollHeight="90vh" [lazy]="true" [itemSize]="225">
+    <p-virtualScroller *ngIf="isMobileUser" [value]="filteredTorrentData" [trackBy]="trackBy" scrollHeight="90vh" [lazy]="true" [itemSize]="225">
       <ng-template let-torrent pTemplate="torrent">
         <mat-card class="torrent-card-view mat-elevation-z0" style="padding: 15px 0; height: 90%;">
-          <mat-card-header style="margin: 0; padding-right: 16px;">
-            <mat-card-title style="word-break: break-all; font-size: 14pt;">{{torrent.name}}</mat-card-title>
+          <mat-card-header style="margin: 0;">
+            <mat-card-title style="word-break: break-all; font-size: 12pt;">{{torrent.name}}</mat-card-title>
+            <!-- Show how much has downloaded -->
+            <mat-card-subtitle>
+              {{getFileSizeString(torrent.downloaded > torrent.size ? torrent.size : torrent.downloaded)}} / {{getFileSizeString(torrent.size)}}
+            </mat-card-subtitle>
+
+            <!-- Show tags -->
             <mat-card-subtitle style="width: max-content;">
               <p-tag
               *ngIf="torrent.force_start"
@@ -183,18 +189,8 @@
                 <i class="pi pi-info-circle"></i>&nbsp; More info
               </p-tag>
             </mat-card-subtitle>
-
-            <div class="spacer"></div>
-
-            <!-- Show status -->
-            <div style="text-align: end;">
-              <mat-card-subtitle>
-                {{getFileSizeString(torrent.downloaded > torrent.size ? torrent.size : torrent.downloaded)}} / {{getFileSizeString(torrent.size)}}
-              </mat-card-subtitle>
-            </div>
           </mat-card-header>
           <mat-card-content style="padding: 0 16px;">
-
             <!-- Download speed and more info -->
             <div class="row space-between align-baseline" style="margin-bottom: 10px;">
               <p>

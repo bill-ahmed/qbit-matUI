@@ -8,8 +8,10 @@
             <br/>
 
             <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="upload_files" appDragAndDropFiles (fileDropped)="updateFiles($event, true)" (click)="torrentFileUpload.click()">
-              <h4>Drag and drop files here</h4>
-              <h4>or</h4>
+              <div *ngIf="!isMobileUser">
+                <h4>Drag and drop files here</h4>
+                <h4>or</h4>
+              </div>
 
               <button color="primary" mat-flat-button>
                 <mat-icon>attach_file</mat-icon>
@@ -22,7 +24,7 @@
               </button>
 
               <br/>
-              <h4 *ngIf="!show_torrent_contents">
+              <h4 *ngIf="!show_torrent_contents || isMobileUser">
                 <i> {{getFilesToUploadString()}} </i>
               </h4>
 

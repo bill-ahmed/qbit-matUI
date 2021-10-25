@@ -136,6 +136,8 @@ export class TorrentsTableComponent implements OnInit {
     return 'table-col table-col-' + column.replace(/ /g, '-')
   }
 
+  trackBy(index: number, item: Torrent) { return item.hash; }
+
   /** Get all torrent data and update the table */
   private async updateTorrentData(data): Promise<void>{
 
