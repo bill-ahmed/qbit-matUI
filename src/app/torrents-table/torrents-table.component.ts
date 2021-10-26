@@ -16,7 +16,7 @@ import { RowSelectionService } from '../services/torrent-management/row-selectio
 import { TorrentInfoDialogComponent } from '../modals/torrent-info-dialog/torrent-info-dialog.component';
 import { ThemeService } from '../services/theme.service';
 import { Observable } from 'rxjs';
-import { GetTorrentSearchName } from 'src/utils/Helpers';
+import { GetTorrentSearchName, IsMobileUser } from 'src/utils/Helpers';
 import { MoveTorrentsDialogComponent } from '../modals/move-torrents-dialog/move-torrents-dialog.component';
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { TorrentHelperService } from '../services/torrent-management/torrent-helper.service';
@@ -50,6 +50,8 @@ export class TorrentsTableComponent implements OnInit {
   // Context menu items
   public contextMenuItems: MenuItem[];
   public contextMenuSelectedTorrent: Torrent;
+
+  public isMobileUser = IsMobileUser();
 
   // Other
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
@@ -133,6 +135,8 @@ export class TorrentsTableComponent implements OnInit {
   getClassNameForColumns(column: string): string {
     return 'table-col table-col-' + column.replace(/ /g, '-')
   }
+
+  trackBy(index: number, item: Torrent) { return item.hash; }
 
   /** Get all torrent data and update the table */
   private async updateTorrentData(data): Promise<void>{
@@ -262,8 +266,19 @@ export class TorrentsTableComponent implements OnInit {
   /** Open the modal for deleting a new torrent */
   openDeleteTorrentDialog(event: any, tors: Torrent[]): void {
     if(event) { event.stopPropagation() };
+    let opts: any = { disableClose: true, data: {torrent: tors}, panelClass: "generic-dialog" };
 
-    this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}, panelClass: "generic-dialog"});
+    if(this.isMobileUser) {
+      opts = {
+        ...opts,
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%'
+      }
+    }
+
+    this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, opts);
     this.deleteTorDialogRef.afterClosed().subscribe((result: any) => {
       if (result.attemptedDelete) { this.torrentDeleteFinishCallback() }
     });
@@ -272,8 +287,19 @@ export class TorrentsTableComponent implements OnInit {
   /** Open modal for viewing details torrent information */
   openInfoTorrentDialog(event: any, tor: Torrent): void {
     if(event) { event.stopPropagation(); }
+    let opts: any = {data: {torrent: tor}, autoFocus: false, panelClass: "generic-dialog"};
 
-    this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, {data: {torrent: tor}, autoFocus: false, panelClass: "generic-dialog"})
+    if(this.isMobileUser) {
+      opts = {
+        ...opts,
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%'
+      }
+    }
+
+    this.infoTorDialogRef = this.infoTorDialog.open(TorrentInfoDialogComponent, opts)
     this.infoTorDialogRef.afterClosed().subscribe((result: any) => { })
   }
 

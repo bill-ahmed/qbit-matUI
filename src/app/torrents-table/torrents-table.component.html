@@ -4,12 +4,13 @@
     <mat-spinner diameter=50 *ngIf="isLoading()"></mat-spinner>
     <p id="loading_p" *ngIf="isLoading()">Loading...</p>
 
-    <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading() && !isTorrentsEmpty()"></app-bulk-update-torrents>
+    <app-bulk-update-torrents (onChange)="handleBulkEditChange($event)" *ngIf="!isLoading() && !isTorrentsEmpty() && !isMobileUser"></app-bulk-update-torrents>
 
     <!-- Handle context menu -->
     <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
 
-    <p-table *ngIf="!isLoading() && !isTorrentsEmpty()" styleClass="p-datatable-sm mat-elevation-z1"
+    <!-- Only show on desktop browsers -->
+    <p-table *ngIf="!isLoading() && !isTorrentsEmpty() && !isMobileUser" styleClass="p-datatable-sm mat-elevation-z1"
       [columns]="displayedColumns"
       [value]="filteredTorrentData"
       dataKey="hash"
@@ -154,6 +155,65 @@
         </tr>
       </ng-template>
     </p-table>
+
+    <!-- If mobile browser, simpler list view -->
+    <p-virtualScroller *ngIf="isMobileUser" [value]="filteredTorrentData" [trackBy]="trackBy" scrollHeight="90vh" [lazy]="true" [itemSize]="225">
+      <ng-template let-torrent pTemplate="torrent">
+        <mat-card class="torrent-card-view mat-elevation-z0" (click)="openInfoTorrentDialog($event, torrent)">
+          <mat-card-header style="margin: 0;">
+            <mat-card-title class="word-break-all" style="font-size: 12pt;">{{torrent.name}}</mat-card-title>
+            <!-- Show how much has downloaded -->
+            <mat-card-subtitle>
+              {{getFileSizeString(torrent.downloaded > torrent.size ? torrent.size : torrent.downloaded)}} / {{getFileSizeString(torrent.size)}}
+            </mat-card-subtitle>
+
+            <div class="spacer"></div>
+
+            <!-- Delete button -->
+            <div>
+              <button color="warn" mat-icon-button (click)="openDeleteTorrentDialog($event, [torrent])" style="margin-right: 10px;">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-card-header>
+          
+          <mat-card-content class="torrent-card-view-content">
+            <!-- Show tags -->
+            <mat-card-subtitle style="width: max-content;">
+              <p-tag
+              *ngIf="torrent.force_start"
+              value="[F]"
+              styleClass="torrent-status info"
+              [style]="{marginRight: '5px'}"
+              >
+
+              </p-tag>
+
+              <p-tag
+                [value]="getStatusString(torrent.state)"
+                [styleClass]="getClassForStatus(torrent)"
+                >
+              </p-tag>
+            </mat-card-subtitle>
+
+            <!-- Download speed and more info -->
+            <div class="row space-between align-baseline" style="margin-bottom: 10px;">
+              <p>
+                <i class="pi pi-arrow-down"></i>&nbsp;: {{getFileSizeString(torrent.dlspeed)}}/s,
+                <i class="pi pi-arrow-up"></i>&nbsp;: {{getFileSizeString(torrent.upspeed)}}/s
+              </p>
+            </div>
+            
+            <!-- Progress bar -->
+            <div class="row">
+              <p-progressBar class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"
+                [value]="(torrent.progress * 100).toFixed(2)">
+              </p-progressBar>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </ng-template>
+    </p-virtualScroller>
 
     <div *ngIf="isTorrentsEmpty()">
       <p> No torrents found. Try adding one by clicking Upload at the top-right. </p>

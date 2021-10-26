@@ -16,6 +16,7 @@ import { AuthService } from '../services/auth/auth.service';
 import { SettingsComponent } from '../modals/settings/settings.component';
 import { ApplicationConfigService } from '../services/app/application-config.service';
 import { TorrentDataStoreService } from '../services/torrent-management/torrent-data-store.service';
+import { IsMobileUser } from 'src/utils/Helpers';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,8 @@ export class HomeComponent implements OnInit {
   private cookieSID: string;
   public applicationBuildInfo: QbittorrentBuildInfo;
   public isDarkTheme: Observable<boolean>;
+
+  public isMobileUser = IsMobileUser();
 
   constructor(private data_store: TorrentDataStoreService, public dialog: MatDialog, private theme: ThemeService, private auth: AuthService,
               private appConfig: ApplicationConfigService) {
@@ -49,14 +52,24 @@ export class HomeComponent implements OnInit {
 
   /** Open the modal for adding a new torrent */
   openAddTorrentDialog(opts?: any): void {
-    const addTorDialogRef = this.dialog.open(AddTorrentDialogComponent,
-      {
-        disableClose: true,
-        panelClass: "generic-dialog",
-        minWidth: "40%",
-        data: opts
+    let options: any = {
+      disableClose: true,
+      panelClass: "generic-dialog",
+      minWidth: "40%",
+      data: opts
+    };
+
+    if(this.isMobileUser) {
+      options = {
+        ...options,
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%'
       }
-    );
+    }
+
+    const addTorDialogRef = this.dialog.open(AddTorrentDialogComponent, options);
 
     addTorDialogRef.afterClosed().subscribe((result: any) => {
       this.handleAddTorrentDialogClosed(result);
@@ -64,16 +77,25 @@ export class HomeComponent implements OnInit {
   }
 
   openSettingsDialog():void {
-    const settingsDialogRef = this.dialog.open(
-      SettingsComponent,
-      {
-        panelClass: "generic-dialog",
-        minWidth: "80%",
-        height: "85vh",
-        autoFocus: false,
-        disableClose: true
+    let opts: any = {
+      panelClass: "generic-dialog",
+      minWidth: "80%",
+      height: "85vh",
+      autoFocus: false,
+      disableClose: true
+    };
+
+    if(this.isMobileUser) {
+      opts = {
+        ...opts,
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%'
       }
-    );
+    }
+
+    const settingsDialogRef = this.dialog.open(SettingsComponent, opts);
 
     settingsDialogRef.afterClosed().subscribe(res => {
     })

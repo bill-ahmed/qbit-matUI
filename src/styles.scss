@@ -3,7 +3,7 @@
 @import "~@angular/material/theming";
 @import "variables.scss";
 
-html, body { height: 100%; min-width: 800px;}
+html, body { height: 100%; }
 body {
   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -11,11 +11,38 @@ body {
 
 }
 
+.spacer {
+  flex-grow: 1;
+}
+
 .debug-r { border: solid 1px red; }
 .debug-g { border: solid 1px green; }
 .debug-b { border: solid 1px blue; }
 .debug-y { border: solid 1px yellow; }
 .debug-p { border: solid 1px purple; }
+
+/** Flex layouts **/
+.row { display: flex; flex-direction: row; }
+.col { display: flex; flex-direction: column; }
+.space-between  { justify-content: space-between; }
+.space-evenly   { justify-content: space-evenly; }
+.space-around   { justify-content: space-around; }
+
+.wrap     { flex-wrap: wrap; }
+.no-wrap  { flex-wrap: nowrap; }
+
+.align-center   { align-items: center; }
+.align-baseline { align-items: baseline; }
+
+.grow { flex-grow: 1; }
+.grow-1 { flex-grow: 0.1; }
+.grow-3 { flex-grow: 0.3; }
+.grow-4 { flex-grow: 0.4; }
+.grow-5 { flex-grow: 0.5; }
+.grow-6 { flex-grow: 0.6; }
+.grow-7 { flex-grow: 0.7; }
+
+.word-break-all { word-break: break-all; }
 
 /** Styles applicable for all material dialogs */
 .generic-dialog .mat-dialog-container {

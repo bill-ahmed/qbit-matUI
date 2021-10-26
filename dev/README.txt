@@ -15,7 +15,9 @@ To setup the dev env:
 3. Open up the default web ui and set desired username/password
 4. Under Web UI settings, set the path to "/www"
 5. Go to project root
-6. Run: npm run dev
-7. Go to http://localhost:8090
+6. Build a prod version of the login page: ng build --prod --project=login
+7. Copy/paste the build files into ./dev/www/public
+8. Run: npm run dev
+9. Go to http://localhost:8090
 
 Note: If you make any changes to the source code, you will have to hard-reload the page each time (Ctrl + Shift + R on Windows).

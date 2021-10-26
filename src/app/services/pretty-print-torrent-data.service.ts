@@ -70,7 +70,7 @@ export class PrettyPrintTorrentDataService {
     let date = new Date(timestamp * 1000)
     let completedYear = date.getUTCFullYear();
 
-    /** If timestamp is from before or at 1970, or fat in the future, then torrent is still downloading.
+    /** If timestamp is from before or at 1970, or far in the future, then torrent is still downloading.
      *
      * Need to do this because some Qbittorrent versions will use a date close to epoch
      * to denote a future completion date (or some date in the far future)

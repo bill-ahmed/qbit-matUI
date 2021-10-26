@@ -3,13 +3,29 @@
   <!-- Toolbar -->
   <div class="toolbar">
     <mat-toolbar>
-      <div>
+      <div *ngIf="!isMobileUser">
         <h1> qBittorrent </h1>
       </div>
 
-      <app-search-torrents></app-search-torrents>
+      <app-search-torrents *ngIf="!isMobileUser"></app-search-torrents>
 
-      <div class="actions">
+      <div *ngIf="isMobileUser" class="row space-evenly" style="width: 100%;">
+        <button mat-raised-button color="warn" (click)="openAddTorrentDialog()">
+          <span>Upload</span>
+        </button>
+
+        <button mat-flat-button (click)="$event.stopPropagation();handleSlideToggle()">
+          <mat-icon>brightness_6</mat-icon>
+          <mat-slide-toggle style="padding-left: 10px;" (click)="false" (change)="false" [checked]="isDarkThemeEnabled()" color="primary">
+          </mat-slide-toggle>
+        </button>
+
+        <button mat-raised-button color="default" (click)="logout()">
+          <span>Logout</span>
+        </button>
+      </div>
+
+      <div *ngIf="!isMobileUser" class="actions">
         <div id="toolbar_actions">
           <button mat-fab matTooltip="Add Torrent" id="addTorrentFAB" color="warn" (click)="openAddTorrentDialog()">
             <mat-icon>cloud_upload</mat-icon>
@@ -45,13 +61,12 @@
 
         </div>
       </div>
-
     </mat-toolbar>
   </div>
 
   <!-- Main Content -->
   <div class="content" role="main">
     <app-torrents-table></app-torrents-table>
-    <app-global-transfer-info></app-global-transfer-info>
+    <app-global-transfer-info *ngIf="!isMobileUser"></app-global-transfer-info>
   </div>
 </div>

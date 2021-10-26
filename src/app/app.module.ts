@@ -43,6 +43,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { TableModule } from 'primeng/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BulkUpdateTorrentsComponent } from './torrents-table/bulk-update-torrents/bulk-update-torrents.component';
@@ -120,6 +121,7 @@ if(!environment.production){
     MatToolbarModule,
     MatButtonModule,
     ProgressBarModule,
+    VirtualScrollerModule,
     TableModule,
     TagModule,
     ContextMenuModule,
