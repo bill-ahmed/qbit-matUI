@@ -23,14 +23,29 @@
     border-color: $dark-default;
   }
 
-  .p-virtualscroller-content {
-    background: $table-surface-2;
+  .p-virtualscroller-item {
+    background: $bg-surface-0;
   }
 }
 
-.torrent-card-view {
-  margin: 10px 5px;
+mat-card.torrent-card-view {
+  display: flex;
+  flex-direction: column;
+
   border: solid 1px $my-app-default;
+  cursor: pointer;
+  height: 95%;
+
+  margin: 0;
+  padding: 15px 0;
+
+  mat-card-content.torrent-card-view-content {
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    padding: 0 16px;
+  }
 
   p {
     margin-bottom: 5px;

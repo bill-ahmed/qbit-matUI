@@ -55,7 +55,6 @@ export class TorrentDataStoreService {
     }
 
     // Update state with new
-    // TODO: When a torrent gets removed, we need to refresh our data
     this.setFormattedResponse(data);
     this._updateDataSource(this.TorrentMainData);
 

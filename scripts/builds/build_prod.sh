@@ -42,7 +42,7 @@ rm -rf "$default_build_path/$login_build"
 echo
 echo "Building for Windows..."
 cp -v -f scripts/assets/config.windows.json src/assets/config.prod.json
-ng build --prod
+npx ng build --prod
 mkdir "$default_build_path/$win_build"
 mv -v $default_build_dir "$default_build_path/$win_build/private"        # Each application should be under private folder
 
@@ -50,14 +50,14 @@ mv -v $default_build_dir "$default_build_path/$win_build/private"        # Each 
 echo
 echo "Building for Unix..."
 cp -v -f scripts/assets/config.unix.json src/assets/config.prod.json
-ng build --prod
+npx ng build --prod
 mkdir "$default_build_path/$unix_build"
 mv -v $default_build_dir "$default_build_path/$unix_build/private"       # Each application should be under private folder
 
 # Step (4) -- Build login page
 echo
 echo "Building login page..."
-ng build --prod --project="login"
+npx ng build --prod --project="login"
 
 # Step (5) -- Copy login page to both Unix & Windows builds
 echo

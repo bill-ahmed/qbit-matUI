@@ -1,0 +1,11 @@
+.delete-torrent-dialog {
+    height: 100%;
+    width: 100%;
+}
+
+/* TODO: Make this less hacky */
+.dark-theme.delete-torrent-dialog { background: #303030; }
+
+.delete-disk-msg { line-height: 20px; }
+
+.delete-disk-msg p { margin: 0; }

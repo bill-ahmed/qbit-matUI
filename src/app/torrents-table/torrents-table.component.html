@@ -9,7 +9,7 @@
     <!-- Handle context menu -->
     <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
 
-    <!-- Only show on desktop sized browsers -->
+    <!-- Only show on desktop browsers -->
     <p-table *ngIf="!isLoading() && !isTorrentsEmpty() && !isMobileUser" styleClass="p-datatable-sm mat-elevation-z1"
       [columns]="displayedColumns"
       [value]="filteredTorrentData"
@@ -157,10 +157,9 @@
     </p-table>
 
     <!-- If mobile browser, simpler list view -->
-    <!-- TODO: Add virtual scrolling... -->
     <p-virtualScroller *ngIf="isMobileUser" [value]="filteredTorrentData" [trackBy]="trackBy" scrollHeight="90vh" [lazy]="true" [itemSize]="225">
       <ng-template let-torrent pTemplate="torrent">
-        <mat-card class="torrent-card-view mat-elevation-z0" style="padding: 15px 0; height: 90%;">
+        <mat-card class="torrent-card-view mat-elevation-z0" (click)="openInfoTorrentDialog($event, torrent)">
           <mat-card-header style="margin: 0;">
             <mat-card-title class="word-break-all" style="font-size: 12pt;">{{torrent.name}}</mat-card-title>
             <!-- Show how much has downloaded -->
@@ -168,6 +167,17 @@
               {{getFileSizeString(torrent.downloaded > torrent.size ? torrent.size : torrent.downloaded)}} / {{getFileSizeString(torrent.size)}}
             </mat-card-subtitle>
 
+            <div class="spacer"></div>
+
+            <!-- Delete button -->
+            <div>
+              <button color="warn" mat-icon-button (click)="openDeleteTorrentDialog($event, [torrent])" style="margin-right: 10px;">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-card-header>
+          
+          <mat-card-content class="torrent-card-view-content">
             <!-- Show tags -->
             <mat-card-subtitle style="width: max-content;">
               <p-tag
@@ -184,13 +194,8 @@
                 [styleClass]="getClassForStatus(torrent)"
                 >
               </p-tag>
-
-              <p-tag styleClass="torrent-status primary mobile-status" (click)="openInfoTorrentDialog($event, torrent)">
-                <i class="pi pi-info-circle"></i>&nbsp; More info
-              </p-tag>
             </mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content style="padding: 0 16px;">
+
             <!-- Download speed and more info -->
             <div class="row space-between align-baseline" style="margin-bottom: 10px;">
               <p>
@@ -198,7 +203,7 @@
                 <i class="pi pi-arrow-up"></i>&nbsp;: {{getFileSizeString(torrent.upspeed)}}/s
               </p>
             </div>
-
+            
             <!-- Progress bar -->
             <div class="row">
               <p-progressBar class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"

@@ -266,8 +266,19 @@ export class TorrentsTableComponent implements OnInit {
   /** Open the modal for deleting a new torrent */
   openDeleteTorrentDialog(event: any, tors: Torrent[]): void {
     if(event) { event.stopPropagation() };
+    let opts: any = { disableClose: true, data: {torrent: tors}, panelClass: "generic-dialog" };
 
-    this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, {disableClose: true, data: {torrent: tors}, panelClass: "generic-dialog"});
+    if(this.isMobileUser) {
+      opts = {
+        ...opts,
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        height: '100%',
+        width: '100%'
+      }
+    }
+
+    this.deleteTorDialogRef = this.deleteTorrentDialog.open(DeleteTorrentDialogComponent, opts);
     this.deleteTorDialogRef.afterClosed().subscribe((result: any) => {
       if (result.attemptedDelete) { this.torrentDeleteFinishCallback() }
     });
