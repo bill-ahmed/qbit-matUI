@@ -78,6 +78,11 @@ export class TorrentInfoDialogComponent implements OnInit {
 
     // Serialize & update
     this.torrentContentsAsNodes = await this.fs.SerializeFileSystem(fs_root);
+
+    // Need a weighted average for total progress. 
+    // Luckily qBittorrent already calculates this for us!
+    this.torrentContentsAsNodes[0].progress = this.torrent.progress;
+
     this.isLoading = false;
   }
 
