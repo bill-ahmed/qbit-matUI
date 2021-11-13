@@ -108,6 +108,10 @@
                 {{getFileSizeString(torrent.uploaded)}}
               </div>
 
+              <div *ngSwitchCase="'Downloaded'">
+                {{getFileSizeString(torrent.downloaded)}}
+              </div>
+
               <div *ngSwitchCase="'Ratio'">
                 {{getTorrentRatioString(torrent)}}
               </div>
