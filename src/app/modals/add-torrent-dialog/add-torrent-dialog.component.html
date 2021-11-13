@@ -1,6 +1,15 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="upload_outer_container">
   <div class="mat-dialog-inner-container mat-app-background upload_container">
-    <h2 mat-dialog-title>Upload Torrents</h2>
+
+    <div class="row space-between align-baseline">
+      <h2 mat-dialog-title>Upload Torrents</h2>
+
+      <mat-dialog-actions *ngIf="isMobileUser" align="end">
+        <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>
+        <button disabled={{isUploadDisabled()}} mat-raised-button (click)="handleUpload()" color="primary" cdkFocusInitial>Upload</button>
+      </mat-dialog-actions>
+    </div>
+
     <mat-dialog-content class="mat-typography dialog_content">
       <mat-tab-group mat-align-tabs="start" (selectedTabChange)="handleTabChange($event)" [selectedIndex]="currentTab?.index || 0">
         <mat-tab label="File Upload">
@@ -63,7 +72,7 @@
       </div>
     </mat-dialog-content>
 
-    <mat-dialog-actions align="end">
+    <mat-dialog-actions *ngIf="!isMobileUser" align="end">
       <button disabled={{isLoading}} mat-button [mat-dialog-close]="true">Cancel</button>
       <button disabled={{isUploadDisabled()}} mat-raised-button (click)="handleUpload()" color="primary" cdkFocusInitial>Upload</button>
     </mat-dialog-actions>

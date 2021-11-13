@@ -11,6 +11,11 @@
         <mat-icon>search</mat-icon>
         <input id="directorySearchInput" type="text" (keyup)="onSearchValueChange($event)" placeholder="Search...">
       </mat-card>
+
+      <div class="row align-center" *ngIf="isMobileUser">
+        <button mat-button [mat-dialog-close]="false"> Cancel </button>
+        <button mat-raised-button (click)="closeDialog()" color="primary"> Confirm </button>
+      </div>
     </div>
 
     <mat-divider></mat-divider>
@@ -85,7 +90,7 @@
         <br/>
 
     </mat-dialog-content>
-    <mat-dialog-actions align="end">
+    <mat-dialog-actions *ngIf="!isMobileUser" align="end">
         <button mat-button [mat-dialog-close]="false"> Cancel </button>
         <button mat-raised-button (click)="closeDialog()" color="primary"> Confirm </button>
     </mat-dialog-actions>

@@ -1,6 +1,7 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="mat-dialog-inner-container mat-app-background">
 
-    <h2 mat-dialog-title>
+    <div class="row space-between align-baseline">
+      <h2 mat-dialog-title>
         {{torrent.name}}
         <p style="font-size: 10pt; margin: 0;"><i>{{torrent.hash}}</i></p>
         <p></p>
@@ -18,7 +19,12 @@
             >
           </p-tag>
         </div>
-    </h2>
+      </h2>
+
+      <button *ngIf="isMobileUser" mat-icon-button [mat-dialog-close]="true">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
 
     <mat-dialog-content class="mat-typography torrent-info-container">
         <mat-tab-group mat-align-tabs="start">
@@ -81,7 +87,7 @@
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
-    <button mat-button [mat-dialog-close]="true">Close</button>
+      <button *ngIf="!isMobileUser" mat-button [mat-dialog-close]="true">Close</button>
     </mat-dialog-actions>
 
 </div>
