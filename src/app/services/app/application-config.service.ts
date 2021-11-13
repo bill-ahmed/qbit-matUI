@@ -77,6 +77,18 @@ export class ApplicationConfigService {
     this._persistWebUIOptions(updateNow);
   }
 
+  /** 
+   * Update column width with change in width provided. 
+   * 
+   * E.g. if previous width was 10, and delta = -5, then new width is 5.
+   * */
+  setColumnWidth(col: TORRENT_TABLE_COLUMNS, delta: number) {
+    let colWidths = this.user_preferences.web_ui_options.torrent_table.column_widths
+    colWidths[col] = colWidths[col] + delta;
+
+    this._persistWebUIOptions();
+  }
+
   async getQbittorrentBuildInfo(): Promise<QbittorrentBuildInfo> {
     if(!this.qBitBuildInfo) { this.qBitBuildInfo = await this.data_store.GetApplicationBuildInfo(); }
 

@@ -274,7 +274,7 @@ export interface WebUITorrentTableSettings {
     order: 'asc' | 'desc'
   },
   columns_to_show: string[],
-  column_widths: { [x: string]: number }[],
+  column_widths: { [x: string]: number },
 }
 
 export interface WebUINotificationSettings {

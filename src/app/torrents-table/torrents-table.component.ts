@@ -23,6 +23,7 @@ import { TorrentHelperService } from '../services/torrent-management/torrent-hel
 import { SnackbarService } from '../services/notifications/snackbar.service';
 import { MenuItem } from 'primeng/api';
 import { getClassForStatus } from '../../utils/Helpers'
+import { Constants } from 'src/constants';
 
 
 @Component({
@@ -46,6 +47,8 @@ export class TorrentsTableComponent implements OnInit {
 
   // A reverse mapping from column name to torrent property
   public displayedColumnsMapping = ApplicationConfigService.TORRENT_TABLE_COLUMNS_MAPPING
+
+  public colWidths = Constants.TORRENT_TABLE_COLUMNS_WIDTHS as any;
 
   // Context menu items
   public contextMenuItems: MenuItem[];
@@ -260,8 +263,8 @@ export class TorrentsTableComponent implements OnInit {
 
   /** Callback for when table changes col width */
   handleColumnResize(event: any) {
-    console.log('resized', event);
-    console.log(`element ${event.element.id} resized by ${event.delta}`)
+    let colName = event.element.id.replace(/-/g, ' ');
+    this.appConfig.setColumnWidth(colName, event.delta);
   }
  
   /** Determine whether a torrent is selected or not */
@@ -369,12 +372,16 @@ export class TorrentsTableComponent implements OnInit {
     // Column order
     this.displayedColumns = pref.web_ui_options?.torrent_table?.columns_to_show;
 
+    // Want to override defaults
+    let oldColWidths = this.colWidths;
+    let newColWidths = pref.web_ui_options?.torrent_table?.column_widths
+    this.colWidths = { ...oldColWidths, ...newColWidths };
+
     // Re-sort data
     this.handleSortChange(this.currentMatSort);
   }
 
   colNameForMapping(col) {
-    console.log('col mapping for', col)
     return this.displayedColumnsMapping[col].name
   }
 

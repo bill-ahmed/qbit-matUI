@@ -43,7 +43,10 @@
               [class]="getClassNameForColumns(col)" 
               
               pReorderableColumn 
-              pResizableColumn 
+
+              pResizableColumn
+              [pResizableColumnDisabled]="['select', 'Actions'].includes(col)" 
+
               [pSortableColumn]="displayedColumnsMapping[col]"
           >
             
@@ -66,7 +69,7 @@
 
       <ng-template pTemplate="colgroup">
         <colgroup>
-          <col *ngFor="let col of displayedColumns" [ngStyle]="{ 'width': col.width || 'initial' }">
+          <col *ngFor="let col of displayedColumns" [ngStyle]="{ 'width': colWidths[col] + 'px' || 'initial' }">
         </colgroup>
       </ng-template>
 
