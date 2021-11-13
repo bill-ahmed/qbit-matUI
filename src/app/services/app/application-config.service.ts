@@ -12,6 +12,7 @@ import { ApplicationDefaults } from './defaults';
 import { NetworkConnectionInformationService } from '../network/network-connection-information.service';
 import { MergeDeep } from 'src/utils/Helpers';
 import { BehaviorSubject } from 'rxjs';
+import { Constants } from 'src/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -19,35 +20,18 @@ import { BehaviorSubject } from 'rxjs';
 export class ApplicationConfigService {
 
   static THEME_OPTIONS = ['Light', 'Dark'];
-  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS[] = [
-    'Name', 'Size', 'Progress', 'Status',
-    'Down Speed', 'Up Speed', 'ETA',
-    'Ratio', 'Uploaded',
-    'Completed On', 'Added On', 'Last Activity',
-    'Category', 'Seeders', 'Leechers', 'Downloaded'
-  ];
+  
+  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS[] = Constants.TORRENT_TABLE_COLUMNS;
+  static TORRENT_TABLE_COLUMNS_MAPPING = Constants.TORRENT_TABLE_COLUMNS_MAPPING;
 
-  static TORRENT_TABLE_COLUMNS_MAPPING = {
-    'Name': 'name',
-    'Size': 'size',
-    'Progress': 'progress',
-    'Status': 'state',
-    'Down Speed': 'dlspeed',
-    'Up Speed': 'upspeed',
-    'ETA': 'eta',
-    'Ratio': 'ratio',
-    
-    'Downloaded': 'downloaded',
-    'Uploaded': 'uploaded',
+  /** 
+   * Map column name to its user-desired width. If no width is set, defaults to zero (0).
+   */
+  static TORRENT_TABLE_COLUMN_WIDTHS: { [x: string] : number } = ApplicationConfigService.TORRENT_TABLE_COLUMNS.reduce((prev, col) => {
+    prev[col] = 0;
+    return prev;
+  }, {})
 
-    'Completed On': 'completion_on',
-    'Added On': 'added_on',
-    'Last Activity': 'last_activity',
-    'Category': 'category',
-
-    'Seeders': 'num_seeds',
-    'Leechers': 'num_leechs',
-  }
 
   /** All available columns for the torrent table */
   static ALL_COLUMNS = ['select', 'Actions', ...ApplicationConfigService.TORRENT_TABLE_COLUMNS];
@@ -71,7 +55,6 @@ export class ApplicationConfigService {
   private loaded_preferences = false;
 
   constructor(private data_store: TorrentDataStoreService, private networkInfo: NetworkConnectionInformationService, private http: HttpClient) {
-
     this.application_version = _appConfig.version;
     this.data_store.GetApplicationBuildInfo()
     .then(res => { this.qBitBuildInfo = res })

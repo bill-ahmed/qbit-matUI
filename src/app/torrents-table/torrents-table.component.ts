@@ -136,6 +136,10 @@ export class TorrentsTableComponent implements OnInit {
     return 'table-col table-col-' + column.replace(/ /g, '-')
   }
 
+  getIdForColumns(column: string): string {
+    return column.replace(/ /g, '-');
+  }
+
   trackBy(index: number, item: Torrent) { return item.hash; }
 
   /** Get all torrent data and update the table */
@@ -254,6 +258,12 @@ export class TorrentsTableComponent implements OnInit {
     this.appConfig.setTorrentTableColumns(event.columns, true);
   }
 
+  /** Callback for when table changes col width */
+  handleColumnResize(event: any) {
+    console.log('resized', event);
+    console.log(`element ${event.element.id} resized by ${event.delta}`)
+  }
+ 
   /** Determine whether a torrent is selected or not */
   isSelected(tor: Torrent): boolean {
     return this.selection.isSelected(tor);
@@ -361,6 +371,11 @@ export class TorrentsTableComponent implements OnInit {
 
     // Re-sort data
     this.handleSortChange(this.currentMatSort);
+  }
+
+  colNameForMapping(col) {
+    console.log('col mapping for', col)
+    return this.displayedColumnsMapping[col].name
   }
 
   public getClassForStatus(t: Torrent): string { return getClassForStatus(t); }

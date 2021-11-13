@@ -27,13 +27,26 @@
       [contextMenu]="cm"
       [(contextMenuSelection)]="contextMenuSelectedTorrent"
 
+      [resizableColumns]="true" 
+      columnResizeMode="expand"
+      responsiveLayout="scroll"
+
       (onColReorder)="handleColumnReorder($event)"
+      (onColResize)="handleColumnResize($event)"
       >
 
       <!-- TABLE HEADER -->
       <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let col of displayedColumns" [class]="getClassNameForColumns(col)" pReorderableColumn [pSortableColumn]="displayedColumnsMapping[col]">
+          <th *ngFor="let col of displayedColumns" 
+              [id]="getIdForColumns(col)" 
+              [class]="getClassNameForColumns(col)" 
+              
+              pReorderableColumn 
+              pResizableColumn 
+              [pSortableColumn]="displayedColumnsMapping[col]"
+          >
+            
             <div style="display: flex;" [ngSwitch]="col">
               <!-- Checkbox for selecting ALL torrents -->
               <div *ngSwitchCase="'select'">
@@ -49,6 +62,12 @@
             </div>
           </th>
         </tr>
+      </ng-template>
+
+      <ng-template pTemplate="colgroup">
+        <colgroup>
+          <col *ngFor="let col of displayedColumns" [ngStyle]="{ 'width': col.width || 'initial' }">
+        </colgroup>
       </ng-template>
 
       <!-- TABLE ROWS -->
