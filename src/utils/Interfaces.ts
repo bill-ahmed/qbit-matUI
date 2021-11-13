@@ -273,7 +273,8 @@ export interface WebUITorrentTableSettings {
     column_name: TORRENT_TABLE_COLUMNS,
     order: 'asc' | 'desc'
   },
-  columns_to_show: string[]
+  columns_to_show: string[],
+  column_widths: { [x: string]: number },
 }
 
 export interface WebUINotificationSettings {

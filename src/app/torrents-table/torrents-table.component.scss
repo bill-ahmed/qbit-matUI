@@ -111,24 +111,32 @@ mat-spinner {
     word-wrap: break-word;
     word-break: break-word;
 
-    width: 450px;
+    // width: 450px;
   }
 
-  /** MUST HAVE SIZES FOR EACH COLUMN!! */
-
   &.table-col-select     { width: 50px; }
-  &.table-col-Actions    { width: 140px; }
-  &.table-col-Size       { width: 85px; }
-  &.table-col-Progress   { width: 175px; }
-  &.table-col-Status     { width: 140px; }
-  &.table-col-Up-Speed   { width: 100px; }
-  &.table-col-Down-Speed { width: 120px; }
-  &.table-col-ETA        { width: 115px; }
-  &.table-col-Ratio      { width: 75px; }
-  &.table-col-Uploaded   { width: 85px; }
-  &.table-col-Added-On   { width: 150px; }
-  &.table-col-Completed-On { width: 170px; }
-  &.table-col-Last-Activity { width: 170px; }
+  // &.table-col-Actions    { width: 140px; }
+  // &.table-col-Size       { width: 85px; }
+  // &.table-col-Progress   { width: 175px; }
+  // &.table-col-Status     { width: 140px; }
+  
+  // &.table-col-Up-Speed   { width: 100px; }
+  // &.table-col-Down-Speed { width: 120px; }
+  
+  // &.table-col-ETA        { width: 115px; }
+  // &.table-col-Ratio      { width: 75px; }
+
+  // &.table-col-Downloaded  { width: 100px; }
+  // &.table-col-Uploaded    { width: 100px; }
+
+  // &.table-col-Added-On   { width: 170px; }
+  // &.table-col-Completed-On { width: 170px; }
+  // &.table-col-Last-Activity { width: 170px; }
+  
+  // &.table-col-Category { width: 120px; }
+
+  // &.table-col-Seeders { width: 85px; }
+  // &.table-col-Leechers { width: 85px; }
 }
 
 i.pi {

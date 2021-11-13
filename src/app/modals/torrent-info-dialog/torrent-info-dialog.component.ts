@@ -9,7 +9,7 @@ import { TorrentDataStoreService } from '../../services/torrent-management/torre
 import { NetworkConnectionInformationService } from '../../services/network/network-connection-information.service';
 import { FileSystemService, SerializedNode } from '../../services/file-system/file-system.service';
 import DirectoryNode from 'src/app/services/file-system/FileSystemNodes/DirectoryNode';
-import { getClassForStatus } from 'src/utils/Helpers';
+import { getClassForStatus, IsMobileUser } from 'src/utils/Helpers';
 import { SnackbarService } from 'src/app/services/notifications/snackbar.service';
 
 @Component({
@@ -29,6 +29,8 @@ export class TorrentInfoDialogComponent implements OnInit {
   private REFRESH_INTERVAL: any;
 
   private allowDataRefresh = true;
+
+  public isMobileUser = IsMobileUser();
 
   constructor(@Inject(MAT_DIALOG_DATA) data: any, private units_helper: UnitsHelperService,
               private pp: PrettyPrintTorrentDataService, private theme: ThemeService, private data_store: TorrentDataStoreService,
@@ -76,6 +78,11 @@ export class TorrentInfoDialogComponent implements OnInit {
 
     // Serialize & update
     this.torrentContentsAsNodes = await this.fs.SerializeFileSystem(fs_root);
+
+    // Need a weighted average for total progress. 
+    // Luckily qBittorrent already calculates this for us!
+    this.torrentContentsAsNodes[0].progress = this.torrent.progress;
+
     this.isLoading = false;
   }
 

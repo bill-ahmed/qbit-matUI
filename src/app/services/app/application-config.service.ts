@@ -12,6 +12,7 @@ import { ApplicationDefaults } from './defaults';
 import { NetworkConnectionInformationService } from '../network/network-connection-information.service';
 import { MergeDeep } from 'src/utils/Helpers';
 import { BehaviorSubject } from 'rxjs';
+import { Constants } from 'src/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -19,27 +20,18 @@ import { BehaviorSubject } from 'rxjs';
 export class ApplicationConfigService {
 
   static THEME_OPTIONS = ['Light', 'Dark'];
-  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS[] = [
-    'Name', 'Size', 'Progress', 'Status',
-    'Down Speed', 'Up Speed', 'ETA',
-    'Ratio', 'Uploaded',
-    'Completed On', 'Added On', 'Last Activity'
-  ];
+  
+  static TORRENT_TABLE_COLUMNS: TORRENT_TABLE_COLUMNS[] = Constants.TORRENT_TABLE_COLUMNS;
+  static TORRENT_TABLE_COLUMNS_MAPPING = Constants.TORRENT_TABLE_COLUMNS_MAPPING;
 
-  static TORRENT_TABLE_COLUMNS_MAPPING = {
-    'Name': 'name',
-    'Size': 'size',
-    'Progress': 'progress',
-    'Status': 'state',
-    'Down Speed': 'dlspeed',
-    'Up Speed': 'upspeed',
-    'ETA': 'eta',
-    'Ratio': 'ratio',
-    'Uploaded': 'uploaded',
-    'Completed On': 'completion_on',
-    'Added On': 'added_on',
-    'Last Activity': 'last_activity'
-  }
+  /** 
+   * Map column name to its user-desired width. If no width is set, defaults to zero (0).
+   */
+  static TORRENT_TABLE_COLUMN_WIDTHS: { [x: string] : number } = ApplicationConfigService.TORRENT_TABLE_COLUMNS.reduce((prev, col) => {
+    prev[col] = 0;
+    return prev;
+  }, {})
+
 
   /** All available columns for the torrent table */
   static ALL_COLUMNS = ['select', 'Actions', ...ApplicationConfigService.TORRENT_TABLE_COLUMNS];
@@ -63,7 +55,6 @@ export class ApplicationConfigService {
   private loaded_preferences = false;
 
   constructor(private data_store: TorrentDataStoreService, private networkInfo: NetworkConnectionInformationService, private http: HttpClient) {
-
     this.application_version = _appConfig.version;
     this.data_store.GetApplicationBuildInfo()
     .then(res => { this.qBitBuildInfo = res })
@@ -84,6 +75,18 @@ export class ApplicationConfigService {
   setTorrentTableColumns(cols: string[], updateNow?: boolean) {
     this.user_preferences.web_ui_options.torrent_table.columns_to_show = cols;
     this._persistWebUIOptions(updateNow);
+  }
+
+  /** 
+   * Update column width with change in width provided. 
+   * 
+   * E.g. if previous width was 10, and delta = -5, then new width is 5.
+   * */
+  setColumnWidth(col: TORRENT_TABLE_COLUMNS, delta: number) {
+    let colWidths = this.user_preferences.web_ui_options.torrent_table.column_widths
+    colWidths[col] = colWidths[col] + delta;
+
+    this._persistWebUIOptions();
   }
 
   async getQbittorrentBuildInfo(): Promise<QbittorrentBuildInfo> {

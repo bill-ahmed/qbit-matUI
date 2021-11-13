@@ -27,13 +27,29 @@
       [contextMenu]="cm"
       [(contextMenuSelection)]="contextMenuSelectedTorrent"
 
+      [resizableColumns]="true" 
+      columnResizeMode="expand"
+      responsiveLayout="scroll"
+
       (onColReorder)="handleColumnReorder($event)"
+      (onColResize)="handleColumnResize($event)"
       >
 
       <!-- TABLE HEADER -->
       <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let col of displayedColumns" [class]="getClassNameForColumns(col)" pReorderableColumn [pSortableColumn]="displayedColumnsMapping[col]">
+          <th *ngFor="let col of displayedColumns" 
+              [id]="getIdForColumns(col)" 
+              [class]="getClassNameForColumns(col)" 
+              
+              pReorderableColumn 
+
+              pResizableColumn
+              [pResizableColumnDisabled]="['select', 'Actions'].includes(col)" 
+
+              [pSortableColumn]="displayedColumnsMapping[col]"
+          >
+            
             <div style="display: flex;" [ngSwitch]="col">
               <!-- Checkbox for selecting ALL torrents -->
               <div *ngSwitchCase="'select'">
@@ -49,6 +65,12 @@
             </div>
           </th>
         </tr>
+      </ng-template>
+
+      <ng-template pTemplate="colgroup">
+        <colgroup>
+          <col *ngFor="let col of displayedColumns" [ngStyle]="{ 'width': colWidths[col] + 'px' || 'initial' }">
+        </colgroup>
       </ng-template>
 
       <!-- TABLE ROWS -->
@@ -106,6 +128,10 @@
 
               <div *ngSwitchCase="'Uploaded'">
                 {{getFileSizeString(torrent.uploaded)}}
+              </div>
+
+              <div *ngSwitchCase="'Downloaded'">
+                {{getFileSizeString(torrent.downloaded)}}
               </div>
 
               <div *ngSwitchCase="'Ratio'">
