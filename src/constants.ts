@@ -36,7 +36,7 @@ export class Constants {
    * Map column name to width in pixels;
    */
   static TORRENT_TABLE_COLUMNS_WIDTHS = {
-    'Actions': 140,
+    'Actions': 120,
     'Name': 450,
     
     'Size': 85,

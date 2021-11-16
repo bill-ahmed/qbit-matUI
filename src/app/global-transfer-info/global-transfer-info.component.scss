@@ -1,6 +1,6 @@
 .global-transfer-info-container {
   height: 100vh;
-  width: 225px;
+  width: 235px;
 
   .data-container {
     height: 100vh;
@@ -21,6 +21,13 @@
       height: 64px;
     }
 
+    #toggle_alt_limit {
+      h4 {
+        margin: 0 0 0 5px;
+        font-size: 10pt;
+      }
+    }
+
     section {
       padding: 10px;
 
@@ -34,15 +41,6 @@
       flex-direction: column;
 
       width: 100%;
-    }
-
-    #bottom_actions {
-      width: 100%;
-
-      #useAltLimits > label > span {
-        display: flex;
-        align-items: center;
-      }
     }
   }
 }
@@ -75,11 +73,25 @@ h4 {
 mat-chip {
   border-radius: 10px;
   width: 100%;
+
+  h4 {
+    font-size: 10pt;
+    margin: 0 0 0 5px;
+  }
 }
 
 #filter_torrents {
+  h3 {
+    font-size: 11pt;
+    margin-bottom: 0;
+  }
+
   mat-chip {
     border-radius: 0;
     cursor: pointer;
+
+    &:hover {
+      border: none;
+    }
   }
 }
