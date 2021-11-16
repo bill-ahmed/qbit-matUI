@@ -1,16 +1,32 @@
 .global-transfer-info-container {
-  height: 100%;
+  height: 100vh;
+  width: 250px;
 
   .data-container {
-    height: 100%;
+    height: 100vh;
+    overflow-y: auto;
 
     display: flex;
     flex-direction: column;
 
-    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.05), 0 3px 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 0;
+    border-right: solid 2px rgba(0, 0, 0, 0.1);
 
-    section h2 {
-      font-weight: 400;
+    padding: 0;
+
+    #qbittorrent_name {
+      background: #1976D2;
+      color: white;
+
+      height: 64px;
+    }
+
+    section {
+      padding: 10px;
+
+      h2 {
+        font-weight: 400;
+      }
     }
 
     #disk_summary, #global_transfer {
@@ -20,10 +36,6 @@
       width: 100%;
     }
 
-    #global_transfer {
-      flex-grow: 1;
-    }
-
     #bottom_actions {
       width: 100%;
 
@@ -31,6 +43,14 @@
         display: flex;
         align-items: center;
       }
+    }
+  }
+}
+
+.dark-theme {
+  .data-container {
+    #qbittorrent_name {
+      background: #212121;
     }
   }
 }
@@ -47,24 +67,19 @@ h3 {
     margin: 0;
 }
 
-#summaryContent h4 {
+h4 {
     font-size: 10pt;
     margin: 0 5px 0 5px;
 }
 
 mat-chip {
-  border-radius: 0;
+  border-radius: 10px;
   width: 100%;
-  cursor: pointer;
 }
 
-/** For small screens */
-@media only screen and (max-width: 1550px) {
-  .global-transfer-info-container {
-    padding-top: 0;
-
-    .hide-small {
-      display: none;
-    }
+#filter_torrents {
+  mat-chip {
+    border-radius: 0;
+    cursor: pointer;
   }
 }

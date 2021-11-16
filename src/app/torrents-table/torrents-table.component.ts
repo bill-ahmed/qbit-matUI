@@ -107,7 +107,14 @@ export class TorrentsTableComponent implements OnInit {
       { label: 'Decrease Priority', icon: 'pi pi-fw pi-chevron-down', command: () => this.decreasePriorityBulk(this.selection.selected) },
       { label: 'Max Priority', icon: 'pi pi-fw pi-angle-double-up', command: () => this.maximumPriorityBulk(this.selection.selected) },
       { label: 'Min Priority', icon: 'pi pi-fw pi-angle-double-down', command: () => this.minimumPriorityBulk(this.selection.selected) },
-    ]
+    ];
+
+    // Update columns widths
+    setInterval(() => {
+      if(this.displayedColumns?.length > 0) {
+        // console.log('updating widths', this.displayedColumns)
+      }
+    }, 100)
   }
 
   ngOnDestroy(): void { }
@@ -265,6 +272,10 @@ export class TorrentsTableComponent implements OnInit {
   handleColumnResize(event: any) {
     let colName = event.element.id.replace(/-/g, ' ');
     this.appConfig.setColumnWidth(colName, event.delta);
+
+    // Immediately update preferences in-memory
+    this.colWidths = this.appConfig.getWebUISettings().torrent_table.column_widths;
+    this.updateTorrentData(this.allTorrentInformation);
   }
  
   /** Determine whether a torrent is selected or not */

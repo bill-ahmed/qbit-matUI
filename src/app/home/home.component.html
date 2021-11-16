@@ -1,72 +1,71 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="homeContainer mat-app-background">
-
-  <!-- Toolbar -->
-  <div class="toolbar">
-    <mat-toolbar>
-      <div *ngIf="!isMobileUser">
-        <h1> qBittorrent </h1>
-      </div>
-
-      <app-search-torrents *ngIf="!isMobileUser"></app-search-torrents>
-
-      <div *ngIf="isMobileUser" class="row space-evenly" style="width: 100%;">
-        <button mat-raised-button color="warn" (click)="openAddTorrentDialog()">
-          <span>Upload</span>
-        </button>
-
-        <button mat-flat-button (click)="$event.stopPropagation();handleSlideToggle()">
-          <mat-icon>brightness_6</mat-icon>
-          <mat-slide-toggle style="padding-left: 10px;" (click)="false" (change)="false" [checked]="isDarkThemeEnabled()" color="primary">
-          </mat-slide-toggle>
-        </button>
-
-        <button mat-raised-button color="default" (click)="logout()">
-          <span>Logout</span>
-        </button>
-      </div>
-
-      <div *ngIf="!isMobileUser" class="actions">
-        <div id="toolbar_actions">
-          <button mat-fab matTooltip="Add Torrent" id="addTorrentFAB" color="warn" (click)="openAddTorrentDialog()">
-            <mat-icon>cloud_upload</mat-icon>
-          </button>
-
-          <button class="hide_mobile" mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
-            <mat-icon>cloud_upload</mat-icon>
-            &nbsp; Upload
-          </button>
-
-          <button disableRipple class="mat-elevation-z1" color="default" mat-fab [matMenuTriggerFor]="menu">
-            <mat-icon>person</mat-icon>
-          </button>
-
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openSettingsDialog()">
-              <mat-icon>settings</mat-icon>
-              <span>Settings</span>
+  <div class="row" style="width: 100%;" [ngClass]="{ 'homeContainerMobile': isMobileUser }">
+    <app-global-transfer-info *ngIf="!isMobileUser"></app-global-transfer-info>
+    <div>
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <mat-toolbar>
+          <app-search-torrents *ngIf="!isMobileUser"></app-search-torrents>
+          
+          <div *ngIf="isMobileUser" class="row space-evenly" style="width: 100%;">
+            <button mat-raised-button color="warn" (click)="openAddTorrentDialog()">
+              <span>Upload</span>
             </button>
 
-            <button mat-menu-item (click)="$event.stopPropagation();handleSlideToggle()">
+            <button mat-flat-button (click)="$event.stopPropagation();handleSlideToggle()">
               <mat-icon>brightness_6</mat-icon>
-              Dark Theme &nbsp;
-              <mat-slide-toggle id="slideToggleTheme" (click)="false" (change)="false" [checked]="isDarkThemeEnabled()" color="primary">
+              <mat-slide-toggle style="padding-left: 10px;" (click)="false" (change)="false" [checked]="isDarkThemeEnabled()" color="primary">
               </mat-slide-toggle>
             </button>
 
-            <button mat-menu-item id="logoutButton" color="default" (click)="logout()">
-              <mat-icon>exit_to_app</mat-icon>
+            <button mat-raised-button color="default" (click)="logout()">
               <span>Logout</span>
             </button>
-          </mat-menu>
+          </div>
 
-        </div>
+          <div *ngIf="!isMobileUser" class="actions">
+            <div id="toolbar_actions">
+              <button mat-fab matTooltip="Add Torrent" id="addTorrentFAB" color="warn" (click)="openAddTorrentDialog()">
+                <mat-icon>cloud_upload</mat-icon>
+              </button>
+
+              <button class="hide_mobile" mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
+                <mat-icon>cloud_upload</mat-icon>
+                &nbsp; Upload
+              </button>
+
+              <button disableRipple class="mat-elevation-z1" color="default" mat-fab [matMenuTriggerFor]="menu">
+                <mat-icon>person</mat-icon>
+              </button>
+
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openSettingsDialog()">
+                  <mat-icon>settings</mat-icon>
+                  <span>Settings</span>
+                </button>
+
+                <button mat-menu-item (click)="$event.stopPropagation();handleSlideToggle()">
+                  <mat-icon>brightness_6</mat-icon>
+                  Dark Theme &nbsp;
+                  <mat-slide-toggle id="slideToggleTheme" (click)="false" (change)="false" [checked]="isDarkThemeEnabled()" color="primary">
+                  </mat-slide-toggle>
+                </button>
+
+                <button mat-menu-item id="logoutButton" color="default" (click)="logout()">
+                  <mat-icon>exit_to_app</mat-icon>
+                  <span>Logout</span>
+                </button>
+              </mat-menu>
+
+            </div>
+          </div>
+        </mat-toolbar>
       </div>
-    </mat-toolbar>
-  </div>
 
-  <!-- Main Content -->
-  <div class="content" role="main">
-    <app-torrents-table></app-torrents-table>
-    <app-global-transfer-info *ngIf="!isMobileUser"></app-global-transfer-info>
+      <!-- Main Content -->
+      <div class="content" role="main">
+        <app-torrents-table></app-torrents-table>
+      </div>
+    </div>
   </div>
 </div>

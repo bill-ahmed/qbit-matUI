@@ -1,14 +1,17 @@
 $border-dark: #6F6F6F;
 
 #bulk-update-card {
-  padding: 0 20px 0 30px;
-  margin-top: 30px;
+  padding: 0 20px 0 15px;
 
   display: flex;
   flex-direction: row;
   align-items: baseline;
 
   border-radius: 0;
+  
+  // Same as in home.component.scss
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .spacer {
@@ -37,11 +40,4 @@ $border-dark: #6F6F6F;
 
 .mat-card-info button {
   margin-left: 20px;
-}
-
-.refresh-interval {
-  mat-chip {
-    letter-spacing: 0.05em;
-    border-radius: 0;
-  }
 }

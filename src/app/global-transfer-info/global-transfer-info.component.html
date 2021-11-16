@@ -1,33 +1,55 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="global-transfer-info-container mat-app-background">
     <mat-card class="mat-elevation-z0 data-container">
+      <section *ngIf="!isMobileUser" id="qbittorrent_name">
+        <div>
+          <h1 style="font-weight: 500;"> qBittorrent </h1>
+        </div>
+      </section>
+
+      <div class="hide-small">
+        <mat-divider [inset]="true"></mat-divider>
+      </div>
+
+      <section class="hide-small" id="bottom_actions">
+        <div (click)="toggleAltSpeedLimits()" class="row align-center space-between" style="cursor: pointer">
+          <div class="row align-center">
+            <mat-icon>speed</mat-icon>
+            <h4>Toggle alt limit</h4>
+          </div>
+
+          <mat-slide-toggle id="useAltLimits" style="pointer-events: none;" [checked]="isAltSpeedEnabled" color="primary">
+          </mat-slide-toggle>
+        </div>
+      </section>
+
       <section id="disk_summary">
         <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
 
         <div *ngIf="!isLoading()" id="summaryContent">
           <mat-chip-list>
-            <mat-chip color="default" disableRipple selected>
+            <mat-chip color="default" disableRipple>
               <mat-icon color="primary">refresh</mat-icon>
               <h4>Refresh Interval: {{refreshInterval / 1000}}s</h4>
             </mat-chip>
 
-            <mat-chip color="default" disableRipple selected>
+            <mat-chip color="default" disableRipple>
               <mat-icon color="primary">storage</mat-icon>
               <h4>Free space: {{getFreeSpaceOnDisk()}}</h4>
             </mat-chip>
           </mat-chip-list>
         </div>
       </section>
+      
 
       <br class="hide-small"/>
       <mat-divider class="hide-small" [inset]="true"></mat-divider>
-      <br/>
 
       <section id="global_transfer">
         <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
         <div *ngIf="!isLoading()" id="summaryContent">
           <mat-chip-list>
-            <mat-chip color="primary" (click)="handleDownloadLimitSelect()" disableRipple selected matTooltip="Click to set download limit" matTooltipPosition="above">
-              <mat-icon>arrow_downward</mat-icon>
+            <mat-chip style="cursor: pointer;" (click)="handleDownloadLimitSelect()" disableRipple matTooltip="Click to set download limit" matTooltipPosition="above">
+              <mat-icon color="primary">arrow_downward</mat-icon>
               <h4>{{getDownloadSpeedString()}} {{getDownLimitString()}}</h4>
             </mat-chip>
 
@@ -37,8 +59,8 @@
             </mat-chip>
 
             <br/>
-            <mat-chip color="accent" (click)="handleUploadLimitSelect()" disableRipple selected matTooltip="Click to set upload limit" matTooltipPosition="below">
-              <mat-icon>arrow_upward</mat-icon>
+            <mat-chip style="cursor: pointer;" (click)="handleUploadLimitSelect()" disableRipple matTooltip="Click to set upload limit" matTooltipPosition="below">
+              <mat-icon color="accent">arrow_upward</mat-icon>
               <h4>{{getUploadSpeedString()}} {{getUpLimitString()}}</h4>
             </mat-chip>
 
@@ -50,18 +72,65 @@
         </div>
       </section>
 
-      <div class="hide-small">
-        <br/>
-        <mat-divider [inset]="true"></mat-divider>
-        <br/>
-      </div>
+      <br class="hide-small"/>
+      <mat-divider class="hide-small" [inset]="true"></mat-divider>
 
-      <section class="hide-small" id="bottom_actions">
-        <div class="row">
-          <mat-slide-toggle labelPosition="before" id="useAltLimits" (toggleChange)="toggleAltSpeedLimits()" [checked]="isAltSpeedEnabled" color="primary" matTooltip="Use alt speed limits" matTooltipPosition="above">
-            <mat-icon style="margin-top: 8px;">speed</mat-icon>
-          </mat-slide-toggle>
-        </div>
+      <section id="filter_torrents">
+        <h3>
+          Filter Status
+        </h3>
+
+        <mat-chip-list>
+          <mat-chip>
+            <h4>All</h4>
+          </mat-chip>
+
+
+          <mat-chip color="default">
+            <mat-icon style="color: gray">arrow_downward</mat-icon>
+            <h4>Downloading</h4>
+          </mat-chip>
+
+          <mat-chip>
+            <mat-icon style="color: gray">arrow_upward</mat-icon>
+            <h4>Seeding</h4>
+          </mat-chip>
+
+          <mat-chip color="default">
+            <mat-icon style="color: #7ABF7D">done</mat-icon>
+            <h4>Completed</h4>
+          </mat-chip>
+
+          <mat-chip color="default">
+            <mat-icon style="color: gray">play_arrow</mat-icon>
+            <h4>Resumed</h4>
+          </mat-chip>
+
+          <mat-chip color="default">
+            <mat-icon style="color: gray">pause</mat-icon>
+            <h4>Paused</h4>
+          </mat-chip>
+
+          <mat-chip color="default">
+            <mat-icon color="primary">toggle_on</mat-icon>
+            <h4>Active</h4>
+          </mat-chip>
+
+          <mat-chip color="default">
+            <mat-icon color="accent">toggle_off</mat-icon>
+            <h4>Inactive</h4>
+          </mat-chip>
+
+          <mat-chip color="primary">
+            <mat-icon>refresh</mat-icon>
+            <h4>Stalled</h4>
+          </mat-chip>
+
+          <mat-chip color="warn">
+            <mat-icon>error</mat-icon>
+            <h4>Errored</h4>
+          </mat-chip>
+        </mat-chip-list>
       </section>
     </mat-card>
 </div>

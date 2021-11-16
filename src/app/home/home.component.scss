@@ -1,19 +1,19 @@
+@import "../../variables.scss";
+
 .mat-toolbar {
-  background: #1976D2;
   color: white;
 
-  padding: 0 25px;
+  padding: 0;
+  padding-right: 25px;
 
-  margin-bottom: 15px;
+  margin: 15px 0;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-}
 
-.dark-theme .mat-toolbar {
-  background: #212121;
+  background: $bg-color-light;
 }
 
 .mat-toolbar h1 {
@@ -80,41 +80,41 @@ app-search-torrents:focus-within {
 }
 
 .content {
-  display: flex;
-  min-height: 100%;
-  width: 100%;
+  margin: 0 15px;
+  background: $bg-surface-light-0;
+  border-radius: 10px;
 
-  flex-direction: row;
-  justify-content: space-evenly;
-
-  padding-left: 2px;
-  padding-right: 2px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.content app-torrents-table {
-  width: 83%;
-}
+.dark-theme {
+  .content {
+    background: $bg-surface-dark-0;
+    box-shadow: none;
+  }
 
-.content app-global-transfer-info {
-  width: 15%;
-  margin-top: 30px;
+  .mat-toolbar {
+    background: inherit;
+  }
 }
 
 /** For small screens */
-@media only screen and (max-width: 1550px) {
+/* @media only screen and (max-width: 1550px) {
   .content {
     flex-direction: column;
     padding: 0 5%;
   }
+} */
 
-  .content app-torrents-table {
-    width: 100%;
+.homeContainerMobile {
+  display: block;
+
+  .content {
+    box-shadow: none;
+    background: inherit;
   }
 
-  .content app-global-transfer-info {
-    width: 100%;
-    margin-top: 10px;
-  }
+  .mat-toolbar { margin-top: 0; background: inherit; }
 }
 
 /** For phone screens */
