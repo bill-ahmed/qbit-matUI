@@ -49,10 +49,15 @@ body {
 .generic-dialog .mat-dialog-container {
   padding: 0;
   overflow: unset;
+
+  border-radius: 15px;
 }
 
 .mat-dialog-inner-container {
   padding: 24px;
+
+  // Must be less than or equal to border-radius in .mat-dialog-container
+  border-radius: 10px;
 }
 
 .indented_field {
