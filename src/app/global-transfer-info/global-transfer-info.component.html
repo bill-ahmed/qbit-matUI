@@ -1,9 +1,7 @@
 <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="global-transfer-info-container mat-app-background">
     <mat-card class="mat-elevation-z0 data-container">
-      <section *ngIf="!isMobileUser" id="qbittorrent_name">
-        <div>
-          <h1 style="font-weight: 500;"> qBittorrent </h1>
-        </div>
+      <section *ngIf="!isMobileUser" id="qbittorrent_name" class="row justify-center text-center">
+        <h1 style="font-weight: 500; width: 100%; margin: auto;"> qBittorrent </h1>
       </section>
 
       <div class="hide-small">

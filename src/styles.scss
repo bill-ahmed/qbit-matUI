@@ -41,6 +41,8 @@ body {
 .grow-6 { flex-grow: 0.6; }
 .grow-7 { flex-grow: 0.7; }
 
+
+.text-center { text-align: center; }
 .word-break-all { word-break: break-all; }
 
 /** Styles applicable for all material dialogs */
@@ -201,8 +203,8 @@ body {
 
 /*** CUSTOM SCROLLBAR ***/
 ::-webkit-scrollbar {
-  width: 8px;   /** Target vertical scroll-bars */
-  height: 8px;  /** Target horizontal scroll-bars */
+  width: 5px;   /** Target vertical scroll-bars */
+  height: 5px;  /** Target horizontal scroll-bars */
 }
 
 /* Corner of the track (will sometimes show a small white square) */
@@ -213,7 +215,6 @@ body {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: rgb(131, 131, 131);
-  border-radius: 10px;
 }
 
 /* Handle on hover */

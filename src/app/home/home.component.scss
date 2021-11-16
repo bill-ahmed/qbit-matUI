@@ -1,39 +1,53 @@
 @import "../../variables.scss";
 
+.toolbar {
+  padding: 0 15px;
+  width: 100%;
+}
+
+mat-toolbar {
+  padding: 0;
+}
+
 .mat-toolbar {
   color: white;
 
-  padding: 0;
-  padding-right: 25px;
-
   margin: 15px 0;
+
+  padding-right: 25px;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
-  background: $bg-color-light;
-}
+  background: $bg-surface-light-0;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
-.mat-toolbar h1 {
-  font-size: 22pt;
-}
+  #app-search-torrents {
+    flex-grow: 1;
+    margin: 0;
+  }
 
+  h1 {
+    font-size: 22pt;
+  }
 
-.mat-toolbar #toolbar_actions{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
+  #toolbar_actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 
-.mat-toolbar #toolbar_actions button{
-  margin-left: 25px;
-}
+    button{
+      margin-left: 15px;
+    }
 
-.mat-toolbar #toolbar_actions #slideToggleTheme {
-  padding-left: 30px;
+    #slideToggleTheme {
+      margin-left: 5px;
+    }
+  }
 }
 
 .actions {
@@ -49,12 +63,8 @@
   display: none;
 }
 
-#addTorrentButton, #logoutButton {
+#logoutButton {
   margin-right: 5px;
-  font-size: 12pt;
-
-  height: 42px;
-  width: 130px;
 }
 
 app-search-torrents {
@@ -82,7 +92,7 @@ app-search-torrents:focus-within {
 .content {
   margin: 0 15px;
   background: $bg-surface-light-0;
-  border-radius: 10px;
+  border-radius: 7px;
 
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
@@ -95,6 +105,7 @@ app-search-torrents:focus-within {
 
   .mat-toolbar {
     background: inherit;
+    box-shadow: none;
   }
 }
 

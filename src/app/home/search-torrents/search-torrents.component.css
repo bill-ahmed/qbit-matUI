@@ -8,19 +8,18 @@
     height: 50px;
 
     width: 100%;
-
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-.searchTorrentsInput {
+#torrentSearchInput {
+    height: 100%;
     font-size: 12pt;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.02rem;
 
     border: 0px solid;
     outline: none;
 
     padding-bottom: 7px;
-    margin: 5px 5px 0 10px;
+    margin: 5px 0 0 10px;
 
     flex-grow: 1;
 
