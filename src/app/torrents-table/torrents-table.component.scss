@@ -18,6 +18,10 @@
     overflow: scroll;
 }
 
+.p-virtualscroller-item {
+  background: $bg-color-light; 
+}
+
 .dark-theme {
   .torrent-card-view {
     border-color: $dark-default;

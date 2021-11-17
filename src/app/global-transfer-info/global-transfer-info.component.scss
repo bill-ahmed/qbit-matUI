@@ -73,10 +73,16 @@ h4 {
 mat-chip {
   border-radius: 10px;
   width: 100%;
+}
 
-  h4 {
-    font-size: 10pt;
-    margin: 0 0 0 5px;
+#summaryContent {
+  mat-chip {
+    background: rgba(0, 0, 0, 0.08);
+  
+    h4 {
+      font-size: 10pt;
+      margin: 0 0 0 5px;
+    }
   }
 }
 
@@ -104,6 +110,12 @@ mat-chip {
 }
 
 .dark-theme {
+  #summaryContent {
+    mat-chip {
+      background: rgba(97, 97, 97, 0.5);
+    }
+  }
+
   #filter_torrents {
     mat-chip {
       color: white;
