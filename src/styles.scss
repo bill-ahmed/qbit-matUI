@@ -26,7 +26,7 @@ body {
 .space-between  { justify-content: space-between; }
 .space-evenly   { justify-content: space-evenly; }
 .space-around   { justify-content: space-around; }
-
+ 
 .wrap     { flex-wrap: wrap; }
 .no-wrap  { flex-wrap: nowrap; }
 
@@ -226,4 +226,15 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.show-mobile { display: none; }
+.show-mobile-flex { display: none; }
+
+/** For phone screens */
+@media only screen and (max-width: 640px) {
+  .hide-mobile { display: none; }
+
+  .show-mobile { display: block; }
+  .show-mobile-flex { display: flex; }
 }

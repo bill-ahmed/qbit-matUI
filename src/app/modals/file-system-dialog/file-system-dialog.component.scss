@@ -1,3 +1,6 @@
+@import "~@angular/material/theming";
+@import "../../../variables.scss";
+
 /** Declare Variables */
 $border-dark: #494949;
 
@@ -9,14 +12,68 @@ $border-dark: #494949;
     padding: 10px;
 }
 
+.leftNavigation {
+  padding-left: 0;
+  padding-right: 3px;
+
+  width: 250px;
+  height: 450px;
+
+  overflow: auto;
+}
+
+.directoryContents {
+  height: 450px;
+  width: 75%;
+
+  overflow-y: scroll;
+
+  .create-new-folder-input {
+    min-width: 80%;
+    height: 50px;
+
+    padding: 10px;
+    padding-left: 20px;
+  }
+}
+
 .file-systme-explorer-container {
-    min-height: 50vh;
-    min-width: 70vw;
+  min-height: 50vh;
+  min-width: 40vw;
 
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
-    overflow: hidden;
+  overflow: hidden;
+
+  .folder {
+    height: 40px;
+    width: 100%;
+
+    margin: 5px 5px 5px 0;
+    padding: 3px 0;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+    overflow-x: scroll;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    &.selected-folder {
+      border-right: solid 5px mat-color($my-app-primary);
+    }
+
+    .folder-icon {
+      margin: 0 5px 0 10px;
+    }
+    
+    .folder-name {
+      margin: 0 5px;
+    }
+  }
 }
 
 .file-explorer-header {
@@ -51,59 +108,41 @@ $border-dark: #494949;
   }
 }
 
-.file-explorer-actions {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+#fs-navigator {
+  width: 100%;
+  margin-bottom: 25px;
+}
 
-  margin-bottom: 10px;
+#saveLocation {
+  flex-grow: 1;
+  margin: 0 15px;
+  padding: 0 15px;
 
-  .left-actions {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
+  height: 36px;
 
-    flex-grow: 1;
-    max-width: 90%;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 5px;
 
-    #saveLocation {
-      margin: 0;
-      margin-left: 20px;
-      max-width: 90%;
-      word-wrap: break-word;
+  overflow: auto;
+
+  // Hacky, need to center the text
+  // span { margin-top: 6px; }
+}
+
+.dark-theme {
+  .file-systme-explorer-container {  
+    .folder {  
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      &.selected-folder {
+        border-right: solid 5px mat-color($dark-accent);
+      }
     }
   }
-}
 
-.leftNavigation {
-    padding-left: 0;
-    padding-right: 0;
-    flex-grow: 1;
-
-    max-width: 300px;
-    height: 450px;
-
-    overflow-y: scroll;
-}
-
-.directoryContents {
-    flex-grow: 4;
-
-    height: 450px;
-
-    overflow-y: scroll;
-
-    max-width: 75%;
-
-    .create-new-folder-input {
-      min-width: 80%;
-      height: 50px;
-
-      padding: 10px;
-      padding-left: 20px;
-    }
-}
-
-#isFolderSelected {
-    justify-self: flex-end;
+  #saveLocation {
+    background: $table-surface-1;
+  }
 }

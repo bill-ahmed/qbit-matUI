@@ -21,37 +21,37 @@
     <mat-divider></mat-divider>
     <br/>
 
-    <div class="file-explorer-actions">
-      <div class="left-actions">
-        <button color="primary" mat-button (click)="navigateUp()">
-          <mat-icon mat-list-icon>arrow_back</mat-icon>
-          Back
-        </button>
-        <h4 id="saveLocation">Location: {{getFilePath() === "" ? "N/A" : getFilePath()}}</h4>
+    <div id="fs-navigator" class="row space-between align-center">
+      <button color="primary" mat-button (click)="navigateUp()">
+        <mat-icon mat-list-icon>arrow_back</mat-icon>
+        Back
+      </button>
+
+      <div id="saveLocation" class="row align-center hide-mobile">
+        <span> Location: {{getFilePath() === "" ? "N/A" : getFilePath()}} </span>
       </div>
 
-      <div class="spacer"></div>
-
-      <button color="accent" mat-flat-button (click)="handleCreateFolderAction()">
+      <button color="accent" style="min-width: 130px;" mat-flat-button (click)="handleCreateFolderAction()">
         <mat-icon mat-list-icon>add</mat-icon>
         New Folder
       </button>
     </div>
 
     <mat-dialog-content class="mat-typography">
-
         <div class="file-systme-explorer-container">
             <div class="leftNavigation" mode="side" opened>
-                <mat-nav-list role="list">
-                    <mat-list-item *ngFor="let dir of leftChildren" (click)="navigateToDir(dir, 'parent')">
+              <!-- parent folders -->
+              <div class="folder row align-center" 
+                  *ngFor="let dir of leftChildren" 
+                  
+                  (click)="navigateToDir(dir, 'parent')" 
+                  [ngClass]="{'selected-folder': isDirectorySelected(dir)}"
+              >
 
-                        <mat-icon *ngIf="!isDirectorySelected(dir)" color="accent" mat-list-icon>folder</mat-icon>
-                        <mat-icon *ngIf="isDirectorySelected(dir)" color="accent" mat-list-icon>folder_open</mat-icon>
-                        <div mat-line>{{dir.value}}</div>
-                        <div mat-line>{{getNumChildrenString(dir)}}</div>
-
-                    </mat-list-item>
-                </mat-nav-list>
+                <mat-icon *ngIf="!isDirectorySelected(dir)" color="accent" class="folder-icon">folder</mat-icon>
+                <mat-icon *ngIf="isDirectorySelected(dir)" color="accent" class="folder-icon">folder_open</mat-icon>
+                <div class="folder-name">{{dir.value}}</div>
+              </div>
             </div>
 
             <mat-divider [vertical]="true"></mat-divider>
@@ -77,19 +77,22 @@
                   </button>
                 </mat-list-item>
 
-                <mat-nav-list role="list">
-                    <mat-list-item *ngFor="let dir of rightChildren" id={{dir.value}} (click)="navigateToDir(dir, 'child')">
-                        <mat-icon color="accent" mat-list-icon>folder</mat-icon>
-                        <div mat-line>{{dir.value}}</div>
-                        <div mat-line>{{getNumChildrenString(dir)}}</div>
-                    </mat-list-item>
-                </mat-nav-list>
+                <!-- sub-folders -->
+                <div class="folder row align-center" *ngFor="let dir of rightChildren" id={{dir.value}} (click)="navigateToDir(dir, 'child')">
+                  <mat-icon color="accent" class="folder-icon">folder</mat-icon>
+                  <div class="folder-name">{{dir.value}}</div>
+                </div>
             </div>
         </div>
         <mat-divider></mat-divider>
         <br/>
 
     </mat-dialog-content>
+
+    <div id="saveLocation" class="show-mobile-flex row align-center">
+      <span> Location: {{getFilePath() === "" ? "N/A" : getFilePath()}} </span>
+    </div>
+
     <mat-dialog-actions *ngIf="!isMobileUser" align="end">
         <button mat-button [mat-dialog-close]="false"> Cancel </button>
         <button mat-raised-button (click)="closeDialog()" color="primary"> Confirm </button>
