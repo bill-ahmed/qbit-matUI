@@ -45,8 +45,6 @@ export class FileSystemTreeExplorerComponent implements OnChanges {
 
   ngOnInit(): void {
     this._updateData();
-
-    console.log('allow set priority?', this.allowSetPriority)
   }
 
   ngOnChanges(changes: SimpleChanges) {

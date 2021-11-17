@@ -116,13 +116,6 @@ export class TorrentsTableComponent implements OnInit {
       { label: 'Max Priority', icon: 'pi pi-fw pi-angle-double-up', command: () => this.maximumPriorityBulk(this.selection.selected) },
       { label: 'Min Priority', icon: 'pi pi-fw pi-angle-double-down', command: () => this.minimumPriorityBulk(this.selection.selected) },
     ];
-
-    // Update columns widths
-    setInterval(() => {
-      if(this.displayedColumns?.length > 0) {
-        // console.log('updating widths', this.displayedColumns)
-      }
-    }, 100)
   }
 
   ngOnDestroy(): void { }
@@ -222,8 +215,6 @@ export class TorrentsTableComponent implements OnInit {
         return Constants.TORRENT_STATE_MAPPING[this.torrentFilterValue]?.includes(tor.state);
       });
     }
-
-    console.log('rendering filtered', this.torrentFilterValue, this.filteredTorrentData)
   }
 
   handleSortChange(event: any) {

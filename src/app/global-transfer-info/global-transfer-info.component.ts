@@ -76,7 +76,6 @@ export class GlobalTransferInfoComponent implements OnInit {
 
   handleFilterStatusSelect(filterChosen: any) {
     this.filteringBy = filterChosen;
-    console.log('filtering by', filterChosen);
     this.filterService.updateFilter(filterChosen);
   }
 
