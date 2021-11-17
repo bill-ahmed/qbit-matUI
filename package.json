@@ -4,6 +4,7 @@
     "ng": "ng",
     "start": "ng serve",
     "dev": "ng build --watch --output-path=\"dev/www/private\"",
+    "dev-login": "ng build --watch --project=login --output-path=\"dev/www/public\"",
     "build": "ng build",
     "build_prod": "ng build --prod",
     "test": "ng test",

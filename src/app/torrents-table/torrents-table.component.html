@@ -10,7 +10,7 @@
     <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
 
     <!-- Only show on desktop browsers -->
-    <p-table *ngIf="!isLoading() && !isTorrentsEmpty() && !isMobileUser" styleClass="p-datatable-sm mat-elevation-z1"
+    <p-table *ngIf="!isLoading() && !isTorrentsEmpty() && !isMobileUser" styleClass="p-datatable-sm"
       [columns]="displayedColumns"
       [value]="filteredTorrentData"
       dataKey="hash"
@@ -55,7 +55,7 @@
               <div *ngSwitchCase="'select'">
                 <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
                   [checked]="selection.hasValue() && isAllSelected()"
-                  [indeterminate]="selection.hasValue() && !isAllSelected()" [style]="{margin: '5px 15px'}">
+                  [indeterminate]="selection.hasValue() && !isAllSelected()" [style]="{marginLeft: '10px'}">
                 </mat-checkbox>
               </div>
 
@@ -82,13 +82,13 @@
             (contextmenu)="handleTorrentSelected(torrent)"
 
             [pContextMenuRow]="torrent"
-            >
+          >
           <td *ngFor="let col of columns" [class]="getClassNameForColumns(col)">
             <div [ngSwitch]="col">
               <div *ngSwitchCase="'select'">
                 <mat-checkbox color="primary" (click)="$event.stopPropagation()"
                           (change)="$event ? handleTorrentSelected(torrent) : null"
-                          [checked]="selection.isSelected(torrent)" [style]="{margin: '5px 15px'}">
+                          [checked]="selection.isSelected(torrent)" [style]="{marginLeft: '10px'}">
                 </mat-checkbox>
               </div>
 
@@ -175,7 +175,7 @@
                 </p-tag>
               </div>
 
-              <div *ngSwitchDefault>{{torrent[displayedColumnsMapping[col]]}}</div>
+              <div *ngSwitchDefault [ngStyle]="{ 'width': colWidths[col] + 'px' || 'initial' }">{{torrent[displayedColumnsMapping[col]]}}</div>
             </div>
           </td>
         </tr>
@@ -241,8 +241,9 @@
       </ng-template>
     </p-virtualScroller>
 
-    <div *ngIf="isTorrentsEmpty()">
-      <p> No torrents found. Try adding one by clicking Upload at the top-right. </p>
+    <div *ngIf="isTorrentsEmpty()" style="margin: 15px;">
+      <p> No torrents found. </p>
+      <p>Try changing the search value, applying a different filter status, or uploading a torrent.</p>
     </div>
 </div>
 

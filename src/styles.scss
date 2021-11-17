@@ -8,7 +8,6 @@ body {
   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
 
 .spacer {
@@ -27,7 +26,7 @@ body {
 .space-between  { justify-content: space-between; }
 .space-evenly   { justify-content: space-evenly; }
 .space-around   { justify-content: space-around; }
-
+ 
 .wrap     { flex-wrap: wrap; }
 .no-wrap  { flex-wrap: nowrap; }
 
@@ -42,16 +41,24 @@ body {
 .grow-6 { flex-grow: 0.6; }
 .grow-7 { flex-grow: 0.7; }
 
+
+.text-center { text-align: center; }
 .word-break-all { word-break: break-all; }
 
 /** Styles applicable for all material dialogs */
 .generic-dialog .mat-dialog-container {
   padding: 0;
   overflow: unset;
+
+  border-radius: 15px;
 }
 
 .mat-dialog-inner-container {
   padding: 24px;
+
+  // Must be less than or equal to border-radius in .mat-dialog-container
+  border-radius: 10px;
+  background: white;
 }
 
 .indented_field {
@@ -202,8 +209,8 @@ body {
 
 /*** CUSTOM SCROLLBAR ***/
 ::-webkit-scrollbar {
-  width: 8px;   /** Target vertical scroll-bars */
-  height: 8px;  /** Target horizontal scroll-bars */
+  width: 5px;   /** Target vertical scroll-bars */
+  height: 5px;  /** Target horizontal scroll-bars */
 }
 
 /* Corner of the track (will sometimes show a small white square) */
@@ -214,10 +221,20 @@ body {
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: rgb(131, 131, 131);
-  border-radius: 10px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.show-mobile { display: none; }
+.show-mobile-flex { display: none; }
+
+/** For phone screens */
+@media only screen and (max-width: 640px) {
+  .hide-mobile { display: none; }
+
+  .show-mobile { display: block; }
+  .show-mobile-flex { display: flex; }
 }

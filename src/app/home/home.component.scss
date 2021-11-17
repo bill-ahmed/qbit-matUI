@@ -1,0 +1,155 @@
+@import "../../variables.scss";
+
+.toolbar {
+  padding: 0 15px;
+  width: 100%;
+}
+
+mat-toolbar {
+  padding: 0;
+}
+
+.mat-toolbar {
+  color: white;
+
+  margin: 15px 0 5px 0;
+
+  padding-right: 25px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  background: transparent;
+  border-radius: 5px;
+  
+
+  #app-search-torrents {
+    flex-grow: 1;
+    margin: 0;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  }
+
+  h1 {
+    font-size: 22pt;
+  }
+
+  #toolbar_actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    button{
+      margin-left: 15px;
+    }
+
+    #slideToggleTheme {
+      margin-left: 5px;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+
+  justify-content: flex-end;
+}
+
+#addTorrentFAB, #logoutFAB {
+  /* background: #ff1744; */
+  display: none;
+}
+
+#logoutButton {
+  margin-right: 5px;
+}
+
+app-search-torrents {
+  margin-left: 20px;
+  margin-right: 20px;
+
+  flex-grow: 0.6;
+  transition: all ease-in-out 0.4s;
+
+  border-radius: 7px;
+}
+
+app-search-torrents:focus-within {
+  flex-grow: 0.62;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.homeContainer{
+  flex: 1;
+  min-height: 100%;
+  width: 100%;
+}
+
+.content {
+  margin: 0 15px;
+  background: $bg-surface-light-0;
+  border-radius: 7px;
+
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.dark-theme {
+  .content {
+    background: $bg-surface-dark-0;
+    box-shadow: none;
+  }
+
+  .mat-toolbar {
+    background: inherit;
+    box-shadow: none;
+  }
+}
+
+/** For small screens */
+/* @media only screen and (max-width: 1550px) {
+  .content {
+    flex-direction: column;
+    padding: 0 5%;
+  }
+} */
+
+.homeContainerMobile {
+  display: block;
+
+  .content {
+    box-shadow: none;
+    background: inherit;
+  }
+
+  .mat-toolbar { margin-top: 0; background: inherit; }
+}
+
+/** For phone screens */
+@media only screen and (max-width: 768px) {
+  #addTorrentButton, .hide_mobile {
+      display: none;
+  }
+
+  #addTorrentFAB, #logoutFAB {
+      display: unset;
+  }
+
+  app-search-torrents {
+    bottom: unset;
+    transition: none;
+    flex-grow: 1;
+
+    margin-right: 0;
+  }
+
+  app-search-torrents:focus-within {
+    flex-grow: 1;
+  }
+}

@@ -1,11 +1,15 @@
 @import '~@angular/material/theming';
 @include mat-core();
 
+$bg-color-light:  #FAFAFA;
+
 /** Light theme **/
 $my-app-default:    #e0e0e0;
 $my-app-primary:    mat-palette($mat-blue);
 $my-app-accent:     mat-palette($mat-deep-orange);
 $my-app-warn:       mat-palette($mat-red, 500, 900, A400);
+
+$bg-surface-light-0:     white;
 
 /** Dark theme **/
 $dark-default:      #616161;
@@ -13,12 +17,14 @@ $dark-primary:      mat-palette($mat-blue-gray, 300, 100, 500);
 $dark-accent:       mat-palette($mat-green, 300, 100, 500);
 $dark-warn:         mat-palette($mat-red);
 
+$bg-surface-dark-0:     #424242;
+
 /** Torrent table specific */
 $table-surface-1:   #595959;
 $table-surface-2:   #424242;
 $table-black-color:   rgba(0,0,0,.87);
 
-$bg-surface-0:     #383434;
+$bg-surface-0:     #303030;
 
 $row-hover-light:  #f2f2f2;
 $row-hover-dark:   #5c5c5c;

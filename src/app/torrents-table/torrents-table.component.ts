@@ -24,6 +24,7 @@ import { SnackbarService } from '../services/notifications/snackbar.service';
 import { MenuItem } from 'primeng/api';
 import { getClassForStatus } from '../../utils/Helpers'
 import { Constants } from 'src/constants';
+import { TorrentFilterService } from '../services/torrent-filter-service.service';
 
 
 @Component({
@@ -60,12 +61,14 @@ export class TorrentsTableComponent implements OnInit {
   private deleteTorDialogRef: MatDialogRef<DeleteTorrentDialogComponent, any>;
   private infoTorDialogRef: MatDialogRef<TorrentInfoDialogComponent, any>;
   private currentMatSort = {active: "Completed On", direction: "desc"};
+
   private torrentSearchValue = ""; // Keep track of which torrents are currently selected
+  private torrentFilterValue = "";
 
   constructor(private appConfig: ApplicationConfigService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
-              private torrentSearchService: TorrentSearchServiceService, private torrentsSelectedService: RowSelectionService, private snackbar: SnackbarService,
-              private theme: ThemeService) { }
+              private torrentSearchService: TorrentSearchServiceService, private filterService: TorrentFilterService, private torrentsSelectedService: RowSelectionService, 
+              private snackbar: SnackbarService, private theme: ThemeService) { }
 
   ngOnInit(): void {
     // Theming
@@ -75,6 +78,11 @@ export class TorrentsTableComponent implements OnInit {
     this.torrentSearchService.getSearchValue().subscribe((res: string) => {
       this.updateTorrentSearchValue(res);
     });
+
+    // Filtering torrents
+    this.filterService.getFilterValue().subscribe((res: string) => {
+      this.updateFilterValue(res);
+    })
 
     // Get user preferences
     this.appConfig.getUserPreferencesSubscription().subscribe(res => { this.setUserPreferences(res) });
@@ -107,7 +115,7 @@ export class TorrentsTableComponent implements OnInit {
       { label: 'Decrease Priority', icon: 'pi pi-fw pi-chevron-down', command: () => this.decreasePriorityBulk(this.selection.selected) },
       { label: 'Max Priority', icon: 'pi pi-fw pi-angle-double-up', command: () => this.maximumPriorityBulk(this.selection.selected) },
       { label: 'Min Priority', icon: 'pi pi-fw pi-angle-double-down', command: () => this.minimumPriorityBulk(this.selection.selected) },
-    ]
+    ];
   }
 
   ngOnDestroy(): void { }
@@ -158,6 +166,7 @@ export class TorrentsTableComponent implements OnInit {
 
     // Filter by any search criteria
     this.updateTorrentsBasedOnSearchValue();
+    this.updateTorrentsBasedOnFilterValue();
   }
 
   private updateTorrentSearchValue(val: string): void {
@@ -166,6 +175,13 @@ export class TorrentsTableComponent implements OnInit {
 
     // User is searching for something
     this.updateTorrentsBasedOnSearchValue()
+  }
+
+  private updateFilterValue(val: string) {
+    val = val ?? '';
+    this.torrentFilterValue = val;
+
+    this.updateTorrentsBasedOnFilterValue();
   }
 
   /** Callback for when user is searching for a torrent. Filter all torrents displayed that match torrent criteria
@@ -183,6 +199,21 @@ export class TorrentsTableComponent implements OnInit {
     }
     else if(this.torrentSearchValue === "") {   // If searching for value is empty, restore filteredTorrentData
       this.filteredTorrentData = this.allTorrentData
+    }
+  }
+
+  updateTorrentsBasedOnFilterValue() {
+    // If a filter value is given, then do the work
+    if(this.allTorrentData && this.torrentFilterValue) {
+      // Sometimes filtered data is empty while not searching, likely a timing issue
+      // Super hacky...
+      this.filteredTorrentData = (this.filteredTorrentData.length === 0 && this.torrentSearchValue === '' ? this.allTorrentData : this.filteredTorrentData)
+      .filter((tor: Torrent) => {
+        // Special case for when we consider all torrents
+        if(this.torrentFilterValue === 'All') return true;
+
+        return Constants.TORRENT_STATE_MAPPING[this.torrentFilterValue]?.includes(tor.state);
+      });
     }
   }
 
@@ -265,6 +296,10 @@ export class TorrentsTableComponent implements OnInit {
   handleColumnResize(event: any) {
     let colName = event.element.id.replace(/-/g, ' ');
     this.appConfig.setColumnWidth(colName, event.delta);
+
+    // Immediately update preferences in-memory
+    this.colWidths = this.appConfig.getWebUISettings().torrent_table.column_widths;
+    this.updateTorrentData(this.allTorrentInformation);
   }
  
   /** Determine whether a torrent is selected or not */

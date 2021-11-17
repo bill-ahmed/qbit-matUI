@@ -18,6 +18,10 @@
     overflow: scroll;
 }
 
+.p-virtualscroller-item {
+  background: $bg-color-light; 
+}
+
 .dark-theme {
   .torrent-card-view {
     border-color: $dark-default;
@@ -103,47 +107,12 @@ mat-spinner {
 
 /** Sizes of each column */
 .table-col   {
-  width: max-content;
-
-  &.table-col-Name {
-    overflow-wrap: break-word;
-
-    word-wrap: break-word;
-    word-break: break-word;
-
-    // width: 450px;
-  }
-
-  &.table-col-select     { width: 50px; }
-  // &.table-col-Actions    { width: 140px; }
-  // &.table-col-Size       { width: 85px; }
-  // &.table-col-Progress   { width: 175px; }
-  // &.table-col-Status     { width: 140px; }
-  
-  // &.table-col-Up-Speed   { width: 100px; }
-  // &.table-col-Down-Speed { width: 120px; }
-  
-  // &.table-col-ETA        { width: 115px; }
-  // &.table-col-Ratio      { width: 75px; }
-
-  // &.table-col-Downloaded  { width: 100px; }
-  // &.table-col-Uploaded    { width: 100px; }
-
-  // &.table-col-Added-On   { width: 170px; }
-  // &.table-col-Completed-On { width: 170px; }
-  // &.table-col-Last-Activity { width: 170px; }
-  
-  // &.table-col-Category { width: 120px; }
-
-  // &.table-col-Seeders { width: 85px; }
-  // &.table-col-Leechers { width: 85px; }
+  &.table-col-select     { width: 40px; }
 }
 
 i.pi {
   font-size: 15px;
 }
-
-/** Torrent table header and row styles **/
 
 .p-datatable .p-datatable-thead > tr > th {
   background: white;
