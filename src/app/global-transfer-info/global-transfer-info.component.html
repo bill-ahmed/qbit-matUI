@@ -78,53 +78,54 @@
           Filter Status
         </h3>
 
-        <mat-chip-list>
-          <mat-chip>
+        <mat-chip-list chipListSelectable="true" focused="true" [selectable]="true">
+
+          <mat-chip (click)="handleFilterStatusSelect('All')" [selected]="isSelected('All')">
             <h4>All</h4>
           </mat-chip>
 
 
-          <mat-chip color="default">
+          <mat-chip color="default" (click)="handleFilterStatusSelect('Downloading')" [selected]="isSelected('Downloading')">
             <mat-icon style="color: gray">arrow_downward</mat-icon>
             <h4>Downloading</h4>
           </mat-chip>
 
-          <mat-chip>
+          <mat-chip (click)="handleFilterStatusSelect('Seeding')" [selected]="isSelected('Seeding')">
             <mat-icon style="color: gray">arrow_upward</mat-icon>
             <h4>Seeding</h4>
           </mat-chip>
 
-          <mat-chip color="default">
+          <mat-chip color="default" (click)="handleFilterStatusSelect('Completed')" [selected]="isSelected('Completed')">
             <mat-icon style="color: #7ABF7D">done</mat-icon>
             <h4>Completed</h4>
           </mat-chip>
 
-          <mat-chip color="default">
+          <mat-chip color="default" (click)="handleFilterStatusSelect('Resumed')" [selected]="isSelected('Resumed')">
             <mat-icon style="color: gray">play_arrow</mat-icon>
             <h4>Resumed</h4>
           </mat-chip>
 
-          <mat-chip color="default">
+          <mat-chip color="default" (click)="handleFilterStatusSelect('Paused')" [selected]="isSelected('Paused')">
             <mat-icon style="color: gray">pause</mat-icon>
             <h4>Paused</h4>
           </mat-chip>
 
-          <mat-chip color="default">
+          <mat-chip color="default" (click)="handleFilterStatusSelect('Active')" [selected]="isSelected('Active')">
             <mat-icon color="primary">toggle_on</mat-icon>
             <h4>Active</h4>
           </mat-chip>
 
-          <mat-chip color="default">
+          <mat-chip color="default" (click)="handleFilterStatusSelect('Inactive')" [selected]="isSelected('Inactive')">
             <mat-icon color="accent">toggle_off</mat-icon>
             <h4>Inactive</h4>
           </mat-chip>
 
-          <mat-chip color="primary">
+          <mat-chip color="primary" (click)="handleFilterStatusSelect('Stalled')" [selected]="isSelected('Stalled')">
             <mat-icon>refresh</mat-icon>
             <h4>Stalled</h4>
           </mat-chip>
 
-          <mat-chip color="warn">
+          <mat-chip color="warn" (click)="handleFilterStatusSelect('Errored')" [selected]="isSelected('Errored')">
             <mat-icon>error</mat-icon>
             <h4>Errored</h4>
           </mat-chip>

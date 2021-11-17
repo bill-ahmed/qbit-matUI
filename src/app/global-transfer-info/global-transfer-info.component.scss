@@ -87,11 +87,31 @@ mat-chip {
   }
 
   mat-chip {
+    color: black;
+
     border-radius: 0;
     cursor: pointer;
 
-    &:hover {
-      border: none;
+    background: none;
+
+    border: solid 2px;
+    border-color:rgba(0, 0, 0, 0.07);
+
+    &.mat-chip-selected {
+      background: rgb(224, 224, 224);
+    }
+  }
+}
+
+.dark-theme {
+  #filter_torrents {
+    mat-chip {
+      color: white;
+      border-color: rgba(97, 97, 97, 0.5);
+
+      &.mat-chip-selected {
+        background: rgb(97, 97, 97);
+      }
     }
   }
 }

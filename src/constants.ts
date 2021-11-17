@@ -61,4 +61,22 @@ export class Constants {
     'Seeders': 85,
     'Leechers': 85
   }
+  
+  /** 
+   * Map a filter state as defined in global-transfer-info-component
+   * to a list of states that encompass it.
+   * 
+   * For example, the state "Error" may apply to any of: `['error', 'stalledDL', 'unknown', etc...]`
+   */
+  static TORRENT_STATE_MAPPING = {
+    'Downloading': ['downloading', 'pausedUP'],
+    'Seeding': ['uploading', 'stalledUP', 'forcedUP'],
+    'Completed': ['uploading', 'stalledUP', 'forcedUP'],
+    'Resumed': ['uploading', 'stalledUP', 'forcedUP'],
+    'Paused': ['pausedUP', 'pausedDL'],
+    'Active': ['uploading', 'downloading', 'allocating', 'metaDL', 'checkingDL', 'moving', 'uploading', 'stalledUP', 'forcedUP'],
+    'Inactive': ['pausedUP', 'pausedDL', 'queuedUP', 'queuedDL', 'stalledUP'],
+    'Stalled': ['stalledUP', 'stalledDL'],
+    'Errored': ['error', 'missingFiles', 'unknown', 'stalledDL'],
+  }
 }

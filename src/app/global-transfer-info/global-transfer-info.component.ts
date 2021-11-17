@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { NetworkConnectionInformationService } from 'src/app/services/network/network-connection-information.service';
 import { RateLimitsDialogComponent } from '../modals/rate-limits-dialog/rate-limits-dialog.component';
 import { IsMobileUser } from 'src/utils/Helpers';
+import { TorrentFilterService } from '../services/torrent-filter-service.service';
 
 @Component({
   selector: 'app-global-transfer-info',
@@ -17,18 +18,17 @@ import { IsMobileUser } from 'src/utils/Helpers';
 export class GlobalTransferInfoComponent implements OnInit {
 
   public data: GlobalTransferInfo = null;
-  public isAltSpeedEnabled: boolean;
 
+  public isAltSpeedEnabled: boolean;
   public refreshInterval = -1;
 
+  public filteringBy = 'all';
+
   public isDarkTheme: Observable<boolean>;
-
-  private rateLimitDiaglogRef: MatDialogRef<RateLimitsDialogComponent>;
-
   public isMobileUser = IsMobileUser();
 
   constructor(private data_store: TorrentDataStoreService, private networkInfo: NetworkConnectionInformationService, private units_helper:
-              UnitsHelperService, private rateLimitDialog: MatDialog, private theme: ThemeService) { }
+              UnitsHelperService, private rateLimitDialog: MatDialog, private filterService: TorrentFilterService, private theme: ThemeService) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
@@ -53,7 +53,7 @@ export class GlobalTransferInfoComponent implements OnInit {
   }
 
   handleDownloadLimitSelect() {
-    this.rateLimitDiaglogRef = this.rateLimitDialog.open(RateLimitsDialogComponent, {
+    this.rateLimitDialog.open(RateLimitsDialogComponent, {
       autoFocus: false,
       data: {
         for: 'Download',
@@ -64,7 +64,7 @@ export class GlobalTransferInfoComponent implements OnInit {
   }
 
   handleUploadLimitSelect() {
-    this.rateLimitDiaglogRef = this.rateLimitDialog.open(RateLimitsDialogComponent, {
+    this.rateLimitDialog.open(RateLimitsDialogComponent, {
       autoFocus: false,
       data: {
         for: 'Upload',
@@ -73,6 +73,14 @@ export class GlobalTransferInfoComponent implements OnInit {
       panelClass: "generic-dialog"
     });
   }
+
+  handleFilterStatusSelect(filterChosen: any) {
+    this.filteringBy = filterChosen;
+    console.log('filtering by', filterChosen);
+    this.filterService.updateFilter(filterChosen);
+  }
+
+  isSelected(chip: string) { return this.filteringBy === chip }
 
   async toggleAltSpeedLimits() {
     console.log('toggled alt limits')
