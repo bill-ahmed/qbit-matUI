@@ -37,8 +37,11 @@
 
     width: 60%;
 
-    /*Animations short-hand: {duration} {timing-function} {dekay} {itetarion-count} {nameOfAnimation}*/
+    /*Animations short-hand: {duration} {timing-function} {delay} {itetarion-count} {nameOfAnimation}*/
     animation: 0.4s ease-out 0s 1 slideInAndFadeFromBottom;
+
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 7px;
 
     mat-card-content {
       height: 100%;
@@ -78,10 +81,16 @@
   }
 }
 
+.dark-theme {
+  mat-card {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
+  }
+}
+
 /*Rise up tranistion*/
 @keyframes slideInAndFadeFromBottom{
   0% {
-    transform: translateY(20%);
+    transform: translateY(10%);
     opacity: 0;
   }
 
