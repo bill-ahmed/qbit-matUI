@@ -4,11 +4,9 @@
         <h1 style="font-weight: 500; width: 100%; margin: auto;"> qBittorrent </h1>
       </section>
 
-      <div class="hide-small">
-        <mat-divider [inset]="true"></mat-divider>
-      </div>
+      <mat-divider [inset]="true"></mat-divider>
 
-      <section class="hide-small" id="toggle_alt_limit">
+      <section  id="toggle_alt_limit">
         <div (click)="toggleAltSpeedLimits()" class="row align-center space-between" style="cursor: pointer">
           <div class="row align-center">
             <mat-icon>speed</mat-icon>
@@ -37,10 +35,8 @@
           </mat-chip-list>
         </div>
       </section>
-      
 
-      <br class="hide-small"/>
-      <mat-divider class="hide-small" [inset]="true"></mat-divider>
+      <mat-divider class="spaced"  [inset]="true"></mat-divider>
 
       <section id="global_transfer">
         <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
@@ -70,8 +66,7 @@
         </div>
       </section>
 
-      <br class="hide-small"/>
-      <mat-divider class="hide-small" [inset]="true"></mat-divider>
+      <mat-divider class="spaced" [inset]="true"></mat-divider>
 
       <section id="filter_torrents">
         <h3>

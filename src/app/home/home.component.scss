@@ -12,7 +12,7 @@ mat-toolbar {
 .mat-toolbar {
   color: white;
 
-  margin: 15px 0;
+  margin: 15px 0 5px 0;
 
   padding-right: 25px;
 
@@ -21,13 +21,14 @@ mat-toolbar {
   justify-content: space-between;
   align-items: center;
 
-  background: $bg-surface-light-0;
+  background: transparent;
   border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  
 
   #app-search-torrents {
     flex-grow: 1;
     margin: 0;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   }
 
   h1 {
@@ -73,6 +74,8 @@ app-search-torrents {
 
   flex-grow: 0.6;
   transition: all ease-in-out 0.4s;
+
+  border-radius: 7px;
 }
 
 app-search-torrents:focus-within {

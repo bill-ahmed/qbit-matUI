@@ -1,6 +1,6 @@
 .global-transfer-info-container {
   height: 100vh;
-  width: 235px;
+  width: 220px;
 
   .data-container {
     height: 100vh;
@@ -14,11 +14,16 @@
 
     padding: 0;
 
+    mat-divider.spaced {
+      margin: 5px 0;
+    }
+
     #qbittorrent_name {
       background: #1976D2;
       color: white;
 
       height: 64px;
+      margin-bottom: 0;
     }
 
     #toggle_alt_limit {
@@ -102,6 +107,11 @@ mat-chip {
 
     border: solid 2px;
     border-color:rgba(0, 0, 0, 0.07);
+
+    h4 {
+      font-size: 10pt;
+      margin: 0 0 0 5px;
+    }
 
     &.mat-chip-selected {
       background: rgb(224, 224, 224);
