@@ -30,7 +30,7 @@
         <mat-tab-group mat-align-tabs="start">
             <mat-tab label="General">
                 <div class="torrent-info-general-content">
-                  <div class="row">
+                  <div class="row wrap rounded-container elevation-1">
                     <div class="panel">
                       <p class="word-break-all"><b>Name:</b> {{torrent.name}}</p>
                       <p><b>Total Size:</b> {{total_size()}}</p>
@@ -44,9 +44,7 @@
                     </div>
                   </div>
 
-                  <mat-divider></mat-divider>
-
-                  <div class="row">
+                  <div class="row wrap rounded-container elevation-1">
                     <div class="panel">
                         <p>Downloaded: {{downloaded()}} / {{total_size()}}</p>
                         <p>Download Speed: {{dl_speed()}} ({{dl_speed_avg()}} avg.)</p>
