@@ -2,8 +2,10 @@
   display: none;
 }
 
-.example-tree ,
-.example-tree  {
+.example-tree {
+  width: 100%;
+
+
   li, ul {
     margin-top: 0;
     margin-bottom: 0;
@@ -17,8 +19,6 @@
   .file-node.mat-tree-node {
     cursor: default;
   }
-
-  word-wrap: break-word;
 }
 
 #expand_folder_button {
@@ -41,8 +41,9 @@
   padding: 0 10px;
 
   .node-title {
+    flex-grow: 1;
+    word-break: break-all;
     word-wrap: break-word;
-    width: 360px;
   }
 
   .priority_selection {

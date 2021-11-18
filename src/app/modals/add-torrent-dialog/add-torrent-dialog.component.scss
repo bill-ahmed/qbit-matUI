@@ -1,3 +1,5 @@
+@import "../../../variables.scss";
+
 .upload_outer_container {
   display: flex;
   flex-direction: row;
@@ -51,6 +53,8 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   padding: 18px;
+
+  background: $bg-surface-light-0;
 
   .files_in_torrents {
     height: 90%;
@@ -128,6 +132,12 @@ mat-hint {
 
 .upload_files h4 {
   margin-left: 10px;
+}
+
+.dark-theme {
+  .torrent_contents_container {
+    background: $bg-surface-0;
+  }
 }
 
 

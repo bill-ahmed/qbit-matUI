@@ -12,9 +12,9 @@ mat-toolbar {
 .mat-toolbar {
   color: white;
 
-  margin: 15px 0 5px 0;
+  margin: 5px 0 15px 0;
 
-  padding-right: 25px;
+  // padding-right: 3px;
 
   display: flex;
   flex-direction: row;
@@ -42,11 +42,7 @@ mat-toolbar {
     align-items: center;
 
     button{
-      margin-left: 15px;
-    }
-
-    #slideToggleTheme {
-      margin-left: 5px;
+      margin-right: 15px;
     }
   }
 }
@@ -93,7 +89,7 @@ app-search-torrents:focus-within {
 }
 
 .content {
-  margin: 0 15px;
+  margin: 0 15px 20px 15px;
   background: $bg-surface-light-0;
   border-radius: 7px;
 

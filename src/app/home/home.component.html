@@ -2,12 +2,10 @@
   <div class="row" [ngClass]="{ 'homeContainerMobile': isMobileUser }">
     <app-global-transfer-info *ngIf="!isMobileUser"></app-global-transfer-info>
 
-    <div class="grow" style="overflow: auto">
+    <div class="col grow" style="overflow: auto">
       <!-- Toolbar -->
       <div class="toolbar">
-        <mat-toolbar>
-          <app-search-torrents *ngIf="!isMobileUser" id="app-search-torrents"></app-search-torrents>
-          
+        <mat-toolbar>          
           <div *ngIf="isMobileUser" class="row space-evenly" style="width: 100%;">
             <button mat-raised-button color="warn" (click)="openAddTorrentDialog()">
               <span>Upload</span>
@@ -35,12 +33,6 @@
                 &nbsp; Upload
               </button>
 
-              <button disableRipple mat-raised-button (click)="$event.stopPropagation();handleSlideToggle()">
-                <mat-icon>brightness_6</mat-icon>
-                <mat-slide-toggle style="padding-left: 10px;" (click)="false" (change)="false" [checked]="isDarkThemeEnabled()" color="primary">
-                </mat-slide-toggle>
-              </button>
-
               <button disableRipple class="mat-elevation-z1" color="primary" mat-flat-button [matMenuTriggerFor]="menu">
                 <mat-icon>person</mat-icon>
                 <mat-icon>expand_more</mat-icon>
@@ -60,11 +52,13 @@
 
             </div>
           </div>
+
+          <app-search-torrents *ngIf="!isMobileUser" id="app-search-torrents"></app-search-torrents>
         </mat-toolbar>
       </div>
 
       <!-- Main Content -->
-      <div class="content" role="main">
+      <div class="grow content" role="main">
         <app-torrents-table></app-torrents-table>
       </div>
     </div>
