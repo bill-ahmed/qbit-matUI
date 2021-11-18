@@ -78,6 +78,13 @@ h4 {
 mat-chip {
   border-radius: 10px;
   width: 100%;
+
+  white-space: nowrap;
+
+  h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 #summaryContent {
