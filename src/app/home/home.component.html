@@ -24,16 +24,14 @@
 
           <div *ngIf="!isMobileUser" class="actions">
             <div id="toolbar_actions">
-              <button mat-fab matTooltip="Add Torrent" id="addTorrentFAB" color="warn" (click)="openAddTorrentDialog()">
-                <mat-icon>cloud_upload</mat-icon>
-              </button>
-
-              <button class="hide_mobile" mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
+              <button mat-raised-button id="addTorrentButton" color="warn" (click)="openAddTorrentDialog()">
                 <mat-icon>cloud_upload</mat-icon>
                 &nbsp; Upload
               </button>
 
-              <button disableRipple class="mat-elevation-z1" color="primary" mat-flat-button [matMenuTriggerFor]="menu">
+              <app-search-torrents id="app-search-torrents"></app-search-torrents>
+
+              <button id="more-actions-button" disableRipple class="mat-elevation-z1" color="primary" mat-flat-button [matMenuTriggerFor]="menu">
                 <mat-icon>person</mat-icon>
                 <mat-icon>expand_more</mat-icon>
               </button>
@@ -52,8 +50,6 @@
 
             </div>
           </div>
-
-          <app-search-torrents *ngIf="!isMobileUser" id="app-search-torrents"></app-search-torrents>
         </mat-toolbar>
       </div>
 
