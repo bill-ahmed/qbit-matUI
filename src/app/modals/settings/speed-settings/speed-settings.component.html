@@ -2,19 +2,19 @@
   <section>
     <h3> Global Rate Limits </h3>
 
-    <div class="indented_field">
-      <div class="field">
-        <p>Upload limit:</p>
-        <mat-form-field class="medium numeric_field">
+    <div class="rounded-container elevation-1">
+      <div class="row align-baseline">
+        <p>Upload limit: &nbsp;&nbsp;</p>
+        <mat-form-field class="numeric_field" style="max-width: 60px;">
           <input matInput type="number" [(ngModel)]="speed_settings.up_limit" value="{{speed_settings.up_limit}}" [formControl]="validators.up_limit">
         </mat-form-field>
         <p>KiB/s <i>(0 or -1 implies &infin;)</i></p>
       </div>
       <mat-error *ngIf="validators.up_limit.invalid">{{invalidLimitMessage()}}</mat-error>
 
-      <div class="field">
-        <p>Download limit:</p>
-        <mat-form-field class="medium numeric_field">
+      <div class="row align-baseline">
+        <p>Download limit: &nbsp;&nbsp;</p>
+        <mat-form-field class="numeric_field" style="max-width: 60px;">
           <input matInput type="number" [(ngModel)]="speed_settings.dl_limit" value="{{speed_settings.dl_limit}}" [formControl]="validators.dl_limit">
         </mat-form-field>
         <p>KiB/s <i>(0 or -1 implies &infin;)</i></p>
@@ -27,19 +27,19 @@
   <section>
     <h3> Alternative Rate Limits </h3>
 
-    <div class="indented_field">
-      <div class="field">
-        <p>Upload</p>
-        <mat-form-field class="medium numeric_field">
+    <div class="rounded-container elevation-1">
+      <div class="row align-baseline">
+        <p>Upload: &nbsp;&nbsp;</p>
+        <mat-form-field class="numeric_field" style="max-width: 60px;">
           <input matInput type="number" [(ngModel)]="speed_settings.alt_up_limit" value="{{speed_settings.alt_up_limit}}" [formControl]="validators.alt_up_limit">
         </mat-form-field>
         <p>KiB/s <i>(0 or -1 implies &infin;)</i></p>
       </div>
       <mat-error *ngIf="validators.alt_up_limit.invalid">{{invalidLimitMessage()}}</mat-error>
 
-      <div class="field">
-        <p>Download:</p>
-        <mat-form-field class="medium numeric_field">
+      <div class="row align-baseline">
+        <p>Download: &nbsp;&nbsp;</p>
+        <mat-form-field class="numeric_field" style="max-width: 60px;">
           <input matInput type="number" [(ngModel)]="speed_settings.alt_dl_limit" value="{{speed_settings.alt_dl_limit}}" [formControl]="validators.alt_dl_limit">
         </mat-form-field>
         <p>KiB/s <i>(0 or -1 implies &infin;)</i></p>
@@ -56,11 +56,11 @@
           <div class="field" style="justify-content: flex-start;">
             <div>
               From:
-              <mat-form-field class="x-small numeric_field">
+              <mat-form-field class="numeric_field" style="max-width: 35px;">
                 <input matInput type="number" [(ngModel)]="speed_settings.schedule_from_hour" value="{{speed_settings.schedule_from_hour}}">
               </mat-form-field>
               :
-              <mat-form-field class="x-small numeric_field">
+              <mat-form-field class="numeric_field" style="max-width: 35px;">
                 <input matInput type="number" [(ngModel)]="speed_settings.schedule_from_min" value="{{speed_settings.schedule_from_min}}">
               </mat-form-field>
             </div>
@@ -70,11 +70,11 @@
 
             <div>
               To:
-              <mat-form-field class="x-small numeric_field">
+              <mat-form-field class="numeric_field" style="max-width: 35px;">
                 <input matInput type="number" [(ngModel)]="speed_settings.schedule_to_hour" value="{{speed_settings.schedule_to_hour}}">
               </mat-form-field>
               :
-              <mat-form-field class="x-small numeric_field">
+              <mat-form-field class="numeric_field" style="max-width: 35px;">
                 <input matInput type="number" [(ngModel)]="speed_settings.schedule_to_min" value="{{speed_settings.schedule_to_min}}">
               </mat-form-field>
             </div>

@@ -4,7 +4,7 @@
       <section>
         <h3> Themeing </h3>
 
-        <div class="choose_theme">
+        <div class="choose_theme rounded-container elevation-1">
           <p> Choose a theme:  </p>
           <mat-radio-group class="radio_group_options" [(ngModel)]="theme_settings.theme">
             <mat-radio-button class="radio_options" color="accent" *ngFor="let option of theme_options" [value]="option">
@@ -13,35 +13,32 @@
           </mat-radio-group>
         </div>
       </section>
-      <br/>
 
       <section>
         <h3> Notifications </h3>
 
-        <div class="field">
+        <div class="field rounded-container elevation-1">
           <mat-checkbox [(ngModel)]="notification_settings.show_snack_notifications">Show snackbar notifications</mat-checkbox>
         </div>
-      </section >
-      <br/>
+      </section>
 
       <section>
         <h3> Events </h3>
 
-        <div class="field">
+        <div class="field rounded-container elevation-1">
           <button mat-stroked-button (click)="registerMagnetHandler()">
             <mat-icon>public</mat-icon>
             Register to handle magnet links...
           </button>
         </div>
       </section >
-      <br/>
     </mat-tab>
 
     <mat-tab label="Torrents">
       <section>
         <h3> Uploading Torrents </h3>
 
-        <div class="field">
+        <div class="field rounded-container elevation-1">
           <mat-checkbox [(ngModel)]="torrent_upload_settings.show_parsed_torrents_from_file">Show torrent contents in file upload</mat-checkbox>
         </div>
 
@@ -53,72 +50,75 @@
       <section>
         <h3> Torrent Data </h3>
 
-        <div class="field">
-          <p>How often to refresh torrent data:</p>
-        </div>
-        <div class="field">
-          <mat-radio-group class="radio_group_options" [(ngModel)]="torrent_data_options.refresh_interval">
-            <mat-radio-button class="radio_options" color="accent" [value]="1500">
-              Auto (recommended)
-            </mat-radio-button>
-
-            <mat-radio-button class="radio_options" matTooltip="Every 1 second" color="accent" [value]="1000">
-              Fastest
-            </mat-radio-button>
-
-            <mat-radio-button class="radio_options" matTooltip="Every 2 seconds" color="accent" [value]="2000">
-              Fast
-            </mat-radio-button>
-
-            <mat-radio-button class="radio_options" matTooltip="Every 5 seconds" color="accent" [value]="5000">
-              Medium
-            </mat-radio-button>
-
-            <mat-radio-button class="radio_options" matTooltip="Every 8 seconds" matTooltipPosition="right" color="accent" [value]="8000">
-              Slow
-            </mat-radio-button>
-          </mat-radio-group>
+        <div class="rounded-container elevation-1">
+          <div class="field">
+            <p>How often to refresh torrent data:</p>
+          </div>
+          <div class="field">
+            <mat-radio-group class="radio_group_options" [(ngModel)]="torrent_data_options.refresh_interval">
+              <mat-radio-button class="radio_options" color="accent" [value]="1500">
+                Auto (recommended)
+              </mat-radio-button>
+  
+              <mat-radio-button class="radio_options" matTooltip="Every 1 second" color="accent" [value]="1000">
+                Fastest
+              </mat-radio-button>
+  
+              <mat-radio-button class="radio_options" matTooltip="Every 2 seconds" color="accent" [value]="2000">
+                Fast
+              </mat-radio-button>
+  
+              <mat-radio-button class="radio_options" matTooltip="Every 5 seconds" color="accent" [value]="5000">
+                Medium
+              </mat-radio-button>
+  
+              <mat-radio-button class="radio_options" matTooltip="Every 8 seconds" matTooltipPosition="right" color="accent" [value]="8000">
+                Slow
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
         </div>
       </section>
-      <br/>
 
       <section>
         <h3> Torrent Table </h3>
 
-        <div class="field">
-          <p>Default Sort Order</p>
-        </div>
-        <div class="field" style="justify-content: flex-start;">
-          <mat-form-field>
-            <mat-label>Choose Column</mat-label>
-            <mat-select [(value)]="torrent_table_settings.default_sort_order.column_name">
-              <mat-option *ngFor="let column of default_sort_options" [value]="column">
-                {{ column }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field style="margin-left: 30px;">
-            <mat-label>Choose Order</mat-label>
-            <mat-select [(value)]="torrent_table_settings.default_sort_order.order">
-              <mat-option *ngFor="let order of [['asc', 'Ascending'], ['desc', 'Descending']]" [value]="order[0]">
-                {{ order[1] }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <br/>
-
-        <div class="field">
-          <p> Columns to Display </p>
-        </div>
-        <div class="field">
-          <mat-form-field style="width: 90%;">
-            <mat-label>Choose Columns</mat-label>
-            <mat-select [(value)]="torrent_table_settings.columns_to_show" multiple>
-              <mat-option *ngFor="let column of all_torrent_table_columns" [value]="column"> {{ column }} </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <div class="rounded-container elevation-1">
+          <div class="field">
+            <p>Default Sort Order</p>
+          </div>
+          <div class="field" style="justify-content: flex-start;">
+            <mat-form-field>
+              <mat-label>Choose Column</mat-label>
+              <mat-select [(value)]="torrent_table_settings.default_sort_order.column_name">
+                <mat-option *ngFor="let column of default_sort_options" [value]="column">
+                  {{ column }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+  
+            <mat-form-field style="margin-left: 30px;">
+              <mat-label>Choose Order</mat-label>
+              <mat-select [(value)]="torrent_table_settings.default_sort_order.order">
+                <mat-option *ngFor="let order of [['asc', 'Ascending'], ['desc', 'Descending']]" [value]="order[0]">
+                  {{ order[1] }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <br/>
+  
+          <div class="field">
+            <p> Columns to Display </p>
+          </div>
+          <div class="field">
+            <mat-form-field style="width: 90%;">
+              <mat-label>Choose Columns</mat-label>
+              <mat-select [(value)]="torrent_table_settings.columns_to_show" multiple>
+                <mat-option *ngFor="let column of all_torrent_table_columns" [value]="column"> {{ column }} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
       </section>
     </mat-tab>
@@ -127,46 +127,51 @@
       <section>
         <h3> File System </h3>
 
-        <mat-checkbox [(ngModel)]="file_system_settings.use_alt_delimiter">Use Alternate File Path Delimiter</mat-checkbox>
+        <div class="rounded-container elevation-1">
+          <mat-checkbox [(ngModel)]="file_system_settings.use_alt_delimiter">Use Alternate File Path Delimiter</mat-checkbox>
 
-        <div class="indented_field {{file_system_settings.use_alt_delimiter ? '' : 'disabled'}}">
-          <div class="field">
-            <p>Delimiter to use:</p>
-            <mat-form-field class="small numeric_field">
-              <input matInput type="text" [(ngModel)]="file_system_settings.delimiter" value="{{file_system_settings.delimiter}}">
-            </mat-form-field>
+          <div class="indented_field {{file_system_settings.use_alt_delimiter ? '' : 'disabled'}}">
+            <div class="field">
+              <p>Delimiter to use:</p>
+              <mat-form-field class="small numeric_field">
+                <input matInput type="text" [(ngModel)]="file_system_settings.delimiter" value="{{file_system_settings.delimiter}}">
+              </mat-form-field>
+            </div>
           </div>
         </div>
       </section>
       <br/>
 
       <mat-divider></mat-divider>
-      <br/>
 
-      <section style="display: flex;flex-direction: row;align-items: center;">
+      <section class="row align-center">
         <h1 class="mat-error" style="margin: 0; font-weight: 500;"> Danger Zone </h1>
         &nbsp; &nbsp;
         <mat-icon color="error">warning</mat-icon>
       </section>
 
-      <section>
-        <h3> Reset All Web UI Settings </h3>
-        <p> You cannot undo this action! </p>
+      <div class="rounded-container elevation-1" style="margin-left: 10px">
+        <section style="margin: 0;">
+          <h3> Reset All Web UI Settings </h3>
+          <p> You cannot undo this action! </p>
+  
+          <div class="field">
+            <button mat-raised-button (click)="_resetAllSettings()" color="warn"> Reset Web UI Settings </button>
+          </div>
+        </section>
+      </div>
 
-        <div class="field">
-          <button mat-raised-button (click)="_resetAllSettings()" color="warn"> Reset Web UI Settings </button>
-        </div>
-      </section>
-      <br/>
-
-      <section>
-        <h3> Disable Material Web UI </h3>
-        <p> Note: To re-enable this Web UI, you can go to Tools > Options > Web UI > Use alternative Web UI</p>
-
-        <div class="field">
-          <button mat-raised-button (click)="_disableAlternateWebUI()" color="warn"> Disable Web UI </button>
-        </div>
-      </section>
+      <div class="rounded-container elevation-1" style="margin-left: 10px">
+        <section style="margin: 0;">
+          <h3> Disable Material Web UI </h3>
+          <p> Note: To re-enable this Web UI, you can go to Tools > Options > Web UI > Use alternative Web UI</p>
+  
+          <div class="field">
+            <button mat-raised-button (click)="_disableAlternateWebUI()" color="warn"> Disable Web UI </button>
+          </div>
+        </section>
+      </div>
+      
       <br/>
     </mat-tab>
   </mat-tab-group>
