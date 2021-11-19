@@ -12,9 +12,9 @@ mat-toolbar {
 .mat-toolbar {
   color: white;
 
-  margin: 15px 0 5px 0;
+  margin: 5px 0 15px 0;
 
-  padding-right: 25px;
+  // padding-right: 3px;
 
   display: flex;
   flex-direction: row;
@@ -23,13 +23,6 @@ mat-toolbar {
 
   background: transparent;
   border-radius: 5px;
-  
-
-  #app-search-torrents {
-    flex-grow: 1;
-    margin: 0;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  }
 
   h1 {
     font-size: 22pt;
@@ -40,13 +33,20 @@ mat-toolbar {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    flex-grow: 1;
 
-    button{
-      margin-left: 15px;
+    #addTorrentButton, #more-actions-button {
+      height: 100%;
+      margin: 0 25px;
     }
 
-    #slideToggleTheme {
-      margin-left: 5px;
+    #app-search-torrents {
+      height: 100%;
+      flex-grow: 1;
+
+      margin: 0 10px;
+
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     }
   }
 }
@@ -57,11 +57,8 @@ mat-toolbar {
   flex-direction: row;
 
   justify-content: flex-end;
-}
 
-#addTorrentFAB, #logoutFAB {
-  /* background: #ff1744; */
-  display: none;
+  width: 100%;
 }
 
 #logoutButton {
@@ -93,7 +90,7 @@ app-search-torrents:focus-within {
 }
 
 .content {
-  margin: 0 15px;
+  margin: 0 15px 20px 15px;
   background: $bg-surface-light-0;
   border-radius: 7px;
 
@@ -112,14 +109,6 @@ app-search-torrents:focus-within {
   }
 }
 
-/** For small screens */
-/* @media only screen and (max-width: 1550px) {
-  .content {
-    flex-direction: column;
-    padding: 0 5%;
-  }
-} */
-
 .homeContainerMobile {
   display: block;
 
@@ -129,27 +118,4 @@ app-search-torrents:focus-within {
   }
 
   .mat-toolbar { margin-top: 0; background: inherit; }
-}
-
-/** For phone screens */
-@media only screen and (max-width: 768px) {
-  #addTorrentButton, .hide_mobile {
-      display: none;
-  }
-
-  #addTorrentFAB, #logoutFAB {
-      display: unset;
-  }
-
-  app-search-torrents {
-    bottom: unset;
-    transition: none;
-    flex-grow: 1;
-
-    margin-right: 0;
-  }
-
-  app-search-torrents:focus-within {
-    flex-grow: 1;
-  }
 }

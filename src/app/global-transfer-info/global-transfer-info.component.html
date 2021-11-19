@@ -6,7 +6,17 @@
 
       <mat-divider [inset]="true"></mat-divider>
 
-      <section  id="toggle_alt_limit">
+      <section id="toggle_alt_limit">
+        <div class="row space-between align-center" style="cursor: pointer" (click)="$event.stopPropagation();handleSlideToggle()">
+          <div class="row">
+            <mat-icon>brightness_6</mat-icon>
+            <h4>Dark theme</h4>
+          </div>
+
+          <mat-slide-toggle style="padding-left: 10px;" (click)="false" (change)="false" [checked]="isDarkThemeEnabled()" color="primary">
+          </mat-slide-toggle>
+        </div>
+        
         <div (click)="toggleAltSpeedLimits()" class="row align-center space-between" style="cursor: pointer">
           <div class="row align-center">
             <mat-icon>speed</mat-icon>
@@ -55,7 +65,7 @@
             <br/>
             <mat-chip style="cursor: pointer;" (click)="handleUploadLimitSelect()" disableRipple matTooltip="Click to set upload limit" matTooltipPosition="below">
               <mat-icon color="accent">arrow_upward</mat-icon>
-              <h4>{{getUploadSpeedString()}} {{getUpLimitString()}}</h4>
+              <h4>some speed {{getUploadSpeedString()}} {{getUpLimitString()}}</h4>
             </mat-chip>
 
             <mat-chip disableRipple>

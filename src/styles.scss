@@ -45,6 +45,17 @@ body {
 .text-center { text-align: center; }
 .word-break-all { word-break: break-all; }
 
+.rounded-container {
+  margin: 10px;
+  padding: 15px;
+  border-radius: 7px;
+
+  overflow-x: auto;
+}
+
+.elevation-1 { box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; }
+.elevation-2 { box-shadow: rgb(99, 99, 99, 0.2) 0px 2px 8px 0px; }
+
 /** Styles applicable for all material dialogs */
 .generic-dialog .mat-dialog-container {
   padding: 0;
@@ -108,29 +119,29 @@ body {
     max-width: 120px;
   }
 
-  .numeric_field {
-    margin-left: 10px;
-
-    /** Hide the annoying increase/decrease buttons on numeric input */
-    /* Chrome, Safari, Edge, Opera */
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    /* Firefox */
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-  }
-
   .regular_field {
     margin-left: 10px;
   }
 
   .wide_field {
     min-width: 300px;
+  }
+}
+
+input.numeric_field {
+  margin-left: 10px;
+
+  /** Hide the annoying increase/decrease buttons on numeric input */
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
   }
 }
 
@@ -185,6 +196,11 @@ body {
 
 // For dark mode!
 .dark-theme {
+  .rounded-container { background: $bg-surface-dark-0; }
+  .elevation-1 { box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 4px; }
+  .elevation-2 { box-shadow: rgb(0, 0, 0, 0.5) 0px 2px 8px 0px; }
+
+
   .torrent-status {
     &.primary {
       background: mat-color($dark-primary);

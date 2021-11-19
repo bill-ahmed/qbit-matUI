@@ -47,6 +47,10 @@ export class GlobalTransferInfoComponent implements OnInit {
     })
   }
 
+  public toggleTheme(): void {
+    this.theme.setDarkTheme(!this.theme.getCurrentValue());
+  }
+
   handleDataChange(newData: GlobalTransferInfo): void {
     this.data = newData;
     this.isAltSpeedEnabled = this.data.use_alt_speed_limits;
@@ -77,6 +81,14 @@ export class GlobalTransferInfoComponent implements OnInit {
   handleFilterStatusSelect(filterChosen: any) {
     this.filteringBy = filterChosen;
     this.filterService.updateFilter(filterChosen);
+  }
+
+  handleSlideToggle(): void {
+    this.toggleTheme();
+  }
+
+  isDarkThemeEnabled(): boolean {
+    return this.theme.getCurrentValue();
   }
 
   isSelected(chip: string) { return this.filteringBy === chip }

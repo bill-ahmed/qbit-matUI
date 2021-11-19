@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit {
   openSettingsDialog():void {
     let opts: any = {
       panelClass: "generic-dialog",
-      minWidth: "80%",
+      minWidth: "60%",
       height: "85vh",
       autoFocus: false,
       disableClose: true
