@@ -142,6 +142,7 @@ export class TorrentsTableComponent implements OnInit {
   getTorrentUploadedString(tor: Torrent): string  { return this.pp.pretty_print_uploaded(tor); }
   getTorrentRatioString(tor: Torrent): number     { return this.pp.pretty_print_ratio(tor); }
   getCompletedOnString(timestamp: number): string { return this.pp.pretty_print_completed_on(timestamp); }
+  getTrackerString(tracker: string): string       { return this.pp.pretty_print_tracker(tracker); }
 
   getClassNameForColumns(column: string): string {
     return 'table-col table-col-' + column.replace(/ /g, '-')

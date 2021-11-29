@@ -69,7 +69,7 @@
 
       <ng-template pTemplate="colgroup">
         <colgroup>
-          <col *ngFor="let col of displayedColumns" [ngStyle]="{ 'width': colWidths[col] + 'px' || 'initial' }">
+          <col *ngFor="let col of displayedColumns" [ngStyle]="{ 'width': colWidths[col] + 'px' || 'initial', 'textOverflow': 'ellipsis' }">
         </colgroup>
       </ng-template>
 
@@ -173,6 +173,10 @@
                   [styleClass]="getClassForStatus(torrent)"
                   >
                 </p-tag>
+              </div>
+
+              <div *ngSwitchCase="'Tracker'">
+                {{ getTrackerString(torrent.tracker) }}
               </div>
 
               <div *ngSwitchDefault [ngStyle]="{ 'width': colWidths[col] + 'px' || 'initial' }">{{torrent[displayedColumnsMapping[col]]}}</div>

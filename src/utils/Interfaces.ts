@@ -49,7 +49,9 @@ export interface Torrent {
     category: string,
     super_seeding: boolean,
     force_start: boolean,
-    save_path: string
+    save_path: string,
+
+    tracker: string
 }
 
 /** Global states of server, such as global download, upload, etc. */

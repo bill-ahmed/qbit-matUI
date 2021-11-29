@@ -87,4 +87,22 @@ export class PrettyPrintTorrentDataService {
 
     return dateCompleted;
   }
+
+  /**
+   * Get only hostname for a tracker URL
+   * 
+   * Hacky, since `new URL(...)` doesn't parse UDP string properly.
+   * 
+   * Example: `udp://tracker.opentrackr.org:1337` --> `tracker.opentrackr.org`
+   * 
+   * Example: `https://my.domain.com/123456` --> `my.domain.com`
+   * 
+   */
+  pretty_print_tracker(t: string) {
+    if(t.startsWith('udp'))
+      return t.split('//')[1].split(':')[0]
+    
+    // Fallback, it's probably a well-formatted HTTP URL
+    return new URL(t).hostname;
+  }
 }
