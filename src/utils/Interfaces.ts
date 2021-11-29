@@ -79,22 +79,29 @@ export interface GlobalTransferInfo {
     free_space_on_disk: number,
     total_peer_connections: number,
 
-    /** True if alternative speed limits are enabled */
+    /** True if alternative speed limits are enabled. */
     use_alt_speed_limits: boolean
 }
 
-/** Response when requesting torrent data from server */
+/** Response when requesting torrent data from server. */
 export interface MainData {
     rid: number,
     full_update: boolean,
     torrents: Torrent[],
-    /** List of hashes of torrents removed since last request */
-    torrents_removed: [ string ],
-    /** List of categories added since last request */
-    categories: [ string ],
-    categories_removed: [ string ],
+    
+    /** List of hashes of torrents removed since last request. */
+    torrents_removed: string[],
+
+    /** List of categories added since last request. */
+    categories: string[],
+    categories_removed: string[],
     queueing: boolean,
     server_state: GlobalTransferInfo
+
+    /** Maps a tracker to a list of torrent hashes. */
+    trackers: {
+      [x: string] : string[]
+    }
 }
 
 /** The contents of a torrent */

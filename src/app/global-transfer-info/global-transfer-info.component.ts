@@ -9,6 +9,7 @@ import { NetworkConnectionInformationService } from 'src/app/services/network/ne
 import { RateLimitsDialogComponent } from '../modals/rate-limits-dialog/rate-limits-dialog.component';
 import { IsMobileUser } from 'src/utils/Helpers';
 import { TorrentFilterService } from '../services/torrent-filter-service.service';
+import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
 
 @Component({
   selector: 'app-global-transfer-info',
@@ -17,24 +18,27 @@ import { TorrentFilterService } from '../services/torrent-filter-service.service
 })
 export class GlobalTransferInfoComponent implements OnInit {
 
+  public mainData: MainData = null;
   public data: GlobalTransferInfo = null;
 
   public isAltSpeedEnabled: boolean;
   public refreshInterval = -1;
 
-  public filteringBy = 'all';
+  public filteringBy = 'All';
 
   public isDarkTheme: Observable<boolean>;
   public isMobileUser = IsMobileUser();
 
   constructor(private data_store: TorrentDataStoreService, private networkInfo: NetworkConnectionInformationService, private units_helper:
-              UnitsHelperService, private rateLimitDialog: MatDialog, private filterService: TorrentFilterService, private theme: ThemeService) { }
+              UnitsHelperService, public pp: PrettyPrintTorrentDataService, private rateLimitDialog: MatDialog, private filterService: TorrentFilterService, 
+              private theme: ThemeService) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
     // Subscribe to any changes with data store
     this.data_store.GetTorrentDataSubscription().subscribe((res: MainData) => {
       if(res) {
+        this.mainData = res;
         this.handleDataChange(res.server_state);
       }
     });
@@ -49,6 +53,14 @@ export class GlobalTransferInfoComponent implements OnInit {
 
   public toggleTheme(): void {
     this.theme.setDarkTheme(!this.theme.getCurrentValue());
+  }
+
+  trackerList() {
+    let trackers = [];
+    for(let t in this.mainData?.trackers)
+      trackers.push(t)
+
+    return trackers;
   }
 
   handleDataChange(newData: GlobalTransferInfo): void {
@@ -94,7 +106,6 @@ export class GlobalTransferInfoComponent implements OnInit {
   isSelected(chip: string) { return this.filteringBy === chip }
 
   async toggleAltSpeedLimits() {
-    console.log('toggled alt limits')
     this.isAltSpeedEnabled = !this.isAltSpeedEnabled
     await this.data_store.ToggleAltSpeedLimits();
   }

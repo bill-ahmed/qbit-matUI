@@ -79,9 +79,11 @@
       <mat-divider class="spaced" [inset]="true"></mat-divider>
 
       <section id="filter_torrents">
-        <h3>
-          Filter Status
+        <h3 style="margin-bottom: 5px;">
+          Filter
         </h3>
+
+        <h4>Status</h4>
 
         <mat-chip-list chipListSelectable="true" focused="true" [selectable]="true">
 
@@ -133,6 +135,15 @@
           <mat-chip color="warn" (click)="handleFilterStatusSelect('Errored')" [selected]="isSelected('Errored')">
             <mat-icon>error</mat-icon>
             <h4>Errored</h4>
+          </mat-chip>
+        </mat-chip-list>
+        <br/>
+
+        <h4>Trackers</h4>
+
+        <mat-chip-list chipListSelectable="true" focused="true" [selectable]="true">
+          <mat-chip *ngFor="let tracker of trackerList()" (click)="handleFilterStatusSelect(tracker)" [selected]="isSelected(tracker)">
+            <h4 style="margin: 0;">({{mainData.trackers[tracker].length}}) {{pp.pretty_print_tracker(tracker)}}</h4>
           </mat-chip>
         </mat-chip-list>
       </section>
