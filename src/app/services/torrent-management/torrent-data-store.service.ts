@@ -153,6 +153,10 @@ export class TorrentDataStoreService {
     return this.torrent_http_service.GetTorrentContents(tor.hash);
   }
 
+  public GetTorrentTrackers(tor: Torrent): Observable<any> {
+    return this.torrent_http_service.GetTorrentTrackers(tor.hash);
+  }
+
   public async ToggleAltSpeedLimits() {
     await this.torrent_http_service.ToggleAltSpeedLimits();
   }

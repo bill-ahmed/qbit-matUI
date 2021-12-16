@@ -7,10 +7,6 @@ app-file-system-tree-explorer {
   width: 97%;
 }
 
-.torrent-info-general-content, .torrent-info-content-content {
-    overflow-y: scroll;
-}
-
 .row {
   margin: 10px;
 
@@ -30,4 +26,27 @@ mat-chip-list {
 
 .torrent_tags p-tag {
   margin-right: 8px;
+}
+
+table.torrentTrackerTable {
+  margin: 25px;
+  border: solid 3px rgba(0,0,0,0.05);
+
+  thead {
+    th { 
+      padding: 5px 10px;
+      text-align: left;
+      background: rgba(0,0,0,0.05);
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        padding: 5px;
+      }
+    }
+
+    tr:nth-child(even) { background: rgba(0,0,0,0.05); }
+  }
 }
