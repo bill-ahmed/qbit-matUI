@@ -22,13 +22,12 @@
     max-height: unset;
 
     #choose_save_location {
-      width: 85%;
       min-width: 300px;
 
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      justify-content: space-evenly;
+      justify-content: space-between;
       align-items: baseline;
 
       #trigger_file_explorer {

@@ -35,6 +35,8 @@ export class AddTorrentDialogComponent implements OnInit {
 
   public isMobileUser = IsMobileUser();
 
+  public allSaveLocations: string[] = [];
+
   /** Keep track of the mat-tab the user is currently in. */
   public currentTab: MatTabChangeEvent;
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
@@ -49,6 +51,8 @@ export class AddTorrentDialogComponent implements OnInit {
     this.isDarkTheme = this.theme.getThemeSubscription();
     this.updateDefaultSaveLocationFromDisk();
     this.appConfig.getUserPreferences().then(pref => { this.show_torrent_contents = pref.web_ui_options.upload_torrents?.show_parsed_torrents_from_file ?? true });
+
+    this.allSaveLocations = this.data_store.GetAllSaveLocations();
 
     if(this.inputData?.magnetURL) {
       this.urlsToUpload = this.inputData.magnetURL;

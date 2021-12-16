@@ -55,10 +55,6 @@ export class TorrentDataStoreService {
   public async UpdateTorrentData(rid?: number): Promise<MainData> {
     let data = await this.torrent_http_service.GetAllTorrentData(rid || this.rid).toPromise();
 
-    // One first update, cache list of all save locations
-    if(data.full_update)
-      this.saveLocationsCache = data.torrents.map(t => t.save_path);
-
     // Only set raw data initially
     if(!this.rawData){
       this.rawData = JSON.parse(JSON.stringify(data));
@@ -69,6 +65,10 @@ export class TorrentDataStoreService {
     this._updateDataSource(this.TorrentMainData);
 
     this.rid = data.rid;
+
+    // One first update, cache list of all save locations
+    if(data.full_update)
+      this.saveLocationsCache = [...(new Set(this.TorrentMainData.torrents.map(t => t.save_path)))].sort();
 
     return this.TorrentMainData;
   }
@@ -92,6 +92,8 @@ export class TorrentDataStoreService {
 
     return res;
   }
+
+  public GetAllSaveLocations(): string[] { return this.saveLocationsCache; }
 
   /** Handle uploading torrent files
    * @param files The torrents to upload.
