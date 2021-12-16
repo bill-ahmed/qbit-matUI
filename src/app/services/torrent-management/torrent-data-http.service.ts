@@ -243,6 +243,17 @@ export class TorrentDataHTTPService {
     return this.sendTorrentHashesPOST(url, [hash], null, body);
   }
 
+  GetTorrentTrackers(hash: string): Observable<any> {
+    let root = this.http_endpoints.root;
+    let endpoint = this.http_endpoints.trackers;
+    let url = root + endpoint;
+
+    let body = new FormData();
+    body.append("hash", hash);
+
+    return this.sendTorrentHashesPOST(url, [hash], null, body);
+  }
+
   async ToggleAltSpeedLimits(): Promise<void> {
     let root = this.http_endpoints.root;
     let endpoint = this.http_endpoints.toggleSpeedLimitsMode;

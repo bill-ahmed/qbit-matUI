@@ -24,7 +24,7 @@ import { SnackbarService } from '../services/notifications/snackbar.service';
 import { MenuItem } from 'primeng/api';
 import { getClassForStatus } from '../../utils/Helpers'
 import { Constants } from 'src/constants';
-import { TorrentFilterService } from '../services/torrent-filter-service.service';
+import { TorrentFilter, TorrentFilterService } from '../services/torrent-filter-service.service';
 
 
 @Component({
@@ -63,7 +63,7 @@ export class TorrentsTableComponent implements OnInit {
   private currentMatSort = {active: "Completed On", direction: "desc"};
 
   private torrentSearchValue = ""; // Keep track of which torrents are currently selected
-  private torrentFilterValue = "";
+  private torrentFilterBy: TorrentFilter = { type: '', value: '' };
 
   constructor(private appConfig: ApplicationConfigService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
@@ -80,7 +80,8 @@ export class TorrentsTableComponent implements OnInit {
     });
 
     // Filtering torrents
-    this.filterService.getFilterValue().subscribe((res: string) => {
+    this.filterService.getFilterValue().subscribe((res: TorrentFilter) => {
+      // TODO: Account for different filter types
       this.updateFilterValue(res);
     })
 
@@ -142,6 +143,7 @@ export class TorrentsTableComponent implements OnInit {
   getTorrentUploadedString(tor: Torrent): string  { return this.pp.pretty_print_uploaded(tor); }
   getTorrentRatioString(tor: Torrent): number     { return this.pp.pretty_print_ratio(tor); }
   getCompletedOnString(timestamp: number): string { return this.pp.pretty_print_completed_on(timestamp); }
+  getTrackerString(tracker: string): string       { return this.pp.pretty_print_tracker(tracker); }
 
   getClassNameForColumns(column: string): string {
     return 'table-col table-col-' + column.replace(/ /g, '-')
@@ -177,9 +179,8 @@ export class TorrentsTableComponent implements OnInit {
     this.updateTorrentsBasedOnSearchValue()
   }
 
-  private updateFilterValue(val: string) {
-    val = val ?? '';
-    this.torrentFilterValue = val;
+  private updateFilterValue(val: TorrentFilter) {
+    this.torrentFilterBy = val;
 
     this.updateTorrentsBasedOnFilterValue();
   }
@@ -204,15 +205,19 @@ export class TorrentsTableComponent implements OnInit {
 
   updateTorrentsBasedOnFilterValue() {
     // If a filter value is given, then do the work
-    if(this.allTorrentData && this.torrentFilterValue) {
+    if(this.allTorrentData && this.torrentFilterBy) {
       // Sometimes filtered data is empty while not searching, likely a timing issue
       // Super hacky...
       this.filteredTorrentData = (this.filteredTorrentData.length === 0 && this.torrentSearchValue === '' ? this.allTorrentData : this.filteredTorrentData)
       .filter((tor: Torrent) => {
         // Special case for when we consider all torrents
-        if(this.torrentFilterValue === 'All') return true;
+        if(this.torrentFilterBy.value === 'All') return true;
 
-        return Constants.TORRENT_STATE_MAPPING[this.torrentFilterValue]?.includes(tor.state);
+        if(this.torrentFilterBy.type === 'filter_status')
+          return Constants.TORRENT_STATE_MAPPING[this.torrentFilterBy.value]?.includes(tor.state);
+        
+        if(this.torrentFilterBy.type === 'filter_tracker')
+          return this.allTorrentInformation.trackers[this.torrentFilterBy.value].includes(tor.hash)
       });
     }
   }
