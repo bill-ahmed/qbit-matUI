@@ -62,7 +62,6 @@
       <div id="choose_save_location">
         <mat-form-field appearance="outline">
           <mat-label>Download To...</mat-label>
-          <!-- TODO: Add mat-autocomplete with list of all save locations -->
           <input value="{{filesDestination}}" name="savepath" type="text" id="savepath" (change)="updateFileDestination($event)" matInput [matAutocomplete]="auto" >
 
           <mat-autocomplete autoActiveFirstOption  #auto="matAutocomplete">
