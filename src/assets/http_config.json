@@ -4,6 +4,7 @@
       "login": "/auth/login",
       "logout": "/auth/logout",
       "torrentList": "/sync/maindata",
+      "trackers": "/torrents/trackers",
       "uploadTorrents": "/torrents/add",
       "deleteTorrent": "/torrents/delete",
       "recheckTorrent": "/torrents/recheck",

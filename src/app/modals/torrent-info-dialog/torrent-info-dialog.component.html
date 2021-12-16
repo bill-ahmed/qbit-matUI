@@ -61,27 +61,53 @@
                 </div>
             </mat-tab>
 
+            <mat-tab label="Trackers">
+              <table class="torrentTrackerTable">
+                <thead>
+                  <th>Tier</th>
+                  <th>URL</th>
+                  <th>Status</th>
+                  <th>Peers</th>
+                  <th>Seeds</th>
+                  <th>Leeches</th>
+                  <th>Downloaded</th>
+                  <th>Message</th>
+                </thead>
+
+                <tbody>
+                  <tr *ngFor="let tracker of torrentTrackers">
+                    <td> {{ tracker.tier }} </td>
+                    <td> {{ tracker.url }} </td>
+                    <td> {{ tracker.status === 2 || tracker.status === 3 ? 'Working' : 'Not Working' }} </td>
+                    <td> {{ tracker.num_peers >= 0 ? tracker.num_peers : 'N/A' }} </td>
+                    <td> {{ tracker.num_seeds >= 0 ? tracker.num_seeds : 'N/A' }} </td>
+                    <td> {{ tracker.num_leeches >= 0 ? tracker.num_leeches : 'N/A' }} </td>
+                    <td> {{ tracker.num_downloaded >= 0 ? tracker.num_downloaded : 'N/A' }} </td>
+                    <td> {{ tracker.msg }} </td>
+                  </tr>
+                </tbody>
+              </table>
+            </mat-tab>
+
             <mat-tab>
               <ng-template matTabLabel>
                 <span matBadge="{{isLoading ? '—' : torrentContents.length}}" matBadgeColor="accent" matBadgeOverlap="false">Files</span>
               </ng-template>
-                <div class="torrent-info-content-content">
-                  <app-file-system-tree-explorer
-                      *ngIf="!isLoading"
-                      [showProgress]="true"
-                      [allowSetPriority]="true"
-                      [directories]="get_content_directories_as_advanced_nodes()"
+              <div class="torrent-info-content-content">
+                <app-file-system-tree-explorer
+                    *ngIf="!isLoading"
+                    [showProgress]="true"
+                    [allowSetPriority]="true"
+                    [directories]="get_content_directories_as_advanced_nodes()"
 
-                      (onPriorityChange)="handleFilePriorityChange($event)"
-                      (onPriorityChangeToggled)="handlePriorityChangeToggled()">
-                  </app-file-system-tree-explorer>
+                    (onPriorityChange)="handleFilePriorityChange($event)"
+                    (onPriorityChangeToggled)="handlePriorityChangeToggled()">
+                </app-file-system-tree-explorer>
 
-                  <mat-spinner *ngIf="isLoading"></mat-spinner>
-                </div>
+                <mat-spinner *ngIf="isLoading"></mat-spinner>
+              </div>
             </mat-tab>
-
         </mat-tab-group>
-
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">

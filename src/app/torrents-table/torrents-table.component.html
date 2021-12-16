@@ -69,7 +69,7 @@
 
       <ng-template pTemplate="colgroup">
         <colgroup>
-          <col *ngFor="let col of displayedColumns" [ngStyle]="{ 'width': colWidths[col] + 'px' || 'initial' }">
+          <col *ngFor="let col of displayedColumns" [ngStyle]="{ 'width': colWidths[col] + 'px' || 'initial', 'textOverflow': 'ellipsis' }">
         </colgroup>
       </ng-template>
 
@@ -175,6 +175,10 @@
                 </p-tag>
               </div>
 
+              <div *ngSwitchCase="'Tracker'">
+                {{ getTrackerString(torrent.tracker) }}
+              </div>
+
               <div *ngSwitchDefault [ngStyle]="{ 'width': colWidths[col] + 'px' || 'initial' }">{{torrent[displayedColumnsMapping[col]]}}</div>
             </div>
           </td>
@@ -243,7 +247,7 @@
 
     <div *ngIf="isTorrentsEmpty()" style="margin: 15px;">
       <p> No torrents found. </p>
-      <p>Try changing the search value, applying a different filter status, or uploading a torrent.</p>
+      <p>Try changing the search value, applying a different filter, or uploading a torrent.</p>
     </div>
 </div>
 

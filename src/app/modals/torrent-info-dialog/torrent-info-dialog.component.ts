@@ -15,13 +15,16 @@ import { SnackbarService } from 'src/app/services/notifications/snackbar.service
 @Component({
   selector: 'app-torrent-info-dialog',
   templateUrl: './torrent-info-dialog.component.html',
-  styleUrls: ['./torrent-info-dialog.component.css']
+  styleUrls: ['./torrent-info-dialog.component.scss']
 })
 export class TorrentInfoDialogComponent implements OnInit {
 
   public torrent: Torrent = null;
   public torrentContents: TorrentContents[] = [];
   public torrentContentsAsNodes: SerializedNode[] = [];
+  
+  public torrentTrackers: any[] = [];
+
   public isDarkTheme: Observable<boolean>;
   public isLoading = true;
 
@@ -43,6 +46,7 @@ export class TorrentInfoDialogComponent implements OnInit {
 
     // Get data the first time immediately
     this.data_store.GetTorrentContents(this.torrent).toPromise().then(res => {this.updateTorrentContents(res)});
+    this.data_store.GetTorrentTrackers(this.torrent).toPromise().then(res => { this.updateTorrentTrackers(res) })
 
     /** Refresh torrent contents data on the recommended interval */
     this.setRefreshInterval();
@@ -51,6 +55,8 @@ export class TorrentInfoDialogComponent implements OnInit {
   ngOnDestroy(): void {
     if(this.REFRESH_INTERVAL) { clearInterval(this.REFRESH_INTERVAL) }
   }
+
+  private updateTorrentTrackers(trackers: any[]) { this.torrentTrackers = trackers; }
 
   private async updateTorrentContents(content: TorrentContents[]): Promise<void> {
     if(!this.allowDataRefresh) return;
@@ -122,6 +128,10 @@ export class TorrentInfoDialogComponent implements OnInit {
       this.data_store.GetTorrentContents(this.torrent).subscribe(content => {
         this.updateTorrentContents(content);
       });
+
+      this.data_store.GetTorrentTrackers(this.torrent).subscribe(trackers => {
+        this.updateTorrentTrackers(trackers);
+      })
     },
       this.network_info.get_refresh_interval_from_network_type("medium")
     );

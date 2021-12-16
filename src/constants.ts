@@ -4,11 +4,11 @@ export class Constants {
     'Down Speed', 'Up Speed', 'ETA',
     'Ratio', 'Uploaded',
     'Completed On', 'Added On', 'Last Activity',
-    'Category', 'Seeders', 'Leechers', 'Downloaded'
+    'Category', 'Seeders', 'Leechers', 'Downloaded', 'Tracker'
   ];
   
   /**
-   * Map column name its property in the Torrent object
+   * Map column name to its property in the Torrent object.
    */
   static TORRENT_TABLE_COLUMNS_MAPPING = {
     'Name': 'name',
@@ -30,6 +30,7 @@ export class Constants {
   
     'Seeders': 'num_seeds',
     'Leechers': 'num_leechs',
+    'Tracker': 'tracker'
   }
 
   /**
@@ -59,7 +60,8 @@ export class Constants {
     'Category': 120,
 
     'Seeders': 85,
-    'Leechers': 85
+    'Leechers': 85,
+    'Tracker': 120
   }
   
   /** 
