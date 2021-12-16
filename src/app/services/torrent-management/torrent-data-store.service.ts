@@ -27,6 +27,12 @@ export class TorrentDataStoreService {
   private refresh_interval: any;
   private DEFAULT_REFRESH_TIMEOUT: number;
 
+  /** 
+   * A cache of all torrent save location.
+   * Updated every full-update.
+   */
+  private saveLocationsCache: string[] = [];
+
   constructor(private torrent_http_service: TorrentDataHTTPService, private networkInfo: NetworkConnectionInformationService) {
     this.UpdateTorrentData();
 
@@ -48,6 +54,10 @@ export class TorrentDataStoreService {
    */
   public async UpdateTorrentData(rid?: number): Promise<MainData> {
     let data = await this.torrent_http_service.GetAllTorrentData(rid || this.rid).toPromise();
+
+    // One first update, cache list of all save locations
+    if(data.full_update)
+      this.saveLocationsCache = data.torrents.map(t => t.save_path);
 
     // Only set raw data initially
     if(!this.rawData){
