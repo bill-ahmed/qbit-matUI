@@ -217,7 +217,7 @@ export class TorrentsTableComponent implements OnInit {
           return Constants.TORRENT_STATE_MAPPING[this.torrentFilterBy.value]?.includes(tor.state);
         
         if(this.torrentFilterBy.type === 'filter_tracker')
-          return tor.tracker.includes(this.torrentFilterBy.value);
+          return tor.tracker === this.torrentFilterBy.value;
       });
     }
   }

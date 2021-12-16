@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { NetworkConnectionInformationService } from 'src/app/services/network/network-connection-information.service';
 import { RateLimitsDialogComponent } from '../modals/rate-limits-dialog/rate-limits-dialog.component';
 import { IsMobileUser } from 'src/utils/Helpers';
-import { TorrentFilterService } from '../services/torrent-filter-service.service';
+import { TorrentFilter, TorrentFilterService } from '../services/torrent-filter-service.service';
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class GlobalTransferInfoComponent implements OnInit {
   public isAltSpeedEnabled: boolean;
   public refreshInterval = -1;
 
-  public filteringBy = 'All';
+  public filteringBy: TorrentFilter = { type: 'filter_status', value: 'All' };
 
   public isDarkTheme: Observable<boolean>;
   public isMobileUser = IsMobileUser();
@@ -91,8 +91,17 @@ export class GlobalTransferInfoComponent implements OnInit {
   }
 
   handleFilterStatusSelect(filterChosen: any) {
-    this.filteringBy = filterChosen;
-    this.filterService.updateFilter({ type: 'filter_status', value: filterChosen });
+    let chosen: TorrentFilter = { type: 'filter_status', value: filterChosen }
+    this.filteringBy = chosen;
+
+    this.filterService.updateFilter(chosen);
+  }
+
+  handleFilterTrackerSelect(trackerChosen: string) {
+    let chosen: TorrentFilter = { type: 'filter_tracker', value: trackerChosen }
+    this.filteringBy = chosen;
+
+    this.filterService.updateFilter(chosen)
   }
 
   handleSlideToggle(): void {
@@ -103,7 +112,7 @@ export class GlobalTransferInfoComponent implements OnInit {
     return this.theme.getCurrentValue();
   }
 
-  isSelected(chip: string) { return this.filteringBy === chip }
+  isSelected(chip: string) { return this.filteringBy.value === chip }
 
   async toggleAltSpeedLimits() {
     this.isAltSpeedEnabled = !this.isAltSpeedEnabled

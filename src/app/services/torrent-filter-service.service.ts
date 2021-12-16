@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TorrentFilterService {
-  private _filterSource = new BehaviorSubject<TorrentFilter>({ type: '', value: '' });
+  private _filterSource = new BehaviorSubject<TorrentFilter>({ type: 'filter_status', value: 'All' });
   private _filterValue = this._filterSource.asObservable();
 
   constructor() { }

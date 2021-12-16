@@ -142,8 +142,16 @@
         <h4>Trackers</h4>
 
         <mat-chip-list chipListSelectable="true" focused="true" [selectable]="true">
-          <mat-chip *ngFor="let tracker of trackerList()" (click)="handleFilterStatusSelect(tracker)" [selected]="isSelected(tracker)">
-            <h4 style="margin: 0;">({{mainData.trackers[tracker].length}}) {{pp.pretty_print_tracker(tracker)}}</h4>
+          <mat-chip style="padding: 7px; overflow: hidden; overflow-x: auto;" *ngFor="let tracker of trackerList()" (click)="handleFilterTrackerSelect(tracker)" [selected]="isSelected(tracker)">
+            <div class="row">
+              <h4 style="margin: 0; margin-right: 5px; overflow: visible;">
+                ({{mainData.trackers[tracker].length}})
+              </h4>
+
+              <h4 style="margin: 0; text-overflow: ellipsis;">
+                {{pp.pretty_print_tracker(tracker)}}
+              </h4>
+            </div>
           </mat-chip>
         </mat-chip-list>
       </section>
