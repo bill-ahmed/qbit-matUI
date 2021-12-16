@@ -92,7 +92,7 @@ export class GlobalTransferInfoComponent implements OnInit {
 
   handleFilterStatusSelect(filterChosen: any) {
     this.filteringBy = filterChosen;
-    this.filterService.updateFilter(filterChosen);
+    this.filterService.updateFilter({ type: 'filter_status', value: filterChosen });
   }
 
   handleSlideToggle(): void {
