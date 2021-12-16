@@ -101,8 +101,19 @@ export class PrettyPrintTorrentDataService {
   pretty_print_tracker(t: string) {
     if(t.startsWith('udp'))
       return t.split('//')[1].split(':')[0]
-    
+
+    // URL given can be empty if tracker
+    // not realized yet
+    if(!t)
+      return t;
+
     // Fallback, it's probably a well-formatted HTTP URL
-    return new URL(t).hostname;
+    try {
+      return new URL(t).hostname;
+
+    } catch (error) {
+      console.error('failed to parse url:', t);
+      return t;
+    }
   }
 }
