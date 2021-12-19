@@ -76,6 +76,16 @@ export class ApplicationConfigService {
     this.user_preferences.web_ui_options.torrent_table.columns_to_show = cols;
     this._persistWebUIOptions(updateNow);
   }
+  
+  toggleFilterStatusOpen() {
+    this.user_preferences.web_ui_options.filters.status_open = !this.user_preferences.web_ui_options.filters.status_open;
+    this._persistWebUIOptions(true)
+  }
+
+  toggleFilterTrackersOpen() {
+    this.user_preferences.web_ui_options.filters.tracker_open = !this.user_preferences.web_ui_options.filters.tracker_open;
+    this._persistWebUIOptions(true)
+  }
 
   /** 
    * Update column width with change in width provided. 

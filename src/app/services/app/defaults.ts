@@ -24,6 +24,10 @@ export class ApplicationDefaults {
     upload_torrents: {
       show_parsed_torrents_from_file: true,
       show_parsed_torrents_from_magnet: true
+    },
+    filters: {
+      status_open: true,
+      tracker_open: false
     }
   }
 }
