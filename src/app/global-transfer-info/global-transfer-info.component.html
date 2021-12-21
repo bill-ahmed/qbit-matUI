@@ -28,6 +28,15 @@
         </div>
       </section>
 
+      <mat-divider class="spaced" [inset]="true"></mat-divider>
+
+      <button mat-stroked-button color="default" (click)="openStatisticsDialog()" style="margin: 10px;"> 
+        <mat-icon>trending_up</mat-icon> &nbsp;
+        <span>Statistics</span> 
+      </button>  
+
+      <mat-divider class="spaced" [inset]="true"></mat-divider>
+
       <section id="disk_summary">
         <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
 

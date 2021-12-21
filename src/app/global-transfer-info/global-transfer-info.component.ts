@@ -11,6 +11,7 @@ import { IsMobileUser } from 'src/utils/Helpers';
 import { TorrentFilter, TorrentFilterService } from '../services/torrent-filter-service.service';
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
 import { ApplicationConfigService } from '../services/app/application-config.service';
+import { StatisticsDialogComponent } from '../modals/statistics-dialog/statistics-dialog.component';
 
 @Component({
   selector: 'app-global-transfer-info',
@@ -36,7 +37,7 @@ export class GlobalTransferInfoComponent implements OnInit {
 
   constructor(private data_store: TorrentDataStoreService, private networkInfo: NetworkConnectionInformationService, private units_helper:
               UnitsHelperService, public pp: PrettyPrintTorrentDataService, private rateLimitDialog: MatDialog, private filterService: TorrentFilterService, 
-              private theme: ThemeService, private appConfig: ApplicationConfigService) { }
+              private theme: ThemeService, private appConfig: ApplicationConfigService, public statisticsDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
@@ -74,6 +75,16 @@ export class GlobalTransferInfoComponent implements OnInit {
       trackers.push(t)
 
     return trackers;
+  }
+
+  openStatisticsDialog() {
+    let options: any = {
+      disableClose: false,
+      panelClass: "generic-dialog",
+      data: this.data
+    };
+
+    this.statisticsDialog.open(StatisticsDialogComponent, options)
   }
 
   handleDataChange(newData: GlobalTransferInfo): void {
