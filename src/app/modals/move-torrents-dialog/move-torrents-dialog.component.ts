@@ -25,6 +25,8 @@ export class MoveTorrentsDialogComponent implements OnInit {
   public showListofTorrents = false;
   public isDarkTheme: Observable<boolean>;
 
+  public allSaveLocations: string[] = [];
+
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
   constructor(public fileSystemDialog: MatDialog, private data_store: TorrentDataStoreService,
@@ -38,6 +40,8 @@ export class MoveTorrentsDialogComponent implements OnInit {
 
     this.torrents = this.data_store.GetTorrentsByIDs(torrent_ids);
     this.torrents.sort((a, b) => a.name > b.name ? 1 : -1);
+
+    this.allSaveLocations = this.data_store.GetAllSaveLocations();
 
     this.isDarkTheme = this.theme.getThemeSubscription();
   }

@@ -28,6 +28,15 @@
         </div>
       </section>
 
+      <mat-divider class="spaced" [inset]="true"></mat-divider>
+
+      <button mat-stroked-button color="default" (click)="openStatisticsDialog()" style="margin: 10px;"> 
+        <mat-icon>trending_up</mat-icon> &nbsp;
+        <span>Statistics</span> 
+      </button>  
+
+      <mat-divider class="spaced" [inset]="true"></mat-divider>
+
       <section id="disk_summary">
         <mat-spinner diameter=30 *ngIf="isLoading()"></mat-spinner>
 
@@ -65,7 +74,7 @@
             <br/>
             <mat-chip style="cursor: pointer;" (click)="handleUploadLimitSelect()" disableRipple matTooltip="Click to set upload limit" matTooltipPosition="below">
               <mat-icon color="accent">arrow_upward</mat-icon>
-              <h4>some speed {{getUploadSpeedString()}} {{getUpLimitString()}}</h4>
+              <h4>{{getUploadSpeedString()}} {{getUpLimitString()}}</h4>
             </mat-chip>
 
             <mat-chip disableRipple>
@@ -83,9 +92,13 @@
           Filter
         </h3>
 
-        <h4>Status</h4>
+        <div (click)="toggleStatus()" class="row space-between cursor-pointer">
+          <h4>Status</h4>
+          <mat-icon *ngIf="!filterStatusOpen">expand_more</mat-icon>
+          <mat-icon *ngIf="filterStatusOpen">expand_less</mat-icon>
+        </div>
 
-        <mat-chip-list chipListSelectable="true" focused="true" [selectable]="true">
+        <mat-chip-list *ngIf="filterStatusOpen" chipListSelectable="true" focused="true" [selectable]="true">
 
           <mat-chip (click)="handleFilterStatusSelect('All')" [selected]="isSelected('All')">
             <h4>All</h4>
@@ -139,9 +152,13 @@
         </mat-chip-list>
         <br/>
 
-        <h4>Trackers</h4>
+        <div (click)="toggleTrackers()" class="row space-between cursor-pointer">
+          <h4>Trackers</h4>
+          <mat-icon *ngIf="!filterTrackersOpen">expand_more</mat-icon>
+          <mat-icon *ngIf="filterTrackersOpen">expand_less</mat-icon>
+        </div>
 
-        <mat-chip-list chipListSelectable="true" focused="true" [selectable]="true">
+        <mat-chip-list *ngIf="filterTrackersOpen" chipListSelectable="true" focused="true" [selectable]="true">
           <mat-chip style="padding: 7px; overflow: hidden; overflow-x: auto;" *ngFor="let tracker of trackerList()" (click)="handleFilterTrackerSelect(tracker)" [selected]="isSelected(tracker)">
             <div class="row">
               <h4 style="margin: 0; margin-right: 5px; overflow: visible;">

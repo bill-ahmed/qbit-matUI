@@ -27,6 +27,12 @@ export class TorrentDataStoreService {
   private refresh_interval: any;
   private DEFAULT_REFRESH_TIMEOUT: number;
 
+  /** 
+   * A cache of all torrent save location.
+   * Updated every full-update.
+   */
+  private saveLocationsCache: string[] = [];
+
   constructor(private torrent_http_service: TorrentDataHTTPService, private networkInfo: NetworkConnectionInformationService) {
     this.UpdateTorrentData();
 
@@ -60,6 +66,10 @@ export class TorrentDataStoreService {
 
     this.rid = data.rid;
 
+    // One first update, cache list of all save locations
+    if(data.full_update)
+      this.saveLocationsCache = [...(new Set(this.TorrentMainData.torrents.map(t => t.save_path)))].sort();
+
     return this.TorrentMainData;
   }
 
@@ -82,6 +92,8 @@ export class TorrentDataStoreService {
 
     return res;
   }
+
+  public GetAllSaveLocations(): string[] { return this.saveLocationsCache; }
 
   /** Handle uploading torrent files
    * @param files The torrents to upload.

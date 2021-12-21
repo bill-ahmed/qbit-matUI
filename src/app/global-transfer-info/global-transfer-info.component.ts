@@ -10,6 +10,8 @@ import { RateLimitsDialogComponent } from '../modals/rate-limits-dialog/rate-lim
 import { IsMobileUser } from 'src/utils/Helpers';
 import { TorrentFilter, TorrentFilterService } from '../services/torrent-filter-service.service';
 import { PrettyPrintTorrentDataService } from '../services/pretty-print-torrent-data.service';
+import { ApplicationConfigService } from '../services/app/application-config.service';
+import { StatisticsDialogComponent } from '../modals/statistics-dialog/statistics-dialog.component';
 
 @Component({
   selector: 'app-global-transfer-info',
@@ -29,9 +31,13 @@ export class GlobalTransferInfoComponent implements OnInit {
   public isDarkTheme: Observable<boolean>;
   public isMobileUser = IsMobileUser();
 
+  // Toggle filter views
+  public filterStatusOpen: boolean;
+  public filterTrackersOpen: boolean;
+
   constructor(private data_store: TorrentDataStoreService, private networkInfo: NetworkConnectionInformationService, private units_helper:
               UnitsHelperService, public pp: PrettyPrintTorrentDataService, private rateLimitDialog: MatDialog, private filterService: TorrentFilterService, 
-              private theme: ThemeService) { }
+              private theme: ThemeService, private appConfig: ApplicationConfigService, public statisticsDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.isDarkTheme = this.theme.getThemeSubscription();
@@ -49,11 +55,19 @@ export class GlobalTransferInfoComponent implements OnInit {
     .subscribe(newInterval => {
       this.refreshInterval = this.networkInfo.getRefreshInterval();
     })
+
+    this.appConfig.getUserPreferencesSubscription().subscribe(userPref => {
+      this.filterStatusOpen = userPref.web_ui_options?.filters?.status_open;
+      this.filterTrackersOpen = userPref.web_ui_options?.filters?.tracker_open;
+    })
   }
 
   public toggleTheme(): void {
     this.theme.setDarkTheme(!this.theme.getCurrentValue());
   }
+
+  toggleStatus() { this.appConfig.toggleFilterStatusOpen() }
+  toggleTrackers() { this.appConfig.toggleFilterTrackersOpen() }
 
   trackerList() {
     let trackers = [];
@@ -61,6 +75,16 @@ export class GlobalTransferInfoComponent implements OnInit {
       trackers.push(t)
 
     return trackers;
+  }
+
+  openStatisticsDialog() {
+    let options: any = {
+      disableClose: false,
+      panelClass: "generic-dialog",
+      data: this.data
+    };
+
+    this.statisticsDialog.open(StatisticsDialogComponent, options)
   }
 
   handleDataChange(newData: GlobalTransferInfo): void {

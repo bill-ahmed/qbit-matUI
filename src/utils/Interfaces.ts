@@ -257,7 +257,11 @@ export interface WebUISettings {
   file_system?: WebUIFileSystemSettings
   network?: WebUINetworkSettings
   upload_torrents?: WebUIUploadingSettings
-  notifications?: WebUINotificationSettings;
+  notifications?: WebUINotificationSettings
+  filters?: {
+    status_open: boolean,
+    tracker_open: boolean
+  }
 }
 
 export interface WebUIUploadingSettings {

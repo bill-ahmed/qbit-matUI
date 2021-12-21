@@ -1,0 +1,97 @@
+<div [ngClass]="{'dark-theme': isDarkTheme | async}">
+    <div class="mat-dialog-inner-container mat-app-background statistics_container">
+        <div class="col">
+            <h2 mat-dialog-title>Statistics</h2>
+
+            <section>
+                <h4><b>User Statistics</b></h4>
+
+                <div class="stat_item">
+                    <p>All-time upload:</p>
+                    <p>{{ units_helper.GetFileSizeString(inputData.alltime_ul) }}</p>
+                </div>
+
+                <div class="stat_item">
+                    <p>All-time download:</p>
+                    <p>{{ units_helper.GetFileSizeString(inputData.alltime_dl) }}</p>
+                </div>
+
+                <div class="stat_item">
+                    <p>All-time share ratio:</p>
+                    <p>{{ inputData.global_ratio }}</p>
+                </div>
+
+                <div class="stat_item">
+                    <p>Session waste:</p>
+                    <p>{{ units_helper.GetFileSizeString(inputData.total_wasted_session) }}</p>
+                </div>
+
+                <div class="stat_item">
+                    <p>Connected peers:</p>
+                    <p>{{ inputData.total_peer_connections }}</p>
+                </div>
+            </section>
+
+            <section>
+                <h4><b>Cache Statistics</b></h4>
+
+                <div class="stat_item">
+                    <p>Read cache hits:</p>
+                    <p>{{ inputData.read_cache_hits }}%</p>
+                </div>
+
+                <div class="stat_item">
+                    <p>Total buffer size:</p>
+                    <p>{{ units_helper.GetFileSizeString(inputData.total_buffers_size) }}</p>
+                </div>
+            </section>
+
+            <section>
+                <h4><b>Performance Statistics</b></h4>
+
+                <div class="stat_item">
+                    <p>Write cache overload:</p>
+                    <p>{{ inputData.write_cache_overload }}%</p>
+                </div>
+
+                <div class="stat_item">
+                    <p>Read cache overload:</p>
+                    <p>{{ inputData.read_cache_overload }}%</p>
+                </div>
+
+                <div class="stat_item">
+                    <p>Queued I/O jobs:</p>
+                    <p>{{ inputData.queued_io_jobs }}</p>
+                </div>
+
+                <div class="stat_item">
+                    <p>Average time in queue:</p>
+                    <p>{{ inputData.average_time_queue }}ms</p>
+                </div>
+
+                <div class="stat_item">
+                    <p>Total queued size:</p>
+                    <p>{{ units_helper.GetFileSizeString(inputData.total_queued_size) }}</p>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<style>
+.statistics_container {
+    width: 350px;
+}
+
+b { font-weight: 500; }
+h4 { margin-bottom: 10px; }
+section { margin-bottom: 5px; }
+
+.stat_item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    padding: 0 10px;
+}
+</style>

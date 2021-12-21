@@ -66,6 +66,7 @@ import { RateLimitsDialogComponent } from './modals/rate-limits-dialog/rate-limi
 import { ChipLabelComponent } from './chip-label/chip-label.component';
 import { TagModule } from 'primeng/tag';
 import { ContextMenuModule } from 'primeng/contextmenu';
+import { StatisticsDialogComponent } from './modals/statistics-dialog/statistics-dialog.component';
 
 var appRoutes: Routes;
 
@@ -106,7 +107,8 @@ if(!environment.production){
     InfoSnackbarComponent,
     DragAndDropFilesDirective,
     RateLimitsDialogComponent,
-    ChipLabelComponent
+    ChipLabelComponent,
+    StatisticsDialogComponent
   ],
   imports: [
     CdkTreeModule,
