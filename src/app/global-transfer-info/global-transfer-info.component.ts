@@ -73,6 +73,9 @@ export class GlobalTransferInfoComponent implements OnInit {
     let trackers = [];
     for(let t in this.mainData?.trackers)
       trackers.push(t)
+    
+    // De-dupe
+    trackers = [...new Set(trackers)]
 
     return trackers;
   }
