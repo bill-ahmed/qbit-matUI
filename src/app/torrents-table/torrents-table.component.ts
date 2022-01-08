@@ -103,6 +103,8 @@ export class TorrentsTableComponent implements OnInit {
     });
 
     this.contextMenuItems = [
+      { label: 'More Info', icon: 'pi pi-fw pi-info-circle', command: () => this.openInfoTorrentDialog(null, this.contextMenuSelectedTorrent) },
+      { /* Divider */ },
       { label: 'Pause', icon: 'pi pi-fw pi-pause', command: () => this.pauseTorrentsBulk(this.selection.selected) },
       { label: 'Resume', icon: 'pi pi-fw pi-play', command: () => this.resumeTorrentsBulk(this.selection.selected) },
       { label: 'Force Resume', icon: 'pi pi-fw pi-forward', command: () => this.forceStartTorrentsBulk(this.selection.selected) },
@@ -287,7 +289,11 @@ export class TorrentsTableComponent implements OnInit {
   /** Callback for when a torrent is selected in the table. Update row selection service with new data
    * @param event The event thrown.
    */
-  handleTorrentSelected(tor: Torrent): void {
+  handleTorrentSelected(event, tor: Torrent): void {
+    // Avoid selecting/deselecting if user only wants to
+    // view more info via right-click
+    if(event.type === 'contextmenu') return;
+
     this.selection.toggle(tor);
     this._updateSelectionService();
   }

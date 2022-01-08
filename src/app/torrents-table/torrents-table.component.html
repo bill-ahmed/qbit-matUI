@@ -78,8 +78,8 @@
         <tr class="torrent-table-row"
             [ngClass]="{selected: isSelected(torrent)}"
 
-            (click)="handleTorrentSelected(torrent)"
-            (contextmenu)="handleTorrentSelected(torrent)"
+            (click)="handleTorrentSelected($event, torrent)"
+            (contextmenu)="handleTorrentSelected($event, torrent)"
 
             [pContextMenuRow]="torrent"
           >
@@ -87,7 +87,7 @@
             <div [ngSwitch]="col">
               <div *ngSwitchCase="'select'">
                 <mat-checkbox color="primary" (click)="$event.stopPropagation()"
-                          (change)="$event ? handleTorrentSelected(torrent) : null"
+                          (change)="$event ? handleTorrentSelected($event, torrent) : null"
                           [checked]="selection.isSelected(torrent)" [style]="{marginLeft: '10px'}">
                 </mat-checkbox>
               </div>
