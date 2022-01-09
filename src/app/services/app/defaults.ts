@@ -28,6 +28,9 @@ export class ApplicationDefaults {
     filters: {
       status_open: true,
       tracker_open: false
+    },
+    misc: {
+      preferredDateFormat: Constants.DATE_FORMATS[0]
     }
   }
 }

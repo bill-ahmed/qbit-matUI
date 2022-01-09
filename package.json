@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~11.2.14",
     "@angular/router": "~11.2.14",
     "buffer": "^5.6.0",
+    "dateformat": "^5.0.2",
     "material-icons-font": "^2.1.0",
     "ngx-cookie-service": "^2.4.0",
     "primeicons": "^4.1.0",

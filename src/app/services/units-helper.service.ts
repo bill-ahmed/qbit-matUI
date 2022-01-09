@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
+import { ApplicationConfigService } from './app/application-config.service';
+import dateFormat from 'dateformat';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UnitsHelperService {
 
-  constructor() { }
+  constructor(private appConfig: ApplicationConfigService) { }
 
   /** Get string representation of a file size
    * e.g. 2,560 -> 2.56 KB
@@ -106,12 +108,10 @@ export class UnitsHelperService {
    */
   public GetDateString(timestamp: number): string {
     let date = new Date(timestamp * 1000);
-    let am_pm = date.getHours() > 11 ? 'PM' : 'AM';
-    let result =
-    `${this.getDay(date)}/${this.getMonth(date)}/${date.getFullYear()},
-    ${this.getHours(date)}:${this.getMinutes(date)}:${this.getSeconds(date)} ${am_pm}`;
 
-    return result;
+    // Based on user preferences
+    let preferredFormat = this.appConfig.getWebUISettings().misc.preferredDateFormat;
+    return dateFormat(date, preferredFormat);
   }
 
   /** Given a number of kibibits, return the number of bits it represents. */

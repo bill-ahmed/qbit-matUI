@@ -261,7 +261,8 @@ export interface WebUISettings {
   filters?: {
     status_open: boolean,
     tracker_open: boolean
-  }
+  },
+  misc: WebUIMiscSettings
 }
 
 export interface WebUIUploadingSettings {
@@ -292,4 +293,8 @@ export interface WebUITorrentTableSettings {
 
 export interface WebUINotificationSettings {
   show_snack_notifications: boolean,
+}
+
+export interface WebUIMiscSettings {
+  preferredDateFormat: string
 }

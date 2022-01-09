@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicationConfigService } from 'src/app/services/app/application-config.service';
-import { WebUISettings, WebUITorrentTableSettings, WebUINetworkSettings, WebUIUploadingSettings, WebUINotificationSettings, WebUIFileSystemSettings } from 'src/utils/Interfaces';
+import { WebUISettings, WebUITorrentTableSettings, WebUINetworkSettings, WebUIUploadingSettings, WebUINotificationSettings, WebUIFileSystemSettings, WebUIMiscSettings } from 'src/utils/Interfaces';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { NetworkConnectionInformationService } from 'src/app/services/network/network-connection-information.service';
 import { ApplicationDefaults } from 'src/app/services/app/defaults';
 import { SnackbarService } from 'src/app/services/notifications/snackbar.service';
+import { Constants } from 'src/constants';
 
 @Component({
   selector: 'app-web-ui-settings',
@@ -20,6 +21,7 @@ export class WebUiSettingsComponent implements OnInit {
   // Column names have underscores as spaces
   default_sort_options = ApplicationConfigService.TORRENT_TABLE_COLUMNS.sort();
   all_torrent_table_columns = ApplicationConfigService.ALL_COLUMNS;
+  all_datetime_formats = Constants.DATE_FORMATS;
 
   /** Default settings */
   theme_settings = { theme: "" };
@@ -28,6 +30,7 @@ export class WebUiSettingsComponent implements OnInit {
   file_system_settings:     WebUIFileSystemSettings     = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS.file_system;
   torrent_table_settings:   WebUITorrentTableSettings   = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS.torrent_table;
   notification_settings:    WebUINotificationSettings   = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS.notifications;
+  misc_settings:            WebUIMiscSettings           = ApplicationDefaults.DEFAULT_WEB_UI_SETTINGS.misc;
 
   /** Validations */
   common_validators = [Validators.min(0)];
@@ -52,6 +55,7 @@ export class WebUiSettingsComponent implements OnInit {
     this.torrent_data_options     =  { ...this.torrent_data_options,      ...this.web_ui_options?.network};
     this.torrent_upload_settings  =  { ... this.torrent_upload_settings,  ...this.web_ui_options?.upload_torrents};
     this.notification_settings    =  { ...this.notification_settings,     ...this.web_ui_options?.notifications};
+    this.misc_settings            =  { ...this.misc_settings,             ...this.web_ui_options?.misc };
   }
 
   /** Inspect this component via ViewChild to get
@@ -65,6 +69,7 @@ export class WebUiSettingsComponent implements OnInit {
       network: {...this.torrent_data_options, auto_refresh: this.torrent_data_options.refresh_interval === this.default_refresh_interval},
       upload_torrents: this.torrent_upload_settings,
       notifications: this.notification_settings,
+      misc: this.misc_settings
     }
   }
 

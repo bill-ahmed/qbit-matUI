@@ -81,4 +81,15 @@ export class Constants {
     'Stalled': ['stalledUP', 'stalledDL'],
     'Errored': ['error', 'missingFiles', 'unknown', 'stalledDL'],
   }
+
+  /** 
+   * All possible date formats.
+   * This makes use of the dateformat library.
+   * @see https://github.com/felixge/node-dateformat
+   * 
+   */
+  static DATE_FORMATS = [
+    'dd/mm/yyyy hh:MM:ss TT',
+    'yyyy-mm-dd HH:MM:ss'
+  ];
 }

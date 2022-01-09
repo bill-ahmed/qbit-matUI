@@ -23,6 +23,19 @@
       </section>
 
       <section>
+        <h3> Date & Time </h3>
+
+        <div class="field rounded-container elevation-1">
+          <mat-form-field style="min-width: 200px;">
+            <mat-label>Choose a format</mat-label>
+            <mat-select [(value)]="misc_settings.preferredDateFormat">
+              <mat-option *ngFor="let format of all_datetime_formats" [value]="format"> {{ format }} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section>
         <h3> Events </h3>
 
         <div class="field rounded-container elevation-1">
