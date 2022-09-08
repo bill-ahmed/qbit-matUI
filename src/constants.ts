@@ -76,7 +76,7 @@ export class Constants {
     'Completed': ['uploading', 'stalledUP', 'forcedUP'],
     'Resumed': ['uploading', 'stalledUP', 'forcedUP'],
     'Paused': ['pausedUP', 'pausedDL'],
-    'Active': ['uploading', 'downloading', 'allocating', 'metaDL', 'checkingDL', 'moving', 'uploading', 'stalledUP', 'forcedUP'],
+    'Active': ['uploading', 'downloading', 'metaDL', 'forcedUP', 'forcedDL', 'forcedMetaDL'],
     'Inactive': ['pausedUP', 'pausedDL', 'queuedUP', 'queuedDL', 'stalledUP'],
     'Stalled': ['stalledUP', 'stalledDL'],
     'Errored': ['error', 'missingFiles', 'unknown', 'stalledDL'],
