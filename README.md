@@ -4,21 +4,26 @@
 
 A material-themed UI for [qBittorrent](https://github.com/qbittorrent/qBittorrent). This interface is more slimmed down, although still contains several features such as:
 
+* See torrent contents _before_ downloading
+* File system navigation (choose where to save a torrents, create sub-folders, etc.)
 * Bulk edit (pause, resume, delete, prioritize, and more)
 * Sorting by different metrics (name, size, date completed, etc.)
-* See torrent contents _before_ downloading
-* File system navigation (choose where to save a torrent, create sub-folders, etc.)
 * Manage local & qBittorrent preferences
 * A fully material-themed UI (Light & Dark themes)
 * ... and more!
 
 ## Demo!
-A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
+A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/
 
 
 ## Installation
-This app is tested with **v4.1.5** and higher of qBittorrent, any lower version are not guaranteed to work.
+This app is tested with **v4.3.8** and higher of qBittorrent, any lower version are not guaranteed to work.
 
+### Automatic -- Docker Mods Support!
+Thanks to @marzzzello for adding support in LinuxServer.io's qBittorrent container: https://github.com/marzzzello/linuxserver-io-mod-qbit-matui
+
+
+### Manual
 1. Take a production-ready build from [releases](https://github.com/bill-ahmed/qbit-material-WebUI/releases), or [build it yourself](#build)
 2. Extract the files into any folder
 3. In qBittorrent, under Tools > Options > Web UI > Use alternative Web UI, set the file location as the folder you created in Step 2.
