@@ -4,21 +4,26 @@
 
 A material-themed UI for [qBittorrent](https://github.com/qbittorrent/qBittorrent). This interface is more slimmed down, although still contains several features such as:
 
+* See torrent contents _before_ downloading
+* File system navigation (choose where to save a torrents, create sub-folders, etc.)
 * Bulk edit (pause, resume, delete, prioritize, and more)
 * Sorting by different metrics (name, size, date completed, etc.)
-* See torrent contents _before_ downloading
-* File system navigation (choose where to save a torrent, create sub-folders, etc.)
 * Manage local & qBittorrent preferences
 * A fully material-themed UI (Light & Dark themes)
 * ... and more!
 
 ## Demo!
-A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/.
+A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/
 
 
 ## Installation
-This app is tested with **v4.1.5** and higher of qBittorrent, any lower version are not guaranteed to work.
+This app is tested with **v4.3.8** and higher of qBittorrent, any lower version are not guaranteed to work.
 
+### Automatic -- Docker Mods Support!
+Thanks to @marzzzello for adding support in LinuxServer.io's qBittorrent container: https://github.com/marzzzello/linuxserver-io-mod-qbit-matui
+
+
+### Manual
 1. Take a production-ready build from [releases](https://github.com/bill-ahmed/qbit-material-WebUI/releases), or [build it yourself](#build)
 2. Extract the files into any folder
 3. In qBittorrent, under Tools > Options > Web UI > Use alternative Web UI, set the file location as the folder you created in Step 2.
@@ -32,25 +37,22 @@ This app relies on a couple files to work properly.
 Under `src/assets/` there are two files: `config.json` and `config.prod.json`. This will store general configuration, such as the delimeter used when parsing file paths (Unix vs. Windows).
 
 ### HTTP Config
-If you wish to configure your endpoints and other data for dev/prod, do so here.
+If you wish to configure your endpoints and other data for dev/prod, do so in `src/assets/http_config.json`.
 
 
 ## Running the App
-To install the dependencies, run `npm install` in both the root directory and the `mock_backend/` folder.
+In order to have the most accurate testing environment, we make use of a docker container running qBittorrent. Make
+sure you have both Docker and docker-compose installed.
 
-### Back-end
-1. Navigate to `mock_backend` directory
-2. Run `node index.js`
+Checkout the instructions in the `dev/` folder on how to set it up.
+
 
 ### Front-end:
-1. Run `ng serve` for a dev server
-2. Navigate to `http://localhost:4200/`
-3. Username: `admin`; Password: `password`; This can be changed under `mock_backend/config.json`
+1. Run `npm run dev` for a dev server
+2. Navigate to `http://localhost:8090/`
+3. Username: `admin`; Password: `adminadmin`; This can be changed through the default Web UI.
 
-To run the login page standalone, do: `ng serve login` and navigate to `http://localhost:4200/`.
-
-The app will automatically reload if you make changes to any of the Angular source code.
-
+The app will re-compile everytime you save changes. To see the changes, you must hard-reload the web page (`CTRL + SHIFT + R` on Windows)
 
 ## Build
 

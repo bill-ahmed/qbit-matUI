@@ -27,7 +27,7 @@
       [contextMenu]="cm"
       [(contextMenuSelection)]="contextMenuSelectedTorrent"
 
-      [resizableColumns]="true" 
+      [resizableColumns]="true"
       columnResizeMode="expand"
       responsiveLayout="scroll"
 
@@ -38,18 +38,18 @@
       <!-- TABLE HEADER -->
       <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let col of displayedColumns" 
-              [id]="getIdForColumns(col)" 
-              [class]="getClassNameForColumns(col)" 
-              
-              pReorderableColumn 
+          <th *ngFor="let col of displayedColumns"
+              [id]="getIdForColumns(col)"
+              [class]="getClassNameForColumns(col)"
+
+              pReorderableColumn
 
               pResizableColumn
-              [pResizableColumnDisabled]="['select', 'Actions'].includes(col)" 
+              [pResizableColumnDisabled]="['select', 'Actions'].includes(col)"
 
               [pSortableColumn]="displayedColumnsMapping[col]"
           >
-            
+
             <div style="display: flex;" [ngSwitch]="col">
               <!-- Checkbox for selecting ALL torrents -->
               <div *ngSwitchCase="'select'">
@@ -79,7 +79,7 @@
             [ngClass]="{selected: isSelected(torrent)}"
 
             (click)="handleTorrentSelected(torrent)"
-            (contextmenu)="handleTorrentSelected(torrent)"
+            (contextmenu)="torrentRightClicked = torrent"
 
             [pContextMenuRow]="torrent"
           >
@@ -206,7 +206,7 @@
               </button>
             </div>
           </mat-card-header>
-          
+
           <mat-card-content class="torrent-card-view-content">
             <!-- Show tags -->
             <mat-card-subtitle style="width: max-content;">
@@ -233,7 +233,7 @@
                 <i class="pi pi-arrow-up"></i>&nbsp;: {{getFileSizeString(torrent.upspeed)}}/s
               </p>
             </div>
-            
+
             <!-- Progress bar -->
             <div class="row">
               <p-progressBar class="custom_progress_bar {{torrent.progress > 0.5 ? 'white_label' : ''}}"

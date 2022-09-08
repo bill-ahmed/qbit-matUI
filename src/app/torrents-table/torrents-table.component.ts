@@ -65,9 +65,12 @@ export class TorrentsTableComponent implements OnInit {
   private torrentSearchValue = ""; // Keep track of which torrents are currently selected
   private torrentFilterBy: TorrentFilter = { type: '', value: '' };
 
+  // When user right-clicks a row in the torrent table, so we can choose what to do with it
+  public torrentRightClicked: Torrent = null;
+
   constructor(private appConfig: ApplicationConfigService, private data_store: TorrentDataStoreService,
               private pp: PrettyPrintTorrentDataService, public deleteTorrentDialog: MatDialog, private infoTorDialog: MatDialog, private moveTorrentDialog: MatDialog,
-              private torrentSearchService: TorrentSearchServiceService, private filterService: TorrentFilterService, private torrentsSelectedService: RowSelectionService, 
+              private torrentSearchService: TorrentSearchServiceService, private filterService: TorrentFilterService, private torrentsSelectedService: RowSelectionService,
               private snackbar: SnackbarService, private theme: ThemeService) { }
 
   ngOnInit(): void {
@@ -103,6 +106,7 @@ export class TorrentsTableComponent implements OnInit {
     });
 
     this.contextMenuItems = [
+      { label: 'More Info', icon: 'pi pi-fw pi-info-circle', command: () => this.openInfoTorrentDialog(null, this.torrentRightClicked) },
       { label: 'Pause', icon: 'pi pi-fw pi-pause', command: () => this.pauseTorrentsBulk(this.selection.selected) },
       { label: 'Resume', icon: 'pi pi-fw pi-play', command: () => this.resumeTorrentsBulk(this.selection.selected) },
       { label: 'Force Resume', icon: 'pi pi-fw pi-forward', command: () => this.forceStartTorrentsBulk(this.selection.selected) },
@@ -215,7 +219,7 @@ export class TorrentsTableComponent implements OnInit {
 
         if(this.torrentFilterBy.type === 'filter_status')
           return Constants.TORRENT_STATE_MAPPING[this.torrentFilterBy.value]?.includes(tor.state);
-        
+
         if(this.torrentFilterBy.type === 'filter_tracker')
           return this.allTorrentInformation.trackers[this.torrentFilterBy.value].includes(tor.hash)
       });
@@ -306,7 +310,7 @@ export class TorrentsTableComponent implements OnInit {
     this.colWidths = this.appConfig.getWebUISettings().torrent_table.column_widths;
     this.updateTorrentData(this.allTorrentInformation);
   }
- 
+
   /** Determine whether a torrent is selected or not */
   isSelected(tor: Torrent): boolean {
     return this.selection.isSelected(tor);

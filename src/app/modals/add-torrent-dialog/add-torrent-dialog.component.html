@@ -13,7 +13,7 @@
     <mat-dialog-content class="mat-typography dialog_content">
       <mat-tab-group mat-align-tabs="start" (selectedTabChange)="handleTabChange($event)" [selectedIndex]="currentTab?.index || 0">
         <mat-tab label="File Upload">
-          <div class="file_upload_container">
+          <div class="file_upload_container" style="padding-top: 25px;">
             <br/>
 
             <div [ngClass]="{'dark-theme': isDarkTheme | async}" class="upload_files" appDragAndDropFiles (fileDropped)="updateFiles($event, true)" (click)="torrentFileUpload.click()">
