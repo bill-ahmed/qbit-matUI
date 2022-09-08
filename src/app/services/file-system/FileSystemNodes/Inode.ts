@@ -73,8 +73,6 @@ export default class Inode extends TreeNode implements SerializableNode {
       return this.parent.getAbsolutePath(delimiter) + this.value + delimiter;
     }
 
-    // Hack: Unix-based OS use '/', so we need it to be leading
-    if (delimiter === '/') return '/' + this.value
     return this.value
   }
 

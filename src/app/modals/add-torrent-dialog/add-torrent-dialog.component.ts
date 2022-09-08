@@ -7,7 +7,7 @@ import { TorrentDataStoreService } from '../../services/torrent-management/torre
 import { FileSystemDialogComponent } from '../file-system-dialog/file-system-dialog.component';
 import { ThemeService } from '../../services/theme.service';
 import { Observable } from 'rxjs';
-import { SerializedNode } from '../../services/file-system/file-system.service';
+import {FileSystemService, SerializedNode} from '../../services/file-system/file-system.service';
 import { GetDefaultSaveLocation, IsMobileUser } from 'src/utils/Helpers';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { TorrentParserService } from 'src/app/services/torrent-management/torrent-parser.service';
@@ -45,6 +45,7 @@ export class AddTorrentDialogComponent implements OnInit {
 
   constructor(private appConfig: ApplicationConfigService, private dialogRef:MatDialogRef<AddTorrentDialogComponent>, private data_store: TorrentDataStoreService,
               private torrentParser: TorrentParserService, public fileSystemDialog: MatDialog, public snackbar: SnackbarService, private theme: ThemeService,
+              private fsService: FileSystemService,
               @Inject(MAT_DIALOG_DATA) inputData) { this.inputData = inputData }
 
   ngOnInit(): void {
@@ -221,6 +222,8 @@ export class AddTorrentDialogComponent implements OnInit {
     this.fileSystemExplorerDialogREF.afterClosed().subscribe((res: string) => {
       // If use confirmed choice of file path
       if(res) {
+        // Hack: Unix-based OS use '/', so we need it to be leading
+        if (this.fsService.getFileSystemDelimeter() === '/') res = '/' + res
         this.filesDestination = res
       }
     })
