@@ -1,7 +1,7 @@
 version: "2.1"
 services:
   qbittorrent:
-    image: linuxserver/qbittorrent:version-14.3.8.99202110081405-7423-ac5c264e6ubuntu20.04.1
+    image: linuxserver/qbittorrent:4.4.5
     container_name: qbit-matUI-dev-container
     environment:
       - PUID=1000

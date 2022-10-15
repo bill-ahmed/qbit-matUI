@@ -17,7 +17,7 @@ A live demo is available here: https://qbit-material-webui-demo.herokuapp.com/
 
 
 ## Installation
-This app is tested with **v4.3.8** and higher of qBittorrent, any lower version are not guaranteed to work.
+This app is tested with **v4.4.5** and higher of qBittorrent, any lower version are not guaranteed to work.
 
 ### Automatic -- Docker Mods Support!
 Thanks to @marzzzello for adding support in LinuxServer.io's qBittorrent container: https://github.com/marzzzello/linuxserver-io-mod-qbit-matui
@@ -56,6 +56,6 @@ The app will re-compile everytime you save changes. To see the changes, you must
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build. 
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
 To get a build for the login page, run `ng build --project="login"`, and provide the `--prod` flag for a production build.

@@ -30,7 +30,7 @@ export class MoveTorrentsDialogComponent implements OnInit {
   private fileSystemExplorerDialogREF: MatDialogRef<FileSystemDialogComponent, any>;
 
   constructor(public fileSystemDialog: MatDialog, private data_store: TorrentDataStoreService,
-              private theme: ThemeService, private torrentsSelected: RowSelectionService,
+              private theme: ThemeService, private torrentsSelected: RowSelectionService, private fsService: FileSystemService,
               private snackbar: SnackbarService, private dialogRef:MatDialogRef<MoveTorrentsDialogComponent>) { }
 
   ngOnInit(): void {
@@ -82,6 +82,8 @@ export class MoveTorrentsDialogComponent implements OnInit {
     this.fileSystemExplorerDialogREF.afterClosed().subscribe((res: string) => {
       // If use confirmed choice of file path
       if(res) {
+        const delim = this.fsService.getFileSystemDelimeter()
+        if (delim === '/') res = '/' + res
         this.filesDestination = res
       }
     })
